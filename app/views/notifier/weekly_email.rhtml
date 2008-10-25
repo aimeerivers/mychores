@@ -1,0 +1,22 @@
+To unsubscribe, click here:
+http://www.mychores.co.uk/subscription/<%= @id %>/<%= @code %>/email/off
+
+
+Hi <%= @name %>,
+
+Here are your tasks for the coming week, from mychores.co.uk
+
+<% for task in @workload %>
+	<%= task.list.name + ": " + task.name %> - <%= particularly_formatted_date(@preferred_date_format, task.next_due) %> (<%= time_from_today(task.next_due, @datetoday) %>)
+	<% if @include_descriptions == true -%>
+	<%= task.description %>
+	<% end -%>
+<% end %>
+
+<% if @number_overdue > 10 -%>
+Too many overdue tasks getting you down? Log into the site for the option to reschedule them.
+
+<% end -%>
+Should you have any problems, please email contact@mychores.co.uk
+
+http://www.mychores.co.uk

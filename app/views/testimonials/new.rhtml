@@ -1,0 +1,9 @@
+
+	<% @heading="Submit a testimonial" %>
+	<% @h1class='home' %>
+
+	<% form_tag(:action => 'create') do %><div>
+	  <%= render :partial => 'form' %>
+	  
+	  <%= submit_tag "Submit testimonial" %>
+	</div><% end %>

@@ -1,0 +1,33 @@
+<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+
+	<% @heading="New task" %>
+	<% @h1class='task' %>
+	
+	<% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; <a class='breadcrumb task' href='#'>New task</a>" %>
+	
+	
+	<table class='my-completions' style='width:150px; text-align:left;'>
+		<tr><td>
+			<h4>Tips</h4>
+            Set your default task options in <a href='/admin/preferences'>Preferences</a>.<br /><br />
+            Use <a href='/tasks/quickcreate'>Quick-create</a> for multiple tasks.
+		</td></tr>
+	</table>
+	
+	
+	
+	<% form_tag(:action => 'create') do %><div>
+	
+	  <% @editmode = false %>
+	  <%= render :partial => 'form' %>
+	
+        <br /><br />
+		
+	  <%= submit_tag "Save task" %>
+	</div><% end %>
+
+<% else %>
+
+	<%= access_denied() %>
+	
+<% end %>

@@ -1,0 +1,55 @@
+<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+
+	<% @heading=@task.name %>
+	<% @h1class='task' %>
+	
+	<% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; " + link_to_task(@task, 'breadcrumb') %>
+	
+
+	
+    <p>Listing all completions for <%= link_to_task(@task, 'picturelink') %></p>
+    
+    
+  	<p style='float:right;'>
+  	  <%= image_tag(@completions_chart.to_url, :alt => "Completions per month", :title => "Completions per month", :size => "400x180") %>
+  	</p>
+
+    	
+    <% if @person.status.nil? %>
+		<p>This page is available to <a href='/home/supporters'>site supporters</a>.</p>
+	<% else %>
+	
+		<% if @completions.empty? %>
+			<p>No completion history for this task.</p>
+		<% else %>
+		
+			<table>
+				<% for completion in @completions %>
+					<tr>
+						<td>
+							<%= formatted_date(completion.date_completed) %> (<%= time_from_today(completion.date_completed, @datetoday) %>)
+						</td>
+						<td>
+							by <%= link_to_person(completion.person, 'picturelink') %>
+						</td>
+						<td>
+							<%= link_to(image_tag('undo.png', :size => '13x13', :alt => 'undo', :title => 'undo', :align => 'absmiddle'), { :controller => 'completions', :action => 'undo', :id => completion.id, :return => 'task' }, :confirm => 'Do you want to undo this completion?') %>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+			
+			
+			<%= will_paginate(@completions) %>
+			
+			
+			
+		<% end %>
+
+    <% end %>
+
+<% else %>
+
+	<%= access_denied() %>
+	
+<% end %>

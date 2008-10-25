@@ -1,0 +1,193 @@
+<%= error_messages_for 'task' %>
+
+
+
+			<table>
+			
+				<tr>
+					<th>Task name:</th>
+					<td><%= text_field('task', 'name', :maxlength => 30, :class => 'styled') %></td>
+				</tr>
+			
+				<tr>
+					<th>Description:</th>
+					<td>
+						<%= text_area('task', 'description', :class => 'styled') %>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>Status:</th>
+					<td>
+						<%= select('task', 'status', ["active", "inactive"]) %>
+					</td>
+				</tr>
+			
+				<tr>
+					<th>Next due:</th>
+					<td>			
+						<%= calendar_field 'task', 'next_due',
+							{ :class => 'date',
+							:field_title => 'Next Due Date',
+							:button_image => 'calendar.gif',
+							:button_title => 'Show calendar' },
+							{ :firstDay => 1,
+							:range => [(Date.today.year) - 1, (Date.today.year) + 1],
+							:step => 1,
+							:showOthers => false,
+							:cache => true,
+							:ifFormat => session[:preferred_long_date_format], 
+							:weekNumbers => false }
+						%>
+					</td>
+				</tr>
+				
+				
+				<tr>
+					<th>One-off task:</th>
+					<td>
+						<label><%= check_box('task', 'one_off', 'onchange' => "toggle_recurrence_options();") %> (Tick if this task occurs only once)</label>
+					</td>
+				</tr>
+			
+				<tr id='recurrence-options' <%= "style='display:none;'" if @task.one_off == true %>>
+					<th>Recurrence:</th>
+					<% @task.recurrence_interval = 3 if @task.recurrence_interval.nil? %>
+					<% @task.recurrence_measure = 'days' if @task.recurrence_measure.nil? %>
+					
+					<td>		
+						<div id='recurrenceinterval'>
+							Every <%= text_field('task', 'recurrence_interval', :size => 2, :maxlength => 2) %>
+							<label><%= radio_button('task', 'recurrence_measure', 'days') %>days</label> &nbsp;
+							<label><%= radio_button('task', 'recurrence_measure', 'weeks') %>weeks</label> &nbsp;
+							<label><%= radio_button('task', 'recurrence_measure', 'months') %>months</label> &nbsp;
+						</div>
+						
+					</td>
+				</tr>
+				
+				<% temp_occur_on = @task.recurrence_occur_on %>
+				
+				<tr>
+					<th>Can occur on:</th>
+					<td>
+					   <table>
+					       <tr><td>
+						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("1") %> value="1" />Monday</label><br />
+						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("2") %> value="2" />Tuesday</label><br />
+						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("3") %> value="3" />Wednesday</label><br />
+						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("4") %> value="4" />Thursday</label><br />
+						  </td><td>
+						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("5") %> value="5" />Friday</label><br />
+						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("6") %> value="6" />Saturday</label><br />
+						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("0") %> value="0" />Sunday</label>
+						  </td></tr>
+						</table>
+					</td>
+				</tr>
+				
+				
+				
+				
+			</table>
+			
+
+        	
+        	
+<br />
+<a href="#" onclick="Effect.BlindDown('advanced-options', {duration: 0.5}); return false;" class='action'>Advanced options ...</a>
+ 
+<div id='advanced-options' style='display:none;'>
+ 
+			<table>
+			
+				<tr>
+					<th>Assigned to:</th>
+					<td>
+						<select id='task_person_id' name='task[person_id]'>
+							<option value=''>Anyone in <%= @team.name %></option>
+							<% for membership in @memberships %>
+								<% if membership.confirmed == 1 %>
+								
+								    <% unless membership.person.usertype == 3 # no deleted people! %>
+								
+    									<% unless @task.person.nil? %>
+    										<% if membership.person.id == @task.person.id %>
+    											<% @selected = " selected='selected'" %>
+    										<% else %>
+    											<% @selected = "" %>
+    										<% end %>
+    									<% end %>
+    									
+    									<option value='<%= membership.person.id %>'<%= @selected %>><%= membership.person.name %></option>
+									
+									<% end %>
+									
+								<% end %>
+							<% end %>
+						</select>
+					</td>
+				</tr>
+			
+				<tr>
+					<th>Rotating assignment:</th>
+					<td>
+						<%= check_box('task', 'rotate') %>
+						<a href='/tasks/rotating'><img src='/images/questionmark.png' width='12' height='12' border='0' alt="What's this?" title="What's this?" /></a>
+					</td>
+				</tr>
+	
+				<tr>
+					<th>Default importance:</th>
+					<td>
+						<select id="task_default_importance" name="task[default_importance]" class="styled">
+							<%= options_from_collection_for_select(@importances, "value", "name", @task.default_importance) %>
+						</select>
+					</td>
+				</tr>
+			
+				<tr>
+					<th>Current importance:</th>
+					<td>
+						<select id="task_current_importance" name="task[current_importance]" class="styled">
+							<%= options_from_collection_for_select(@importances, "value", "name", @task.current_importance) %>
+						</select>
+					</td>
+				</tr>
+				
+				<% temp_task_missed_options = @task.task_missed_options %>
+			
+				<tr>
+					<th>When task is missed:</th>
+					<td>
+						<label><input type="checkbox" name="task_missed_options[]" <%= "checked='checked'" if temp_task_missed_options.include?("increase_importance") %> value="increase_importance" /> Increase importance</label><br />
+						<label><input type="checkbox" name="task_missed_options[]" <%= "checked='checked'" if temp_task_missed_options.include?("reschedule") %> value="reschedule" /> Automatically re-schedule (skip)</label><br />
+						
+					</td>
+				</tr>
+		
+        		
+        		<% if @editmode == false %>
+        		  <%= hidden_field('task', 'list_id', :value=>@list.id) %>
+        		  
+		        <% elsif @editmode == true %>
+            		<tr>
+            			<th>Change list:</th>
+            			<td>
+            				<select id='task_list_id' name='task[list_id]'>
+            				<%= options_from_collection_for_select(@otherlists, "id", "name", @task.list.id) %>
+            				</select>
+            			</td>
+            		</tr>
+        		<% end %>
+        	
+        		</table>
+ 
+</div>
+
+	
+
+			
+
+<!--[eoform:task]-->
+

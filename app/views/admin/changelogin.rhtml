@@ -1,0 +1,35 @@
+<% @heading="Change login id" %>
+<% @h1class='person' %>
+
+<% @links = [] %>
+<% @links += [{:url => "/admin/preferences", :title => "Preferences", :accesskey => "p"}] %>
+<% @links += [{:url => "/admin/changepassword", :title => "Change password", :accesskey => "c"}] %>
+<% @links += [{:url => "/admin/changelogin", :title => "Change login id", :accesskey => "l"}] %>
+<% @links += [{:url => "/openid/associate", :title => "OpenID", :accesskey => "o"}] %>
+
+
+<% if @person.status.nil? %>
+
+	Sorry, the change login id option is only available to <%= link_to('site supporters', {:controller => 'home', :action => 'supporters'}) %>.
+	
+<% else %>
+
+	<% form_tag(:action => 'changeloginid', :id => @person.id) do %><div>
+		<%= error_messages_for 'person' %>
+	
+		<table>
+			
+			<tr>
+				<th>New login id:</th>
+				<td><%= text_field('person', 'login', :maxlength => 40, :class => 'styled') %></td>
+			</tr>
+			
+		</table>
+	  
+		<br />
+	  
+	  <%= submit_tag 'Change login id' %>
+	</div><% end %>
+
+	
+<% end %>

@@ -1,0 +1,50 @@
+<% @heading="Tasks completed this month" %>
+<% @h1class='task' %>
+
+
+<% @links = [] %>
+<% @links += [{:url => "/completions/today", :title => "Tasks completed today", :accesskey => "t"}] %>
+<% @links += [{:url => "/completions/sevendays", :title => "Last 7 days", :accesskey => "l"}] %>
+<% @links += [{:url => "/completions/month", :title => "This month", :accesskey => "m"}] %>
+
+
+
+		<% if @person.status.nil? %>
+			<p>This page is available to <a href='/home/supporters'>site supporters</a>.</p>
+		<% else %>
+		
+			<% if @completions.empty? %>
+				<p>No tasks completed this month.</p>
+			<% else %>
+			
+				<% date_completed = 0 %>
+				<% date_today = @datetoday %>
+				
+				<table>
+			
+				<% for completion in @completions %>
+					<% if completion.date_completed != date_completed %>
+						<tr><td colspan='2'><br />
+						<% if completion.date_completed == date_today %>
+							<h3>Today</h3>
+						<% elsif completion.date_completed == date_today - 1 %>
+							<h3>Yesterday</h3>
+						<% else %>
+							<h3><%= Date::DAYNAMES[completion.date_completed.wday] %> <%= formatted_date(completion.date_completed) %></h3>
+						<% end %>
+						</td></tr>
+						
+						<% date_completed = completion.date_completed %>
+					<% end %>
+					
+					<tr>
+						<td><%= link_to_list(completion.task.list, 'picturelink') %>: <%= link_to_task(completion.task, 'picturelink') %></td>
+						<td><%= link_to(image_tag('undo.png', :size => '13x13', :alt => 'undo', :title => 'undo', :align => 'absmiddle'), { :controller => 'completions', :action => 'undo', :id => completion.id, :return => 'month' }, :confirm => 'Do you want to undo this completion?') %></td>
+					</tr>
+				<% end %>
+				
+				</table>
+				
+			<% end %>
+			
+		<% end %>

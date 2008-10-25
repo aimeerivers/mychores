@@ -1,0 +1,18 @@
+<% if session[:person].status == 'Site Creator' %>
+
+	<% @heading="Compose newsletter" %>
+	<% @h1class='home' %>
+	
+    <% @links = [] %>
+    <% @links += [{:url => "/newsletters", :title => "Newsletters", :accesskey => "n"}] %>
+
+	<% form_tag(:action => 'create') do %><div>
+	  <%= render :partial => 'form' %>
+	  
+	  <br />
+	  <%= submit_tag "Save this newsletter" %>
+	</div><% end %>
+
+<% else %>
+	<%= access_denied() %>
+<% end %>

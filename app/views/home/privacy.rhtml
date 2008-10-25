@@ -1,0 +1,72 @@
+<% @heading="We always respect your privacy" %>
+<% @h1class='home' %>
+
+
+<% @links = [] %>
+<% if session[:person].nil? %>
+    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+<% else %>
+    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+<% end %>
+<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
+<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
+<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+
+
+
+<h3>Contact details - visitors</h3>
+
+<ul>
+
+<li>If you fill in the <a href='/messages/new'>contact form</a>, your details will be stored temporarily and then removed.</li>
+
+<li>MyChores will never provide your contact details to any third party.</li>
+
+</ul>
+
+
+
+<h3>Personal information - members</h3>
+
+<ul>
+
+<li>Your contact details will be stored securely and only used by MyChores.</li>
+
+<li>MyChores will never provide your contact details to any third party.</li>
+
+<li>You may leave MyChores at any time and your details will be removed.</li>
+
+<li>You get to choose whether or not you receive notifications, and if so, how often.</li>
+
+<li>The tasks you track on MyChores will never be published to anyone outside your team.</li>
+
+<li>Whilst MyChores might publish generalised statistics, individuals will never be singled out.</li>
+
+<li>Each team has an RSS feed of tasks completed, with an un-guessable URL. If you choose to make that URL publicly known, that is your responsibility. The URL can be changed upon request.</li>
+
+<li>If you choose to use Twitter Integration to publish tasks completed, that is your responsibility.</li>
+
+</ul>
+
+
+<h3>Passwords - members</h3>
+
+<ul>
+
+<li>Your MyChores password is stored using one-way encryption and cannot be decrypted.</li>
+
+<li>Your Twitter password, if you provide it, is stored using two-way encryption so that it can be sent to Twitter. I give my word that it will not be decrypted for malicious purposes.</li>
+
+</ul>
+
+
+<h3>Non-personal information</h3>
+
+<ul>
+
+<li>MyChores needs cookies enabled to keep you logged in.</li>
+
+<li>MyChores uses <a href='http://www.google.com/analytics'>Google Analytics</a> to track how people are using the site.</li>
+
+</ul>

@@ -1,0 +1,67 @@
+<% @heading="Import Flickr pictures" %>
+
+
+<% @breadcrumbs = link_to_person(@person, 'breadcrumb') %>
+
+
+<% @links = [] %>
+<% @links += [{:url => "/pictures", :title => "Pictures", :accesskey => "p"}] %>
+
+
+
+	
+<a href='http://www.flickr.com/' target='_blank'><img src='/images/flickr_logo.gif' width='98' height='26' alt='Flickr' border='0' /></a><br />
+
+<br />
+
+<% if @person.status.nil? %>
+	<p>At the moment this tool is only available to <a href='/home/supporters'>site supporters</a>.</p>
+<% else %>
+	
+	
+	<p>This tool copies up to 20 pictures at a time from Flickr to MyChores. We recommend that you tag the pictures on Flickr so that you only import the ones you want. You can run the import as many times as necessary.</p>
+			
+			
+    <br />
+			
+	<% form_remote_tag(
+		:html => { :action => url_for(:controller => 'pictures', :action => 'flickr_import') },
+		:url => { :controller => 'pictures', :action => 'flickr_import' },
+		:update => 'results-div',
+		:before => %(Element.show('importing'); Element.hide('submit-button'); Element.hide('results-div')),
+		:success => %(Element.hide('importing'); Element.show('submit-button'); Element.show('results-div'))
+	) do %><div>
+			
+			<table>
+				<tr>
+					<th>Email address used on Flickr:</th>
+					<td><%= text_field('preference', 'flickr_email', :maxlength => 255, :class => 'styled') %></td>
+				</tr>
+				
+				<tr>
+					<th>Import pictures with this tag:</th>
+					<td><%= text_field('preference', 'flickr_tag', :maxlength => 25, :class => 'styled') %></td>
+				</tr>
+			
+			</table>
+			
+			<br />
+			
+	
+
+		<span id='submit-button'><input type="submit" value="Import Flickr pictures" /></span>
+		
+		<span id='importing' style='display:none;'>
+			<img src='/images/spinner.gif' width='16' height='16' alt='Importing pictures ...' />
+			Looking for Flickr photos to import ... this may take a while ...
+		
+		</span>
+	
+	</div><% end %>
+			
+    <br />
+    	
+    <div id='results-div'></div>
+
+
+<% end %>

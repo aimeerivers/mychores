@@ -1,0 +1,11 @@
+<% @heading="New tip" %>
+
+<% @links = [] %>
+<% @links += [{:url => "/tips/list", :title => "Tips list", :accesskey => "l"}] %>
+<% @links += [{:url => "/tips/tagcloud", :title => "Tips tag cloud", :accesskey => "c"}] %>
+
+<% form_tag(:action => 'create') do %><div>
+  <%= render :partial => 'form' %>
+
+  <%= submit_tag "Submit tip" %>
+</div><% end %>

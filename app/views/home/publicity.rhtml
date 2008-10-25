@@ -1,0 +1,32 @@
+<% @heading="Publicity for MyChores" %>
+<% @h1class='home' %>
+
+<% @links = [] %>
+<% if session[:person].nil? %>
+    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+<% else %>
+    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+<% end %>
+<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
+<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
+<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+
+
+
+<ul>
+	<li>31/07/2006 - MyChores added to <a href='http://searchsight.com/'>SearchSight</a> (<strong><a href='http://searchsight.com/1434401-info.html'>view</a></strong>)</li>
+	
+	<li>28/11/2006 - MyChores mentioned on <a href='http://twitter.com/blog'>Twitter blog</a> (<strong><a href='http://twitter.com/blog/2006/11/mychores-adds-twitter-support.html'>view</a></strong>)</li>
+	
+	<li>05/12/2006 - MyChores mentioned in a <a href='http://twitter.com/'>Twitter</a> newsletter</li>
+	
+	<li>06/12/2006 - MyChores linked on <a href='http://twitter.pbwiki.com/'>Twitter Fan Wiki</a></li>
+	
+	<li>08/12/2006 - MyChores listed on <a href='http://happycodr.com'>happycodr.com</a> (<strong><a href='http://happycodr.com/folio/show/53-my-chores'>view</a></strong>)</li>
+	
+	<li>17/12/2006 - MyChores linked on <a href='http://script.aculo.us/'>script.aculo.us</a> wiki (<strong><a href='http://wiki.script.aculo.us/scriptaculous/show/RealWorldUsage'>view</a></strong>)</li>
+	
+	<li>30/12/2006 - MyChores article listed on <a href='http://www.goarticles.com/'>GoArticles</a> (<strong><a href='http://www.goarticles.com/cgi-bin/showa.cgi?C=361568'>view</a></strong>)</li>
+	
+</ul>

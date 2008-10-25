@@ -1,0 +1,48 @@
+<%= error_messages_for 'tip' %>
+
+<table>
+			
+    <tr>
+    	<th>Short description:</th>
+    	<td>
+    	   <%= text_field('tip', 'short_description', :maxlength => 255, :class => 'styled') %>
+    	   <p>For example: <b>How to clean the oven</b></p>
+    	</td>
+    </tr>
+    
+    <tr>
+    	<th>Full description:</th>
+    	<td>
+    		<%= text_area('tip', 'full_description', :rows => 10, :cols => 40) %>
+    	</td>
+    </tr>
+			
+    <tr>
+    	<th>Source (optional):</th>
+    	<td>
+    	   <%= text_field('tip', 'source', :maxlength => 255, :class => 'styled') %>
+    	   <p>Where did this tip come from? Can be a web link.</p>
+    	</td>
+    </tr>
+			
+    <tr>
+    	<th>Tags:</th>
+    	<td>
+    	   <%= text_field('tip', 'tag_edit', :maxlength => 255, :class => 'styled') %><br />
+    	   <p>Tags should be specific words to match with task names.<br />
+    	   For example:<br />
+    	   A tip about cleaning the oven should be tagged: <b>oven, cooker</b><br />
+    	   A general cleaning tip should be tagged: <b>clean, cleaning</b></p>
+    	</td>
+    </tr>
+				
+	<tr>
+		<th>Anonymous:</th>
+		<td>
+			<label><%= check_box('tip', 'is_anon') %> Submit anonymously?</label>
+		</td>
+	</tr>
+</table>
+
+<br /><br />
+

@@ -1,0 +1,27 @@
+<% @heading=@team.name + " - Add a virtual team member" %>
+<% @h1class='team' %>
+
+<% @breadcrumbs = link_to_team(@team, 'breadcrumb') %>
+
+<p>A virtual team member is somebody who helps with your chores, but you don't want to invite them to join MyChores.</p>
+
+<p>Virtual team members cannot log in to MyChores and do not receive emails, but you can assign tasks to them and tick tasks on their behalf.</p>
+
+
+<% form_tag({:action => 'add_virtual', :id => @team.id} ) do %><div>
+
+	<table>
+		
+		<tr>
+			<th>Virtual member's name:</th>
+			<td>
+				<input type='text' id='name' name='name' maxlength='40' class='styled' />
+			</td>
+		</tr>
+		
+	</table>
+	
+	<br />
+		
+	<input type="submit" value="Add virtual team member" />
+</div><% end %>

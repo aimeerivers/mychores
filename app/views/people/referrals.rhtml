@@ -1,0 +1,51 @@
+<% @heading="Referrals" %>
+<% @h1class='person' %>
+
+<% unless @parent.nil? %>
+	<h3>You were referred to MyChores by:</h3>
+	<p><%= link_to_person(@parent, 'picturelink') %></p>
+<% end %>
+
+<% unless @children.empty? %>
+	<h3>You referred these people to MyChores (<%= @children_count %>):</h3>
+	<table>	
+	   <tr>
+	   <% row_counter = 0 %>
+	   
+			<% for child in @children %>
+				<td><%= link_to_person(child, 'picturelink') %> &nbsp;&nbsp;</td>
+				<% row_counter += 1 %>
+				<% if row_counter == 3 %>
+				    </tr><tr>
+				    <% row_counter = 0 %>
+				<% end %>
+			<% end %>
+	   </tr>
+	</table>
+	<br />
+<% end %>
+
+<% unless @grandchildren.empty? %>
+	<h3>They have, in turn, referred these people (<%= @grandchildren_count %>):</h3>
+	<table>
+	   <tr>
+	   <% row_counter = 0 %>
+	   
+			<% for grandchild in @grandchildren %>
+				<td><%= link_to_person(grandchild, 'picturelink') %> &nbsp;&nbsp;</td>
+				<% row_counter += 1 %>
+				<% if row_counter == 3 %>
+				    </tr><tr>
+				    <% row_counter = 0 %>
+				<% end %>
+			<% end %>
+	   </tr>
+	</table>
+	<br />
+<% end %>
+
+<% if @children.empty? %>
+	<p>You have not yet referred anybody to MyChores.</p>
+<% end %>
+
+<p>See <a href='/home/promotions'>Invite friends</a> to learn more about referring people and becoming recognised as a Site Promoter.</p>

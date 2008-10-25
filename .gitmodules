@@ -1,0 +1,12 @@
+[submodule "vendor/rails"]
+	path = vendor/rails
+	url = git://github.com/rails/rails.git
+[submodule "vendor/plugins/globalize"]
+	path = vendor/plugins/globalize
+	url = git://github.com/heythisisnate/globalize.git
+[submodule "vendor/plugins/mislav_will_paginate"]
+	path = vendor/plugins/mislav_will_paginate
+	url = git://github.com/mislav/will_paginate.git
+[submodule "vendor/plugins/attachment_fu"]
+	path = vendor/plugins/attachment_fu
+	url = git://github.com/technoweenie/attachment_fu.git

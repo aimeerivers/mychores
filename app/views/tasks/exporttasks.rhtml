@@ -1,0 +1,8 @@
+<% if @filecreated %>
+	<p>Spreadsheet created.</p>
+	<p><a href='/exports/<%= @filename %>' class='action'>Right-click here to save spreadsheet</a></p>
+<% else %>
+	<p>Sorry, the file could not be created.</p>
+	<p><%= link_to('Try again', {:controller => 'tasks', :action => 'export'}, 'class' => 'action') %></p>
+	<p><%= link_to('Return home', {:controller => 'home', :action => 'index'}, 'class' => 'action') %></p>
+<% end %>

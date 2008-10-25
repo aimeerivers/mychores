@@ -1,0 +1,20 @@
+<%= error_messages_for 'list' %>
+
+<!--[form:list]-->
+
+<table>
+
+	<tr>
+		<th>List name:</th>
+		<td><%= text_field('list', 'name', :maxlength => 25, :class => 'styled') %></td>
+	</tr>
+
+	<tr>
+		<th>Description:</th>
+		<td>
+			<%= text_area('list', 'description', :class => 'styled') %>
+		</td>
+	</tr>
+
+<!--[eoform:list]-->
+

@@ -1,0 +1,40 @@
+<% unless @messages.empty? %>
+	<h3>Messages</h3>
+	<table>
+		<% for message in @messages %>
+			<tr>
+			
+				<% if message.requested == 1 %>
+				
+					<% if message.person.id == @person.id %>
+						<td>Your request to join <%= link_to_team(message.team, 'picturelink') %> is pending.</td>
+						<td>&nbsp;</td>
+						
+					<% else %>
+					
+						<td><%= link_to_person(message.person, 'picturelink') %> wants to join <%= link_to_team(message.team, 'picturelink') %>.</td>
+						<td><%= link_to('Accept', {:controller => 'memberships', :action => 'memaccept', :id => message.id, :key => message.validity_key}, 'class' => 'action') %> |
+						<%= link_to('Decline', {:controller => 'memberships', :action => 'memdecline', :id => message.id, :key => message.validity_key}, 'class' => 'action') %></td>
+						
+					<% end %>
+					
+				<% elsif message.invited == 1 %>
+				
+					<% if message.person.id == @person.id %>
+					
+						<td>You have been invited to join <%= link_to_team(message.team, 'picturelink') %>.</td>
+						<td><%= link_to('Accept', {:controller => 'memberships', :action => 'memaccept', :id => message.id, :key => message.validity_key}, 'class' => 'action') %> |
+						<%= link_to('Decline', {:controller => 'memberships', :action => 'memdecline', :id => message.id, :key => message.validity_key}, 'class' => 'action') %></td>
+						
+					<% else %>
+					
+						<td><%= link_to_person(message.person, 'picturelink') %> has not yet joined <%= link_to_team(message.team, 'picturelink') %>.</td>
+						<td>&nbsp;</td>
+						
+					<% end %>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+	<br />
+<% end %>

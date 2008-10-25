@@ -1,0 +1,139 @@
+<% @heading='MyChores API' %>
+<% @h1class='home' %>
+
+<% @links = [] %>
+<% if session[:person].nil? %>
+    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+<% else %>
+    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+<% end %>
+<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
+<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
+<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+
+
+
+<h2>MyChores API</h2>
+
+<p>The MyChores Application Programming Interface (API) allows external programmers to interact with the MyChores database. At the moment it is still work-in-progress.</p>
+
+<p>An application sends its request via a URI, and MyChores responds with the result. The result may be in XML or JavaScript Object Notation (JSON) depending on the format requested. For most resources the application will need to autheticate using HTTP Basic Authentication so that the MyChores API knows who is making the request. The only current exception is Site Statistics.</p>
+
+<h2>Resources</h2>
+
+<table border='1'>
+  <tr>
+    <th>Resource name</th>
+    <th>Links</th>
+    <th>Auth?</th>
+    <th>Method</th>
+    <th>Parameters</th>
+  </tr>
+  
+  <tr>
+    <td><b>Site Statistics</b> <br /> Gives some site-wide information, such as total number of people registered, tasks, teams and timezones. Also tells you how many tasks have been completed in the last day, seven days, and current month.</td>
+    <td>
+      <a href='/api/site_statistics.xml'>XML</a><br />
+      <a href='/api/site_statistics.json'>JSON</a>
+    </td>
+    <td>No</td>
+    <td>GET</td>
+    <td>None</td>
+  </tr>
+  
+  <tr>
+    <td><b>Verify credentials</b> <br /> May be used as a way to verify that the correct credentials were entered. Returns a 200 OK if valid, or a 401 Unauthorized if not.</td>
+    <td>
+      <a href='/api/verify_credentials.xml'>XML</a><br />
+      <a href='/api/verify_credentials.json'>JSON</a>
+    </td>
+    <td>Yes</td>
+    <td>GET</td>
+    <td>None</td>
+  </tr>
+  
+  <tr>
+    <td><b>Person details</b> <br /> Used without paramaters it indicates who is currently authenticated. Used with a paramater it can give details of a different person. Returns a 404 Not Found if the paramater does not specify a valid person.</td>
+    <td>
+      <a href='/api/person_details.xml'>XML</a><br />
+      <a href='/api/person_details.json'>JSON</a>
+    </td>
+    <td>Yes</td>
+    <td>GET</td>
+    <td>
+      <ul>
+        <li><b>login</b> <i>(optional)</i> - look up a person from their login id, eg <a href='/api/person_details.xml?login=sermoa'>sermoa</a>.</li>
+        <li><b>id</b> <i>(optional)</i> - look up a person from their id in the database, eg <a href='/api/person_details.xml?id=1'>1</a>.</li>
+      </ul>
+    </td>
+  </tr>
+  
+  <tr>
+    <td><b>All tasks</b> <br /> Brings back a list of all tasks in the teams of the currently authenticated person. By default ordered by due date.</td>
+    <td>
+      <a href='/api/all_tasks.xml'>XML</a><br />
+      <a href='/api/all_tasks.json'>JSON</a>
+    </td>
+    <td>Yes</td>
+    <td>GET</td>
+    <td>
+      <ul>
+        <li><b>order_by</b> <i>(optional)</i> - use 'date' or 'importance' (assumed 'date' by default)</li>
+        <li><b>per_page</b> <i>(optional)</i> - the number of tasks you want returned at a time (20 by default)</li>
+        <li><b>page</b> <i>(optional)</i> - the page number you want returned (1 by default)</li>
+      </ul>
+    </td>
+  </tr>
+  
+  <tr>
+    <td><b>My tasks</b> <br /> Brings back a list of tasks specifically assigned to the currently authenticated person, or any tasks in their teams not assigned to anybody in particular. By default ordered by due date.</td>
+    <td>
+      <a href='/api/my_tasks.xml'>XML</a><br />
+      <a href='/api/my_tasks.json'>JSON</a>
+    </td>
+    <td>Yes</td>
+    <td>GET</td>
+    <td>
+      <ul>
+        <li><b>order_by</b> <i>(optional)</i> - use 'date' or 'importance' (assumed 'date' by default)</li>
+        <li><b>per_page</b> <i>(optional)</i> - the number of tasks you want returned at a time (20 by default)</li>
+        <li><b>page</b> <i>(optional)</i> - the page number you want returned (1 by default)</li>
+      </ul>
+    </td>
+  </tr>
+  
+  <tr>
+    <td><b>Today's tasks</b> <br /> As with 'My tasks' (see above) but only tasks due today, not including overdue tasks.</td>
+    <td>
+      <a href='/api/todays_tasks.xml'>XML</a><br />
+      <a href='/api/todays_tasks.json'>JSON</a>
+    </td>
+    <td>Yes</td>
+    <td>GET</td>
+    <td>
+      <ul>
+        <li><b>per_page</b> <i>(optional)</i> - the number of tasks you want returned at a time (20 by default)</li>
+        <li><b>page</b> <i>(optional)</i> - the page number you want returned (1 by default)</li>
+      </ul>
+    </td>
+  </tr>
+  
+  <tr>
+    <td><b>Task details</b> <br /> Returns details about a task, provided the currently authenticated person is a member of that task's team. If not, a 404 Not Found is returned.</td>
+    <td>
+      <a href='/api/task_details.xml?id=1'>XML</a><br />
+      <a href='/api/task_details.json?id=1'>JSON</a>
+    </td>
+    <td>Yes</td>
+    <td>GET</td>
+    <td>
+      <ul>
+        <li><b>id</b> (required) - the id of task to return</li>
+      </ul>
+    </td>
+  </tr>
+  
+</table>
+
+<br /><br />

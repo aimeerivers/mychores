@@ -1,0 +1,120 @@
+<% @heading="Statistics" %>
+<% @h1class='home' %>
+
+
+<div class="dynamic-tab-pane-control tab-pane">
+	<div class="tab-row">
+		<h2 class="tab hover"><a href='/statistics/monthly'>Monthly statistics</a></h2>
+		<h2 class="tab selected"><a href='/statistics/league'>League tables</a></h2>
+	</div>
+	<div class="tab-page">
+	
+	
+	
+	<h2>All-time top 10 tasks (live data)</h2>
+	
+	<table class='topten'>
+		<tr>
+			<th>Rank</th>
+			<th>Task</th>
+			<th>Count</th>
+			<th>People</th>
+		</tr>
+	
+		<% index = 0 %>
+		<% for completion in @topten %>
+			<% index += 1 %>
+			<tr>
+				<td align='center'><%= index.to_s %></td>
+				<td><%= completion.Task %></td>
+				<td align='right'><%= completion.Count.to_s %></td>
+				<td align='right'><%= completion.People.to_s %></td>
+			</tr>
+		<% end %>
+	
+	</table>
+	
+	
+	<br />
+	
+	
+	<h2>Mar 2007 top 10</h2>
+	
+	<table class='topten'><tr><th colspan='2'>Rank</th><th>Task</th><th>Count</th><th>People</th></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>1</td><td>Water plants</td><td align='right'>92</td><td align='right'>26</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>2</td><td>Laundry</td><td align='right'>65</td><td align='right'>21</td></tr>
+<tr><td><img src='/images/statistics/move/down.gif' width='13' height='13' alt='down' /></td><td align='center'>3</td><td>Dust surfaces</td><td align='right'>60</td><td align='right'>21</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>4</td><td>Clean toilet</td><td align='right'>45</td><td align='right'>22</td></tr>
+<tr><td><img src='/images/statistics/move/down.gif' width='13' height='13' alt='down' /></td><td align='center'>5</td><td>Change towels</td><td align='right'>48</td><td align='right'>19</td></tr>
+<tr><td><img src='/images/statistics/move/down.gif' width='13' height='13' alt='down' /></td><td align='center'>6</td><td>Put away things out of place</td><td align='right'>46</td><td align='right'>19</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>7</td><td>Scrub & disinfect sink</td><td align='right'>34</td><td align='right'>18</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>8</td><td>Sweep/vacuum floors</td><td align='right'>40</td><td align='right'>14</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>9</td><td>Change bed sheets</td><td align='right'>27</td><td align='right'>19</td></tr>
+<tr><td><img src='/images/statistics/move/down.gif' width='13' height='13' alt='down' /></td><td align='center'>10</td><td>Clean & scrub bath</td><td align='right'>29</td><td align='right'>15</td></tr>
+</table>
+	
+	
+	<br />
+	
+	
+	<h2>Feb 2007 top 10</h2>
+	
+	<table class='topten'><tr><th colspan='2'>Rank</th><th>Task</th><th>Count</th><th>People</th></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>1</td><td>Water plants</td><td align='right'>97</td><td align='right'>27</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>2</td><td>Dust surfaces</td><td align='right'>68</td><td align='right'>24</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>3</td><td>Laundry</td><td align='right'>76</td><td align='right'>21</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>4</td><td>Change towels</td><td align='right'>52</td><td align='right'>18</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>5</td><td>Put away things out of place</td><td align='right'>43</td><td align='right'>20</td></tr>
+<tr><td><img src='/images/statistics/move/down.gif' width='13' height='13' alt='down' /></td><td align='center'>6</td><td>Clean toilet</td><td align='right'>42</td><td align='right'>19</td></tr>
+<tr><td><img src='/images/statistics/move/down.gif' width='13' height='13' alt='down' /></td><td align='center'>7</td><td>Clean & scrub bath</td><td align='right'>41</td><td align='right'>18</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>8</td><td>Scrub & disinfect sink</td><td align='right'>35</td><td align='right'>18</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>9</td><td>Open Windows</td><td align='right'>38</td><td align='right'>14</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>10</td><td>Sweep/vacuum floors</td><td align='right'>36</td><td align='right'>14</td></tr>
+</table>
+	
+	
+	<br />
+	
+	
+	<h2>Jan 2007 top 10</h2>
+	
+	<table class='topten'><tr><th colspan='2'>Rank</th><th>Task</th><th>Count</th><th>People</th></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>1</td><td>Water plants</td><td align='right'>106</td><td align='right'>23</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>2</td><td>Dust surfaces</td><td align='right'>66</td><td align='right'>21</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>3</td><td>Clean toilet</td><td align='right'>44</td><td align='right'>22</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>4</td><td>Laundry</td><td align='right'>47</td><td align='right'>17</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>5</td><td>Clean & scrub bath</td><td align='right'>39</td><td align='right'>20</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>6</td><td>Change towels</td><td align='right'>39</td><td align='right'>18</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>7</td><td>Put away things out of place</td><td align='right'>39</td><td align='right'>18</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>8</td><td>Scrub & disinfect sink</td><td align='right'>42</td><td align='right'>15</td></tr>
+<tr><td><img src='/images/statistics/move/down.gif' width='13' height='13' alt='down' /></td><td align='center'>9</td><td>Plump cushions</td><td align='right'>43</td><td align='right'>14</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>10</td><td>Open windows</td><td align='right'>39</td><td align='right'>13</td></tr>
+</table>
+	
+
+	<br />
+
+
+	<h2>Dec 2006 top 10</h2>
+	
+	<table class='topten'><tr><th colspan='2'>Rank</th><th>Task</th><th>Count</th><th>People</th></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>1</td><td>Water plants</td><td align='right'>65</td><td align='right'>20</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>2</td><td>Dust surfaces</td><td align='right'>35</td><td align='right'>13</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>3</td><td>Clean Toilet</td><td align='right'>28</td><td align='right'>15</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>4</td><td>Laundry</td><td align='right'>32</td><td align='right'>11</td></tr>
+<tr><td><img src='/images/statistics/move/none.gif' width='13' height='13' alt='none' /></td><td align='center'>5</td><td>Clean & scrub bath</td><td align='right'>24</td><td align='right'>14</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>6</td><td>Plump cushions</td><td align='right'>29</td><td align='right'>11</td></tr>
+<tr><td><img src='/images/statistics/move/down.gif' width='13' height='13' alt='down' /></td><td align='center'>7</td><td>Put away things out of place</td><td align='right'>20</td><td align='right'>12</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>8</td><td>Scrub & disinfect sink</td><td align='right'>19</td><td align='right'>9</td></tr>
+<tr><td><img src='/images/statistics/move/down.gif' width='13' height='13' alt='down' /></td><td align='center'>9</td><td>Change towels</td><td align='right'>20</td><td align='right'>8</td></tr>
+<tr><td><img src='/images/statistics/move/up.gif' width='13' height='13' alt='up' /></td><td align='center'>10</td><td>Open windows</td><td align='right'>20</td><td align='right'>8</td></tr>
+</table>
+
+
+	</div>
+
+
+	
+</div>
+
+<a href='#top'>Top of page</a>

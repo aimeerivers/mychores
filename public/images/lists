@@ -1,0 +1,130 @@
+<html><head><title>Lists</title>
+  
+  <link href="_files/planner.css" media="screen" rel="Stylesheet" type="text/css">
+
+  <script language="JavaScript">
+  <!-- Begin
+	function setFocus() {
+		if (document.forms.length > 0) {
+			var field = document.forms[0];
+				for (i=0; i < field.length; i++) {
+					if ((field.elements[i].type == "text")
+					|| (field.elements[i].type == "textarea")
+					|| (field.elements[i].type.toString().charAt(0) == "s")) {
+						document.forms[0].elements[i].focus();
+						break;
+					}
+				}
+			}
+		}
+  // End -->
+  </script></head>
+<body onload="setFocus()">
+
+<div id="Picture"></div>
+<div id="Login-box">Welcome<br>sermoa<br>(logout)</div>
+<div id="Navigator">
+<a href="http://127.0.0.1:3000/people">People</a><br>
+<a href="http://127.0.0.1:3000/teams">Teams</a><br>
+<a href="http://127.0.0.1:3000/lists">Lists</a><br>
+<a href="http://127.0.0.1:3000/tasks">Tasks</a><br>
+</div>
+
+<div id="Top-bar"><h1 class="shadow">Lists</h1></div>
+<div id="Breadcrumb-bar">Home &gt;&gt; Household &gt;&gt; Living Room &gt;&gt; Vacuum</div>
+
+<div id="Content">
+	
+	
+	
+
+<table>
+  <tbody><tr>
+  
+    <th>Name</th>
+  
+    <th>Description</th>
+  
+    <th>Created on</th>
+  
+    <th>Updated on</th>
+  
+  </tr>
+  
+
+  <tr>
+  
+    <td>Bathroom</td>
+  
+    <td></td>
+  
+    <td>Sun Mar 26 18:22:01 BST 2006</td>
+  
+    <td>Sun Mar 26 18:22:01 BST 2006</td>
+  
+    <td><a href="http://127.0.0.1:3000/lists/show/3">Show</a></td>
+    <td><a href="http://127.0.0.1:3000/lists/edit/3">Edit</a></td>
+    <td><a href="http://127.0.0.1:3000/lists/destroy/3" onclick="return confirm('Deleting a list will delete all associated tasks. Are you sure you want to delete this list?');">Destroy</a></td>
+  </tr>
+
+  <tr>
+  
+    <td>Bedroom</td>
+  
+    <td></td>
+  
+    <td>Sun Mar 26 18:22:15 BST 2006</td>
+  
+    <td>Sun Mar 26 18:22:15 BST 2006</td>
+  
+    <td><a href="http://127.0.0.1:3000/lists/show/4">Show</a></td>
+    <td><a href="http://127.0.0.1:3000/lists/edit/4">Edit</a></td>
+    <td><a href="http://127.0.0.1:3000/lists/destroy/4" onclick="return confirm('Deleting a list will delete all associated tasks. Are you sure you want to delete this list?');">Destroy</a></td>
+  </tr>
+
+  <tr>
+  
+    <td>Living Room</td>
+  
+    <td></td>
+  
+    <td>Sun Mar 26 18:22:26 BST 2006</td>
+  
+    <td>Sun Mar 26 18:22:26 BST 2006</td>
+  
+    <td><a href="http://127.0.0.1:3000/lists/show/5">Show</a></td>
+    <td><a href="http://127.0.0.1:3000/lists/edit/5">Edit</a></td>
+    <td><a href="http://127.0.0.1:3000/lists/destroy/5" onclick="return confirm('Deleting a list will delete all associated tasks. Are you sure you want to delete this list?');">Destroy</a></td>
+  </tr>
+
+  <tr>
+  
+    <td>Personal Care</td>
+  
+    <td></td>
+  
+    <td>Sun Mar 26 18:24:32 BST 2006</td>
+  
+    <td>Sun Mar 26 18:24:32 BST 2006</td>
+  
+    <td><a href="http://127.0.0.1:3000/lists/show/6">Show</a></td>
+    <td><a href="http://127.0.0.1:3000/lists/edit/6">Edit</a></td>
+    <td><a href="http://127.0.0.1:3000/lists/destroy/6" onclick="return confirm('Deleting a list will delete all associated tasks. Are you sure you want to delete this list?');">Destroy</a></td>
+  </tr>
+
+</tbody></table>
+
+
+ 
+
+<br>
+
+<a href="http://127.0.0.1:3000/lists/new">New list</a>
+
+</div>
+
+
+
+
+
+</body></html>

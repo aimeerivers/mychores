@@ -1,0 +1,21 @@
+<% @heading="New list - choose a team" %>
+<% @h1class='list' %>
+
+<% @breadcrumbs = "<a class='breadcrumb list' href='#'>New list</a>" %>
+
+<p>A list must be associated with a team. Please choose or create a team.</p>
+
+
+<% @myteams = find_my_teams %>
+
+<% form_tag({:action => 'new'}, {:method => 'get'}) do %><div>
+	<select id='team' name='team'>
+	<%= options_from_collection_for_select(@myteams, "id", "name") %>
+	</select>
+	
+	<input type="submit" value="Continue ..." />
+</div><% end %>
+
+
+
+<p><a href='/teams/new' class='picturelink team'>New team ...</a></p>

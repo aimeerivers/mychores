@@ -1,0 +1,35 @@
+<% @heading="Pictures" %>
+<% @breadcrumbs = "Pictures you have uploaded" %>
+
+
+<% @links = [] %>
+<% @links += [{:url => "/pictures/new", :title => "Upload a new picture", :accesskey => "u"}] %>
+<% @links += [{:url => "/admin/flickr", :title => "Import Flickr pictures", :accesskey => "i"}] %>
+    
+<% if @mypictures.empty? %>
+    <p>You have not uploaded any pictures yet.</p>
+    <p>Would you like to <a href='/pictures/new'>upload a picture</a> or <a href='/admin/flickr'>import pictures from Flickr</a>?</p>
+<% end %>
+
+<table><tr>
+	
+<% row_counter = 0 %>
+<% for picture in @mypictures %>
+     <td align='center'>
+         <a href='/pictures/show/<%= picture.id.to_s %>'><%= show_picture(picture) %></a><br />
+         <%= picture.filename %>
+         <a href="/pictures/destroy/<%= picture.id.to_s %>" onclick="return confirm('Are you sure you want to delete <%= picture.filename %>?');"><img src='/images/redx.png' width='15' height='10' alt='Delete picture' title='Delete picture' /></a>
+     </td>
+     
+     <% row_counter += 1 %>
+     <% if row_counter == 3 %>
+         </tr><tr>
+         <% row_counter = 0 %>
+     <% end %>
+     
+<% end %>
+
+</tr></table><br /><br />
+
+
+<%= will_paginate(@mypictures) %> 

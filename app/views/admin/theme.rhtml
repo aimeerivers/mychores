@@ -1,0 +1,43 @@
+<% @heading="Change theme" %>
+<% @h1class='person' %>
+
+
+<% @breadcrumbs = link_to_person(@person, 'breadcrumb') %>
+
+<form id='ignore'></form> <!-- Little hack to stop it highlighting the submit button -->
+
+<% form_tag(:action => 'changetheme', :id => @person.id) do %><div>
+	<%= error_messages_for 'preference' %>
+	
+
+			
+			<p>If you're coming back to MyChores frequently, you'd at least like it to look nice, right?!</p>
+			
+			<table><tr>
+			
+			<% row_counter = 0 %>
+			<% for theme in ['Pastels', 'Love', 'Hill', 'Emerald', 'Poppies', 'Autumn', 'Ripples', 'Island', 'Joy', 'Simple', 'Patience'] %>
+			     <% themecode = theme.downcase %>
+			     <td align='center'>
+			         <label><%= radio_button('preference', 'theme', themecode) %> <img alt="<%= theme %>" src="/images/new-themes/<%= themecode %>.png" style="border: 1px solid #999999;" align="absmiddle" height="148" width="250" /></label><br />
+			         <%= theme.t %><br />
+			         <a href='/stylesheets/s2/<%= themecode %>2.css'>view CSS</a><br /><br />
+			     </td>
+			     
+			     <% row_counter += 1 %>
+			     <% if row_counter == 2 %>
+			         </tr><tr>
+			         <% row_counter = 0 %>
+			     <% end %>
+			     
+			<% end %>
+			
+			</tr></table>
+			
+			<br />
+			
+			<p>If you fancy making your own theme, we'll be delighted to include it. Look at the existing CSS files to get started.</p>
+			
+            
+	<%= submit_tag 'Change theme' %>
+</div><% end %>

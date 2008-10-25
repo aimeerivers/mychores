@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8"><title>Typo Administration: sidebar</title>		
+		
+		<meta http-equiv="imagetoolbar" content="no">
+		<link href="_files/administration.css" media="screen" rel="Stylesheet" type="text/css">
+		<script src="_files/prototype" type="text/javascript"></script>
+<script src="_files/effects" type="text/javascript"></script>
+<script src="_files/dragdrop" type="text/javascript"></script>
+<script src="_files/controls" type="text/javascript"></script>
+<script src="_files/typo" type="text/javascript"></script></head>
+
+	<body>
+	<div id="container">
+	
+	<!-- HEADER -->
+	  <div id="header">
+
+	  <div id="info">
+	    <a href="http://journal.mychores.co.uk/admin">settings</a> | 
+	    <a href="http://journal.mychores.co.uk/accounts/logout">log out</a> | 
+	    <a href="http://journal.mychores.co.uk/">your blog »</a>
+	    
+	  </div> 
+	    <h1><a href="http://journal.mychores.co.uk/admin/">Typo admin - MyChores Journal</a></h1>
+	  </div>
+  	<!-- /HEADER -->
+      	
+      	
+  	<div id="tabs-container">
+  	  <ul id="tabs">
+  	    <li><a href="http://journal.mychores.co.uk/admin/content">Articles</a></li>
+  	    <li><a href="http://journal.mychores.co.uk/admin/pages">Pages</a></li>
+  	    <li><a href="http://journal.mychores.co.uk/admin/categories">Categories</a></li>
+  	    <li><a href="http://journal.mychores.co.uk/admin/blacklist">Blacklist</a></li>
+  	    <li class="active"><a href="http://journal.mychores.co.uk/admin/sidebar" class="active">Sidebar</a></li>
+  	    <li><a href="http://journal.mychores.co.uk/admin/themes">Themes</a></li>
+  	    <li><a href="http://journal.mychores.co.uk/admin/users">Users</a></li>
+  	  </ul>
+  	</div>  
+
+ 
+	<div id="overall">
+	  
+
+  	<div id="content">
+  	  <div id="main">
+  	    <h2>Sidebar</h2>
+  	    
+  	    
+        
+  <p>Drag
+and drop to change the sidebar items displayed on this blog. To remove
+items from the sidebar just click remove Changes are saved immediately,
+but not activated until you click the 'Publish' button.</p>
+
+  <form action="/admin/sidebar/publish" method="post" onsubmit="new Ajax.Updater('messages', '/admin/sidebar/publish', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
+  <input value="Publish changes" class="space" type="submit">
+ 
+  <div style="" id="messages"><p>Changes published</p>
+</div>
+  
+  <div id="sidebar-config">
+    <div id="available" class="dropbox">
+      <h3>Available Items</h3>
+      <div id="available_box">
+  <div style="position: relative;" id="available_archives" class="dragitem">
+  <h4 class="handle">Archives</h4>
+  <p>Displays links to monthly archives</p>
+</div>
+
+<div style="position: relative;" id="available_category" class="dragitem">
+  <h4 class="handle">Categories</h4>
+  <p>List of categories for this blog</p>
+</div>
+
+<div style="position: relative;" id="available_delicious" class="dragitem">
+  <h4 class="handle">Del.icio.us</h4>
+  <p>Bookmarks from <a href="http://del.icio.us/">del.icio.us</a></p>
+</div>
+
+<div style="position: relative;" id="available_flickr" class="dragitem">
+  <h4 class="handle">Flickr</h4>
+  <p>Pictures from <a href="http://www.flickr.com/">flickr.com</a></p>
+</div>
+
+<div style="position: relative;" id="available_fortythree" class="dragitem">
+  <h4 class="handle">43things</h4>
+  <p>Goals from <a href="http://www.43things.com/">43things.com</a>.</p>
+</div>
+
+<div style="position: relative;" id="available_fortythreeplaces" class="dragitem">
+  <h4 class="handle">43places</h4>
+  <p>List of your <a href="http://www.43places.com/">43places.com</a>.</p>
+</div>
+
+<div style="position: relative;" id="available_static" class="dragitem">
+  <h4 class="handle">Static</h4>
+  <p>Static content, like links to other sites, advertisements, or blog meta-infomation</p>
+</div>
+
+<div style="position: relative;" id="available_tada" class="dragitem">
+  <h4 class="handle">Tada List</h4>
+  <p>To-do list from <a href="http://www.tadalist.com/">tadalist.com</a></p>
+</div>
+
+<div style="position: relative;" id="available_technorati" class="dragitem">
+  <h4 class="handle">Technorati Watchlist</h4>
+  <p>Display a <a href="http://www.technorati.com/">Technorati</a> Watchlist</p>
+</div>
+
+<div style="position: relative;" id="available_upcoming" class="dragitem">
+  <h4 class="handle">Upcoming</h4>
+  <p>Events from <a href="http://www.upcoming.org/">upcoming.org</a></p>
+</div>
+
+<div style="position: relative;" id="available_xml" class="dragitem">
+  <h4 class="handle">XML Syndication</h4>
+  <p>RSS and Atom feeds</p>
+</div>
+
+</div>
+    </div>
+
+    <div id="cnt-active">
+      <h3>Active Sidebar items</h3>
+      <div id="active" class="dropbox"><!-- Something eats the first form in actives when reloading via AJAX.  This causes massive havoc in Firefox, and minor havoc in Safari.  So we provide it with sacrificial fodder here. --><div style="position: relative;" id="active_category-1" class="dragitem">
+  <h4 class="handle">Categories</h4>
+  <p>List of categories for this blog</p>
+  <div class="space">
+  <form action="/admin/sidebar/set_active" class="configblock" id="configure_1" method="post">
+  <input id="configure_1_count" name="configure[count]" checked="checked" type="checkbox">
+  <label for="configure_1_count">Show article count</label><br>
+  <input id="configure_1_empty" name="configure[empty]" type="checkbox">
+  <label for="configure_1_empty">Show empty categories</label>
+</form>
+
+
+
+  <a href="#" onclick="new Effect.DropOut('active_category-1');; new Ajax.Request('/admin/sidebar/remove/1', {asynchronous:true, evalScripts:true}); return false;">remove</a>
+  </div>
+</div><div style="position: relative;" id="active_xml-3" class="dragitem">
+  <h4 class="handle">XML Syndication</h4>
+  <p>RSS and Atom feeds</p>
+  <div class="space">
+  <form action="/admin/sidebar/set_active" class="configblock" id="configure_3" method="post">
+  <input id="configure_3_articles" name="configure[articles]" checked="checked" type="checkbox">
+  <label for="configure_3_articles">Show Articles feed</label><br>
+  <input id="configure_3_comments" name="configure[comments]" checked="checked" type="checkbox">
+  <label for="configure_3_comments">Show Comments feed</label><br>
+  <input id="configure_3_trackbacks" name="configure[trackbacks]" checked="checked" type="checkbox">
+  <label for="configure_3_trackbacks">Show Trackbacks feed</label>
+</form>
+
+
+
+  <a href="#" onclick="new Effect.DropOut('active_xml-3');; new Ajax.Request('/admin/sidebar/remove/3', {asynchronous:true, evalScripts:true}); return false;">remove</a>
+  </div>
+</div><div style="position: relative;" id="active_static-2" class="dragitem">
+  <h4 class="handle">Static</h4>
+  <p>Static content, like links to other sites, advertisements, or blog meta-infomation</p>
+  <div class="space">
+  <form action="/admin/sidebar/set_active" class="configblock" id="configure_2" method="post">
+  <label>Title</label><br>
+  <input class="text" name="configure[title]" value="Links" type="text"><br>
+  <label>Content</label><br>
+  <textarea rows="10" cols="30" style="width: 265px;" name="configure[body]">
+&lt;a href="http://geourl.org/near?p=http://journal.mychores.co.uk/"
+  title="check out my neighbors in meatspace"&gt;
+&lt;img src="http://i.geourl.org/80x15/simple.png" alt="GeoURL"
+  border="0" width="80" height="15" /&gt;&lt;/a&gt;
+</textarea>
+</form>
+
+
+
+  <a href="#" onclick="new Effect.DropOut('active_static-2');; new Ajax.Request('/admin/sidebar/remove/2', {asynchronous:true, evalScripts:true}); return false;">remove</a>
+  </div>
+</div></div>
+    </div>
+    <br clear="all">
+    
+    <input value="Publish changes" class="space" type="submit">
+    
+  </div>
+  
+  	  </form></div>
+  	  </div>
+  	</div>
+	</div>
+	</body></html>

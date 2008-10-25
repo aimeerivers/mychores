@@ -1,0 +1,9 @@
+<% @heading="New team" %>
+<% @h1class='team' %>
+
+<% @breadcrumbs = "<a class='breadcrumb team' href='#'>New team</a>" %>
+
+<% form_tag(:action => 'create') do %><div>
+  <%= render :partial => 'form' %>
+  <%= submit_tag "Save team" %>
+</div><% end %>

@@ -1,0 +1,53 @@
+<% @heading="FAQ" %>
+<% @h1class='home' %>
+
+
+<% @links = [] %>
+<% if session[:person].nil? %>
+    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+<% else %>
+    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+<% end %>
+<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
+<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
+<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+
+
+<% unless session[:person].nil? %>
+	<% if session[:person].status == 'Site Creator' %>
+	
+	   <% editaccess = true %>
+	   <% @links += [{:url => "/questions/new", :title => "New question", :accesskey => "n"}] %>
+
+    <% else %>
+    
+        <% editaccess = false %>
+        
+	<% end %>
+<% end %>
+
+
+<ul>
+<% for question in @questions %>
+
+	<li><a href='#<%= question.id %>'><%= h question.question %></a></li>
+
+<% end %>
+</ul>
+
+<br />
+
+
+<% for question in @questions %>
+
+	<a href='#' name='<%= question.id %>'></a>
+	<h3><%= h question.question %> <%= link_to("Edit", {:action => "edit", :id => question.id}) if editaccess == true %></h3>
+	<%= textilize(question.answer) %>
+	
+
+<% end %>
+
+
+<br />
+<p><a href='#top'>Top of page</a></p>

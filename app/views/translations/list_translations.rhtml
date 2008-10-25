@@ -1,0 +1,62 @@
+<% @heading="Translations: " + @language_name %>
+
+<% @links = [] %>
+<% @links += [{:url => "/translations/", :title => "Languages", :accesskey => "l"}] %>
+
+<% current_user = session[:person].login -%>
+
+<form></form>
+<% form_tag('/translations/search/' + params[:id], :method => :get) do -%>
+  <%= "Search".t %>
+  <input type='text' name='q' value='<%= params[:q] %>' />
+  <label><input type='radio' value='tr_key' name='language' <%= "checked='checked'" if params[:language] == 'tr_key' %> /> <%= "English".t %></label>
+  <label><input type='radio' value='text' name='language' <%= "checked='checked'" if params[:language] == 'text' %> /> <%= @language_name %></label>
+  <%= submit_tag("Search".t) %>
+  <%= link_to("Clear search".t, '/translations/show/' + params[:id]) if params[:q] %>
+<% end -%>
+
+<br /><br />
+
+<table>
+
+  <tr>
+    <th><%= "English".t %></th>
+    <th><%= @language_name %></th>
+		<th width='10'>&nbsp;</th>
+		<th width='10'>&nbsp;</th>
+		<th><%= "Translator".t %></th>
+  </tr>
+
+<% @translations.each do |translation| -%>
+
+  <tr valign='middle'>
+    <td><%= h(translation.tr_key) %></td>
+    
+    <td>
+        <% if translation.text.nil? %>
+          <% text = h(translation.tr_key) %>
+        <% else %>
+          <% text = h(translation.text) %>
+        <% end %>
+        
+      
+      <span id='translation-<%= translation.id.to_s %>'><%= text %></span>
+    </td>
+    
+    <td>
+      <%= aimee_in_place_editor('translation-' + translation.id.to_s, {:url => url_for(:controller => "translations", :action => "update_translation", :id => translation.id), :rows => 3, :cols => 50, :oncomplete => 'element.up("tr").down("td.translator").innerHTML = "<a class=\'picturelink person\' href=\'/person/' + current_user + '\'>' + current_user + '</a>";'}) %>
+		</td>
+		
+		<td>
+		  &nbsp;
+		</td>
+		
+		<td class='translator'><%= link_to_person(translation.person, 'picturelink') unless translation.person.nil? %></td>
+  </tr>
+
+<% end -%>
+
+</table>
+
+
+<%= will_paginate(@translations) %>

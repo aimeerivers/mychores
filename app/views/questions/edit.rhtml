@@ -1,0 +1,18 @@
+<% if session[:person].status == 'Site Creator' %>
+
+    <% @links = [] %>
+    <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
+
+
+	<% @heading="Edit question" %>
+	<% @h1class='home' %>
+
+	<% form_tag(:action => 'update', :id => @question) do %><div>
+	  <%= render :partial => 'form' %>
+	  
+	  <%= submit_tag "Save" %>
+	</div><% end %>
+
+<% else %>
+	<%= access_denied() %>
+<% end %>

@@ -1,0 +1,63 @@
+xml.instruct! :xml, :version=>"1.0"
+
+xml.rss(:version=>"2.0"){
+  xml.channel{
+    xml.title(@rss_title)
+    xml.link(@rss_link)
+    xml.description(@rss_description)
+    xml.ttl('120')
+    xml.pubDate(@tips.first.created_on.rfc2822) if @tips.any?
+    
+    for tip in @tips
+      xml.item do
+      
+        tip_title = "Tip #" + tip.id.to_s + ": " + tip.short_description
+        if tip.is_anon == true
+          tip_title += " (submitted anonymously)"
+        else
+          tip_title += " (submitted by " + tip.person.login + ")"
+        end
+        
+        xml.title(tip_title)
+        
+        
+#        if tip.full_description.size > 500
+#          truncated_description = truncate(tip.full_description, 500, "").to_s
+#          number_to_chop = truncated_description.reverse.index(" ").to_i
+#          if number_to_chop > 0
+#            for i in 1..number_to_chop
+#              truncated_description.chop!
+#            end
+#          end
+#          truncated_description += " ..."
+#        else
+#          truncated_description = tip.full_description
+#        end
+        
+        # xml.description(truncated_description)
+        
+        proper_description = textilize(tip.full_description)
+        proper_description += "<div>Feedback: "
+        proper_description += "<a href='http://www.mychores.co.uk/tips/useful/"+ tip.id.to_s + "'>Good tip</a> | "
+        proper_description += "<a href='http://www.mychores.co.uk/tips/not_useful/"+ tip.id.to_s + "'>Bad tip</a>"
+        proper_description += "</div>"
+        
+        # xml.content(proper_description)
+        
+        # Can't seem to get content:encoded with rxml.
+        # I'll just put it in the description then.
+        
+        xml.description(proper_description)
+        
+        # rfc822
+        xml.pubDate(tip.created_on.rfc2822)
+        xml.link("http://www.mychores.co.uk/tips/show/" + tip.id.to_s)
+        xml.guid("http://www.mychores.co.uk/tips/show/" + tip.id.to_s, :isPermaLink => 'true')
+        
+        for tag in tip.tag_list().names
+          xml.category CGI::escape(tag)
+        end
+      end
+    end
+  }
+}

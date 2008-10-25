@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+<channel>
+
+	<title>Tasks completed in <%= @team.name %></title>
+	<description>This is a syndication of tasks completed within the last 7 days in &quot;<%= @team.name %>&quot; at http://www.mychores.co.uk</description>
+	<ttl>40</ttl>
+	<link>http://www.mychores.co.uk/teams/show/<%= @team.id.to_s %></link>
+	
+<% for completion in @completions %>
+	
+	<item>
+		<title><%= Date::DAYNAMES[completion.date_completed.wday] %> <%= formatted_date(completion.date_completed) %>: <%= h completion.person.login %>: <%= h completion.task.list.name %>: <%= h completion.task.name %></title>
+		<% if completion.task.description.empty? %>
+		<description>This task has no description.</description>
+		<% else %>
+		<description><%= h completion.task.description %></description>
+		<% end %>
+		<link>http://www.mychores.co.uk/tasks/show/<%= completion.task.id.to_s %></link>
+		<guid isPermaLink="true">http://www.mychores.co.uk/tasks/show/<%= completion.task.id.to_s %>?c=<%= completion.id.to_s %></guid>
+		<category><%= completion.task.list.name %></category>
+		<category><%= completion.person.login %></category>
+	</item>
+	
+<% end %>
+
+</channel>
+</rss>

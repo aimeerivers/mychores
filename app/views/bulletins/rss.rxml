@@ -1,0 +1,30 @@
+xml.instruct! :xml, :version=>"1.0"
+
+xml.rss(:version=>"2.0"){
+  xml.channel{
+    xml.title(@rss_title)
+    xml.link(@rss_link)
+    xml.description(@rss_description)
+    xml.ttl('120')
+    xml.pubDate(@bulletins.first.created_on.rfc2822) if @bulletins.any?
+    
+    for bulletin in @bulletins
+      xml.item do
+      
+        xml.title("News bulletin on " + formatted_date(bulletin.created_on))
+        
+        xml.description(textilize_without_paragraph(bulletin.message))
+        
+        # rfc822
+        xml.pubDate(bulletin.created_on.rfc2822)
+        unless bulletin.link.nil?
+          xml.link(bulletin.link)
+        else
+          xml.link("http://www.mychores.co.uk/bulletins")
+        end
+        xml.guid("http://www.mychores.co.uk/bulletins?id=" + bulletin.id.to_s, :isPermaLink => 'true')
+        
+      end
+    end
+  }
+}

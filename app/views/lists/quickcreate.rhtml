@@ -1,0 +1,58 @@
+<% @heading="Quick-create multiple lists" %>
+<% @h1class='list' %>
+
+<% @breadcrumbs = "<a class='breadcrumb list' href='#'>Quick-create multiple lists</a>" %>
+
+<% @myteams = find_my_teams %>
+
+<% if @myteams.empty? %>
+	<p>You need to <a href='/teams/new'>create a team</a> first.</p>
+<% else %>
+
+	
+	<% form_remote_tag(
+		:html => { :action => url_for(:controller => 'lists', :action => 'multiplecreate') },
+		:url => { :controller => 'lists', :action => 'multiplecreate' },
+		:update => 'results-div',
+		:before => %(Element.show('moving'); Element.hide('submit-button')),
+		:success => %(Element.hide('moving'))
+	) do %><div>
+	
+	<p>Enter the lists you wish to create, one on each line.</p>
+	
+	<p><textarea id='lists' name='lists' cols='40' rows='7' style='font-family:monospace;'>Kitchen
+Living Room
+Study</textarea></p>
+	
+	<table>
+		<tr>
+			<th>Choose team:</th>
+			<td>
+				<select id='team' name='team'>
+				<%= options_from_collection_for_select(@myteams, "id", "name", @defaultteam.to_i) %>
+				</select>
+			</td>
+		</tr>
+	</table>
+	
+	<br />
+	
+	<p>When you're happy, click 'Create lists' and all will be created at once.</p>
+	
+
+		
+	<span id='submit-button'><input type="submit" value="Create lists" /></span>
+	
+	<span id='moving' style='display:none;'>
+		<img src='/images/spinner.gif' width='16' height='16' alt='Creating lists ...' />
+		Creating lists ... this may take a while ...
+	
+	</span>
+	
+	</div><% end %>
+	
+	<div id='results-div'></div>
+	
+	
+<% end %>
+

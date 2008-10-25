@@ -1,0 +1,51 @@
+<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+	
+	<% @heading=@list.name + " - Re-assign tasks"; %>
+	<% @h1class='list' %>
+	
+	<% @breadcrumbs = link_to_team(@team, 'breadcrumb')  + " &gt; " + link_to_list(@list, 'breadcrumb') %>
+	
+	<p>Use this to quickly re-assign all tasks within the <%= link_to_list(@list, 'picturelink') %> list.</p>
+
+			
+	<% form_tag({:action => 'reassigntasks', :id => @list.id}) do %><div>
+	
+		<table>
+			
+			<tr>
+				<th>Assign to:</th>
+				<td>
+					<select id='person' name='person'>
+					<option value=''>Anyone in <%= @team.name %></option>
+						<% for membership in @memberships %>
+							<% if membership.confirmed == 1 %>
+								<% unless membership.person.usertype == 3 %>
+								    <option value='<%= membership.person.id %>'><%= membership.person.name %></option>
+								<% end %>
+							<% end %>
+						<% end %>
+					</select>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<th>Rotating assignment:</th>
+				<td>
+					<input id='rotate' name='rotate' type='checkbox' />
+					<a href='/tasks/rotating'><img src='/images/questionmark.png' width='12' height='12' border='0' alt="What's this?" title="What's this?" /></a>
+				</td>
+			</tr>
+			
+		</table>
+		
+		<br />
+			
+		<input type="submit" value="Re-assign tasks" />
+	</div><% end %>
+
+<% else %>
+
+	<%= access_denied() %>
+	
+<% end %>

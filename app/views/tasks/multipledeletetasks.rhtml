@@ -1,0 +1,7 @@
+<p><%= @deleted %> tasks successfully deleted.</p>
+
+<% if @notdeleted > 0 %>
+<p><%= @notdeleted %> tasks could not be deleted.</p>
+<% end %>
+
+<p><%= link_to('View your workload', {:controller => 'tasks', :action => 'workload'}, 'class'=>'action') %></p>

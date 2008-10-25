@@ -1,0 +1,11 @@
+<% if @numbercreated > 0 %>
+	<p><%= @numbercreated.to_s %> new task<%= 's' unless @numbercreated.to_i == 1 %> created for <%= link_to_list(@list, 'picturelink') %>.</p>
+<% else %>
+	<p>No tasks were created.</p>
+<% end %>
+
+<% if @numberfailed > 0 %>
+	<p><%= @numberfailed.to_s %> task<%= 's' unless @numbercreated.to_i == 1 %> could not be created.</p>
+<% end %>
+
+<p><a href='/tasks/quickcreate?list=<%= @list.id.to_s %>' class='action'>Create more tasks?</a></p>

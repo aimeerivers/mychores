@@ -1,0 +1,58 @@
+<% @heading="Print outs".t %>
+<% @h1class='home' %>
+
+<% @links = [] %>
+<% @links += [{:url => "/tasks/workload", :title => "Workload", :accesskey => "w"}] %>
+<% @links += [{:url => "/tasks/matrix", :title => "Hot Map", :accesskey => "m"}] %>
+<% @links += [{:url => "/tasks/calendar", :title => "Calendar", :accesskey => "c"}] %>
+<% @links += [{:url => "/tasks/collage", :title => "Collage", :accesskey => "o"}] %>
+<% @links += [{:url => "/tasks/statistics", :title => "Statistics", :accesskey => "s"}] %>
+<% @links += [{:url => "/tasks/print", :title => "Print outs", :accesskey => "p"}] %>
+
+
+
+		<p><%= "These views have been created especially for printing. They will open in a new browser window.".t %><br /><br /></p>
+		
+		
+		<table>
+			<tr>
+				<td align='right'>
+					<a href='/tasks/printtodo' target='_blank'><img src='/images/printtodo.jpg' width='159' height='160' alt='<%= "Printable to-do list".t %>' style='border: 1px solid #999999;' /></a>
+				</td>
+				<td>
+					<a href='/tasks/printtodo' target='_blank'><%= "Printable to-do list".t %></a>
+				</td>
+			</tr>
+			
+			<tr>
+				<td align='right'>
+					<a href='/tasks/printweek' target='_blank'><img src='/images/printweek.jpg' width='122' height='200' alt='<%= "Printable weekly calendar".t %>' style='border: 1px solid #999999;' /></a>
+				</td>
+				<td>
+					<img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <a href='/tasks/printweek' target='_blank'><%= "Printable weekly calendar".t %></a>
+				</td>
+			</tr>
+			
+			<tr>
+				<td align='right'>
+					<a href='/tasks/printmonth' target='_blank'><img src='/images/printmonth.jpg' width='207' height='150' alt='<%= "Printable monthly calendar".t %>' style='border: 1px solid #999999;' /></a>
+				</td>
+				<td>
+					<img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <a href='/tasks/printmonth' target='_blank'><%= "Printable monthly calendar".t %></a>
+				</td>
+			</tr>
+			
+			<tr>
+				<td align='right'>
+					<a href='/tasks/export' target='_blank'><img src='/images/spreadsheet.jpg' width='200' height='138' alt='<%= "Export to spreadsheet".t %>' style='border: 1px solid #999999;' /></a>
+				</td>
+				<td>
+					See also:<br />
+					<img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <a href='/tasks/export' target='_blank'><%= "Export to spreadsheet".t %></a>
+				</td>
+			</tr>
+			
+		</table>
+		
+	<div><br /><img src='/images/site-supporter.jpg' width='10' height='10' alt='<%= "Site supporters".t %>' /> = <%= link_to('For site supporters only'.t, {:controller => 'home', :action => 'supporters'}) %></div>
+		

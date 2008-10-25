@@ -1,0 +1,95 @@
+<% @heading="Search" %>
+<% @h1class='search' %>
+
+<% @links = [] %>
+<% if session[:person].nil? %>
+    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+<% else %>
+    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+<% end %>
+<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
+<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
+<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+
+
+
+<%= render :partial => 'searchform' %>
+
+
+
+
+<% unless @tips.nil? or @tips.empty? %>
+	<h3>Tips</h3>
+	<table>
+		<% for tip in @tips %>
+		  <% description = truncate(tip.full_description, 200, " ...") %>
+			<tr>
+				<td>
+				    <%= link_to_tip(tip) %><br />
+				    <%= @mark_term ? highlight(description, @mark_term) : description %>
+				</td>
+			</tr>
+		<% end %>
+	</table>
+	<br />
+<% end %>
+
+<% unless @people.nil? or @people.empty? %>
+	<h3>People</h3>
+	<table>
+		<% for person in @people %>
+			<tr>
+				<td><%= link_to_person(person, 'picturelink') %></td>
+				<td><%= @mark_term ? highlight(person.name, @mark_term) : h(person.name) %></td>
+			</tr>
+		<% end %>
+	</table>
+	<br />
+<% end %>
+
+<% unless @teams.nil? or @teams.empty? %>
+	<h3>Teams</h3>
+	<table>
+		<% for team in @teams %>
+			<tr>
+				<td><%= link_to_team(team, 'picturelink') %></td>
+				<td><%= @mark_term ? highlight(team.description, @mark_term) : h(team.description) %></td>
+			</tr>
+		<% end %>
+	</table>
+	<br />
+<% end %>
+
+<% unless @lists.nil? or @lists.empty? %>
+	<h3>Lists</h3>
+	<table>
+		<% for list in @lists %>
+			<tr>
+				<td><%= link_to_list(list, 'picturelink') %></td>
+				<td><%= @mark_term ? highlight(list.description, @mark_term) : h(list.description) %></td>
+			</tr>
+		<% end %>
+	</table>
+	<br />
+<% end %>
+
+<% unless @tasks.nil? or @tasks.empty? %>
+	<h3>Tasks</h3>
+	<table>
+		<% for task in @tasks %>
+		  <% taskid_string = task.id.to_s %>
+			<tr id='row-<%= taskid_string %>'>
+				<td><%= link_to_list(task.list, 'picturelink') %>: <%= link_to_task(task, 'picturelink') %></td>
+				<td><%= formatted_date(task.next_due) %> (<%= time_from_today(task.next_due, @datetoday) %>)</td>
+				<td><%= @mark_term ? highlight(task.description, @mark_term) : h(task.description) %></td>
+				<td>
+				  <% if @enable_js == false %>
+				    <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'task'})  %></td>
+				  <% else %>
+				    <%= link_to_remote(image_tag('tick.png', :size => '12x12', :alt => 'done', 'onclick' => "new Effect.Fade('row-" + taskid_string + "', {duration:0.8});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :flash => 'none', :return => 'task'}, :failure => "alert('Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.');") %>
+				  <% end %>
+			</tr>
+		<% end %>
+	</table>
+<% end %>

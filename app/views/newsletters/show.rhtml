@@ -1,0 +1,29 @@
+<% if session[:person].status == 'Site Creator' %>
+
+	<% @heading="Newsletter" %>
+
+
+    <% @links = [] %>
+    <% @links += [{:url => "/newsletters", :title => "Newsletters", :accesskey => "n"}] %>
+    <% @links += [{:url => "/newsletters/send_newsletter/" + @newsletter.id.to_s, :title => "Send this newsletter", :accesskey => "s"}] %>
+	
+	
+	<h2>MyChores News: <%= h(@newsletter.title) %></h2>
+	
+	<p>Hi [name],</p>
+	
+	<%= textilize(@newsletter.content) %>
+	
+	<p>MyChores - helping you keep on top of your chores!<br />
+http://www.mychores.co.uk<br /><br />
+
+In case you'd forgotten your login, it is [login].<br />
+You can reset your password here if necessary:<br />
+http://www.mychores.co.uk/admin/forgotpassword</p>
+
+    <h2>Sending history</h2>
+	<%= textilize(@newsletter.details) %>
+	
+<% else %>
+	<%= access_denied() %>
+<% end %>

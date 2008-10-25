@@ -1,0 +1,60 @@
+<% @heading="Export tasks to a spreadsheet" %>
+<% @h1class='task' %>
+
+
+<% if @person.status.nil? %>
+	<p>This page is available to <a href='/home/supporters'>site supporters</a>.</p>
+<% else %>
+
+	
+	<% @myteams = find_my_teams %>
+	
+	
+	<% form_remote_tag(
+		:html => { :action => url_for(:controller => 'tasks', :action => 'exporttasks') },
+		:url => { :controller => 'tasks', :action => 'exporttasks' },
+		:update => 'results-div',
+		:before => %(Element.show('moving'); Element.hide('submit-button')),
+		:success => %(Element.hide('moving'))
+	) do %><div>
+	
+		<table>
+			<tr>
+				<th>Export tasks in these teams:</th>
+				<td>
+					<% for team in @myteams %>
+						<label><input type="checkbox" name="team[]" checked="checked" value="<%= team.id %>" /><%= team.name %></label><br />
+					<% end %>
+				</td>
+			</tr>
+			
+			<!--
+			
+			<tr>
+				<th>Export as:</th>
+				<td>
+					<input type="radio" name="exporttype" checked="checked" value="xls" />Excel (.xls)<br />
+					<input type="radio" name="exporttype" value="csv" />Comma-separated values (.csv)<br />
+				</td>
+			</tr>
+			
+			-->
+			
+		</table>
+		
+		<br />
+		
+		<span id='submit-button'><input type="submit" value="Create spreadsheet" /></span>
+		
+		<span id='moving' style='display:none;'>
+			<img src='/images/spinner.gif' width='16' height='16' alt='Creating spreadsheet ...' />
+			Creating spreadsheet ... this may take a while ...
+		
+		</span>
+	
+	</div><% end %>
+	
+	<div id='results-div'></div>
+	
+	
+<% end %>

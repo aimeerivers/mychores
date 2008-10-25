@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<head>
+  <title>MyChores - Printable to-do list</title>
+  	<link href="/stylesheets/planner.css" media="all" rel="Stylesheet" type="text/css" />
+  		
+</head>
+
+<body>
+
+
+	<h3 style='float:right;'><a href='http://www.mychores.co.uk'>MyChores.co.uk</a> <%= "to-do list for %s (best printed portrait)" / session[:person].name %></h3>
+
+		
+	<% unless @overdue_tasks.empty? %>
+		<h2><%= "Overdue tasks".t %></h2>
+		
+		<table>
+		
+		<% for task in @overdue_tasks %>
+			<tr>
+				<td><big>&#10063; <b><%= task.list.name %>: <%= task.name %></b></big><br /></td>
+				<td><big>- 
+					<% if task.person.nil? %>
+						<%= task.list.team.name %>
+					<% else %>
+						<%= task.person.name %>
+					<% end %>
+				</big></td>
+			</tr>
+			
+			<% unless task.description.nil? or task.description.empty? %>
+				<tr><td colspan='2'><span style='padding-left:20px;'><%= textilize_without_paragraph(task.description) %></span></td></tr>
+			<% end %>
+			
+		<% end %>
+		
+		</table>
+		<br /><br />
+	<% end %>
+	
+	
+	<h2><%= "Today's tasks".t %> (<%= @datetoday.localize("%A") + " " + formatted_date(@datetoday) %>)</h2>
+	
+	<% if @todays_tasks.empty? %>
+			<span><br />
+			No tasks due today.</span>
+	<% else %>
+		
+		<table>
+		<% for task in @todays_tasks %>
+			<tr>
+				<td><big>&#10063; <b><%= task.list.name %>: <%= task.name %></b></big><br /></td>
+				<td><big>- 
+					<% if task.person.nil? %>
+						<%= task.list.team.name %>
+					<% else %>
+						<%= task.person.name %>
+					<% end %>
+				</big></td>
+			</tr>
+			
+			<% unless task.description.nil? or task.description.empty? %>
+				<tr><td colspan='2'><span style='padding-left:20px;'><%= textilize_without_paragraph(task.description) %></span></td></tr>
+			<% end %>
+			
+		<% end %>
+		</table>
+		
+	<% end %>
+		
+</body>
+	
+</html>

@@ -1,0 +1,163 @@
+<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+
+	<% @heading="Choose a picture" %>
+	
+	<% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; " + link_to_task(@task, 'breadcrumb') %>
+	
+	
+
+    <% @links = [] %>
+    <% @links += [{:url => "/pictures", :title => "Pictures", :accesskey => "p"}] %>
+    <% @links += [{:url => "/pictures/new?task=" + @task.id.to_s, :title => "Upload a new picture", :accesskey => "u"}] %>
+    <% @links += [{:url => "/tasks/show/" + @task.id.to_s, :title => "Return to task", :accesskey => "r"}] %>
+    
+    
+	<form id='ignore'></form> <!-- Little hack to stop it highlighting the submit button -->
+    
+	<% form_tag(:controller => 'tasks', :action => 'update', :id => @task.id) do %><div>
+	
+	<label><%= radio_button('task', 'picture_id', 1) %> No picture</label><br /><br />
+	
+	<%= submit_tag 'Use selected picture' %>
+	
+	<br /><br />
+	
+	
+	<div class="tab-pane" id="tab-pane-1">
+	
+	<script type="text/javascript">
+	var tabPane1 = new WebFXTabPane( document.getElementById( "tab-pane-1" ), false );
+	</script>
+		
+		
+		
+		
+	
+		<div class="tab-page" id="tab-page-1">
+			<h2 class="tab">Your pictures</h2>
+			
+			<script type="text/javascript">
+			tabPane1.addTabPage( document.getElementById( "tab-page-1" ) );
+			</script>
+			
+			    
+                <% if @mypictures.empty? %>
+                    <p>You have not uploaded any pictures yet.</p>
+                <% else %>
+    
+                	<table><tr>
+                		
+                	<% row_counter = 0 %>
+                	<% for picture in @mypictures %>
+                	     <td align='center'>
+                	         <label><%= radio_button('task', 'picture_id', picture.id) %> <%= show_picture(picture) %></label><br />
+                	     </td>
+                	     
+                	     <% row_counter += 1 %>
+                	     <% if row_counter == 3 %>
+                	         </tr><tr>
+                	         <% row_counter = 0 %>
+                	     <% end %>
+                	     
+                	<% end %>
+                	
+                	</tr></table>
+                	
+                <% end %>
+			
+			<br /><br />
+	
+		</div>
+	
+	
+	
+		<div class="tab-page" id="tab-page-2">
+			<h2 class="tab">Team pictures</h2>
+
+			<script type="text/javascript">
+			tabPane1.addTabPage( document.getElementById( "tab-page-2" ) );
+			</script>
+			
+			    
+                <% if @teampictures.empty? %>
+                    <p>There are no team pictures to use.</p>
+                <% else %>
+    
+                	<table><tr>
+                		
+                	<% row_counter = 0 %>
+                	<% for picture in @teampictures %>
+                	     <td align='center'>
+                	         <label><%= radio_button('task', 'picture_id', picture.id) %> <%= show_picture(picture) %></label><br />
+                	     </td>
+                	     
+                	     <% row_counter += 1 %>
+                	     <% if row_counter == 3 %>
+                	         </tr><tr>
+                	         <% row_counter = 0 %>
+                	     <% end %>
+                	     
+                	<% end %>
+                	
+                	</tr></table>
+                	
+                <% end %>
+			
+			
+			<br /><br />
+	
+		</div>
+	
+	
+	
+	
+	
+		<div class="tab-page" id="tab-page-3">
+			<h2 class="tab">Public pictures</h2>
+
+			<script type="text/javascript">
+			tabPane1.addTabPage( document.getElementById( "tab-page-3" ) );
+			</script>
+			
+			    
+                <% if @publicpictures.empty? %>
+                    <p>There are no public pictures to use.</p>
+                <% else %>
+    
+                	<table><tr>
+                		
+                	<% row_counter = 0 %>
+                	<% for picture in @publicpictures %>
+                	     <td align='center'>
+                	         <label><%= radio_button('task', 'picture_id', picture.id) %> <%= show_picture(picture) %></label><br />
+                	     </td>
+                	     
+                	     <% row_counter += 1 %>
+                	     <% if row_counter == 3 %>
+                	         </tr><tr>
+                	         <% row_counter = 0 %>
+                	     <% end %>
+                	     
+                	<% end %>
+                	
+                	</tr></table>
+                	
+                <% end %>
+			
+			
+			<br /><br />
+	
+		</div>
+		
+	</div>
+	
+	
+	<%= submit_tag 'Use selected picture' %>
+	</div><% end %>
+
+
+<% else %>
+
+	<%= access_denied() %>
+	
+<% end %>

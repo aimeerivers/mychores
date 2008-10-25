@@ -1,0 +1,38 @@
+<% if @picture.person_id == session[:person].id or @picture.is_public == true %>
+
+	<% @heading=@picture.filename %>
+	
+	
+    <% @links = [] %>
+    <% @links += [{:url => "/pictures", :title => "Pictures", :accesskey => "p"}] %>
+    <% if @picture.person_id == session[:person].id %>
+        <% @links += [{:url => "/pictures/destroy/" + @picture.id.to_s, :title => "Delete picture", :accesskey => "d", :onclick => "return confirm('Are you sure you want to delete this picture?');"}] %>
+	<% end %>
+	
+    <%= show_picture(@picture) %>
+    
+    <br /><br />
+    
+    <% if @picture.is_flickr_import == true %>
+        <p>Imported from <%= link_to('Flickr', @picture.flickr_url) %></p>
+    <% else %>
+        <p>Original file: <%= link_to(@picture.filename, @picture.public_filename) %> (<%= @picture.width %>x<%= @picture.height %>)</p>
+    <% end %>
+    
+    <% if @tasks.empty? %>
+        <p>None of your tasks use this picture.</p>
+    <% else %>
+        <p>The following tasks use this picture:</p>
+        <ul>
+            <% for task in @tasks %>
+                <li><%= link_to_task(task, 'picturelink') %></li>
+            <% end %>
+        </ul>
+    <% end %>
+
+
+<% else %>
+
+	<%= access_denied() %>
+	
+<% end %>

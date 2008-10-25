@@ -1,0 +1,39 @@
+<% if session[:person].status == 'Site Creator' %>
+
+    <% @heading="Newsletters" %>
+    
+    
+    <% @links = [] %>
+    <% @links += [{:url => "/newsletters/new", :title => "New newsletter", :accesskey => "n"}] %>
+    
+    
+    <p>Right now, <%= @total_wanting %> people want to receive emails. Remember to send in batches of maximum 100 per hour.</p>
+    
+    <table>
+    
+    <% for newsletter in @newsletters %>
+    
+        <tr>
+            <td><%= link_to(h(newsletter.title), :action => 'show', :id => newsletter.id) %></td>
+            <td><%= formatted_date(newsletter.created_on) %></td>
+            <td><%= textilize(newsletter.details) %></td>
+            <td><%= link_to("Send", :action => 'send_newsletter', :id => newsletter.id) %></td>
+        </tr>
+    
+    
+    <% end %>
+    
+    </table>
+    
+    <br /><br />
+    
+    
+    <% if @newsletter_pages.page_count > 1 %>
+    	<p>
+    	Page: <%= pagination_links(@newsletter_pages) %>
+    	</p>
+    <% end %>
+
+<% else %>
+	<%= access_denied() %>
+<% end %>

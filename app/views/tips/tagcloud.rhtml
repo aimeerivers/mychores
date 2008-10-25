@@ -1,0 +1,25 @@
+<% @heading="Tips tag cloud" %>
+
+
+<% @links = [] %>
+<% @links += [{:url => "/tips/list", :title => "Tips list", :accesskey => "l"}] %>
+<% @links += [{:url => "/tips/tagcloud", :title => "Tips tag cloud", :accesskey => "c"}] %>
+<% @links += [{:url => "/tips/new", :title => "Add a tip", :accesskey => "a"}] %>
+
+
+<div style='text-align:center; line-height:4em;'>
+
+<% for tag in @tag_counts%>
+
+    <% @ems = 1 %>
+    <% for i in 2..8 %>
+        <% if tag.count.to_f > @thresholds[i-1] and tag.count.to_f <= @thresholds[i] %>
+            <% @ems = i * 0.8 %>
+        <% end %>
+    <% end %>
+    
+    <span style='font-size:<%= @ems %>em;'><nobr>&nbsp;<a href='/tips/list?tag=<%= CGI::escape(tag.name) %>' title='<%= tag.name + ": " + tag.count.to_s%> tip<%= 's' if tag.count > 1 %>' style='text-decoration:none;'><%= tag.name %></a>&nbsp;</nobr></span>
+    
+<% end %>
+
+</div>

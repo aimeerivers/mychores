@@ -1,0 +1,36 @@
+<% form_tag(:action => 'search') do %><div>
+
+<table>
+	<tr>
+		<th>Search for:</th>
+		<td><input type='text' id='search' name='search' class='styled' value='<%= @mark_term %>' /></td>
+	</tr>
+	<tr>
+		<th>Search in:</th>
+		<td>
+		  <label><input type="checkbox" name="searchin[]" <%= 'checked' if @search_in.include?('tips') %> value="tips" />Tips</label>&nbsp;&nbsp;
+		  <label><input type="checkbox" name="searchin[]" <%= 'checked' if @search_in.include?('people') %> value="people" />People</label>&nbsp;&nbsp;
+		  <label><input type="checkbox" name="searchin[]" <%= 'checked' if @search_in.include?('teams') %> value="teams" />Teams</label>&nbsp;&nbsp;
+		  <% unless session[:person].nil? %>
+    		  <label><input type="checkbox" name="searchin[]" <%= 'checked' if @search_in.include?('lists') %> value="lists" />Lists</label>&nbsp;&nbsp;
+    		  <label><input type="checkbox" name="searchin[]" <%= 'checked' if @search_in.include?('tasks') %> value="tasks" />Tasks</label>&nbsp;&nbsp;
+		  <% end %>
+		</td>
+	</tr>
+	<tr>
+	   <th>Limit results:</th>
+	   <td>
+	       <select id='limit' name='limit'>
+	           <option value='10' <%= 'selected' if @limit == 10 %>>10</option>
+	           <option value='20' <%= 'selected' if @limit == 20 %>>20</option>
+	           <option value='30' <%= 'selected' if @limit == 30 %>>30</option>
+	       </select>
+	   </td>
+</table>
+
+<br />
+<%= submit_tag 'Search' %>
+
+</div><% end %>
+
+<br /><br />

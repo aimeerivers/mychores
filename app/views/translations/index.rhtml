@@ -1,0 +1,32 @@
+<% @heading="Translations" %>
+
+<table>
+
+  <% for language in @languages %>
+
+  <tr>
+    <% if language.native_name.nil? %>
+      <% language_name = language.english_name %>
+    <% else %>
+      <% language_name = language.native_name %>
+    <% end %>
+    
+    <td style='vertical-align:middle;'><%= image_tag("flags/" + language.id.to_s + ".png", :size => "16x11") %></td>
+    
+    <td style='vertical-align:middle;'><%= link_to(language_name, :controller => 'translations', :action => 'show', :id => language.id) %></td>
+    
+    <% untranslated = Translation.count(:all, :conditions => ["language_id = ? AND text is null", language.id])
+    translated = Translation.count(:all, :conditions => ["language_id = ? AND text is not null", language.id])
+    total = Translation.count(:all, :conditions => ["language_id = ?", language.id])
+    
+    @pie_chart.data = [translated, untranslated]
+    @pie_chart.max_data_value = @pie_chart.data.max %>
+    
+    <td style='vertical-align:middle;'><%= translated.to_s %>/<%= total.to_s %></td>
+    
+    <td style='vertical-align:middle;'><%= image_tag(@pie_chart.to_url, :alt => language_name, :title => language_name, :size => "50x50") %></td>
+  </tr>
+  
+  <% end %>
+
+</table>

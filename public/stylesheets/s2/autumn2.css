@@ -1,0 +1,436 @@
+/*
+	Design by Free CSS Templates
+	http://www.freecsstemplates.org
+	Released for free under a Creative Commons Attribution 2.5 License
+*/
+/* Basic */
+*
+{
+	margin: 0em;
+	padding: 0em;
+}
+h1,h2
+{
+}
+body
+{
+	font-family: "trebuchet ms", sans-serif;
+	color: #555555;
+	font-size: 10pt;
+}
+a {
+	color: #669911;
+}
+a:visited {
+    color: #446600;
+}
+a:hover, a:active {
+    color: #88CC22;
+}
+
+/* Outer */
+#outer
+{
+}
+/* Header */
+#header
+{
+	height: 115px;
+	background-image: url('green-images/leaves.jpg');
+	background-position: bottom right;
+	padding-left: 40px;
+	padding-top: 25px;
+}
+#header h1 a
+{
+	color: #FF6;
+	text-decoration: none;
+}
+#header h1
+{
+	/* text-transform: lowercase; */
+	color: #FDF;
+	text-decoration: none;
+	font-size: 2.5em;
+}
+#header h2
+{
+	position: relative;
+	top: -0.3em;
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #FDF;
+	/* text-transform: lowercase; */
+}
+#header h2 a {
+    font-size: 0.9em;
+    /* color: blue; */
+}
+/* Menu */
+#menu
+{
+	background-image: url('green-images/a3.gif');
+	background-repeat: repeat-x;
+	background-position: bottom left;
+	padding: 0.5em 2em 0.5em 2em;
+}
+#menu ul
+{
+	list-style: none;
+}
+#menu li
+{
+	display: inline;
+}
+#menu li a
+{
+	font-size: 1.1em;
+	font-weight: bold;
+	/* text-transform: lowercase; */
+	color: #5D5F53;
+	text-decoration: none;
+	margin-right: 1em;
+}
+#menu li a:hover
+{
+	color: #6B7E09;
+	text-decoration: underline;
+}
+
+
+/* Ads */
+#ads
+{
+	background-color: #fff;
+	padding: 0.5em 2em 0.5em 2em;
+}
+#more-ads
+{
+	background-color: #fff;
+	padding: 3.5em 2em 0.5em 2em;
+}
+
+
+
+
+
+
+
+/* Content */
+#content
+{
+	border-top: solid 1px #D0D4BB;
+	padding: 3em 15px 1em 15px;
+	line-height: 1.6em;
+	background: url('green-images/a4.gif') repeat-x top left;
+}
+#content p
+{
+	margin-bottom: 1.5em;
+}
+#content h2,h3,h4,h5,h6
+{
+	margin-bottom: 1em;
+}
+#content ul
+{
+	margin-bottom: 1.5em;
+	padding-left: 1em;
+}
+#content blockquote
+{
+	padding: 1em;
+	margin-bottom: 1.5em;
+	background-color: #FFFCD8;
+	background-image: url('shared-images/a5.gif');
+	background-repeat: no-repeat;
+	background-position: top left;
+	border: dotted 1px #DFD999;
+}
+#content blockquote p
+{
+	margin-bottom: 0em;
+}
+#content table
+{
+	/* margin-bottom: 1.5em; */
+}
+/* Primary Content */
+#primaryContentContainer
+{
+	float: left;
+	margin-right: -460px;
+	width: 100%;
+}
+#primaryContent
+{
+	margin: 0em 240px 0em 0em;
+	padding: 0em 1.5em 1.5em 1.5em;
+}
+#primaryContent h2, #primaryContent h3
+{
+	/* text-transform: lowercase; */
+	color: #5D5F53;
+	border-bottom: dotted 1px #ECEEDF;
+	padding-bottom: 0.3em;
+}
+#secondaryContent h3, #tertiaryContent h3
+{
+	background: url('green-images/a1.gif') no-repeat;
+	width: 185px;
+	height: 27px;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding-left: 15px;
+	padding-top: 5px;
+	/* text-transform: lowercase; */
+	color: #5D5F53;
+}
+#secondaryContent ul, #tertiaryContent ul
+{
+    margin-left: 1.5em;
+}
+
+#secondaryContent li, #tertiaryContent li
+{
+    font-size: 1.1em;
+}
+/* Secondary Content */
+#secondaryContent
+{
+	float: left;
+	width: 215px;
+}
+/* Tertiary Content */
+#tertiaryContent
+{
+	float: right;
+	width: 215px;
+	padding-right: 1em;
+}
+
+/* Bottom menu */
+#bottom-menu
+{
+	background: url('green-images/a6.gif') repeat-x top left;
+	padding: 0.5em 2em 0.5em 2em;
+}
+#bottom-menu ul
+{
+	list-style: none;
+}
+#bottom-menu li
+{
+	display: inline;
+}
+#bottom-menu li a
+{
+	font-size: 1.1em;
+	font-weight: bold;
+	/* text-transform: lowercase; */
+	color: #5D5F53;
+	text-decoration: none;
+	margin-right: 1em;
+}
+#bottom-menu li a:hover
+{
+	color: #6B7E09;
+	text-decoration: underline;
+}
+
+/* Footer */
+#footer
+{
+	background: url('green-images/a4.gif') repeat-x top left;
+	border-top: solid 1px #D0D4BB;
+	padding: 2.0em 3.5em 2.0em 3.5em;
+	font-size: 0.9em;
+}
+#footer a {
+text-decoration: none;
+}
+.clear
+{
+	clear: both;
+}
+
+
+
+
+
+
+
+
+a.breadcrumb {
+    color: #FDF;
+}
+
+a.picturelink {
+	color: #555555;
+}
+
+span.notice {
+font-size: 1.2em;
+font-weight: bold;
+padding: 4px;
+margin: 4px;
+color: #555555;
+border: 1px solid #DOD4BB;
+background-color: #F6F7F1;
+}
+
+
+
+span.specialhover:hover div {
+background-color: #F6F7F1;
+border: 1px solid #D0D4BB;
+}
+
+
+
+
+div.tips {
+border: 1px solid #D0D4BB;
+background-color: #F6F7F1;
+padding: 10px;
+margin: 5px;
+}
+
+div.recurrence-options {
+border: 1px solid #D0D4BB;
+background-color: #F6F7F1;
+width: 280px;
+padding: 10px;
+margin: 5px;
+}
+
+input, textarea, select, optgroup {
+border: 1px solid #D0D4BB;
+font-size: 1em;
+}
+
+optgroup {
+}
+
+input {
+margin-right: 0.3em;
+}
+
+input.styled {
+width: 250px;
+}
+
+textarea.styled {
+width: 250px;
+height: 80px;
+}
+
+table.my-completions {
+border: 1px solid #D0D4BB;
+background-color: #F6F7F1;
+padding: 5px;
+margin: 10px;
+text-align: right;
+float: right;
+}
+
+tr.very_overdue, tr.importance7 {
+background-color: #FBADAD;
+}
+
+tr.overdue, tr.importance6 {
+background-color: #FFD7D7;
+}
+
+tr.due_today, tr.importance5 {
+background-color: #FFE9BE;
+}
+
+tr.due_soon, tr.importance4 {
+background-color: #E4FBE2;
+}
+
+
+
+
+span.statistics-overdue {
+background-color: #FFD7D7;
+}
+
+span.statistics-due-today {
+background-color: #FFE9BE;
+}
+
+span.statistics-done-today {
+background-color: #E4FBE2;
+}
+
+
+
+
+
+
+table.calendar-table {
+border-right: 1px solid #D0D4BB;
+border-bottom: 1px solid #D0D4BB;
+background-color: #FFFFFF;
+}
+
+tr.calendar-today {
+background-color: #F6F7F1;
+}
+
+td.calendar-date {
+border-left: 1px solid #D0D4BB;
+border-top: 1px solid #D0D4BB;
+text-align: center;
+margin: 0px;
+}
+
+td.calendar-content {
+border-left: 1px solid #D0D4BB;
+border-top: 1px solid #D0D4BB;
+text-align: left;
+margin: 0px;
+width: 300px;
+}
+
+td.sunday {
+color: red;
+}
+
+
+
+
+
+
+
+
+.dynamic-tab-pane-control .tab-row .tab {
+	border: 1px solid #D0D4BB;
+	/* background: #EFFCFD; */
+}
+
+.dynamic-tab-pane-control .tab-row .tab.selected {
+	/* background:		#D6F4FF; */
+}
+
+.dynamic-tab-pane-control .tab-page {
+	/* border-top:			1px solid #D0D4BB; */
+	/* background:		White; */
+}
+
+
+
+
+a.action {
+    font-style: italic;
+}
+
+
+
+
+.fieldWithErrors input {
+  border: 2px solid #446600;
+  /* background-color: red; */
+}

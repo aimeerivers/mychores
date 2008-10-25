@@ -1,0 +1,45 @@
+<% @heading="News bulletins" %>
+
+
+<% @links = [] %>
+<% if session[:person].nil? %>
+    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+<% else %>
+    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+<% end %>
+<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
+<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
+<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+
+<% unless session[:person].nil? %>
+    <% if session[:person].status == "Site Creator" %>
+        <% editaccess = true %>
+        <% @links += [{:url => "/bulletins/new", :title => "Add a bulletin", :accesskey => "a"}] %>
+    <% else %>
+        <% editaccess = false %>
+    <% end %>
+<% end %>
+
+<span style='float:right; padding:0.5em;'><a href='/bulletins/rss'><img src='/images/feed-icon-24x24.png' width='24' height='24' alt='RSS feed of MyChores news bulletins' title='RSS feed of MyChores news bulletins' /></a></span>
+
+<p>Quick news bulletins. For more detailed information see the <a href='http://journal.mychores.co.uk'>journal</a>.</p>
+
+
+<% for bulletin in @bulletins %>
+
+    <h4><%= formatted_date(bulletin.created_on) %> <%= link_to("Edit", {:action => "edit", :id => bulletin.id}) if editaccess == true %></h4>
+    <p>
+        <%= textilize_without_paragraph(bulletin.message) %>
+    
+    	<% unless bulletin.link.nil? %>
+    		<a href='<%= bulletin.link %>'>Read more ...</a>
+    	<% end %>
+    </p>
+    
+    <br />
+
+<% end %>
+
+
+<%= will_paginate(@bulletins) %>

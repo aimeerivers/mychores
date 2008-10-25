@@ -1,0 +1,70 @@
+<% @heading="Delete tasks" %>
+<% @h1class='task' %>
+
+	<% @myteams = find_my_teams %>
+	
+
+	
+	<% if @myteams.empty? %>
+		<p>You have no teams.<br />
+		Would you like to <a href='/teams/new'>Create a team</a>?</p>
+		
+	<% else %>
+	   <form id='ignore'></form> <!-- Little hack to stop it highlighting the submit button -->
+	   
+	   <img src="/images/icons/task-delete-large.png" alt="Delete tasks" height="44" width="47" style="float:left; padding-right:10px;">
+	   
+	   <p>This is a quick way to delete several tasks at once. Select the lists whose tasks you would like deleted.</p>
+	   
+	   <p>Be aware this will delete tasks <strong>permanently</strong> including history of when they were completed.</p>
+	   
+	   
+    	<% form_remote_tag(
+    		:html => { :name => 'selectionForm', :action => url_for(:controller => 'tasks', :action => 'multipledeletetasks') },
+    		:url => { :controller => 'tasks', :action => 'multipledeletetasks' },
+    		:update => 'results-div',
+    		:before => %(Element.show('moving'); Element.hide('submit-button')),
+    		:success => %(Element.hide('moving'))
+    	) do %><div>
+	
+		<table>
+			<tr>
+				<% for team in @myteams %>
+				    <td>
+				    
+				   <%= link_to_team(team, 'picturelink') %><br />
+				   
+				   <% @lists = team.lists %>
+	   				<% for list in @lists %>
+						<label><input type="checkbox" name="list[]" value="<%= list.id %>" /><%= list.name %></label><br />
+					<% end %>
+					
+					</td>
+					<td width='10'>&nbsp;</td>
+					
+				<% end %>
+			</tr>
+		</table>
+		
+		<br />
+		
+		
+	   <p><a href="#" class="action" onclick="SetAllCheckBoxes('selectionForm', 'list[]', true);">Select all</a>
+	   | <a href="#" class="action" onclick="SetAllCheckBoxes('selectionForm', 'list[]', false);">Select none</a></p>
+	
+		
+		<span id='submit-button'><input type="submit" value="Delete tasks in selected lists" /></span>
+		
+		<span id='moving' style='display:none;'>
+			<img src='/images/spinner.gif' width='16' height='16' alt='Deleting tasks ...' />
+			Deleting tasks ... this may take a while ...
+		
+		</span>
+		
+    	</div><% end %>
+    	
+    	<div id='results-div'></div>
+		
+	 <% end %>
+	
+	

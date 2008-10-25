@@ -1,0 +1,60 @@
+
+<% if @is_valid == true %>
+
+	<% @heading=@person.login + " - subscription options" %>
+	<% @h1class='person' %>
+	
+	<% @breadcrumbs = link_to_person(@person, 'breadcrumb') %>
+	
+    <table>
+        <tr>
+            <td>
+                <% if @person.notifications == 'None' %>
+                <img src='/images/redx.png' width='15' height='10' alt='No' />
+                From now on you will <b>not</b> receive notification emails.
+                <% else %>
+                <img src='/images/tick.png' width='12' height='12' alt='Yes' />
+                You are currently set to receive notification emails of your chores.
+                <% end %>
+            </td>
+            <td>
+                <% if @person.notifications == 'None' %>
+                <a href='/subscription/<%= @id %>/<%= @code %>/email/on' class='action'>Please send me daily emails of my chores.</a>
+                <% else %>
+                <a href='/subscription/<%= @id %>/<%= @code %>/email/off' class='action'>Please don't send me these emails.</a>
+                <% end %>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <% if @person.newsletters %>
+                <img src='/images/tick.png' width='12' height='12' alt='Yes' />
+                You will receive occasional newsletters.
+                <% else %>
+                <img src='/images/redx.png' width='15' height='10' alt='No' />
+                From now on you will <b>not</b> receive newsletters.
+                <% end %>
+            </td>
+            <td>
+                <% if @person.newsletters %>
+                <a href='/subscription/<%= @id %>/<%= @code %>/newsletter/off' class='action'>Actually I'd rather not get newsletters.</a>
+                <% else %>
+                <a href='/subscription/<%= @id %>/<%= @code %>/newsletter/on' class='action'>It's okay, I don't mind getting occasional newsletters.</a>
+                <% end %>
+            </td>
+        </tr>
+    </table>
+    
+    <br /><br />
+
+    <p>Further options are available under <a href='/admin/email'>Email settings</a>.</p>
+
+<% else %>
+
+	<% @heading="Subscription options" %>
+	<% @h1class='person' %>
+	
+	<p>Sorry, the URL you used is invalid. Please <a href='/messages/new'>contact us</a> if you think there has been an error.</p>
+	
+<% end %>

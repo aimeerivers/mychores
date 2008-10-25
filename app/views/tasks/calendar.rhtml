@@ -1,0 +1,121 @@
+<% @heading="Calendar".t %>
+<% @h1class='home' %>
+
+<% @links = [] %>
+<% @links += [{:url => "/tasks/workload", :title => "Workload", :accesskey => "w"}] %>
+<% @links += [{:url => "/tasks/matrix", :title => "Hot Map", :accesskey => "m"}] %>
+<% @links += [{:url => "/tasks/calendar", :title => "Calendar", :accesskey => "c"}] %>
+<% @links += [{:url => "/tasks/collage", :title => "Collage", :accesskey => "o"}] %>
+<% @links += [{:url => "/tasks/statistics", :title => "Statistics", :accesskey => "s"}] %>
+<% @links += [{:url => "/tasks/print", :title => "Print outs", :accesskey => "p"}] %>
+
+<%= render(:partial => 'messages') %>
+
+
+		<%= render(:partial => 'reschedule_link') %>
+		
+		<% day = Date.parse("#{@year}-#{@month}-01") %>
+		
+		<% days_in_month = ::Time.days_in_month(@month.to_i, @year.to_i) %>
+		
+		<h2><%= link_to(image_tag('arrow-left.png', :size => '15x12', :alt => "previous month".t), {'year' => @backyear, 'month' => @backmonth}) + day.localize("%B %Y") + link_to(image_tag('arrow-right.png', :size => '15x12', :alt => "next month".t), {'year' => @forwardyear, 'month' => @forwardmonth}) %></h2>
+		
+		<% day_of_month = 1 %>
+		
+		<% year_string = @year.to_s -%>
+		<% month_string = @month.to_s -%>
+		
+		
+		
+		<table border='0'><tr><td width='50%'>
+			<table class='calendar-table'>
+				<% while day_of_month <= days_in_month %>
+				
+				  <% day = Date.parse("#{@year}-#{@month}-#{day_of_month}") %>
+				
+					<tr<%= " class='calendar-today'" if day_of_month == @marktoday %>>
+						<td class='calendar-date<%= " sunday" if day.wday == 0 %>'>
+							<b><%= day_of_month %></b><br />
+							<%= day.localize("%a") %>
+						</td>
+						
+						<td class='calendar-content droppable' id='drop_<%= year_string + "-" + month_string + "-" + day_of_month.to_s %>'>
+							<% content_in_cell = false; %>
+							<% for task in @this_months_tasks %>
+								<% if task.next_due.mday == day_of_month %>
+									<% content_in_cell = true; %>
+									
+                            	    <% if task.list.team.use_colour == true
+                            	       style=" style='background-color:#" + task.list.team.colour + "; color:#" + task.list.team.text_colour + ";'"
+                            	    else
+                            	       style=""
+                            	    end %>
+                       
+									  <span id='task-<%= task.id.to_s %>' class='draggable'>
+									  
+									  <% if @enable_js -%>									
+                      <img src='/images/icons/drag-handle.png' class='drag-handle' width='13' height='13' alt='<%= "Drag to re-schedule".t %>' title='<%= "Drag to re-schedule".t %>' />
+                    <% end -%>
+										<a title='<%= task.recurrence_description %>' href='/tasks/show/<%= task.id %>' <%= style %>><%= task.list.name %>: <%= task.name %></a>
+										
+										<% if @enable_js == false %>
+											<%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'calendar'}) %>
+										<% else %>
+											<%= link_to_remote(image_tag('tick.png', :size => '12x12', :alt => 'done', 'onclick' => "new Effect.Fade('task-" + task.id.to_s + "', {duration:0.8});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'calendar', :flash => 'none'}, :failure => "alert('" + "Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.".t + "');") %>
+										<% end %>
+									
+									  <br />
+									</span>
+									
+								<% end %>
+							<% end %>
+							<%= "&nbsp;" if content_in_cell == false %>
+							
+						</td>
+					</tr>
+					
+					<% day_of_month += 1 %>
+					
+					<% if day_of_month == 17 %>
+						</table>
+						<!-- start the right-hand side -->
+						</td><td width='50%'>
+						<table class='calendar-table'>
+					<% end %>
+					
+				<% end %>
+			</table>
+			
+		</td></tr></table><br />
+		
+		
+		<% if @enable_js -%>
+		  <script type='text/javascript'>
+		  
+		    $$('.droppable').each( function(element) {
+		      Droppables.add(element, {
+		        hoverclass: 'draggable-hover',
+		        onDrop: function(item) {
+		          item.setStyle({'top': '0px', 'left': '0px'});
+		          element.appendChild(item);
+              var options = {
+                method: 'post',
+                parameters: $H({'id': item.id.split("-")[1], 'value': element.id.split("_")[1]}).toQueryString()
+              };
+		          new Ajax.Request('/tasks/change_due_date', options);
+		          item.highlight();
+		        }
+		      });
+		    });
+		    
+		    $$('.draggable').each( function(element) {
+		      new Draggable(element, {
+		        handle: 'drag-handle',
+		        revert: 'failure',
+		        scroll: window
+		      });
+		    });
+		  
+		  </script>
+		<% end -%>
+		

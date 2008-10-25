@@ -1,0 +1,53 @@
+<% @heading=@team.name + " - Add kids" %>
+<% @h1class='team' %>
+
+<% @breadcrumbs = link_to_team(@team, 'breadcrumb') %>
+
+<p>Kids are part of your team but they access MyChores through <a href='http://kids.mychores.co.uk'>MyChores for Kids</a>. The interface is much simpler and has no administrative functions.</p>
+
+<p>You would log into MyChores for Kids with your own login id, as the parent or guardian, and then your kids select their name from a drop-down list.</p>
+
+<p>Kids do not log into MyChores, and they do not receive emails. If you wanted to convert them to a full member later on you could do so.</p>
+
+<p>For now, all you need provide is your kids' names.</p>
+
+
+<% form_tag({:action => 'add_kids', :id => @team.id} ) do %><div>
+
+	<table>
+		
+		<tr>
+			<th>Kid's name:</th>
+			<td>
+				<input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>Kid's name:</th>
+			<td>
+				<input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>Kid's name:</th>
+			<td>
+				<input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>Kid's name:</th>
+			<td>
+				<input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
+			</td>
+		</tr>
+		
+	</table>
+	
+	<br />
+		
+	<input type="submit" value="Add kids" />
+	
+</div><% end %>

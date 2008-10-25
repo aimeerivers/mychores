@@ -1,0 +1,127 @@
+<% if @person.usertype == 1 %>
+
+    <% @heading=@person.login; %>
+    <% @h1class='person' %>
+    
+    <% @breadcrumbs = link_to_person(@person, 'breadcrumb') %>
+    
+    <% unless session[:person].nil? %>
+    	<% if @person.id == session[:person].id %>
+    		<% @itsme = true %>
+    		
+    		
+            <% @links = [] %>
+            <% @links += [{:url => "/admin/preferences", :title => "Preferences", :accesskey => "p"}] %>
+            <% @links += [{:url => "/admin/changepassword", :title => "Change password", :accesskey => "c"}] %>
+            <% @links += [{:url => "/admin/changelogin", :title => "Change login id", :accesskey => "l"}] %>
+            <% @links += [{:url => "/openid/associate", :title => "OpenID", :accesskey => "o"}] %>
+    
+    	<% else %>
+    		<% @itsme = false %>
+    		
+            <% @links = [] %>
+            <% @links += [{:url => "/memberships/invite?person=" + @person.id.to_s, :title => "Invite to join a team", :accesskey => "i"}] %>
+    
+    	<% end %>
+    <% end %>
+    
+    
+    
+
+    
+    <table cellpadding='0' cellspacing='0' border='0'>
+        <tr><td>
+    
+        <table>
+        
+        	<% unless @person.name.empty? %>
+        		<tr>
+        			<th>Name:</th>
+        			<td><%= h @person.name %></td>
+        		</tr>
+        	<% end %>
+        
+        	<% unless @person.status.nil? %>
+        		<tr>
+        			<th>Status:</th>
+        			<td><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <a href='/home/supporters'><%= h @person.status %></a></td>
+        		</tr>
+        	<% end %>
+        	
+        	<tr>
+        		<th>Teams:</th>
+        		<td>
+        			<table>
+        				<% for membership in @memberships %>
+        					<tr>
+        						<td><%= link_to_team(membership.team, 'picturelink') %></td>
+        						<td>
+        							<% if membership.confirmed != 1 %>
+        								<%= " (awaiting confirmation)" %>
+        							<% else %>
+        								<% if @itsme == true %>
+        									<%= link_to(image_tag('redx.png', :size => '15x10', :alt => 'Remove yourself from this team?', :title => 'Remove yourself from this team?'), { :controller => 'memberships', :action => 'remove', :id => membership.id, :returnto => 'person' }, :confirm => 'Are you sure you want to remove yourself from this team?') %>
+        								<% end %>
+        							<% end %>
+        						</td>
+        					</tr>
+        				<% end %>
+        			</table>
+        		</td>
+        	</tr>
+        	
+        	
+        </table>
+        
+        </td><td width='20'>
+            &nbsp;
+        </td><td>
+            <a href='http://gravatar.com/'>
+                <img src="<%= gravatar_url(@person.email) %>" class="gravatar" alt="Gravatar (globally recognised avatar)" title="Gravatar (globally recognised avatar)" />
+            </a>
+        </td></tr>
+    </table>
+    
+    <br /><br />
+    	
+    	
+    <% unless @number_of_tips == 0 %>
+    	<h3><%= link_to_person(@person, 'picturelink') %>'s newest tips:</h3>
+    
+        <% if @number_of_tips > 3 %>
+    	   <p><a href='/tips/list?person=<%= @person.login %>'>See all <%= @number_of_tips.to_s %> tips by <%= @person.login %></a></p>
+        <% end %>
+        
+        
+        <% for tip in @person_tips %>
+        
+            <h4><%= link_to_tip(tip) %></h4>
+            
+            <% if tip.full_description.size > 300 %>
+                <% truncated_description = truncate(tip.full_description, 300, "").to_s %>
+                <% number_to_chop = truncated_description.reverse.index(" ").to_i %>
+                <% if number_to_chop > 0 %>
+                    <% for i in 1..number_to_chop %>
+                        <% truncated_description.chop! %>
+                    <% end %>
+                <% end %>
+                <p><%= truncated_description %> [<a href='/tips/show/<%= tip.id.to_s %>'>read more ...</a>]</p>
+                
+            <% else %>
+                <%= textilize(tip.full_description) %>
+            <% end %>
+            
+            
+            <% unless tip.cached_tag_list.nil? or tip.cached_tag_list.empty? %>
+                <p>Submitted in <%= print_tags_for_tip(tip) %></p>
+            <% end %>
+            
+            <br />
+        
+        <% end %>
+    
+    <% end %>
+
+<% else %>
+    <%= access_denied() %>
+<% end %>

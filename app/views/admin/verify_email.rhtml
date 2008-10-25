@@ -1,0 +1,27 @@
+<!-- This is the page called from an email link to verify an email address. -->
+
+
+
+<% if @is_valid == true %>
+
+	<% @heading=@person.login + " - Verify email address" %>
+	<% @h1class='person' %>
+	
+	<% @breadcrumbs = link_to_person(@person, 'breadcrumb') %>
+	
+	<p>Thank you.</p>
+	
+	<p>Your email address <b><%= @person.email %></b> has been verified.</p>
+
+    <p><a href='/home'>Home</a></p>
+
+<% else %>
+
+	<% @heading="Verify email address" %>
+	<% @h1class='person' %>
+	
+	<p>Sorry, there was a problem verifying your email address.</p>
+	
+	<p>Please go to <a href='/admin/preferences'>Preferences</a> to try again.</p>
+	
+<% end %>

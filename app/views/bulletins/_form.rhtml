@@ -1,0 +1,22 @@
+<%= error_messages_for 'bulletin' %>
+
+
+<table>
+
+	<tr>
+		<th>Bulletin:</th>
+		<td>
+			<%= text_area('bulletin', 'message', :rows => 12) %>
+		</td>
+	</tr>
+
+	<tr>
+		<th>Link:</th>
+		<td><%= text_field('bulletin', 'link', :maxlength => 255, :class => 'styled') %></td>
+	</tr>
+	
+</table>
+
+<br />
+
+

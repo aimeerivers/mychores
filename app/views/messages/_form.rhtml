@@ -1,0 +1,38 @@
+<%= error_messages_for 'message' %>
+
+<!--[form:message]-->
+
+<table>
+
+	<tr>
+		<th>Your name:</th>
+		<td><%= text_field('message', 'name', :maxlength => 40, :class => 'styled') %></td>
+	</tr>
+
+	<tr>
+		<th>Email:</th>
+		<td><%= text_field('message', 'email', :maxlength => 255, :class => 'styled') %></td>
+	</tr>
+
+	<tr>
+		<th>Category:</th>
+		<td><%= select('message', 'cat', ['Problem', 'Suggestion', 'Question', 'Testimonial', 'Translation', 'Other'], { :class => 'styled'}) %></td>
+	</tr>
+
+	<tr>
+		<th>Message:</th>
+		<td>
+			<%= text_area('message', 'content', :cols => 50, :rows => 8) %>
+		</td>
+	</tr>
+	
+	<tr>
+	  <th>reCAPTCHA:</th>
+	  <td><%= get_captcha() %></td>
+	</tr>
+	
+</table>
+
+<br />
+
+<!--[eoform:message]-->

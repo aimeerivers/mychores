@@ -1,0 +1,19 @@
+<% @heading="Edit tip" %>
+
+
+<% @links = [] %>
+<% @links += [{:url => "/tips/list", :title => "Tips list", :accesskey => "l"}] %>
+<% @links += [{:url => "/tips/tagcloud", :title => "Tips tag cloud", :accesskey => "c"}] %>
+
+
+<% if @tip.person_id == session[:person].id or session[:person].status == "Site Creator" %>
+
+    <% form_tag(:action => 'update', :id => @tip.id) do %><div>
+      <%= render :partial => 'form' %>
+      
+      <%= submit_tag "Save tip" %>
+    </div><% end %>
+    
+<% else %>
+    <%= access_denied() %>
+<% end %>

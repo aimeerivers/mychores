@@ -1,0 +1,15 @@
+<% if session[:person].status == 'Site Creator' %>
+
+
+	<% @heading="Edit bulletin" %>
+	<% @h1class='home' %>
+
+	<% form_tag(:action => 'update', :id => @bulletin.id) do %><div>
+	  <%= render :partial => 'form' %>
+	  
+	  <%= submit_tag "Save" %>
+	</div><% end %>
+
+<% else %>
+	<%= access_denied() %>
+<% end %>

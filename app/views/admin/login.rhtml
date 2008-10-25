@@ -1,0 +1,45 @@
+<% @heading='Please login' %>
+
+<% @links = [] %>
+<% if session[:person].nil? %>
+    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+<% else %>
+    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+<% end %>
+<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
+<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
+<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+
+
+<% form_tag(:action=> "login") do %><div>
+    
+    	<table>
+    		<tr>
+    			<th>Login id:</th>
+	    		<td><input type="text" name="person_login" id="person_login" class='styled' /></td>
+	    	</tr>
+    		<tr>
+    			<th>Password:</th>
+	    		<td><input type="password" name="person_password" id="person_password" class='styled' /></td>
+	    	</tr>
+	    </table>
+	    
+	    <br />
+	    
+    <input type="submit" name="login" value="Login" />
+
+
+</div><% end %>
+
+<br />
+
+<p><a class='action' href='/admin/forgotpassword'>Forgotten your password?</a></p>
+
+
+<br /><br />
+
+<h3><img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' /> Login using OpenID</h3>
+
+<p>If your account is associated with an OpenID you may use it to login.</p>
+<p><a class='action' href='/openid/login'>Login using OpenID</a></p>

@@ -1,0 +1,65 @@
+<% if session[:person].status == 'Site Creator' %>
+
+	<% @heading="Site supporters check" %>
+	<% @h1class='person' %>
+	
+	
+	<h2>Twitter users</h2>
+	
+	<table>
+		<tr>
+			<th>Person</th>
+			<th>Name</th>
+			<th>Twitter id</th>
+			<th>Status</th>
+			<th>Update</th>
+			<th>Receive</th>
+			<th>Update string</th>
+		</tr>
+
+		<% for supporter in @supporters %>
+		
+			<tr>
+				<td><%= link_to_person(supporter.person, 'picturelink') %></td>
+				<td><%= supporter.person.name %></td>
+				<td><a href='http://twitter.com/<%= supporter.twitter_email %>'><%= supporter.twitter_email %></a></td>
+				<td><%= supporter.person.status %></td>
+				<td><%= supporter.twitter_post %></td>
+				<td><%= supporter.twitter_receive %> <%= "(" + (supporter.twitter_receive_time_gmt).hour.to_s + ")" if supporter.twitter_receive == true %></td>
+				<td><%= supporter.twitter_update_string %></td>
+			</tr>
+			
+		<% end %>
+		
+	</table>
+	
+	
+	<br /><br />
+	
+	<h2>Site promoters</h2>
+	
+	<table>
+		<tr>
+			<th>Person</th>
+			<th>Name</th>
+			<th>Status</th>
+			<th>Referred</th>
+		</tr>
+
+		<% for promoter in @promoters %>
+		
+			<tr>
+				<td><%= link_to_person(promoter, 'picturelink') %></td>
+				<td><%= promoter.name %></td>
+				<td><%= promoter.status %></td>
+				<td><%= promoter.referred.to_s %></td>
+			</tr>
+			
+		<% end %>
+		
+	</table>
+	
+
+<% else %>
+	<%= access_denied() %>
+<% end %>

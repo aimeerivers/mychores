@@ -1,0 +1,100 @@
+<% @heading="Statistics".t %>
+<% @h1class='home' %>
+
+<% @links = [] %>
+<% @links += [{:url => "/tasks/workload", :title => "Workload", :accesskey => "w"}] %>
+<% @links += [{:url => "/tasks/matrix", :title => "Hot Map", :accesskey => "m"}] %>
+<% @links += [{:url => "/tasks/calendar", :title => "Calendar", :accesskey => "c"}] %>
+<% @links += [{:url => "/tasks/collage", :title => "Collage", :accesskey => "o"}] %>
+<% @links += [{:url => "/tasks/statistics", :title => "Statistics", :accesskey => "s"}] %>
+<% @links += [{:url => "/tasks/print", :title => "Print outs", :accesskey => "p"}] %>
+
+<%= render(:partial => 'messages') %>
+
+
+		<%= render(:partial => 'reschedule_link') %>
+		
+		<table class='my-completions'>
+			<tr><td>
+				<h4><%= "My efforts".t %></h4>
+				<%= link_to('Today'.t, {:controller => 'completions', :action => 'today'}) %>: <%= @done_today %><br />
+				<%= link_to('Last 7 days'.t, {:controller => 'completions', :action => 'sevendays'}) %>: <%= @done_this_week %><br />
+				<%= link_to('This month'.t, {:controller => 'completions', :action => 'month'}) %>: <%= @done_this_month %><br />
+				
+				<% if @thirty_days_max > 0 %>
+				  <br /><%= image_tag(@thirty_day_chart.to_url, :alt => "Tasks completed in the last 28 days".t, :title => "Tasks completed in the last 28 days".t, :size => "120x20") %><br />
+				<% end %>
+			</td></tr>
+		</table>
+		
+		
+		<h4><%= "My tasks".t %></h4>
+		
+		<% if @total_number > 0 %>
+		
+			<% percent_done = (@done_today.to_f / @total_number) * 100 %>
+			
+		  <%= image_tag(@chart.to_url, :alt => "My tasks".t, :title => "My tasks".t, :size => "300x110") %>			
+		  <%= image_tag(@pie_chart.to_url, :alt => percent_done.to_i.to_s + "%", :title => percent_done.to_i.to_s + "%", :size => "70x70") %>
+			
+			<p>
+			  <%= "%d out of" / @done_today %> <%= "%d tasks" / @total_number %> = <b><%= "%d% done" / percent_done.to_i %></b>
+		  </p>
+			
+		<% else %>
+			<p><%= "No tasks due, no tasks done.".t %></p>
+		<% end %>
+		
+		
+		<% @my_teams = find_my_teams %>
+		<% for team in @my_teams %>
+		
+		  <br /><br />
+			
+			<h4><%= "%s tasks" / link_to_team(team, 'picturelink') %></h4>
+			
+			<% @number_overdue = Task.count_by_sql ["select count(*) from tasks where status='active' and next_due < ? and list_id in (select id from lists where team_id = ?)", @datetoday, team.id] %>
+			
+			<% @due_today = Task.count_by_sql ["select count(*) from tasks where status='active' and next_due = ? and list_id in (select id from lists where team_id = ?)", @datetoday, team.id] %>
+			
+			<% @done_today = Completion.count_by_sql ["select count(*) from completions where date_completed = ? and task_id in (select id from tasks where list_id in (select id from lists where team_id = ?))", @datetoday, team.id] %>
+			
+			<% @total_number = @number_overdue + @due_today + @done_today %>
+		
+			<% if @total_number > 0 %>
+			    
+			    <% @chart_data = []
+          @chart_data[0] = @number_overdue
+          @chart_data[1] = @due_today
+          @chart_data[2] = @done_today
+    
+          @chart_labels = []
+          @chart_labels[0] = "Overdue: %d" / @number_overdue
+          @chart_labels[1] = "Due today: %d" / @due_today
+          @chart_labels[2] = "Done today: %d" / @done_today
+          
+          max = @chart_data.max
+			
+			    @chart.data = [@number_overdue, @due_today, @done_today]
+			    @chart.labels = [0,max]
+          @chart.y_labels = @chart_labels.reverse
+          @chart.max_data_value = max
+          
+          percent_done = (@done_today.to_f / @total_number) * 100
+          @pie_chart.data = [@done_today, @due_today, @total_number-@done_today-@due_today]
+          @pie_chart.max_data_value = @pie_chart.data.max %>
+				
+          <%= image_tag(@chart.to_url, :alt => "%s tasks" / team.name, :title => "%s tasks" / team.name, :size => "300x110") %>
+		      <%= image_tag(@pie_chart.to_url, :alt => percent_done.to_i.to_s + "%", :title => percent_done.to_i.to_s + "%", :size => "70x70") %>
+			
+				
+				<p>
+				  <%= "%d out of" / @done_today %> <%= "%d tasks" / @total_number %> = <b><%= "%d% done" / percent_done.to_i %></b>
+				</p>
+				
+			<% else %>
+				<p><%= "No tasks due, no tasks done.".t %></p>
+			<% end %>
+		
+		<% end %>
+		

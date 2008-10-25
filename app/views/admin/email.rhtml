@@ -1,0 +1,59 @@
+<% @heading="Email settings" %>
+<% @h1class='person' %>
+
+
+<% @breadcrumbs = link_to_person(@person, 'breadcrumb') %>
+
+<% form_tag(:action => 'changeemail', :id => @person.id) do %><div>
+	<%= error_messages_for 'person' %>
+	
+			<table>
+				<tr>
+					<th>Email address:</th>
+					<td>
+					   <%= text_field('person', 'email', :maxlength => 255, :class => 'styled') %>
+					   <% if @person.email_verified == false %>
+					       <%= link_to('Verify email address', { :action => 'email_verify', :id => @person.id, :return => 'preferences' }, :confirm => 'This will send you an email with a link to confirm your email addres. Continue?', 'class'=>'action') %>
+					   <% else %>
+					       (Verified)
+					   <% end %>
+					</td>
+				</tr>
+				<tr>
+					<th>Notifications:</th>
+					<td><%= select('person', 'notifications', ["None", "Daily", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"]) %></td>
+				</tr>
+				<tr>
+					<th>Time of notification:</th>
+					<td><%= select('preference', 'email_time', ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]) %></td>
+				</tr>
+				<tr>
+					<th>HTML emails:</th>
+					<td>
+						<label><%= check_box('preference', 'html_emails') %> (Allows you to tick off tasks straight from your email)</label>
+					</td>
+				</tr>
+				<tr>
+					<th><%= "Colourful emails".t %>:</th>
+					<td>
+						<label><%= check_box('preference', 'colourful_emails') %> (<%= "shows the Red/Amber/Green colour coding - HTML email format only".t %>)</label>
+					</td>
+				</tr>
+				<tr>
+					<th>Include descriptions:</th>
+					<td>
+						<label><%= check_box('preference', 'include_descriptions') %> (Tick to include task descriptions in your emails)</label>
+					</td>
+				</tr>
+				<tr>
+					<th>Receive newsletters:</th>
+					<td>
+						<label><%= check_box('person', 'newsletters') %> (Newsletters are very rare, i promise!)</label>
+					</td>
+				</tr>
+			</table>
+			
+			<br /><br />
+
+	<%= submit_tag 'Save Email settings' %>
+</div><% end %>

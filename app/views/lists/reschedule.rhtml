@@ -1,0 +1,31 @@
+<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+	
+	<% @heading=@list.name + " - Re-schedule tasks"; %>
+	<% @h1class='list' %>
+	
+	<% @breadcrumbs = link_to_team(@team, 'breadcrumb')  + " &gt; " + link_to_list(@list, 'breadcrumb') %>
+	
+	<p>Use this to quickly re-schedule all tasks within the <%= link_to_list(@list, 'picturelink') %> list. They will all be set to the same date.</p>
+	
+	<p>You may prefer to <a href='/tasks/move'>move all tasks</a> by a specific number of days.</p>
+
+			
+	<% form_tag({:action => 'rescheduletasks', :id => @list.id}) do %><div>
+	   <p>
+		<input button_image="calendar.gif" class="date" id="newdate" name="newdate" size="12" title="Date Completed" type="text" value="<%= @datetoday.strftime(session[:preferred_long_date_format]) %>" />
+		<img alt="Calendar" button_image="calendar.gif" class="date" id="completed_calendar" src="/images/calendar.gif" title="Show calendar" />
+		
+		<script type="text/javascript">
+			Calendar.setup({ range:[<%= (@datetoday.year) %>, <%= (@datetoday.year) + 1 %>], cache:true, weekNumbers:false, firstDay:1, inputField:"newdate", step:1, showOthers:false, button:"completed_calendar", ifFormat:"<%= session[:preferred_long_date_format] %>" })
+		</script>
+		
+	   </p>
+		
+		<input type="submit" value="Re-schedule tasks" />
+	</div><% end %>
+
+<% else %>
+
+	<%= access_denied() %>
+	
+<% end %>

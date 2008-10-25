@@ -1,0 +1,16 @@
+
+<% unless @error_message.nil? %>
+    <p><%= @error_message %>.</p>
+    
+    <p>Please try again later or <a href='/messages/new'>let us know</a> if the problem persists.</p>
+<% else %>
+    <% if @number_imported == 0 %>
+        <p>No new pictures were found on Flickr.</p>
+    <% elsif @number_imported == 1 %>
+        <p><img src='/images/tick.png' width='12' height='12' alt='' /> One new picture was imported successfully.</p>
+    <% else %>
+        <p><img src='/images/tick.png' width='12' height='12' alt='' /> <%= @number_imported.to_s %> new pictures were imported successfully.</p>
+    <% end %>
+    
+    <p><%= link_to('See your pictures', {:controller => 'pictures', :action => 'index'}, 'class'=>'action') %></p>
+<% end %>

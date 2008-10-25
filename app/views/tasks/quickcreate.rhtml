@@ -1,0 +1,70 @@
+<% @heading="Quick-create multiple tasks" %>
+<% @h1class='task' %>
+
+<% @breadcrumbs = "<a class='breadcrumb task' href='#'>Quick-create multiple tasks</a>" %>
+
+<% @myteams = find_my_teams %>
+
+<% if @myteams.empty? %>
+	<p>You need to <a href='/teams/new'>create a team</a> first.</p>
+<% else %>
+
+	
+	<% form_remote_tag(
+		:html => { :action => url_for(:controller => 'tasks', :action => 'multiplecreate') },
+		:url => { :controller => 'tasks', :action => 'multiplecreate' },
+		:update => 'results-div',
+		:before => %(Element.show('moving'); Element.hide('submit-button')),
+		:success => %(Element.hide('moving'))
+	) do %><div>
+	
+	<p>Enter the tasks you wish to create, one on each line.<br />
+	Tasks are created using your task template (see <a href='/admin/preferences'>Preferences</a>).</p>
+	
+	
+	
+	<p><textarea id='tasks' name='tasks' cols='60' rows='7' style='font-family:monospace;'>Sweep floor - every 3 days
+Dust surfaces - every 2 weeks - tomorrow
+Wash windows - every month - <%= (@datetoday + 3).to_s %>
+
+(These are just examples, delete and type your own!)</textarea></p>
+	
+	<p><a class="action" href="/quickcreatetips.html" onclick="formatting_tips(); return false">Click here for help with Quick-create format ...</a></p>
+	<div class="tips" id="formatting" style="display: none"></div><br />
+
+	
+	<table>
+		<tr>
+			<th>Choose list:</th>
+			<td>
+				<select id='list' name='list'>
+				<% for team in @myteams %>
+					<optgroup label="<%= team.name %>:">
+					<% for list in team.lists %>
+						<option value='<%= list.id %>' <%= selected='selected' if list.id == @defaultlist.to_i %>><%= list.name %></option>
+					<% end %>
+				<% end %>
+				</select>
+			</td>
+	</table>
+	
+	<br />
+	
+	<p>When you're happy, click 'Create tasks' and all will be created at once.</p>
+
+		
+	<span id='submit-button'><input type="submit" value="Create tasks" /></span>
+	
+	<span id='moving' style='display:none;'>
+		<img src='/images/spinner.gif' width='16' height='16' alt='Creating tasks ...' />
+		Creating tasks ... this may take a while ...
+	
+	</span>
+	
+	</div><% end %>
+	
+	<div id='results-div'></div>
+	
+	
+<% end %>
+

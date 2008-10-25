@@ -1,0 +1,72 @@
+<% @heading="Move tasks" %>
+<% @h1class='task' %>
+
+<% if @most_overdue.empty? %>
+
+	<p>You have no tasks to move.</p>
+	
+	<p><a href='javascript:back()'>Go back</a></p>
+	
+<% else %>
+
+	<% @myteams = find_my_teams %>
+	<% days_overdue = @datetoday - @most_overdue.first.next_due %>
+	
+	<% if days_overdue > 0 %>
+		<p>To be faced with a huge list of overdue tasks can be daunting and de-motivating. Maybe you've been away on holiday, or maybe you've just had too much else to do - it happens to the best of us! What you need is a way to reschedule your tasks so that you can get back on track again.</p>
+
+	
+		<p>Considering that your most overdue task was due on <%= formatted_date(@most_overdue.first.next_due) %>, you might want to move all your tasks by <%= days_overdue %> days.</p>
+	<% else %>
+		<p>You have no overdue tasks. Entering a negative number will make your future tasks due sooner.</p>
+	<% end %>
+
+	
+	<% form_remote_tag(
+		:html => { :action => url_for(:controller => 'tasks', :action => 'movetasks') },
+		:url => { :controller => 'tasks', :action => 'movetasks' },
+		:update => 'results-div',
+		:before => %(Element.show('moving'); Element.hide('submit-button')),
+		:success => %(Element.hide('moving'))
+	) do %><div>
+	
+		<table>
+			<tr>
+				<th>Teams:</th>
+				<td>
+					<% for team in @myteams %>
+						<label><input type="checkbox" name="team[]" checked="checked" value="<%= team.id %>" /><%= team.name %></label><br />
+					<% end %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>Move by:</th>
+				<td><input maxlength="3" name="moveby" size="3" type="text" value="<%= days_overdue %>" /> days</td>
+			</tr>
+			
+			<tr>
+				<th>Move:</th>
+				<td>
+					<label><input type="checkbox" name="movewhat[]" checked="checked" value="days" />Daily tasks</label><br />
+					<label><input type="checkbox" name="movewhat[]" checked="checked" value="weeks" />Weekly tasks</label><br />
+					<label><input type="checkbox" name="movewhat[]" value="months" />Monthly tasks</label><br />
+				</td>
+			</tr>
+		</table>
+		
+		<br />
+		
+		<span id='submit-button'><input type="submit" value="Move!" /></span>
+		
+		<span id='moving' style='display:none;'>
+			<img src='/images/spinner.gif' width='16' height='16' alt='Moving tasks ...' />
+			Moving tasks ... this may take a while ...
+		
+		</span>
+	
+	</div><% end %>
+	
+	<div id='results-div'></div>
+
+<% end %>

@@ -1,0 +1,37 @@
+<% @heading="Upload a picture" %>
+<% @h1class='task' %>
+
+
+
+
+<% unless @task.nil? %>
+    <% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; " + link_to_task(@task, 'breadcrumb') %>
+<% end %>
+
+
+<% @links = [] %>
+<% @links += [{:url => "/pictures", :title => "Pictures", :accesskey => "p"}] %>
+
+
+<% if @is_supporter == false %>
+    <p>You have uploaded <%= @picturecount %> picture<%= "s" unless @picturecount == 1 %>.</p>
+    <p>You may upload 9 pictures. If you become a <a href='/home/supporters'>site supporter</a> you may upload as many pictures as you like.</p>
+<% end %>
+
+
+
+<% unless @is_supporter == false and @picturecount >= 9 %>
+
+    <% form_for :picture, :url => { :action => 'create' }, :html => { :multipart => true } do |f| -%><div>
+    
+      <p><%= f.file_field :uploaded_data %></p>
+      <% unless @task.nil? %>
+        <input id="task" name="task" type="hidden" value="<%= @task.id %>" />
+      <% end %>
+      <p><%= submit_tag :Upload %></p>
+    </div><% end -%>
+    
+    <p>Acceptable picture formats: PNG, GIF and JPG.<br />
+    File must be 90KB or smaller.</p>
+    
+<% end %>

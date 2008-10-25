@@ -1,0 +1,43 @@
+<% @heading=@team.name + " - Invite someone to join" %>
+<% @h1class='team' %>
+
+<% @breadcrumbs = link_to_team(@team, 'breadcrumb') %>
+
+<p>Enter the email address of someone you would like to invite to join <%= link_to_team(@team, "picturelink") %>:</p>
+
+
+<% form_tag({:action => 'invitesend', :id => @team.id}, :onsubmit => "return checkemail()", :name => 'inviteform' ) do %><div>
+
+	<table>
+		
+		<tr>
+			<th>Email:</th>
+			<td>
+				<input type='text' id='email' name='email' maxlength='255' class='styled' />
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>Message:</th>
+			<td>
+				<p><textarea id='message' name='message' cols='60' rows='10'>Hi,
+				
+I'm using MyChores.co.uk to keep track of recurring tasks. I am in a team called '<%= @team.name %>' and I'd like to invite you to join.
+
+Thanks,
+<%= @person.name %>.</textarea></p>
+				A link will be added to the email, with a code to enable sign-up.
+			</td>
+		</tr>
+		
+	</table>
+	
+	<br />
+		
+	<input type="submit" value="Send invitation" />
+</div><% end %>
+
+<br /><br />
+
+<p>Alternatively, you can <a href='/home/search'>search</a> for someone already registered on MyChores, and invite them that way.</p>

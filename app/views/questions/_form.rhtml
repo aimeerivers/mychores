@@ -1,0 +1,32 @@
+<%= error_messages_for 'question' %>
+
+<!--[form:question]-->
+
+<table>
+
+	<tr>
+		<th>Question:</th>
+		<td><%= text_field('question', 'question', :maxlength => 255, :class => 'styled') %></td>
+	</tr>
+
+	<tr>
+		<th>Answer:</th>
+		<td>
+			<%= text_area('question', 'answer', :rows => 12) %>
+			<br />
+			<a class="action" href="/tips.html" onclick="formatting_tips(); return false">Formatting tips ...</a>
+			<div class="tips" id="formatting" style="display: none"></div>
+		</td>
+	</tr>
+
+	<tr>
+		<th>Order:</th>
+		<td><%= text_field('question', 'displayorder', :maxlength => 4, :class => 'styled') %></td>
+	</tr>
+	
+</table>
+
+<br />
+
+<!--[eoform:question]-->
+

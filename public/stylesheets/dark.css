@@ -1,0 +1,219 @@
+body {
+background-color:#070707;
+color: #6633CC;
+}
+
+a {
+color: #AE7DEA;
+}
+
+#Top-bar {
+position: absolute;
+left: 150px; top:20px; width: 680px;
+height:50px;
+padding-left: 10px;
+padding-right: 10px;
+padding-top: 5px;
+}
+
+#Breadcrumb-bar {
+position: absolute;
+left: 155px; top:75px; width: 675px;
+height:20px;
+font-size: 11px;
+padding-left: 10px;
+padding-right: 10px;
+padding-top: 3px;
+border-bottom: 1px dotted #AE7DEA;
+}
+
+#Picture {
+position: absolute;
+left: 0px; top: 0px;
+width: 165px; height:143px;
+background-image: url(../images/flower.jpg);
+background-repeat: no-repeat;
+}
+
+#Login-box {
+position: absolute;
+left: 50px; top: 200px;
+width: 100px; height:80px;
+}
+
+#Navigator {
+position: absolute;
+left: 10px; top: 330px;
+width: 140px; bottom: 10px;
+}
+
+#Right-bar {
+position: absolute;
+left: 860px; top:20px; width: 120px;
+bottom: 10px;
+font-size: 11px;
+padding: 10px;
+text-align: center;
+}
+
+#Content {
+position: absolute;
+left: 160px; top:100px; width: 670px;
+bottom: 10px;
+padding: 10px;
+}
+
+div.tips {
+border: 1px solid #D1F1FF;
+background-color: #F2FBFF;
+padding: 10px;
+margin: 5px;
+}
+
+div.recurrence-options {
+border: 1px solid #D1F1FF;
+background-color: #F2FBFF;
+width: 280px;
+padding: 10px;
+margin: 5px;
+}
+
+input, textarea, select {
+border: 1px solid #6633CC;
+background-color: #8E71B4;
+}
+
+optgroup {
+border: 1px solid #6633CC;
+background-color: #8E71B4;
+}
+
+input.styled {
+width: 250px;
+border: 1px solid #6633CC;
+background-color: #8E71B4;
+}
+
+textarea.styled {
+width: 250px;
+height: 80px;
+border: 1px solid #6633CC;
+background-color: #8E71B4;
+}
+
+table.my-completions {
+border: 1px solid #6633CC;
+background-color: #8E71B4;
+padding: 5px;
+margin: 10px;
+text-align: right;
+float: right;
+}
+
+tr.very_overdue {
+background-color: #EB4545;
+}
+
+tr.overdue {
+background-color: #F57A7A;
+}
+
+tr.due_today {
+background-color: #F9B845;
+}
+
+tr.due_soon {
+background-color: #1EF46F;
+}
+
+table.calendar-table {
+border-right: 1px solid #AAAAAA;
+border-bottom: 1px solid #AAAAAA;
+background-color: #070707;
+}
+
+tr.calendar-today {
+background-color: #404040;
+}
+
+td.calendar-date {
+border-left: 1px solid #AAAAAA;
+border-top: 1px solid #AAAAAA;
+text-align: center;
+margin: 0px;
+}
+
+td.calendar-content {
+border-left: 1px solid #AAAAAA;
+border-top: 1px solid #AAAAAA;
+text-align: left;
+margin: 0px;
+width: 300px;
+}
+
+td.sunday {
+color: red;
+}
+
+th {
+color: #AE7DEA;
+}
+
+h1 {
+color: #AE7DEA;
+}
+
+h2 {
+border-bottom: 1px dashed #6633CC;
+}
+
+div.actionbar {
+font-size: 14px;
+font-family: Georgia, Times, Serif;
+font-style: italic;
+padding-bottom: 5px;
+}
+
+a.breadcrumb {
+color: #6633CC;
+}
+
+a.picturelink {
+color: #6633CC;
+}
+
+a.navpicturelink {
+color: #6633CC;
+}
+
+
+
+
+span.specialhover:hover div {
+background-color: #54096A;
+border: 1px solid #aaaaaa;
+}
+
+
+
+span.notice {
+color: #AE7DEA;
+}
+
+.fieldWithErrors {
+  background-color: #AE7DEA;
+}
+
+
+
+span.statistics-overdue {
+background-color: #F57A7A;
+}
+
+span.statistics-due-today {
+background-color: #F9B845;
+}
+
+span.statistics-done-today {
+background-color: #1EF46F;
+}

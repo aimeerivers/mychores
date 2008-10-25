@@ -1,0 +1,199 @@
+<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+
+	<% @heading=@task.name %>
+	<% @h1class='task' %>
+	
+	<% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; " + link_to_task(@task, 'breadcrumb') %>
+	
+	
+
+    <% @links = [] %>
+    <% @links += [{:url => "/tasks/edit/" + @task.id.to_s, :title => "Edit task", :accesskey => "e"}] %>
+    <% if @task.status == 'active' %>
+        <% @links += [{:url => "/tasks/disactivate/" + @task.id.to_s, :title => "Make inactive", :accesskey => "i"}] %>
+    <% else %>
+        <% @links += [{:url => "/tasks/activate/" + @task.id.to_s, :title => "Make active", :accesskey => "a"}] %>
+    <% end %>
+    <% @links += [{:url => "/tasks/destroy/" + @task.id.to_s, :title => "Delete task", :accesskey => "d", :onclick => "return confirm('Are you sure you want to delete this task?');"}] %>
+    <% @links += [{:url => "/tasks/markdone/" + @task.id.to_s, :title => "Mark as done", :accesskey => "m"}] %>
+    <% @links += [{:url => "/tasks/nudge/" + @task.id.to_s, :title => "Nudge someone", :accesskey => "n"}] %>
+
+
+    <div style='float:right; padding:10px; text-align:center;'>
+        <% unless @task.picture.blank? %>
+            <%= show_picture(@task.picture) %>
+            <br /><br />
+        <% end %>
+        
+        <%= link_to('Choose a picture', :controller => 'pictures', :action => 'choose', :task => @task.id) %>
+    </div>
+
+	
+	<table>
+	
+		<% unless @task.description.empty? %>
+			<tr>
+				<th>Description:</th>
+				<td><%= textilize @task.description %></td>
+			</tr>
+		<% end %>
+		
+		<tr>
+			<th>Status:</th>
+			<td>
+				<%= @task.status %>
+			</td>
+		</tr>
+
+		
+		<% if @task.status == 'active' %>
+		
+			<tr>
+				<th>Next due:</th>
+				<td>
+					<span id='task-duedate-<%= @task.id.to_s %>'><%= formatted_date(@task.next_due) %> (<%= time_from_today(@task.next_due, @datetoday) %>)</span>
+					<% if @enable_js and @quick_edit_options.include?("duedate") -%>
+					   <%= aimee_in_place_date_editor('task-duedate-' + @task.id.to_s, @task.next_due, {:url => url_for(:controller => "tasks", :action => "change_due_date", :id => @task.id)}) %>
+					<% end -%>
+					
+					&nbsp;&nbsp;<%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done', :title => 'Tick to mark as done by you today'), {:controller => 'tasks', :action => 'done', :id => @task.id, :return=>'task'})  %>
+				</td>
+			</tr>
+		
+			<% unless @task.recurrence_description.empty? %>
+				<tr>
+					<th>Recurrence:</th>
+					<td><%= @task.recurrence_description %></td>
+				</tr>
+			<% end %>
+		
+			<tr>
+				<th>Assigned to:</th>
+				<td>
+					<% if @task.person_id.nil? %>
+						<%= link_to_team(@team, 'picturelink') %>
+					<% else %>
+						<%= link_to_person(@task.person, 'picturelink') %>					
+						<% if @task.rotate == true %>
+							&nbsp;<a href='/tasks/rotating'><img src='/images/rotate.png' width='11' height='11' alt='rotating assignment' border='0' /></a>
+						<% end %>
+					<% end %>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<th>Importance:</th>
+				<td>
+				    <% if @enable_js and @quick_edit_options.include?("importance") %>
+					
+    					<script type="text/javascript">
+                          function ajaxRating(xml)
+                          {
+                            var x = xml.responseXML;
+                            var xmlRating = x.getElementsByTagName('rating');
+                            var rating = xmlRating[0].firstChild.nodeValue;
+                          }
+                          var s3 = new Stars({
+                            maxRating: 7,
+                            actionURL: '/tasks/changeimportance/<%= @task.id.to_s %>?importance=',
+                            callback: ajaxRating,
+                            imagePath: '/images/stars/',
+                            value: <%= @task.current_importance %>
+                          });
+                        </script>
+                    
+					<% else %>
+					   <% for loop in 1..@task.current_importance -%><img src='/images/stars/yellowstar.png' width='12' height='10' alt='star' /><% end -%> - <%= @importance.name %>
+                    <% end %>
+
+
+				</td>
+			</tr>
+		<% end %>
+		
+		<tr><td colspan='2'>&nbsp;</td></tr>
+		
+		<tr>
+			<th>Last done:</th>
+			<td>
+				<% if @completions.empty? %>
+					No completion history for this task.
+				<% else %>
+				
+					<table>
+						<% for completion in @completions %>
+							<tr>
+								<td>
+									<%= formatted_date(completion.date_completed) %> (<%= time_from_today(completion.date_completed, @datetoday) %>)
+								</td>
+								<td>
+									by <%= link_to_person(completion.person, 'picturelink') %>
+								</td>
+								<td>
+									<%= link_to(image_tag('undo.png', :size => '13x13', :alt => 'undo', :title => 'undo', :align => 'absmiddle'), { :controller => 'completions', :action => 'undo', :id => completion.id, :return => 'task' }, :confirm => 'Do you want to undo this completion?') %>
+								</td>
+							</tr>
+						<% end %>
+						
+						<% if @completions_count > 5 %>
+						  <tr><td colspan='3'><%= link_to('View more ...', {:controller => 'completions', :action => 'list', :id => @task.id}, :class => 'action' )%></td></tr>
+						<% end %>
+						
+					</table>
+					
+				<% end %>
+				
+			</td>
+		</tr>
+		
+	</table>
+	
+	
+	<% unless @tips.empty? %>
+	   <br /><br />
+	   <h3>Potentially useful tips</h3>
+	   
+        <% for tip in @tips %>
+        
+            <h4><%= link_to_tip(tip) %></h4>
+            
+            <% if tip.full_description.size > 300 %>
+                <% truncated_description = truncate(tip.full_description, 300, "").to_s %>
+                <% number_to_chop = truncated_description.reverse.index(" ").to_i %>
+                <% if number_to_chop > 0 %>
+                    <% for i in 1..number_to_chop %>
+                        <% truncated_description.chop! %>
+                    <% end %>
+                <% end %>
+                <p><%= truncated_description %> [<a href='/tips/show/<%= tip.id.to_s %>'>read more ...</a>]</p>
+                
+            <% else %>
+                <%= textilize(tip.full_description) %>
+            <% end %>
+            
+            <p>Submitted
+            
+            <% if tip.person.nil? or tip.is_anon == true %>
+                anonymously
+            <% else %>
+                by <%= link_to_person(tip.person, 'picturelink') %>
+            <% end %>
+            
+            <% unless tip.cached_tag_list.nil? or tip.cached_tag_list.empty? %>
+                in <%= print_tags_for_tip(tip) %>
+            <% end %></p>
+            
+            <br />
+        
+        <% end %>
+        
+        <p><a href='/tips'>Browse all tips</a></p>
+
+	<% end%>
+
+<% else %>
+
+	<%= access_denied() %>
+	
+<% end %>

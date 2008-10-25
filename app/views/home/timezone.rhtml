@@ -1,0 +1,41 @@
+<% @heading="Timezone information" %>
+<% @h1class='home' %>
+
+<table>
+	<tr>
+		<th>Date today:</th>
+		<td><%= Date.today.to_s %></td>
+	</tr>
+	<tr>
+		<th>DateTime now:</th>
+		<td><%= DateTime.now.to_s %></td>
+	</tr>
+	<tr>
+		<th>DateTime zone:</th>
+		<td><%= DateTime.now.zone %></td>
+	</tr>
+	<tr>
+		<th>DateTime offset:</th>
+		<td><%= DateTime.now.offset %></td>
+	</tr>
+	<tr>
+		<th>Time now:</th>
+		<td><%= Time.now.to_s %></td>
+	</tr>
+	<tr>
+		<th>Time zone:</th>
+		<td><%= Time.now.zone %></td>
+	</tr>
+	<tr>
+		<th>Time dst?:</th>
+		<td><%= Time.now.dst? %></td>
+	</tr>
+	<tr>
+		<th>Time offset:</th>
+		<td><%= Time::zone_offset(Time.now.zone, Time.now.year) %></td>
+	</tr>
+	<tr>
+		<th>Time utc:</th>
+		<td><%= Time.now.utc.to_s %></td>
+	</tr>
+</table>

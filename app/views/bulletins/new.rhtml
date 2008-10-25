@@ -1,0 +1,19 @@
+<% if session[:person].status == 'Site Creator' %>
+
+	<% @heading="New bulletin" %>
+	<% @h1class='home' %>
+	
+	<% @links = [] %>
+    <% @links += [{:url => "/bulletins", :title => "Bulletins", :accesskey => "b"}] %>
+
+	
+
+	<% form_tag(:action => 'create') do %><div>
+	  <%= render :partial => 'form' %>
+	  
+	  <%= submit_tag "Create" %>
+	</div><% end %>
+
+<% else %>
+	<%= access_denied() %>
+<% end %>

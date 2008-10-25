@@ -1,0 +1,123 @@
+<% @heading="Twitter integration" %>
+<% @h1class='person' %>
+
+<% @myteams = find_my_teams %>
+
+<% @breadcrumbs = link_to_person(@person, 'breadcrumb') %>
+
+<% form_tag(:action => 'changetwitter', :id => @person.id) do %><div>
+	<%= error_messages_for 'preference' %>
+	
+			<a href='http://twitter.com/' target='_blank'><img src='/images/twitter.png' width='210' height='49' alt='Twitter' border='0' /></a><br />
+			
+            <h2>Twitter authentication</h2>
+			
+			<table>
+				<tr>
+					<th>Twitter username:</th>
+					<td><%= text_field('preference', 'twitter_email', :maxlength => 255, :class => 'styled') %></td>
+				</tr>
+				<tr>
+					<th>Twitter password:</th>
+					<td><input type="password" name="twitter_password" id="twitter_password" class='styled' value='<%= @preference.twitter_password.tr("A-Za-z", "N-ZA-Mn-za-m")  unless @preference.twitter_password.nil? %>' /></td>
+				</tr>
+				<tr>
+					<th>&nbsp;</th>
+					<td>
+					   <%= link_to_remote("Test Twitter authentication",
+					       :url => { :action => 'twittertest' },
+					       :update => 'twitter_results',
+					       :before => %(Element.hide('twitter_results'); Element.show('checking')),
+					       :success => %(Element.hide('checking'); Element.show('twitter_results')),
+					       :with => %('twitter_username='+document.forms[0].preference_twitter_email.value+'&twitter_password='+document.forms[0].twitter_password.value)
+					   ) %>
+					   <br />
+					   <span id="checking" style="display: none;"><img src='/images/spinner.gif' width='16' height='16' alt='Testing ...' /> Testing ...</span>
+					   <span style="display: none;" id="twitter_results"></span>
+					</td>
+				</tr>
+				
+			</table>
+			
+			<br />
+			
+			<p>You need only enter your password if you wish for MyChores to make Twitter posts for you.<br />Please read our <a href='/home/privacy' target='_blank'>privacy statement</a>.</p>
+			
+			<br />
+			<h2>Receive Twitter notifications?</h2>
+			
+			<p>This will allow you to receive a Twitter direct message every day with the day's tasks (not including overdue tasks).</p>
+			<p>For this to work you must add the Twitter account <a href='http://twitter.com/mychores' target='_blank'><b>mychores</b></a> to your Twitter friends list.</p><br />
+			
+			<table>
+				<tr>
+					<th>Receive Twitter notifications:</th>
+					<td><label><%= check_box('preference', 'twitter_receive') %> (reliability not guaranteed!)</label></td>
+				</tr>
+				<tr>
+					<th>Time of notification:</th>
+					<td><%= select('preference', 'twitter_receive_time', ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]) %></td>
+				</tr>
+			</table>
+			
+			<br />
+			<h2>Make Twitter posts?</h2>
+			
+			<p>MyChores can automatically make a Twitter update on your behalf when you complete a task.</p>
+			<p>This will qualify you for <a href='/home/supporters' target='_blank'>Site supporter</a> status, because it gives publicity for MyChores.</p><br />
+			
+			<table>
+				<tr>
+					<th>Make Twitter posts:</th>
+					<td><%= check_box('preference', 'twitter_post') %></td>
+				</tr>
+				<tr>
+					<th>Twitter update format:</th>
+					<td><%= text_field('preference', 'twitter_update_string', :maxlength => 255, :class => 'styled') %>
+				</tr>
+				<tr>
+					<td><i>Placeholders<br />{TEAM} {LIST} {TASK}<br />will be filled in<br />for your update.</i></td>
+					<td><b>For example:</b><br />
+					Doing my chores: {LIST}: {TASK}<br />
+					I just finished: {TASK}<br />
+					{TEAM}: {LIST}: {TASK}: tick!<br /><br />
+					</td>
+				</tr>
+				
+				<tr>
+					<th>Lists to make<br />a Twitter update:</th>
+					<td>
+						<% if @myteams.empty? %>
+							You have no teams.<br />
+							Would you like to <a href='/teams/new'>Create a team</a>?<br /><br />
+						<% else %>
+						
+							<table><tr>
+						
+								<% for team in @myteams %>
+									<td>
+										<%= link_to_team(team, 'picturelink') %><br />
+										<% @lists = team.lists %>
+										<% for list in @lists %>
+											<% if @preference.twitter_lists.nil? %>
+												<label><input type="checkbox" name="include_lists[]" checked="checked" value="<%= list.id %>" /><%= list.name %></label><br />
+											<% else %>
+												<label><input type="checkbox" name="include_lists[]" <%= 'checked="checked"' if @preference.twitter_lists.include?(list.id.to_s) %> value="<%= list.id %>" /><%= list.name %></label><br />
+											<% end %>
+										<% end %>
+									</td>
+									<td width='10'>&nbsp;</td>
+								<% end %>
+							
+							</tr></table>
+						<% end %>
+					</td>
+				</tr>
+				
+			</table>
+			
+			<br />
+	
+
+	<%= submit_tag 'Save Twitter settings' %>
+</div><% end %>

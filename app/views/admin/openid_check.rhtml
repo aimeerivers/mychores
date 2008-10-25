@@ -1,0 +1,33 @@
+<% if session[:person].status == 'Site Creator' %>
+
+	<% @heading="OpenID check" %>
+	<% @h1class='person' %>
+	
+	
+	<h2>OpenID check</h2>
+	
+	<table>
+		<tr>
+			<th>Person</th>
+			<th>Name</th>
+			<th>OpenID</th>
+			<th>Status</th>
+		</tr>
+
+		<% for person in @people %>
+		
+			<tr>
+				<td><%= link_to_person(person, 'picturelink') %></td>
+				<td><%= person.name %></td>
+				<td><a href='<%= person.openid_url %>'><%= person.openid_url %></a></td>
+				<td><%= person.status %></td>
+			</tr>
+			
+		<% end %>
+		
+	</table>
+	
+
+<% else %>
+	<%= access_denied() %>
+<% end %>

@@ -1,0 +1,199 @@
+
+
+
+
+span.notice {
+display: inline;
+position: absolute;
+}
+
+
+
+
+a.breadcrumb, span.breadcrumb {
+padding-top: 3px;
+margin-top: 0px;
+background-color: transparent;
+background-position: bottom left;
+background-repeat: no-repeat;
+}
+
+
+a.picturelink, span.picturelink {
+padding-top: 3px;
+background-color: transparent;
+background-position: bottom left;
+background-repeat: no-repeat;
+white-space: nowrap;
+display: inline;
+text-decoration: none;
+}
+
+a.picturelink {
+font-weight: bold;
+}
+
+a.home {
+background-image: url(../../images/icons/home-tiny.png);
+padding-left: 17px;
+}
+
+a.person, span.person {
+background-image: url(../../images/icons/person-tiny.png);
+padding-left: 13px;
+}
+
+a.virtualperson, span.virtualperson {
+background-image: url(../../images/icons/virtual-person-tiny.png);
+padding-left: 13px;
+}
+
+a.deletedperson, span.deletedperson {
+background-image: url(../../images/icons/deleted-person-tiny.png);
+padding-left: 13px;
+text-decoration: line-through;
+}
+
+a.kid, span.kid {
+background-image: url(../../images/icons/kid-tiny.png);
+padding-left: 13px;
+}
+
+a.team {
+background-image: url(../../images/icons/team-tiny.png);
+padding-left: 17px;
+}
+
+a.list {
+background-image: url(../../images/icons/list-tiny.png);
+padding-left: 17px;
+}
+
+a.task {
+background-image: url(../../images/icons/task-tiny.png);
+padding-left: 16px;
+}
+
+
+
+span.specialhover div {
+display: none;
+}
+
+span.specialhover:hover div {
+display: inline;
+position: absolute;
+padding: 3px;
+margin: 0px;
+text-align: left;
+}
+
+
+
+img {
+border: 0px;
+}
+
+
+th
+{
+    vertical-align: top;
+	text-align: left;
+	font-weight: bold;
+    padding: 0.2em;
+}
+td
+{
+    vertical-align: top;
+	/* text-align: left; */
+    padding: 0.2em;
+}
+
+
+
+
+
+#Emphasise td {
+vertical-align: middle;
+font-size: 1.2em;
+}
+
+#Emphasise a {
+text-decoration: underline;
+font-weight: bold;
+}
+
+
+span.bar-chart-bar {
+border: 1px solid #aaaaaa;
+height: 0.8em;
+padding: 0px;
+margin: 0px;
+}
+
+
+
+
+table.topten td, table.topten th {
+padding: 0em 0.2em 0em 0em;
+margin: 0em;
+border-bottom: 1px dotted #CCCCCC;
+}
+
+
+
+.pagination {
+  padding: 3px;
+  margin: 1em;
+}
+.pagination a, .pagination a:visited {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #aaaadd;
+  text-decoration: none;
+  color: #000099;
+}
+.pagination a:hover, .pagination a:active {
+  border: 1px solid #000099;
+  color: #000;
+}
+.pagination span.current {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #000099;
+  font-weight: bold;
+  background-color: #000099;
+  color: #FFF;
+}
+.pagination span.disabled {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #eee;
+  color: #ddd;
+}
+
+
+
+
+.draggable-hover {
+  background-color: #ffa;
+}
+
+.drag-handle {
+  cursor: move;
+}
+
+img.expand-collapse {
+  cursor: pointer;
+}
+
+div#tertiaryContent ul ul {
+  margin-left: 0px;;
+  padding-left: 0px;
+  list-style-type: none;
+}
+
+div#tertiaryContent ul ul li {
+  padding-top: 2px;
+  font-size: 0.9em;
+}

@@ -1,0 +1,36 @@
+
+
+<% @heading="New list" %>
+<% @h1class='list' %>
+
+
+<% @myteams = find_my_teams %>
+
+<% if @myteams.empty? %>
+
+	<p>You first need to <a href='/teams/new'>create a team</a>.</p>
+	
+<% else %>
+
+	<% @breadcrumbs = "<a class='breadcrumb list' href='#'>New list</a>" %>
+	
+	<% form_tag(:action => 'create') do %><div>
+	  <%= render :partial => 'form' %>
+	
+		<tr>
+			<th>Choose team:</th>
+			<td>
+				<select id='list_team_id' name='list[team_id]'>
+				<%= options_from_collection_for_select(@myteams, "id", "name", @defaultteam.to_i) %>
+				</select>
+			</td>
+		</tr>
+	
+	</table>
+	
+	<br />
+	
+	  <%= submit_tag "Save list" %>
+	</div><% end %>
+
+<% end %>

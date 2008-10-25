@@ -1,0 +1,173 @@
+<% @heading=@team.name; %>
+<% @h1class='team' %>
+<% @is_member = false %>
+
+<% @breadcrumbs = link_to_team(@team, 'breadcrumb') %>
+
+
+<% @ismember = false %>
+<% @imadeit = false %>
+
+
+<% unless session[:person].nil? %>
+	<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+	
+	   <% @ismember = true %>
+	
+		<% if @team.person_id == session[:person].id %>
+			<% @imadeit = true %>
+		<% end %>
+
+
+        <% @links = [] %>
+        <% @links += [{:url => "/teams/teamworkload/" + @team.id.to_s, :title => "Team workload", :accesskey => "w"}] %>
+        <% @links += [{:url => "/teams/edit/" + @team.id.to_s, :title => "Edit team", :accesskey => "e"}] %>
+        <% if @imadeit == true %>
+            <% @links += [{:url => "/teams/destroy/" + @team.id.to_s, :title => "Delete team", :accesskey => "d", :onclick => "return confirm('Deleting a team will delete all associated lists and tasks. Are you sure you want to delete this team?');"}] %>
+        <% end %>
+        <% @links += [{:url => "/teams/invite/" + @team.id.to_s, :title => "Invite someone to join", :accesskey => "i"}] %>
+        <% @links += [{:url => "/teams/add_virtual/" + @team.id.to_s, :title => "Add a virtual member", :accesskey => "v"}] %>
+
+
+	<% else %>
+	   
+
+
+
+        <% @links = [] %>
+        <% @links += [{:url => "/memberships/memrequest?team=" + @team.id.to_s, :title => "Request to join", :accesskey => "j", :onclick => "return confirm('Do you wish to make a request to join " + @team.name + "?');"}] %>
+
+
+	<% end %>
+<% end %>
+
+<table>
+
+	<% unless @team.description.empty? %>
+		<tr>
+			<th>Description:</th>
+			<td><%= textilize @team.description %></td>
+		</tr>
+	<% end %>
+	
+	
+	<% if @ismember == false %>
+	
+    	<tr>
+    		<th>Team Members:</th>
+    		<td>
+    			<table>
+    				<% unless @memberships.empty? %>
+    					<% for membership in @memberships %>
+    					   <% if membership.person.usertype == 1 %>
+        						<tr>
+        							<td><%= link_to_person(membership.person, 'picturelink') %></td>
+        							<td>
+        								<% if membership.confirmed != 1 %>
+        									<%= " (awaiting confirmation)" %>
+        								<% end %>
+        							</td>
+        						</tr>
+    						<% end %>
+    					<% end %>
+    				<% end %>
+    					
+    			</table>
+    		</td>
+    	</tr>
+	
+	
+	
+	<% else %>
+	
+    	<tr>
+    		<th>Team Members:</th>
+    		<td>
+    			<table>
+    				<% unless @memberships.empty? %>
+    					<% for membership in @memberships %>
+    						<tr>
+    							<td><%= link_to_person(membership.person, 'picturelink') %></td>
+    							<td>
+    								<% if membership.confirmed != 1 %>
+    									<%= " (awaiting confirmation)" %>
+    								<% else %>
+    									<% if @imadeit == true %>
+    										<%= link_to(image_tag('redx.png', :size => '15x10', :alt => 'Remove this person from your team?', :title => 'Remove this person from your team?'), { :controller => 'memberships', :action => 'remove', :id => membership.id, :returnto => 'team' }, :confirm => 'Are you sure you want to remove this person from your team?') %>
+    									<% end %>
+    								<% end %>
+    							</td>
+    						</tr>
+    					<% end %>
+    				<% end %>
+    				
+    				<% unless session[:person].nil? %>
+    					<% unless @invitations.empty? %>
+    						<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+    							<% for invitation in @invitations %>
+    								<tr>
+    									<td><%= invitation.email %></td>
+    									<td><%= link_to(image_tag('envelope.jpg', :size => '17x11', :alt => 'Send a reminder email?', :title => 'Send a reminder email?'), { :controller => 'invitations', :action => 'remind', :id => invitation.code }, :confirm => 'Would you like to send this person a reminder email?') %> (click envelope to send a reminder)</td>
+    								</tr>
+    							<% end %>
+    						<% end %>
+    					<% end %>
+    				<% end %>
+    					
+    			</table>
+    		</td>
+    	</tr>
+		
+		<tr>
+			<th>Lists:</th>
+			<td>
+				<table>
+				<tr><td colspan='2'><%= link_to('Create new list ...', {:controller=>'lists', :action=>'new', :team=>@team.id}, 'class'=>'picturelink list') %></td></tr>
+						
+			
+				<% if @lists.empty? %>
+					<tr><td colspan='2'>This team currently has no lists.</td></tr
+				<% else %>
+				
+				   <tr>
+				   <% row_counter = 0 %>
+				   
+						<% for list in @lists %>
+							<td><%= link_to_list(list, 'picturelink') %> &nbsp;&nbsp;</td>
+							<% row_counter += 1 %>
+							<% if row_counter == 2 %>
+							    </tr><tr>
+							    <% row_counter = 0 %>
+							<% end %>
+						<% end %>
+				   </tr>
+				<% end %>
+				
+				</table>
+			</td>
+		</tr>
+
+
+		<tr>
+			<td colspan='2'>
+				<br />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>Tools:</th>
+			<td>
+			    <table>
+    			    <tr><td><%= link_to(image_tag('ical.gif', :size => '28x16', :alt => 'Click to subscribe to iCalendar as Todo list', :title => 'Click to subscribe to iCalendar as Todo list'), { :controller => 'teams', :action => 'icalendar', :id => @team.code, :type => 'todo' } ) %></td>
+    			        <td><%= link_to('iCalendar Todo list', {:action => 'icalendar', :id => @team.code, :type => 'todo'}) %></td></tr>
+    			    <tr><td><%= link_to(image_tag('ical.gif', :size => '28x16', :alt => 'Click to subscribe to iCalendar as Events', :title => 'Click to subscribe to iCalendar as Events'), { :controller => 'teams', :action => 'icalendar', :id => @team.code, :type => 'event' } ) %></td>
+    			        <td><%= link_to('iCalendar Events', {:action => 'icalendar', :id => @team.code, :type => 'event'}) %></td></tr>
+    			    <tr><td><%= link_to(image_tag('rss.png', :size => '14x14', :alt => 'Click for an RSS feed of tasks completed in this team', :title => 'Click for an RSS feed of tasks completed in this team'), { :controller => 'teams', :action => 'rss', :id => @team.code } ) %></td>
+    			        <td><%= link_to('RSS tasks completed', {:action => 'rss', :id => @team.code}) %></td></tr>
+			    </table>
+			</td>
+		</tr>
+	
+	<% end %>
+	
+</table>

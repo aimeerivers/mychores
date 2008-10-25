@@ -1,0 +1,29 @@
+<% @heading="Welcome to MyChores!" %>
+<% @h1class='person' %>
+
+<p>Hi <%= @person.name %>, thank you for signing up with MyChores!</p>
+
+<% if @auto_team_added == true %>
+
+	<p>You have been automatically added into the following team(s):</p>
+	<ul>
+		<% for team in @teams %>
+			<li><%= link_to_team(team, "picturelink") %></li>
+		<% end %>
+	</ul>
+	
+	<p>You are able to remove yourself if you wish. You are also able to create your own teams.</p>
+	
+<% else %>
+
+	<p>A few tasks have been created to get you started. You are welcome to change them, add to them, remove them - whatever works for you personally.</p>
+	
+	<p>A team has been created: <%= link_to_team(@team, "picturelink") %>. Currently you are the only member, but you can invite other people to join the team and help you with your chores.</p>
+	
+<% end %>
+
+<p>You should soon receive an email asking you to verify your email address. You will not receive any task reminder emails until you have clicked the link in that email.</p>
+
+<p>If you have any problems or questions, please use the contact link at the bottom of the page and get in touch!</p>
+
+<a href='/tasks/workload' class='action'>Click to go to your workload ...</a>

@@ -1,0 +1,13 @@
+db/openid-store/*
+db/backups/*
+log/*
+tmp/*
+public/videos/*
+public/pictures/0000/*
+public/exports/*
+backup_db
+restore_db
+nbproject/*
+*~
+config/database*
+Rakefile

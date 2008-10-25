@@ -1,0 +1,36 @@
+<% if session[:person].status == 'Site Creator' %>
+
+	<% @heading="Send newsletter" %>
+
+
+    <% @links = [] %>
+    <% @links += [{:url => "/newsletters", :title => "Newsletters", :accesskey => "n"}] %>
+	
+	
+	<h2>MyChores News: <%= h(@newsletter.title) %></h2>
+	
+	<%= textilize(@newsletter.details) %>
+	
+	<% form_tag(:action => 'do_send', :id => @newsletter) do %><div>
+	
+	
+	<table>		
+		<tr>
+			<th>From:</th>
+			<th>To:</th>
+		</tr>
+		<tr>
+			<td><input maxlength="10" name="send_from" id="send_from" size="10" type="text" /></td>
+			<td><input maxlength="10" name="send_to" id="send_to" size="10" type="text" /></td>
+		</tr>
+	</table>
+	
+	<br /><br />
+
+    <%= submit_tag 'Send' %>
+    </div><% end %>
+	
+	
+<% else %>
+	<%= access_denied() %>
+<% end %>

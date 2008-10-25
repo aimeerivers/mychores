@@ -1,0 +1,23 @@
+<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+
+	<% @heading=@team.name; %>
+	<% @h1class='team' %>
+	
+	<% @breadcrumbs = link_to_team(@team, 'breadcrumb') %>
+	
+	<% form_tag(:action => 'update', :id => @team) do %><div>
+	
+	  <%= render :partial => 'form' %>
+	  
+	  <%= submit_tag 'Save team' %>
+	</div><% end %>
+	
+	
+	
+
+
+<% else %>
+
+	<%= access_denied() %>
+	
+<% end %>

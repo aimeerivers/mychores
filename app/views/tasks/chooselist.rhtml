@@ -1,0 +1,26 @@
+<% @heading="New task - choose a list" %>
+<% @h1class='task' %>
+
+<% @breadcrumbs = "<a class='breadcrumb task' href='#'>New task</a>" %>
+
+<p>A task must be associated with a list. Please choose or create a list.</p>
+
+
+<% @myteams = find_my_teams %>
+
+<% form_tag({:action => 'new'}, {:method => 'get'}) do %><div>
+	<select id='list' name='list'>
+	<% for team in @myteams %>
+		<optgroup label="<%= team.name %>:">
+		<% for list in team.lists %>
+			<option value='<%= list.id %>'><%= list.name %></option>
+		<% end %>
+	<% end %>
+	</select>
+	
+	<input type="submit" value="Continue ..." />
+</div><% end %>
+
+<br />
+
+<p><a href='/lists/new' class='picturelink list'>New list ...</a></p>
