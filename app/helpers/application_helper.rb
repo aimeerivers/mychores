@@ -4,25 +4,25 @@ module ApplicationHelper
   require 'recaptcha'
   include ReCaptcha::ViewHelper
 
-	def link_to_person(to_link, specific_class)
-	   @controller.send(:link_to_person, to_link, specific_class)
-	end
+  def link_to_person(to_link, specific_class)
+    @controller.send(:link_to_person, to_link, specific_class)
+  end
 
-	def link_to_team(to_link, specific_class)
-	   @controller.send(:link_to_team, to_link, specific_class)
-	end
+  def link_to_team(to_link, specific_class)
+    @controller.send(:link_to_team, to_link, specific_class)
+  end
 
-	def link_to_list(to_link, specific_class)
-	   @controller.send(:link_to_list, to_link, specific_class)
-	end
+  def link_to_list(to_link, specific_class)
+    @controller.send(:link_to_list, to_link, specific_class)
+  end
 
-	def link_to_task(to_link, specific_class)
-	   @controller.send(:link_to_task, to_link, specific_class)
-	end
+  def link_to_task(to_link, specific_class)
+    @controller.send(:link_to_task, to_link, specific_class)
+  end
 
-	def link_to_tip(to_link)
-	   @controller.send(:link_to_tip, to_link)
-	end
+  def link_to_tip(to_link)
+    @controller.send(:link_to_tip, to_link)
+  end
 	
 	
 	
@@ -30,82 +30,82 @@ module ApplicationHelper
 	
 	
 
-	def access_denied()
-		@heading = "Access denied"
-		return "<p>Sorry, you don't have permission to view this page.</p>"
-	end
+  def access_denied()
+    @heading = "Access denied"
+    return "<p>Sorry, you don't have permission to view this page.</p>"
+  end
 
-	def is_member_of_team(this_person_id, this_team_id)
-		@membership_search = Membership.find(:first, :conditions => [ "person_id = ? and team_id = ?", this_person_id, this_team_id ])
-		if @membership_search.nil?
-			return false
-		else
-			return true
-		end
-	end
+  def is_member_of_team(this_person_id, this_team_id)
+    @membership_search = Membership.find(:first, :conditions => [ "person_id = ? and team_id = ?", this_person_id, this_team_id ])
+    if @membership_search.nil?
+      return false
+    else
+      return true
+    end
+  end
 
-	def is_confirmed_member_of_team(this_person_id, this_team_id)
-		@membership_search = Membership.find(:first, :conditions => [ "person_id = ? and team_id = ? and confirmed = 1", this_person_id, this_team_id ])
-		if @membership_search.nil?
-			return false
-		else
-			return true
-		end
-	end
+  def is_confirmed_member_of_team(this_person_id, this_team_id)
+    @membership_search = Membership.find(:first, :conditions => [ "person_id = ? and team_id = ? and confirmed = 1", this_person_id, this_team_id ])
+    if @membership_search.nil?
+      return false
+    else
+      return true
+    end
+  end
 	
-	def find_my_teams
-		@person = session[:person]
-		return Team.find_by_sql(["select * from teams where id in (select team_id from memberships where confirmed = 1 and person_id = ?) order by name ASC", @person.id])
-	end
+  def find_my_teams
+    @person = session[:person]
+    return Team.find_by_sql(["select * from teams where id in (select team_id from memberships where confirmed = 1 and person_id = ?) order by name ASC", @person.id])
+  end
 	
 	
 	
-	# Note this is duplicated in controllers/application.rb!
-	# Needs to be here too for the email to work.
-	def time_from_today(target_date, todays_date)
-		# Finds period of time between today and the target date
-		# If target_date is in the future it will be like '3 days time' or '2 weeks time'
-		# If target_date is in the past it will be like '4 days ago' or '1 week ago'
+  # Note this is duplicated in controllers/application.rb!
+  # Needs to be here too for the email to work.
+  def time_from_today(target_date, todays_date)
+    # Finds period of time between today and the target date
+    # If target_date is in the future it will be like '3 days time' or '2 weeks time'
+    # If target_date is in the past it will be like '4 days ago' or '1 week ago'
 
 		
-		if target_date == todays_date
-			return "today"
+    if target_date == todays_date
+      return "today"
 			
-		else
-			days_difference = target_date - todays_date
-			if days_difference == 1
-				return "tomorrow"
-			elsif days_difference == -1
-				return "yesterday"
+    else
+      days_difference = target_date - todays_date
+      if days_difference == 1
+        return "tomorrow"
+      elsif days_difference == -1
+        return "yesterday"
 				
-			else
-				absolute_difference = days_difference.abs
-				case absolute_difference
-					when 2..10 then return_string = absolute_difference.to_s + " days"
-					when 11..17 then return_string = "~2 weeks"
-					when 18..24 then return_string = "~3 weeks"
-					when 25..31 then return_string = "~4 weeks"
-					when 32..38 then return_string = "~5 weeks"
-					when 39..68 then return_string = "~2 months"
-					when 69..98 then return_string = "~3 months"
-					when 99..128 then return_string = "~4 months"
-					when 129..158 then return_string = "~5 months"
-					when 159..188 then return_string = "~6 months"
-				else return_string = "more than 6 months"
-				end
+      else
+        absolute_difference = days_difference.abs
+        case absolute_difference
+        when 2..10 then return_string = absolute_difference.to_s + " days"
+        when 11..17 then return_string = "~2 weeks"
+        when 18..24 then return_string = "~3 weeks"
+        when 25..31 then return_string = "~4 weeks"
+        when 32..38 then return_string = "~5 weeks"
+        when 39..68 then return_string = "~2 months"
+        when 69..98 then return_string = "~3 months"
+        when 99..128 then return_string = "~4 months"
+        when 129..158 then return_string = "~5 months"
+        when 159..188 then return_string = "~6 months"
+        else return_string = "more than 6 months"
+        end
 					
-				if days_difference > 1
-					return_string = "in " + return_string
-				else
-					return_string += " ago"
-				end
-			end
+        if days_difference > 1
+          return_string = "in " + return_string
+        else
+          return_string += " ago"
+        end
+      end
 			
-			return return_string
+      return return_string
 			
-		end
+    end
 		
-	end
+  end
 	
   def formatted_date(date_to_format)
     @controller.send(:formatted_date, date_to_format)
@@ -220,7 +220,7 @@ module ApplicationHelper
   def aimee_in_place_editor(field_id, options = {})
     img_tag="<img src='/images/edit.png' width='12' height='13' alt='click to edit' title='click to edit' id='edit-" + field_id + "' />"
     
-    function =  "new Ajax.InPlaceEditor("
+    function =  "new Ajax.AimeeInPlaceEditor("
     function << "'#{field_id}', "
     function << "'#{url_for(options[:url])}'"
 
@@ -244,7 +244,7 @@ module ApplicationHelper
     js_options['cancelLink'] = false
     js_options['clickToEditText'] = "''"
     js_options['externalControl'] = "'edit-" + field_id + "'"
-    js_options['onlyExternalControl'] = true
+    js_options['externalControlOnly'] = true
     js_options['value'] = "'" + escape_javascript(options[:value]) + "'" if options[:value]
     
     
@@ -260,7 +260,7 @@ module ApplicationHelper
   def aimee_in_place_date_editor(field_id, datevalue, options = {})
     img_tag="<img src='/images/edit.png' width='12' height='13' alt='click to edit' title='click to edit' id='edit-" + field_id + "' />"
     
-    function =  "new Ajax.InPlaceDateEditor("
+    function =  "new Ajax.AimeeInPlaceDateEditor("
     function << "'#{field_id}', "
     function << "'#{url_for(options[:url])}'"
 
