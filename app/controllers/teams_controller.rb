@@ -26,9 +26,9 @@ class TeamsController < ApplicationController
     @person = session[:person]
     @team.person_id = @person.id # created by
     if @team.save
-		validitykey = Person.sha1(@person.name + Time.now.to_s)
-    	@membership = Membership.new(:team_id => @team.id, :person_id => session[:person].id, :confirmed => 1, :validity_key => validitykey)
-    	@membership.save
+      validitykey = Person.sha1(@person.name + Time.now.to_s)
+      @membership = Membership.new(:team_id => @team.id, :person_id => session[:person].id, :confirmed => 1, :validity_key => validitykey)
+      @membership.save
       redirect_to :action => 'show', :id => @team.id
     else
       render :action => 'new'
@@ -52,109 +52,108 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     if @team.person_id == session[:person].id
 	 	  
-	 	  @team.memberships.each do |membership|
-	 	    membership.destroy
-	 	  end
+      @team.memberships.each do |membership|
+        membership.destroy
+      end
 	 	  
-	 	  @team.destroy
+      @team.destroy
 	 	  
 	 	  
 	 	  
-	 	  flash[:notice] = "Your team was deleted successfully."
-	  else
-	 	  flash[:notice] = "Team not deleted. You can only delete teams which you created."
-	  end
+      flash[:notice] = "Your team was deleted successfully."
+    else
+      flash[:notice] = "Team not deleted. You can only delete teams which you created."
+    end
 	 
     redirect_to :controller => 'tasks', :action => 'workload'
   end
   
   
   
-	def invite
-		@team = Team.find(params[:id])
-		@check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = ?", session[:person].id, @team.id]
-		if @check.empty?
-			flash[:notice] = "You cannot invite someone to join this team because you are not a member of it yourself."
-			redirect_to :controller => 'teams', :action => 'show', :id => @team.id
-		else
-			@person = session[:person]
-		end
-	end
+  def invite
+    @team = Team.find(params[:id])
+    @check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = ?", session[:person].id, @team.id]
+    if @check.empty?
+      flash[:notice] = "You cannot invite someone to join this team because you are not a member of it yourself."
+      redirect_to :controller => 'teams', :action => 'show', :id => @team.id
+    else
+      @person = session[:person]
+    end
+  end
   
   
   
-	def invitesend
-		@team = Team.find(params[:id])
+  def invitesend
+    @team = Team.find(params[:id])
 		
-		if params[:email].empty?
-			flash[:notice] = "You didn't enter an email address."
-			redirect_to :controller => 'teams', :action => 'invite', :id => @team.id
-		else
+    if params[:email].empty?
+      flash[:notice] = "You didn't enter an email address."
+      redirect_to :controller => 'teams', :action => 'invite', :id => @team.id
+    else
 		
-			# Are they allowed to invite someone into this team?
-			@check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = ?", session[:person].id, @team.id]
-			if @check.empty?
-				flash[:notice] = "You cannot invite someone to join this team because you are not a member of it yourself."
-				redirect_to :controller => 'teams', :action => 'show', :id => @team.id
+      # Are they allowed to invite someone into this team?
+      @check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = ?", session[:person].id, @team.id]
+      if @check.empty?
+        flash[:notice] = "You cannot invite someone to join this team because you are not a member of it yourself."
+        redirect_to :controller => 'teams', :action => 'show', :id => @team.id
 				
-			else
-				# Is the person they invited already registered with MyChores?
-				@personinvited = Person.find(:first, :conditions => [ "email = ?", params[:email] ])
-				if @personinvited.nil?
+      else
+        # Is the person they invited already registered with MyChores?
+        @personinvited = Person.find(:first, :conditions => [ "email = ?", params[:email] ])
+        if @personinvited.nil?
 				
-					# Just check that they haven't been invited before ...
-					@invitedbefore = Invitation.find(:first, :conditions => [ "email = ? and team_id = ?", params[:email], @team.id] )
+          # Just check that they haven't been invited before ...
+          @invitedbefore = Invitation.find(:first, :conditions => [ "email = ? and team_id = ?", params[:email], @team.id] )
 					
-					if @invitedbefore.nil?
-						# Send the email
-						# Notifier::deliver_signup_teaminvite(@team, params[:email], params[:message], session[:person].email)
+          if @invitedbefore.nil?
+            # Send the email
+            # Notifier::deliver_signup_teaminvite(@team, params[:email], params[:message], session[:person].email)
 						
-						# Add into invitations table
-						@invitation = Invitation.new(
-							:person_id => session[:person].id,
-							:team_id => @team.id,
-							:email => params[:email],
-							:code => Person.sha1(params[:email] + Time.now.to_s),
-							:accepted => false)
-						@invitation.save
+            # Add into invitations table
+            @invitation = Invitation.new(
+              :person_id => session[:person].id,
+              :team_id => @team.id,
+              :email => params[:email],
+              :code => Person.sha1(params[:email] + Time.now.to_s),
+              :accepted => false)
+            @invitation.save
 						
-						# Send an email
-				      @email = Email.new
-				      @email.subject = "Invitation to join a team at mychores.co.uk"
-				      @email.message = params[:message] + "
+            # Send an email
+            @email = Email.new
+            @email.subject = "Invitation to join a team at mychores.co.uk"
+            @email.message = params[:message] + "
 
 Please use the following link to sign up and join the team:
 http://www.mychores.co.uk/admin/register?code=" + @invitation.code
 				      
-				      @email.to = params[:email]
-				      @email.bcc = "contact@mychores.co.uk"
-				      @email.save
+            @email.to = params[:email]
+            @email.save
 						
-						flash[:notice] = "An invitation will shortly be sent inviting " + params[:email] + " to join this team." 
+            flash[:notice] = "An invitation will shortly be sent inviting " + params[:email] + " to join this team."
 						
-					else
-						flash[:notice] = params[:email] + " has already been invited to join " + @team.name + "." 
-					end
+          else
+            flash[:notice] = params[:email] + " has already been invited to join " + @team.name + "."
+          end
 					
-				else
-					# The email address they entered belongs to someone already registered on MyChores
-					# Are they already in the team?
-					@alreadyinteam = Membership.find(:first, :conditions => [ "team_id = ? and person_id = ?", @team.id, @personinvited.id ])
+        else
+          # The email address they entered belongs to someone already registered on MyChores
+          # Are they already in the team?
+          @alreadyinteam = Membership.find(:first, :conditions => [ "team_id = ? and person_id = ?", @team.id, @personinvited.id ])
 					
-					if @alreadyinteam.nil?
-						# Make a membership record
-						validitykey = Person.sha1(@personinvited.name + Time.now.to_s)
-						@membership = Membership.new(:team_id => @team.id, :person_id => @personinvited.id, :invited => 1, :confirmed => 0, :validity_key => validitykey)
-						@membership.save
+          if @alreadyinteam.nil?
+            # Make a membership record
+            validitykey = Person.sha1(@personinvited.name + Time.now.to_s)
+            @membership = Membership.new(:team_id => @team.id, :person_id => @personinvited.id, :invited => 1, :confirmed => 0, :validity_key => validitykey)
+            @membership.save
 					
-						# Send the invitee the standard email to invite them into a team
-						# Notifier::deliver_meminvite(@team, @personinvited)
+            # Send the invitee the standard email to invite them into a team
+            # Notifier::deliver_meminvite(@team, @personinvited)
 						
 						
-				      # Send an email
-				      @email = Email.new
-				      @email.subject = "New membership invitation from mychores.co.uk"
-				      @email.message = "Dear " + @personinvited.name + ",
+            # Send an email
+            @email = Email.new
+            @email.subject = "New membership invitation from mychores.co.uk"
+            @email.message = "Dear " + @personinvited.name + ",
 
 You have been invited to join a team: " + @team.name + ".
 
@@ -163,24 +162,23 @@ Login to MyChores to accept or decline this invitation. You'll find the links wh
 If you have any problems please email contact@mychores.co.uk
 
 http://www.mychores.co.uk"
-				      @email.to = @personinvited.email
-				      @email.bcc = "contact@mychores.co.uk"
-				      @email.save
+            @email.to = @personinvited.email
+            @email.save
 						
 						
-						flash[:notice] = @personinvited.name + " is already registered on MyChores. An invitation will be sent inviting " + @personinvited.name + " to join " + @team.name + "."
+            flash[:notice] = @personinvited.name + " is already registered on MyChores. An invitation will be sent inviting " + @personinvited.name + " to join " + @team.name + "."
 						
-					else
-						# They are already a member of the team!
-						flash[:notice] = @personinvited.name + " is already a member, or has already been invited to join " + @team.name + "."
-					end
+          else
+            # They are already a member of the team!
+            flash[:notice] = @personinvited.name + " is already a member, or has already been invited to join " + @team.name + "."
+          end
 					
-				end
-			end
+        end
+      end
 			
-			redirect_to :controller => 'teams', :action => 'show', :id => @team.id
-		end
-	end
+      redirect_to :controller => 'teams', :action => 'show', :id => @team.id
+    end
+  end
 	
 	
 	
@@ -188,42 +186,42 @@ http://www.mychores.co.uk"
   
   
   
-	def add_virtual
-		@team = Team.find(params[:id])
-		@check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = ?", session[:person].id, @team.id]
-		if @check.empty?
-			flash[:notice] = "You cannot invite someone to join this team because you are not a member of it yourself."
-			redirect_to :controller => 'teams', :action => 'show', :id => @team.id
-		else
-			@person = session[:person]
+  def add_virtual
+    @team = Team.find(params[:id])
+    @check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = ?", session[:person].id, @team.id]
+    if @check.empty?
+      flash[:notice] = "You cannot invite someone to join this team because you are not a member of it yourself."
+      redirect_to :controller => 'teams', :action => 'show', :id => @team.id
+    else
+      @person = session[:person]
 			
-			unless params[:name].nil? or params[:name].empty?
-			   name = params[:name]
+      unless params[:name].nil? or params[:name].empty?
+        name = params[:name]
 			   
-			   # Create the virtual person record
-			   @virtualmember = Person.new(:name => name, :usertype => 2, :email => 'virtual@mychores.co.uk', :login => Person.sha1(name + Time.now.to_s), :password => Person.sha1(name.reverse + Time.now.to_s), :password_confirmation => Person.sha1(name.reverse + Time.now.to_s), :timezone_name => @person.timezone_name, :parent_id => @person.id)
-			   if @virtualmember.save
+        # Create the virtual person record
+        @virtualmember = Person.new(:name => name, :usertype => 2, :email => 'virtual@mychores.co.uk', :login => Person.sha1(name + Time.now.to_s), :password => Person.sha1(name.reverse + Time.now.to_s), :password_confirmation => Person.sha1(name.reverse + Time.now.to_s), :timezone_name => @person.timezone_name, :parent_id => @person.id)
+        if @virtualmember.save
 			   
-  			     # Create the preference (for consistency and in case they ever convert to a real member)
-  			     @virtualpreference = Preference.new(:person_id => @virtualmember.id)
-                 @virtualpreference.save
+          # Create the preference (for consistency and in case they ever convert to a real member)
+          @virtualpreference = Preference.new(:person_id => @virtualmember.id)
+          @virtualpreference.save
                  
-                 # Join to the team
-                 @membership = Membership.new(:person_id => @virtualmember.id, :team_id => @team.id, :confirmed => true)
-                 @membership.save
+          # Join to the team
+          @membership = Membership.new(:person_id => @virtualmember.id, :team_id => @team.id, :confirmed => true)
+          @membership.save
                
-                 flash[:notice] = "Virtual team member successfully added."
-                 redirect_to :controller => 'teams', :action => 'show', :id => @team.id
+          flash[:notice] = "Virtual team member successfully added."
+          redirect_to :controller => 'teams', :action => 'show', :id => @team.id
                
-               else
+        else
                
-                 flash[:notice] = "Virtual team member could not be added."
-                 redirect_to :controller => 'teams', :action => 'add_virtual', :id => @team.id
+          flash[:notice] = "Virtual team member could not be added."
+          redirect_to :controller => 'teams', :action => 'add_virtual', :id => @team.id
                
-               end
-			end
-		end
-	end
+        end
+      end
+    end
+  end
 	
 	
 	
@@ -301,103 +299,103 @@ http://www.mychores.co.uk"
 	
 	
 	
-#	def updateall
-		# useful for adding in some controlled fields, eg the  code.
-		# should not be available all the time.
-#		@teams = Team.find(:all)
-#		for team in @teams
-#			team.save
-#		end
-#	end
+  #	def updateall
+  # useful for adding in some controlled fields, eg the  code.
+  # should not be available all the time.
+  #		@teams = Team.find(:all)
+  #		for team in @teams
+  #			team.save
+  #		end
+  #	end
 	
 	
 	
-	def rss
-		@team = Team.find_by_code(params[:id])
-		@completions = Completion.find_by_sql ["select * from completions where date_completed >= DATE_SUB(CURDATE(),INTERVAL 7 DAY) and task_id in (select id from tasks where list_id in (select id from lists where team_id = ?)) order by date_completed desc, created_on desc", @team.id]
-		render(:layout => false, :content_type => 'application/rss+xml')
-	end
+  def rss
+    @team = Team.find_by_code(params[:id])
+    @completions = Completion.find_by_sql ["select * from completions where date_completed >= DATE_SUB(CURDATE(),INTERVAL 7 DAY) and task_id in (select id from tasks where list_id in (select id from lists where team_id = ?)) order by date_completed desc, created_on desc", @team.id]
+    render(:layout => false, :content_type => 'application/rss+xml')
+  end
 	
 	
 	
-	def icalendar
-	    require 'icalendar'
-	    # include 'Icalendar'
+  def icalendar
+    require 'icalendar'
+    # include 'Icalendar'
 	    
-		@team = Team.find_by_code(params[:id])
-		@teamtasks = Task.find_by_sql ["select * from tasks where status='active' and list_id in (select id from lists where team_id in (select id from teams where id = ?)) order by next_due ASC, list_id ASC, name ASC", @team.id]
+    @team = Team.find_by_code(params[:id])
+    @teamtasks = Task.find_by_sql ["select * from tasks where status='active' and list_id in (select id from lists where team_id in (select id from teams where id = ?)) order by next_due ASC, list_id ASC, name ASC", @team.id]
 		
 		
-		unless params[:type].nil?
-		  objecttype = params[:type]
-		else
-		  objecttype = "todo"
-		end
+    unless params[:type].nil?
+      objecttype = params[:type]
+    else
+      objecttype = "todo"
+    end
 		
 		
-		@ical = Icalendar::Calendar.new
+    @ical = Icalendar::Calendar.new
 		
-		for task in @teamtasks
+    for task in @teamtasks
 		
 		
-		  # Could either be an event or a todo
-		  if objecttype == "event"
-		    todo = Icalendar::Event.new
-		    todo.dtstart = Date.parse(task.next_due.to_s)
-		  else
-		    todo = Icalendar::Todo.new
-		    todo.due = Date.parse(task.next_due.to_s)
-		  end
+      # Could either be an event or a todo
+      if objecttype == "event"
+        todo = Icalendar::Event.new
+        todo.dtstart = Date.parse(task.next_due.to_s)
+      else
+        todo = Icalendar::Todo.new
+        todo.due = Date.parse(task.next_due.to_s)
+      end
 		  
 		  
-		  todo.summary = task.list.name + ": " + task.name
+      todo.summary = task.list.name + ": " + task.name
 		  
-		  todo.url = URI.parse("http://www.mychores.co.uk/tasks/show/" + task.id.to_s)
-		  todo.status = "NEEDS-ACTION"
+      todo.url = URI.parse("http://www.mychores.co.uk/tasks/show/" + task.id.to_s)
+      todo.status = "NEEDS-ACTION"
 		  
-		  if task.description.empty?
-		    todo.description = "This task has no description."
-		  else
-		    todo.description = task.description.dump
-		  end
+      if task.description.empty?
+        todo.description = "This task has no description."
+      else
+        todo.description = task.description.dump
+      end
 		  
-		  todo.add_category(task.list.name)
+      todo.add_category(task.list.name)
 		  
-		  # Recurrence
-		  unless task.one_off == true
-		    if task.recurrence_measure == 'days'
-		      frequency = 'DAILY'
-		    elsif task.recurrence_measure == 'weeks'
-		      frequency = 'WEEKLY'
-		    elsif task.recurrence_measure == 'months'
-		      frequency = 'MONTHLY'
-		    end
-		    # todo.add_recurrence_rule("FREQ=" + frequency + ";INTERVAL=" + task.recurrence_interval.to_s)
-		  end
+      # Recurrence
+      unless task.one_off == true
+        if task.recurrence_measure == 'days'
+          frequency = 'DAILY'
+        elsif task.recurrence_measure == 'weeks'
+          frequency = 'WEEKLY'
+        elsif task.recurrence_measure == 'months'
+          frequency = 'MONTHLY'
+        end
+        # todo.add_recurrence_rule("FREQ=" + frequency + ";INTERVAL=" + task.recurrence_interval.to_s)
+      end
 		  
-		  # Priority
-		  # Let's take MyChores importance, inverted, to iCalendar priority.
+      # Priority
+      # Let's take MyChores importance, inverted, to iCalendar priority.
 		  
-		  todo.priority = task.current_importance
+      todo.priority = task.current_importance
 		  
-		  case task.current_importance
-		    when 7: todo.priority = 1 # highest
-		    when 6: todo.priority = 2
-		    when 5: todo.priority = 4
-		    when 4: todo.priority = 5 # medium
-		    when 3: todo.priority = 6
-		    when 2: todo.priority = 8
-		    when 1: todo.priority = 9 # lowest
-		  end
+      case task.current_importance
+      when 7: todo.priority = 1 # highest
+      when 6: todo.priority = 2
+      when 5: todo.priority = 4
+      when 4: todo.priority = 5 # medium
+      when 3: todo.priority = 6
+      when 2: todo.priority = 8
+      when 1: todo.priority = 9 # lowest
+      end
 		  
 		  
-		  @ical.add_todo(todo)
-		end
+      @ical.add_todo(todo)
+    end
 		
-		@cal_string = @ical.to_ical
+    @cal_string = @ical.to_ical
 		
-		render(:layout => false, :content_type => 'text/calendar')
-	end
+    render(:layout => false, :content_type => 'text/calendar')
+  end
 	
 	
   
@@ -490,11 +488,11 @@ http://www.mychores.co.uk"
   
   def lists
     @team = Team.find(params[:id])
-		@check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = ?", session[:person].id, @team.id]
-		if @check.empty?
-			output = "You cannot view this team's lists because you are not a team member."
-		else
-		  output = ""
+    @check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = ?", session[:person].id, @team.id]
+    if @check.empty?
+      output = "You cannot view this team's lists because you are not a team member."
+    else
+      output = ""
       @team.lists.each do |list|
         output += "<li>"
         output += link_to_list(list, 'picturelink')

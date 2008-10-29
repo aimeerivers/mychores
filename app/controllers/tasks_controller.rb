@@ -1404,7 +1404,6 @@ http://www.mychores.co.uk/admin/forgotpassword
 http://www.mychores.co.uk"
 				      
     @email.to = @persontonudge.email
-    @email.bcc = "contact@mychores.co.uk"
     @email.save
 						
     flash[:notice] = "Your nudge will be sent shortly."

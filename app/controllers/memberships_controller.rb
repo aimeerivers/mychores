@@ -1,62 +1,61 @@
 class MembershipsController < ApplicationController
 
-	def memrequest
-		if params[:team]
-			@team = Team.find(params[:team])
-			@person = session[:person]
-			validitykey = Person.sha1(@person.name + Time.now.to_s)
+  def memrequest
+    if params[:team]
+      @team = Team.find(params[:team])
+      @person = session[:person]
+      validitykey = Person.sha1(@person.name + Time.now.to_s)
 			
-			@membership = Membership.new(:team_id => @team.id, :person_id => @person.id, :requested => 1, :confirmed => 0, :validity_key => validitykey)
-			@membership.save
+      @membership = Membership.new(:team_id => @team.id, :person_id => @person.id, :requested => 1, :confirmed => 0, :validity_key => validitykey)
+      @membership.save
 			
-      	flash[:notice] = 'Your request to join this team was noted.'
-      	redirect_to :controller => 'teams', :action => 'show', :id => @team.id
+      flash[:notice] = 'Your request to join this team was noted.'
+      redirect_to :controller => 'teams', :action => 'show', :id => @team.id
       	
-      	# Notifier::deliver_memrequest(@team, @person)
+      # Notifier::deliver_memrequest(@team, @person)
       	
-	      # Send an email
-	      @email = Email.new
-	      @email.subject = "New membership request from mychores.co.uk"
-	      @email.message = "Dear " + @team.person.name + ",
+      # Send an email
+      @email = Email.new
+      @email.subject = "New membership request from mychores.co.uk"
+      @email.message = "Dear " + @team.person.name + ",
 
-" + @person.name + " (" + @person.login + ") has asked to join your team: " + @team.name + ".
+      " + @person.name + " (" + @person.login + ") has asked to join your team: " + @team.name + ".
 
 Login to MyChores to view their profile and accept or decline this request. You'll find the links when you login.
 
 If you have any problems please email contact@mychores.co.uk
 
 http://www.mychores.co.uk"
-	      @email.to = @team.person.email
-	      @email.bcc = "contact@mychores.co.uk"
-	      @email.save
-		end
-	end
+      @email.to = @team.person.email
+      @email.save
+    end
+  end
 	
-	def invite
-		@invitee = Person.find(params[:person])
-	end
+  def invite
+    @invitee = Person.find(params[:person])
+  end
 
-	def meminvite
-		if params[:team] && params[:person]
-			@team = Team.find(params[:team])
-			@person = Person.find(params[:person])
+  def meminvite
+    if params[:team] && params[:person]
+      @team = Team.find(params[:team])
+      @person = Person.find(params[:person])
 			
-			@check = Membership.find(:first, :conditions => [ "person_id = ? AND team_id = ?", @person.id, @team.id])
+      @check = Membership.find(:first, :conditions => [ "person_id = ? AND team_id = ?", @person.id, @team.id])
 			
-			if @check.nil?
-				validitykey = Person.sha1(@person.name + Time.now.to_s)
+      if @check.nil?
+        validitykey = Person.sha1(@person.name + Time.now.to_s)
 			
-				@membership = Membership.new(:team_id => @team.id, :person_id => @person.id, :invited => 1, :confirmed => 0, :validity_key => validitykey)
-				@membership.save
+        @membership = Membership.new(:team_id => @team.id, :person_id => @person.id, :invited => 1, :confirmed => 0, :validity_key => validitykey)
+        @membership.save
 				
-	      	flash[:notice] = 'An invitation will be sent shortly.'
+        flash[:notice] = 'An invitation will be sent shortly.'
       	
-      		# Notifier::deliver_meminvite(@team, @person)
+        # Notifier::deliver_meminvite(@team, @person)
 						
-		      # Send an email
-		      @email = Email.new
-		      @email.subject = "New membership invitation from mychores.co.uk"
-		      @email.message = "Dear " + @person.name + ",
+        # Send an email
+        @email = Email.new
+        @email.subject = "New membership invitation from mychores.co.uk"
+        @email.message = "Dear " + @person.name + ",
 
 You have been invited to join a team: " + @team.name + ".
 
@@ -65,39 +64,38 @@ Login to MyChores to accept or decline this invitation. You'll find the links wh
 If you have any problems please email contact@mychores.co.uk
 
 http://www.mychores.co.uk"
-		      @email.to = @person.email
-		      @email.bcc = "contact@mychores.co.uk"
-		      @email.save
+        @email.to = @person.email
+        @email.save
 	      	
-			else
-				flash[:notice] = 'Invitation not saved. Either the person is already a member, or an invitation has already been sent.'
-			end
-      	redirect_to :controller => 'people', :action => 'show', :id => @person.id
-		end
-	end
+      else
+        flash[:notice] = 'Invitation not saved. Either the person is already a member, or an invitation has already been sent.'
+      end
+      redirect_to :controller => 'people', :action => 'show', :id => @person.id
+    end
+  end
 
-	def memaccept
-		@membership = Membership.find(params[:id])
-		if @membership.validity_key == params[:key]
-			@membership.confirmed = 1
-			@membership.save
-			flash[:notice] = 'Membership successfully updated.'
-		else
-			flash[:notice] = 'Error: validity check failed. Membership details not updated.'
-		end
-		redirect_to :controller => 'tasks', :action => 'workload'
-	end
+  def memaccept
+    @membership = Membership.find(params[:id])
+    if @membership.validity_key == params[:key]
+      @membership.confirmed = 1
+      @membership.save
+      flash[:notice] = 'Membership successfully updated.'
+    else
+      flash[:notice] = 'Error: validity check failed. Membership details not updated.'
+    end
+    redirect_to :controller => 'tasks', :action => 'workload'
+  end
 
-	def memdecline
-		@membership = Membership.find(params[:id])
-		if @membership.validity_key == params[:key]
-			@membership.destroy
-			flash[:notice] = 'Membership declined.'
-		else
-			flash[:notice] = 'Error: validity check failed. Membership details not updated.'
-		end
-		redirect_to :controller => 'tasks', :action => 'workload'
-	end
+  def memdecline
+    @membership = Membership.find(params[:id])
+    if @membership.validity_key == params[:key]
+      @membership.destroy
+      flash[:notice] = 'Membership declined.'
+    else
+      flash[:notice] = 'Error: validity check failed. Membership details not updated.'
+    end
+    redirect_to :controller => 'tasks', :action => 'workload'
+  end
 	
   def index
     redirect_to :controller => 'tasks', :action => 'workload'
@@ -116,46 +114,46 @@ http://www.mychores.co.uk"
     @team = @membership.team
     
     if params[:returnto] then
-   	returnto = params[:returnto] 
+      returnto = params[:returnto]
     else
-    	returnto = "team"
+      returnto = "team"
     end
     
     allowedtodelete = false
     
     if @person.id == session[:person].id then
-    	allowedtodelete = true # allowed to remove yourself from a team
+      allowedtodelete = true # allowed to remove yourself from a team
     elsif @team.person.id == session[:person].id then
-    	allowedtodelete = true # allowed to remove someone from a team you created
+      allowedtodelete = true # allowed to remove someone from a team you created
     end
     
     if allowedtodelete == true then
-    	@membership.destroy
+      @membership.destroy
     	
-    	# now we've got to find if any tasks were assigned to them in the team
-    	@tasks = Task.find(:all, :conditions => [ "list_id in (select id from lists where team_id = ?) and person_id = ?", @team.id, @person.id ])
-    	for task in @tasks
-    		task.person_id = nil
-    		# yes, i could work out the next person in the rotation, but it's complicated.
-    		# people aren't often removed from teams so we can just turn off rotation.
-    		task.rotate = 0
-    		task.save
-    	end
+      # now we've got to find if any tasks were assigned to them in the team
+      @tasks = Task.find(:all, :conditions => [ "list_id in (select id from lists where team_id = ?) and person_id = ?", @team.id, @person.id ])
+      for task in @tasks
+        task.person_id = nil
+        # yes, i could work out the next person in the rotation, but it's complicated.
+        # people aren't often removed from teams so we can just turn off rotation.
+        task.rotate = 0
+        task.save
+      end
     	
-    	flash[:notice] = @person.name + " has been successfully removed from " + @team.name + "."
+      flash[:notice] = @person.name + " has been successfully removed from " + @team.name + "."
     else
-    	flash[:notice] = "You are not able to remove that person from that team."
-    	returnto = "workload"
+      flash[:notice] = "You are not able to remove that person from that team."
+      returnto = "workload"
     end
     
     if returnto == "person"
-    	# return to person
-    	redirect_to :controller => 'people', :action => 'show', :id => @person.id
+      # return to person
+      redirect_to :controller => 'people', :action => 'show', :id => @person.id
     elsif returnto == "workload"
-    	redirect_to :controller => 'tasks', :action => 'workload'
+      redirect_to :controller => 'tasks', :action => 'workload'
     else
-    	# return to team
-    	redirect_to :controller => 'teams', :action => 'show', :id => @team.id
+      # return to team
+      redirect_to :controller => 'teams', :action => 'show', :id => @team.id
     end
   end
   

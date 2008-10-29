@@ -206,7 +206,6 @@ If you have any problems please email contact@mychores.co.uk
 
 http://www.mychores.co.uk"
           @email.to = @persontoemail.email
-          @email.bcc = "contact@mychores.co.uk"
           @email.save
           # Notifier::deliver_password_reset_link(@persontoemail)
         end
@@ -392,7 +391,6 @@ If you have any problems please email contact@mychores.co.uk
       
 http://www.mychores.co.uk"
         @email.to = @person.email
-        @email.bcc = "contact@mychores.co.uk"
         @email.save
           
       end
@@ -671,7 +669,6 @@ If you have any problems please email contact@mychores.co.uk
 
 http://www.mychores.co.uk"
     @email.to = @person.email
-    @email.bcc = "contact@mychores.co.uk"
     @email.save
     
     
