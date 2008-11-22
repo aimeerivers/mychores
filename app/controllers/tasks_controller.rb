@@ -919,45 +919,34 @@ class TasksController < ApplicationController
       unless params[:flash] == 'none'
         flash[:notice] = flash_message
       end
-      
+
       respond_to do |format|
-        format.js do
-          render :nothing => true
-          return
-        end
-        format.html do
+        format.js { render :nothing => true; return; } # Get out of here!
+        format.html {} # continue ...
+      end
 		
-          # redirect back
-          if params[:list]
-            # if we came from a list, return to that list
-            redirect_to :controller => 'lists', :action => 'show', :id => params[:list]
+      # redirect back
+      if params[:list]
+        # if we came from a list, return to that list
+        redirect_to :controller => 'lists', :action => 'show', :id => params[:list]
 		   	
-          elsif params[:team]
-            # if we came from a team, return to that team workload
-            redirect_to :controller => 'teams', :action => 'teamworkload', :id => params[:team]
+      elsif params[:team]
+        # if we came from a team, return to that team workload
+        redirect_to :controller => 'teams', :action => 'teamworkload', :id => params[:team]
 		   	
-          elsif params[:return]
-            if params[:return] == 'task'
-              # then go back to the task
-              redirect_to :action => 'show', :id => @task.id
-            elsif params[:return] == 'calendar'
-              # then go back to the calendar
-              redirect_to :action => 'calendar'
-            elsif params[:return] == 'matrix'
-              # then go back to the matrix
-              redirect_to :action => 'matrix'
-            elsif params[:return] == 'collage'
-              # then go back to the matrix
-              redirect_to :action => 'collage'
-            else
-              redirect_to :action => 'workload'
-            end
-          else
-            # otherwise go to the workload
-            redirect_to :action => 'workload'
-          end
-          
+      elsif params[:return]
+        if params[:return] == 'task'
+          # then go back to the task
+          redirect_to :action => 'show', :id => @task.id
+        elsif params[:return] == 'calendar'
+          # then go back to the calendar
+          redirect_to :action => 'calendar'
+        else
+          redirect_to :action => 'workload'
         end
+      else
+        # otherwise go to the workload
+        redirect_to :action => 'workload'
       end
 			
     else
