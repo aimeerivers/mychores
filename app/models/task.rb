@@ -1,5 +1,7 @@
 class Task < ActiveRecord::Base
 
+  include ActionView::Helpers::TextHelper
+
   belongs_to(:list)
   validates_associated(:list)
 
@@ -17,6 +19,10 @@ class Task < ActiveRecord::Base
 
   before_create :check_rotation
   before_update :check_rotation
+
+  def short_name
+    truncate(name)
+  end
 
 
   def describe_recurrence

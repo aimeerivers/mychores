@@ -1,6 +1,6 @@
 <% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
 
-  <% @heading=@task.name %>
+  <% @heading=@task.short_name %>
   <% @h1class='task' %>
 
   <% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; " + link_to_task(@task, 'breadcrumb') %>

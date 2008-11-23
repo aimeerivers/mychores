@@ -108,10 +108,10 @@ class ApplicationController < ActionController::Base
       style=""
     end
 	    
-    javascript_safe_name = (to_link.name).to_s.gsub(/\"/, "").gsub(/\'/, "")
+    javascript_safe_name = (to_link.short_name).to_s.gsub(/\"/, "").gsub(/\'/, "")
 		
     return_string = "<span class='specialhover'>"
-    return_string += "<a href='/tasks/show/" + to_link.id.to_s + "' class='" + specific_class + " task'" + style + " title='" + to_link.recurrence_description + "'>" + h(to_link.name) + "</a>"
+    return_string += "<a href='/tasks/show/" + to_link.id.to_s + "' class='" + specific_class + " task'" + style + " title='" + to_link.recurrence_description + "'>" + h(to_link.short_name) + "</a>"
     return_string += "<div>"
     return_string += "<a href='/tasks/edit/" + to_link.id.to_s + "'>" + "Edit task".t + "</a><br />"
     return_string += "<a href='/tasks/markdone/" + to_link.id.to_s + "'>" + "Mark as done".t + "</a><br />"
