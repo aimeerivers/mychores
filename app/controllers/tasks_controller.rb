@@ -1317,7 +1317,7 @@ Please login to MyChores to tick off your tasks!"
                       assignee = Person.find(task.person_id).login
                     end
 										
-                    csv << ["#{task.name}", "#{task.recurrence_description}", "#{lastdone}", "#{lastdoneby}", "#{assignee}", "#{task.next_due.strftime('%d %b %Y')}", "#{task.description}"]
+                    csv << ["#{task.short_name}", "#{task.recurrence_description}", "#{lastdone}", "#{lastdoneby}", "#{assignee}", "#{task.next_due.strftime('%d %b %Y')}", "#{task.description}"]
                   end
                 else
                   csv << ["(no tasks)"]
