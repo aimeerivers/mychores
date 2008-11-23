@@ -4,10 +4,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
-    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -15,79 +15,79 @@
 
 
 <table>
-    <tr>
-        <td>
+  <tr>
+    <td>
 
-<% form_tag(:action=> "register") do %><div>
+      <% form_tag(:action=> "register") do %><div>
 
-  <%= error_messages_for 'person' %><br/>
-  
-	<table>
-		<tr>
-			<th>Desired login id:</th>
-			<td><%= text_field("person", "login", :class => 'styled', :maxlength => 40) %></td>
-		</tr>
-		<tr>
-			<th>Name:</th>
-			<td><%= text_field("person", "name", :class => 'styled', :maxlength => 40) %></td>
-		</tr>
-		<tr>
-			<th>Choose password:</th>
-			<td><%= password_field("person", "password", :class => 'styled', :maxlength => 30) %></td>
-		</tr>
-		<tr>
-			<th>Confirm password:</th>
-			<td><%= password_field("person", "password_confirmation", :class => 'styled', :maxlength => 30) %></td>
-		</tr>
-		<tr>
-			<th>Email address:</th>
-			<td><%= text_field("person", "email", :class => 'styled', :maxlength => 255, :value => session[:email]) %></td>
-		</tr>
-		<tr>
-			<th>Timezone/location:</th>
-			<td><%= time_zone_select('person', 'timezone_name') %><br /><br /></td>
-		</tr>
-		
-		<tr>
-			<th>reCAPTCHA:</th>
-			<td>
-			  <%= get_captcha() %>
-			</td>
-		</tr>
-		
-		<tr>
-			<td colspan='2'><br /><br />
-				If somebody referred you here, please enter their login id if you know it.
-			</td>
-		</tr>
-		
-		<tr>
-			<th>Referrer id:</th>
-			<td><%= text_field("person", "referrer", :class => 'styled', :maxlength => 40, :value => session[:referrer]) %></td>
-		</tr>
+        <%= error_messages_for 'person' %><br/>
 
-	</table>
-  
-  <br />
+          <table>
+            <tr>
+              <th><%= label(:person, :login, 'Desired login id') %>:</th>
+              <td><%= text_field("person", "login", :class => 'styled', :maxlength => 40) %></td>
+            </tr>
+            <tr>
+              <th><%= label(:person, :name) %>:</th>
+              <td><%= text_field("person", "name", :class => 'styled', :maxlength => 40) %></td>
+            </tr>
+            <tr>
+              <th><%= label(:person, :password, 'Choose password') %>:</th>
+              <td><%= password_field("person", "password", :class => 'styled', :maxlength => 30) %></td>
+            </tr>
+            <tr>
+              <th><%= label(:person, :password_confirmation, 'Confirm password') %>:</th>
+              <td><%= password_field("person", "password_confirmation", :class => 'styled', :maxlength => 30) %></td>
+            </tr>
+            <tr>
+              <th><%= label(:person, :email, 'Email address') %>:</th>
+              <td><%= text_field("person", "email", :class => 'styled', :maxlength => 255, :value => session[:email]) %></td>
+            </tr>
+            <tr>
+              <th><%= label(:person, :timezone_name, 'Timezone/location') %>:</th>
+              <td><%= time_zone_select('person', 'timezone_name') %><br /><br /></td>
+            </tr>
 
-  <input type="submit" value="Register" />
+            <tr>
+              <th>reCAPTCHA:</th>
+              <td>
+                <%= get_captcha() %>
+              </td>
+            </tr>
 
-</div><% end %>
+            <tr>
+              <td colspan='2'><br /><br />
+                If somebody referred you here, please enter their login id if you know it.
+              </td>
+            </tr>
 
-<br />
-  
-<p>We always respect your <a href='/home/privacy'>privacy</a>.</p>
+            <tr>
+              <th><%= label(:person, :referrer, 'Referrer id') %>:</th>
+              <td><%= text_field("person", "referrer", :class => 'styled', :maxlength => 40, :value => session[:referrer]) %></td>
+            </tr>
 
-        </td>
-        <td width='30'>&nbsp;</td>
-        <td>
-            <p>
-            <a href='http://openid.net/' target='_blank'><img src='/images/openid-large.png' width='133' height='50' alt='OpenID' border='0' /></a></p>
-            
-            <p>Alternatively, register using OpenID. It's easier, and you won't need to remember a new login id and password.</p>
-            
-            <p><a href='/openid/register' class='action'>Register using OpenID</a></p>
+          </table>
 
-        </td>
-    </tr>
+          <br />
+
+          <input type="submit" value="Register" />
+
+        </div><% end %>
+
+      <br />
+
+      <p>We always respect your <a href='/home/privacy'>privacy</a>.</p>
+
+    </td>
+    <td width='30'>&nbsp;</td>
+    <td>
+      <p>
+      <a href='http://openid.net/' target='_blank'><img src='/images/openid-large.png' width='133' height='50' alt='OpenID' border='0' /></a></p>
+
+      <p>Alternatively, register using OpenID. It's easier, and you won't need to remember a new login id and password.</p>
+
+      <p><a href='/openid/register' class='action'>Register using OpenID</a></p>
+
+    </td>
+  </tr>
 </table>

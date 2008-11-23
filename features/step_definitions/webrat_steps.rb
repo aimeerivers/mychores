@@ -5,6 +5,15 @@ When /^we click on '(.*)'$/ do |link|
   clicks_link link
 end
 
+When /^we fill in '(.*)' with '(.*)'$/ do |field, value|
+  fills_in field, :with => value
+end
+
+When /^we click the '(.*)' button$/ do |name|
+  clicks_button name
+end
+
+
 
 
 
