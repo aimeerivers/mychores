@@ -21,18 +21,18 @@ xml.rss(:version=>"2.0"){
         xml.title(tip_title)
         
         
-#        if tip.full_description.size > 500
-#          truncated_description = truncate(tip.full_description, 500, "").to_s
-#          number_to_chop = truncated_description.reverse.index(" ").to_i
-#          if number_to_chop > 0
-#            for i in 1..number_to_chop
-#              truncated_description.chop!
-#            end
-#          end
-#          truncated_description += " ..."
-#        else
-#          truncated_description = tip.full_description
-#        end
+        #        if tip.full_description.size > 500
+        #          truncated_description = truncate(tip.full_description, 500, "").to_s
+        #          number_to_chop = truncated_description.reverse.index(" ").to_i
+        #          if number_to_chop > 0
+        #            for i in 1..number_to_chop
+        #              truncated_description.chop!
+        #            end
+        #          end
+        #          truncated_description += " ..."
+        #        else
+        #          truncated_description = tip.full_description
+        #        end
         
         # xml.description(truncated_description)
         
