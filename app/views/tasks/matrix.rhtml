@@ -12,58 +12,60 @@
 <%= render(:partial => 'messages') %>
 
 
-		<%= render(:partial => 'reschedule_link') %>
-		
+<%= render(:partial => 'reschedule_link') %>
 
-	   <form id='ignore'></form> <!-- Little hack to stop it highlighting the submit button -->
-			
-		
-		<table style='width: 600px; height: 600px; background-image: url(/images/matrix-background.jpg); border: 1px solid #CCCCCC;'>
-		
-    		<% for task in @tasks_by_importance %>
-									
-            	    <% if task.list.team.use_colour == true
-            	       style=" style='background-color:#" + task.list.team.colour + "; color:#" + task.list.team.text_colour + ";'"
-            	    else
-            	       style=""
-            	    end %>
-    		  
-    		  
-    		      <% if task.current_importance > 1 %>
-    		          <td colspan='<%= task.current_importance - 1 %>'></td>
-    		      <% end %>
-    		      
-    		      <td align='right'>
-    		          <span id='task-<%= task.id.to_s %>'>
-    						<a title='<%= task.recurrence_description %>' href='/tasks/show/<%= task.id %>' <%= style %>><%= task.list.name %>: <%= task.name %></a>
-    						
-    						<% if @enable_js == false %>
-    							<%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'matrix'}) %>
-    						<% else %>
-    							<%= link_to_remote(image_tag('tick.png', :size => '12x12', :alt => 'done', 'onclick' => "new Effect.Fade('task-" + task.id.to_s + "', {duration:0.8});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'matrix', :flash => 'none'}, :failure => "alert('Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.');") %>
-    						<% end %>
-    					</span>
-    		      </td>
-    		      
-    		      
-    		      <% if task.current_importance < 7 %>
-    		          <td colspan='<%= 7 - task.current_importance %>'></td>
-    		      <% end %>
-    		      
-    		  </tr>
-    		
-    		<% end %>
-		
-		</table>
-		
-		<br />
-		
-		
-			<% form_tag(:action => 'quickchangepreferences', :id => @person.id, :return => 'Matrix') do %><div>
-			<p><%= "Show:".t %> <%= select('preference', 'workload_display', [["All tasks".t, "All tasks"], ["Only my tasks".t, "Only my tasks"], ["Only today's tasks".t, "Only today's tasks"]]) %>  <%= submit_tag "Go!".t %></p>
-			</div><% end %>
-			
 
-			<p><%= "The hot map sorts both by due date and by importance, indicating priority.".t %></p>
-		
-		
+<form id='ignore'></form> <!-- Little hack to stop it highlighting the submit button -->
+
+
+<table style='width: 600px; height: 600px; background-image: url(/images/matrix-background.jpg); border: 1px solid #CCCCCC;'>
+
+  <% for task in @tasks_by_importance %>
+
+    <tr>
+
+      <% if task.list.team.use_colour == true
+        style=" style='background-color:#" + task.list.team.colour + "; color:#" + task.list.team.text_colour + ";'"
+      else
+        style=""
+      end %>
+
+
+      <% if task.current_importance > 1 %>
+        <td colspan='<%= task.current_importance - 1 %>'></td>
+      <% end %>
+
+      <td align='right'>
+        <span id='task-<%= task.id.to_s %>'>
+          <a title='<%= task.recurrence_description %>' href='/tasks/show/<%= task.id %>' <%= style %>><%= task.list.name %>: <%= task.short_name %></a>
+
+          <% if @enable_js == false %>
+            <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'matrix'}) %>
+          <% else %>
+            <%= link_to_remote(image_tag('tick.png', :size => '12x12', :alt => 'done', 'onclick' => "new Effect.Fade('task-" + task.id.to_s + "', {duration:0.8});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'matrix', :flash => 'none'}, :failure => "alert('Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.');") %>
+          <% end %>
+        </span>
+      </td>
+
+
+      <% if task.current_importance < 7 %>
+        <td colspan='<%= 7 - task.current_importance %>'></td>
+      <% end %>
+
+    </tr>
+
+  <% end %>
+
+</table>
+
+<br />
+
+
+<% form_tag(:action => 'quickchangepreferences', :id => @person.id, :return => 'Matrix') do %><div>
+    <p><%= "Show:".t %> <%= select('preference', 'workload_display', [["All tasks".t, "All tasks"], ["Only my tasks".t, "Only my tasks"], ["Only today's tasks".t, "Only today's tasks"]]) %>  <%= submit_tag "Go!".t %></p>
+  </div><% end %>
+
+
+<p><%= "The hot map sorts both by due date and by importance, indicating priority.".t %></p>
+
+

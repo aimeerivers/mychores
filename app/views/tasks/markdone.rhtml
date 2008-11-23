@@ -1,49 +1,49 @@
 <% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
 
-	<% @heading=@task.name + " - mark as done" %>
-	<% @h1class='task' %>
-	
-	<% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; " + link_to_task(@task, 'breadcrumb') %>
-	
-	<% form_tag({:action => 'done'}, {:method => 'get'}) do %><div>
-	
-		<table>
-	
-			<tr>
-				<th>Date completed:</th>
-				<td>
-							
-					<input button_image="calendar.gif" class="date" id="completed" name="completed" size="12" title="Date Completed" type="text" value="<%= @datetoday.strftime(session[:preferred_long_date_format]) %>" />
-					<img alt="Calendar" button_image="calendar.gif" class="date" id="completed_calendar" src="/images/calendar.gif" title="Show calendar" />
-					
-					<script type="text/javascript">
-						Calendar.setup({ range:[<%= (@datetoday.year) - 1 %>, <%= (@datetoday.year) %>], cache:true, weekNumbers:false, firstDay:1, inputField:"completed", step:1, showOthers:false, button:"completed_calendar", ifFormat:"<%= session[:preferred_long_date_format] %>" })
-					</script>
+  <% @heading=@task.short_name + " - mark as done" %>
+  <% @h1class='task' %>
 
-				</td>
-			</tr>
-	
-			<tr>
-				<th>Completed by:</th>
-				<td>
-					<select name='personcompleted' id='personcompleted'>
-						<%= options_from_collection_for_select(@teammembers, 'id', 'name', session[:person].id) %>
-					</select>
-				</td>
-			</tr>
-			
-		</table>
-		
-		<br />
-		
-		<input type='hidden' name='id' value='<%= @task.id %>'>
-		<input type='hidden' name='return' value='task'>
-		
-		<input type="submit" value="Mark done" />
-	</div><% end %>
+  <% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; " + link_to_task(@task, 'breadcrumb') %>
+
+  <% form_tag({:action => 'done'}, {:method => 'get'}) do %><div>
+
+      <table>
+
+        <tr>
+          <th>Date completed:</th>
+          <td>
+
+            <input button_image="calendar.gif" class="date" id="completed" name="completed" size="12" title="Date Completed" type="text" value="<%= @datetoday.strftime(session[:preferred_long_date_format]) %>" />
+            <img alt="Calendar" button_image="calendar.gif" class="date" id="completed_calendar" src="/images/calendar.gif" title="Show calendar" />
+
+            <script type="text/javascript">
+                Calendar.setup({ range:[<%= (@datetoday.year) - 1 %>, <%= (@datetoday.year) %>], cache:true, weekNumbers:false, firstDay:1, inputField:"completed", step:1, showOthers:false, button:"completed_calendar", ifFormat:"<%= session[:preferred_long_date_format] %>" })
+            </script>
+
+          </td>
+        </tr>
+
+        <tr>
+          <th>Completed by:</th>
+          <td>
+            <select name='personcompleted' id='personcompleted'>
+              <%= options_from_collection_for_select(@teammembers, 'id', 'name', session[:person].id) %>
+            </select>
+          </td>
+        </tr>
+
+      </table>
+
+      <br />
+
+      <input type='hidden' name='id' value='<%= @task.id %>'>
+      <input type='hidden' name='return' value='task'>
+
+      <input type="submit" value="Mark done" />
+    </div><% end %>
 
 <% else %>
 
-	<%= access_denied() %>
-	
+  <%= access_denied() %>
+
 <% end %>

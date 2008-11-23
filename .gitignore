@@ -11,3 +11,4 @@ nbproject/*
 *~
 config/database*
 Rakefile
+db/schema.rb

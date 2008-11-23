@@ -1,96 +1,96 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
-<head>
-  <title>MyChores - <%= "Printable monthly calendar".t %></title>
-  	<link href="/stylesheets/planner.css" media="all" rel="Stylesheet" type="text/css" />
-  		
-</head>
+  <head>
+    <title>MyChores - <%= "Printable monthly calendar".t %></title>
+    <link href="/stylesheets/planner.css" media="all" rel="Stylesheet" type="text/css" />
 
-<body>
+  </head>
 
-	<h3 style='float:right;'><a href='http://www.mychores.co.uk'>MyChores.co.uk</a> <%= "monthly calendar for %s (best printed landscape)" / session[:person].name %></h3>
+  <body>
 
-	<h2><%= link_to(image_tag('arrow-left.png', :size => '15x12', :alt => 'previous month'.t), {'year' => @backyear, 'month' => @backmonth}) %> <%= Date.parse("#{@year}-#{@month}-01").localize("%B %Y") %> <%= link_to(image_tag('arrow-right.png', :size => '15x12', :alt => 'next month'.t), {'year' => @forwardyear, 'month' => @forwardmonth}) %></h2>
+    <h3 style='float:right;'><a href='http://www.mychores.co.uk'>MyChores.co.uk</a> <%= "monthly calendar for %s (best printed landscape)" / session[:person].name %></h3>
 
-	<% if @person.status.nil? %>
-		<span><br />
-		<a href='/home/supporters'><%= "This page is available to site supporters.".t %></a></span>
-	<% else %>
-		
-		<% days_in_month = ::Time.days_in_month(@month.to_i, @year.to_i) %>
-		
-		
-		
-		<% day_of_month = 1 %>
-		<% first_day = (Time.local(@year.to_i, @month.to_i, 1)).beginning_of_month %>
-		<% day_of_week = first_day.wday %>
-		
-		
-		
-		<table border='1' width='100%'>
-			
-			<tr>
-				<th width='15%'><%= Date.parse("2008-08-10").localize("%A") %></th>
-				<th width='14%'><%= Date.parse("2008-08-11").localize("%A") %></th>
-				<th width='14%'><%= Date.parse("2008-08-12").localize("%A") %></th>
-				<th width='14%'><%= Date.parse("2008-08-13").localize("%A") %></th>
-				<th width='14%'><%= Date.parse("2008-08-14").localize("%A") %></th>
-				<th width='14%'><%= Date.parse("2008-08-15").localize("%A") %></th>
-				<th width='15%'><%= Date.parse("2008-08-16").localize("%A") %></th>
-			</tr>
-		
-			<% if day_of_week > 0 -%>
-				<tr><td colspan='<%= day_of_week.to_s %>' style='background-color:#EEEEEE;'>&nbsp;</td>
-			<% end -%>
-			
-			<% while day_of_month <= days_in_month -%>
-				<% if day_of_week == 0 -%>
-					<tr>
-				<% end -%>
-				
-				<td valign='top'>
-				<b><%= day_of_month.to_s %></b>
-				
-				<!-- Tasks for the day -->
-				<% for task in @this_months_tasks -%>
-					<% if task.next_due.mday == day_of_month -%>
-						<br />
-						&#10063; <%= task.list.name %>: <%= task.name %>
-							
-					<% end -%>
-				<% end -%>
-				
-				</td>
-				
-				<% day_of_week += 1 -%>
-				
-				<% if day_of_week == 7 -%>
-					</tr>
-					<% day_of_week = 0 -%>
-				<% end -%>
-				
-				<% day_of_month += 1 -%>
-			<% end -%>
-			
-			<% last_day = (Time.local(@year.to_i, @month.to_i, 1)).end_of_month -%>
-			
-			<% day_of_week = (last_day).wday -%>
-			
-			<% filler = 6 - day_of_week -%>
-			
-			<% if filler > 0 -%>
-				<td colspan='<%= filler.to_s %>' style='background-color:#EEEEEE;'>&nbsp;</td>
-			<% end -%>
-			
-			</tr>
-		</table>
-		
-		<div style='text-align: center;'><br /><%= "Please note: Each task only appears once. Your tasks may recur more than once in the month.".t %></div>
-		
-	<% end %>
-			
-		
-</body>
-	
+    <h2><%= link_to(image_tag('arrow-left.png', :size => '15x12', :alt => 'previous month'.t), {'year' => @backyear, 'month' => @backmonth}) %> <%= Date.parse("#{@year}-#{@month}-01").localize("%B %Y") %> <%= link_to(image_tag('arrow-right.png', :size => '15x12', :alt => 'next month'.t), {'year' => @forwardyear, 'month' => @forwardmonth}) %></h2>
+
+    <% if @person.status.nil? %>
+      <span><br />
+      <a href='/home/supporters'><%= "This page is available to site supporters.".t %></a></span>
+    <% else %>
+
+      <% days_in_month = ::Time.days_in_month(@month.to_i, @year.to_i) %>
+
+
+
+      <% day_of_month = 1 %>
+      <% first_day = (Time.local(@year.to_i, @month.to_i, 1)).beginning_of_month %>
+      <% day_of_week = first_day.wday %>
+
+
+
+      <table border='1' width='100%'>
+
+        <tr>
+          <th width='15%'><%= Date.parse("2008-08-10").localize("%A") %></th>
+          <th width='14%'><%= Date.parse("2008-08-11").localize("%A") %></th>
+          <th width='14%'><%= Date.parse("2008-08-12").localize("%A") %></th>
+          <th width='14%'><%= Date.parse("2008-08-13").localize("%A") %></th>
+          <th width='14%'><%= Date.parse("2008-08-14").localize("%A") %></th>
+          <th width='14%'><%= Date.parse("2008-08-15").localize("%A") %></th>
+          <th width='15%'><%= Date.parse("2008-08-16").localize("%A") %></th>
+        </tr>
+
+        <% if day_of_week > 0 -%>
+          <tr><td colspan='<%= day_of_week.to_s %>' style='background-color:#EEEEEE;'>&nbsp;</td>
+          <% end -%>
+
+          <% while day_of_month <= days_in_month -%>
+            <% if day_of_week == 0 -%>
+              <tr>
+              <% end -%>
+
+              <td valign='top'>
+                <b><%= day_of_month.to_s %></b>
+
+                <!-- Tasks for the day -->
+    <% for task in @this_months_tasks -%>
+      <% if task.next_due.mday == day_of_month -%>
+                    <br />
+                    &#10063; <%= task.list.name %>: <%= task.short_name %>
+
+                  <% end -%>
+                <% end -%>
+                                            
+              </td>
+
+              <% day_of_week += 1 -%>
+
+              <% if day_of_week == 7 -%>
+              </tr>
+              <% day_of_week = 0 -%>
+            <% end -%>
+
+            <% day_of_month += 1 -%>
+          <% end -%>
+
+          <% last_day = (Time.local(@year.to_i, @month.to_i, 1)).end_of_month -%>
+
+          <% day_of_week = (last_day).wday -%>
+
+          <% filler = 6 - day_of_week -%>
+
+          <% if filler > 0 -%>
+            <td colspan='<%= filler.to_s %>' style='background-color:#EEEEEE;'>&nbsp;</td>
+          <% end -%>
+
+        </tr>
+      </table>
+
+      <div style='text-align: center;'><br /><%= "Please note: Each task only appears once. Your tasks may recur more than once in the month.".t %></div>
+
+    <% end %>
+
+
+  </body>
+
 </html>

@@ -3,38 +3,38 @@
 
 <% if @other_members.empty? %>
 
-	There are no other team members to nudge.<br /><br />
-	
-	Maybe you'd like to <a href='/home/promotions'>invite some friends</a> to join MyChores?<br /><br />
-	
+  There are no other team members to nudge.<br /><br />
+
+  Maybe you'd like to <a href='/home/promotions'>invite some friends</a> to join MyChores?<br /><br />
+
 <% else %>
 
-	<% form_tag({:action => 'nudge_do'}) do %><div>
-	
-		<table>
-	
-			<tr>
-				<th>To:</th>
-				<td>
-					<select name='persontonudge' id='persontonudge'>
-						<%= options_from_collection_for_select(@other_members, 'id', 'name') %>
-					</select>
-				</td>
-			</tr>
-	
-			<tr>
-				<th>Message:</th>
-				<td>
-					<textarea id='message' name='message' cols='60' rows='10'><%= @default_message %></textarea>
-				</td>
-			</tr>
-			
-		</table>
-		
-		<br /><br />
-		
-		
-		<input type="submit" value="Send nudge" />
-	</div><% end %>
-	
+  <% form_tag({:action => 'nudge_do'}) do %><div>
+
+      <table>
+
+        <tr>
+          <th>To:</th>
+          <td>
+            <select name='persontonudge' id='persontonudge'>
+              <%= options_from_collection_for_select(@other_members, 'id', 'name') %>
+            </select>
+          </td>
+        </tr>
+    
+        <tr>
+          <th>Message:</th>
+          <td>
+            <textarea id='message' name='message' cols='60' rows='10'><%= @default_message %></textarea>
+          </td>
+        </tr>
+
+      </table>
+
+      <br /><br />
+
+
+      <input type="submit" value="Send nudge" />
+    </div><% end %>
+
 <% end %>
