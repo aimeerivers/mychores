@@ -31,6 +31,13 @@
 
   <table>
 
+    <tr>
+      <th>Name:</th>
+      <td>
+        <%= @task.name %>
+      </td>
+    </tr>
+
     <% unless @task.description.empty? %>
       <tr>
         <th>Description:</th>
