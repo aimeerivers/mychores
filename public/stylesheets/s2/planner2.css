@@ -197,3 +197,11 @@ div#tertiaryContent ul ul li {
   padding-top: 2px;
   font-size: 0.9em;
 }
+
+
+
+
+
+div.fieldWithErrors {
+  display: inline;
+}
