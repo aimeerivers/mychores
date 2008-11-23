@@ -9,7 +9,7 @@ belongs_to(:person) # this is for assignment
 belongs_to(:picture)
 
 validates_presence_of(:name)
-validates_length_of(:name, :maximum=>30)
+validates_length_of(:name, :maximum=>255)
 
 validates_numericality_of(:recurrence_interval, :only_integer => true)
 
