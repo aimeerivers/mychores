@@ -273,13 +273,6 @@ class TasksController < ApplicationController
 					
           unless taskname == ""
 					
-            # if the task name is greater than 30 characters, must truncate it
-            tasknamelength = taskname.length
-            while tasknamelength > 30
-              taskname.chop!
-              tasknamelength = taskname.length
-            end
-					
             # create the task
             @newtask = Task.new
 						
