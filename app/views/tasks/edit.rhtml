@@ -1,21 +1,22 @@
 <% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
 
-	<% @heading=@task.name; %>
-	<% @h1class='task' %>
-	
-	<% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; " + link_to_task(@task, 'breadcrumb') %>
-	
-	<% form_tag(:action => 'update', :id => @task) do %><div>
-	
-	   <% @editmode = true %>
-		<%= render :partial => 'form' %>
-		
-        <br /><br />
-		<%= submit_tag 'Save task' %>
-	</div><% end %>
+  <% @heading=@task.short_name; %>
+  <% @h1class='task' %>
+
+  <% @breadcrumbs = link_to_team(@team, 'breadcrumb') + " &gt; " + link_to_list(@list, 'breadcrumb') + " &gt; " + link_to_task(@task, 'breadcrumb') %>
+
+  <% form_tag(:action => 'update', :id => @task) do %><div>
+
+    <% @editmode = true %>
+    <%= render :partial => 'form' %>
+
+      <br /><br />
+      <%= submit_tag 'Save task' %>
+    </div>
+  <% end %>
 
 <% else %>
 
-	<%= access_denied() %>
-	
+  <%= access_denied() %>
+
 <% end %>
