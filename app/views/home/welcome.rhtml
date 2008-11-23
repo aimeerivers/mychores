@@ -4,10 +4,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
-    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -17,108 +17,111 @@
 <div style='display: none;'>Non-CSS browser? Try <a href='http://mobile.mychores.co.uk'>MyChores Mobile</a></div>
 
 <table width='100%' cellpadding='10' cellspacing='0' border='0'>
-	<tr>
-		<td width='*'>
-		
-			
-			
-			<table id='Emphasise'>
-			
-			   <% if session[:person].nil? %>
-			   <tr>
-			     <td><a href='/admin/register'><img src='/images/register.png' width='44' height='44' alt='Register' border='0' /></a></td>
-			     <td><a href='/admin/register'>Register for free</a><br />
-			     <small>(you can leave at any time)</small></td>
-			   </tr>
-			   <% end %>
-			
-			   <tr>
-			     <td><img src='/images/icons/workload-large.png' width='48' height='48' alt='Workload' /></td>
-			     <td>Set up your schedule and tick off your tasks</td>
-			   </tr>
-			
-			   <tr>
-			     <td><img src='/images/icons/team-large.png' width='46' height='48' alt='Team' /></td>
-			     <td>Work as a team to get things done</td>
-			   </tr>
-			
-			   <tr>
-			     <td><img src='/images/icons/statistics-large.png' width='48' height='48' alt='Statistics' /></td>
-			     <td>Track your progress with statistics</td>
-			   </tr>
-			
-			   <tr>
-			     <td><img src='/images/icons/email-large.png' width='48' height='45' alt='Team' /></td>
-			     <td>Access through any browser and receive email reminders</td>
-			   </tr>
-			
-			   <tr>
-			     <td><img src='/images/icons/printer-large.png' width='48' height='48' alt='Print' /></td>
-			     <td>Print out your personal to-do list</td>
-			   </tr>
-			
-			   <tr>
-			     <td><img src='/images/icons/pda-large.png' width='36' height='48' alt='Mobile' /></td>
-			     <td>Use on the go with <a href='http://mobile.mychores.co.uk'>MyChores Mobile</a></td>
-			   </tr>
-			
-			   <tr>
-			     <td><img src='/images/rss-icon.png' width='40' height='40' alt='RSS' /></td>
-			     <td>Integrate using RSS and iCalendar feeds</td>
-			   </tr>
-			
-			   <tr>
-			     <td><img src='/images/twitter-t.png' width='36' height='49' alt='Twitter' /></td>
-			     <td>Update <a href='http://twitter.com'>Twitter</a> and/or receive Twitter notifications</td>
-			   </tr>
-			
-			   <tr>
-			     <td><img src='/images/openid-icon-large.png' width='42' height='37' alt='OpenID' /></td>
-			     <td>Login using <a href='http://openid.net'>OpenID</a></td>
-			   </tr>
-			
-			</table>
-			
-		
-		</td>
-		
-		<td width='50'>&nbsp;</td>
-		
-		<td width='280'>
-		
-				<h3><a href='/statistics'>Statistics</a></h3>
-				<ul>
-				    <li><a href='/statistics'><%= image_tag(@thirty_day_chart.to_url, :alt => "Tasks completed in the last 28 days", :title => "Tasks completed in the last 28 days", :size => "150x20") %></a></li>
-				    <li><%= @numpeople %> people</li>
-				    <li><%= @donetoday %> task<%= 's' unless @donetoday == 1 %> done today</li>
-				    <li><%= @doneyesterday %> task<%= 's' unless @doneyesterday == 1 %> done yesterday</li>
-				    <li><%= @donethismonth %> task<%= 's' unless @donethismonth == 1 %> done this month</li>
-				</ul>
+  <tr>
+    <td width='*'>
 
 
-				<h3><a href='/bulletins'>News</a> (updated <%= formatted_date(@bulletin.created_on) %>)</h3>
-				
-				<p>
-    				<%= textilize_without_paragraph(@bulletin.message) %>
-    				<% unless @bulletin.link.nil? %>
-    					<a href='<%= @bulletin.link %>'>Read more ...</a>
-    				<% end %>
-    			</p>
-		
 
-				<h3><a href='/testimonials'>Testimonials</a></h3>
-				
-				<%= textilize(@testimonial.short_message) %>
-			
-			
-		
-		</td>
-	</tr>
+      <table id='Emphasise'>
+
+        <% if session[:person].nil? %>
+          <tr>
+            <td><a href='/admin/register'><img src='/images/register.png' width='44' height='44' alt='Register' border='0' /></a></td>
+            <td><a href='/admin/register'>Register for free</a><br />
+            <small>(you can leave at any time)</small></td>
+          </tr>
+        <% end %>
+
+        <tr>
+          <td><img src='/images/icons/workload-large.png' width='48' height='48' alt='Workload' /></td>
+          <td>Set up your schedule and tick off your tasks</td>
+        </tr>
+
+        <tr>
+          <td><img src='/images/icons/team-large.png' width='46' height='48' alt='Team' /></td>
+          <td>Work as a team to get things done</td>
+        </tr>
+
+        <tr>
+          <td><img src='/images/icons/statistics-large.png' width='48' height='48' alt='Statistics' /></td>
+          <td>Track your progress with statistics</td>
+        </tr>
+
+        <tr>
+          <td><img src='/images/icons/email-large.png' width='48' height='45' alt='Team' /></td>
+          <td>Access through any browser and receive email reminders</td>
+        </tr>
+
+        <tr>
+          <td><img src='/images/icons/printer-large.png' width='48' height='48' alt='Print' /></td>
+          <td>Print out your personal to-do list</td>
+        </tr>
+
+        <tr>
+          <td><img src='/images/icons/pda-large.png' width='36' height='48' alt='Mobile' /></td>
+          <td>Use on the go with <a href='http://mobile.mychores.co.uk'>MyChores Mobile</a></td>
+        </tr>
+
+        <tr>
+          <td><img src='/images/rss-icon.png' width='40' height='40' alt='RSS' /></td>
+          <td>Integrate using RSS and iCalendar feeds</td>
+        </tr>
+
+        <tr>
+          <td><img src='/images/twitter-t.png' width='36' height='49' alt='Twitter' /></td>
+          <td>Update <a href='http://twitter.com'>Twitter</a> and/or receive Twitter notifications</td>
+        </tr>
+
+        <tr>
+          <td><img src='/images/openid-icon-large.png' width='42' height='37' alt='OpenID' /></td>
+          <td>Login using <a href='http://openid.net'>OpenID</a></td>
+        </tr>
+
+      </table>
+
+
+    </td>
+
+    <td width='50'>&nbsp;</td>
+
+    <td width='280'>
+
+      <h3><a href='/statistics'>Statistics</a></h3>
+      <ul>
+        <li><a href='/statistics'><%= image_tag(@thirty_day_chart.to_url, :alt => "Tasks completed in the last 28 days", :title => "Tasks completed in the last 28 days", :size => "150x20") %></a></li>
+        <li><%= @numpeople %> people</li>
+        <li><%= @donetoday %> task<%= 's' unless @donetoday == 1 %> done today</li>
+        <li><%= @doneyesterday %> task<%= 's' unless @doneyesterday == 1 %> done yesterday</li>
+        <li><%= @donethismonth %> task<%= 's' unless @donethismonth == 1 %> done this month</li>
+      </ul>
+
+      <% unless @bulletin.nil? -%>
+        <h3><a href='/bulletins'>News</a> (updated <%= formatted_date(@bulletin.created_on) %>)</h3>
+
+        <p>
+          <%= textilize_without_paragraph(@bulletin.message) %>
+          <% unless @bulletin.link.nil? %>
+            <a href='<%= @bulletin.link %>'>Read more ...</a>
+          <% end %>
+        </p>
+      <% end -%>
+
+
+      <% unless @testimonial.nil? -%>
+        <h3><a href='/testimonials'>Testimonials</a></h3>
+
+        <%= textilize(@testimonial.short_message) %>
+      <% end -%>
+
+
+
+    </td>
+  </tr>
 </table>
 
 
-	
-	
+
+
 <!--
 ::begin page scraper block::
 People: <%= @numpeople %>

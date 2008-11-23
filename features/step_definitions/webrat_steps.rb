@@ -1,6 +1,16 @@
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
 
+When /^we click on '(.*)'$/ do |link|
+  clicks_link link
+end
+
+
+
+
+
+
+
 When /^I press "(.*)"$/ do |button|
   clicks_button(button)
 end
