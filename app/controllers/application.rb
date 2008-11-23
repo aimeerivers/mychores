@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
   end
 
   include LoginSystem
-  require 'person'
 	
   # include OpenidLoginSystem
   # model :person
