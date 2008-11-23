@@ -914,16 +914,22 @@ class TasksController < ApplicationController
 			
       # Save done before Twitter update.
       # @task.save
-			
-			
-      unless params[:flash] == 'none'
-        flash[:notice] = flash_message
+
+
+      # Our JavaScript requests send params[:flash] = 'none'.
+      # In this case can return out and skip the whole rendering thing.
+      # Outlook will not send this parameter so it will carry on.
+      if params[:flash] and params[:flash] == 'none'
+        render :nothing => true
+        return
       end
 
-      respond_to do |format|
-        format.js { render :nothing => true; return; } # Get out of here!
-        format.html {} # continue ...
-      end
+      # We would have used respond_to
+      # except that Outlook sends requests via JavaScript.
+      # Outlook for the lose.
+
+
+      flash[:notice] = flash_message
 		
       # redirect back
       if params[:list]
