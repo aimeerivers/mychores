@@ -140,9 +140,9 @@ for temp_person in @people
 				
         current_list = task.list.name
         twitter_notify_string += current_list + ": " # Add the new list name
-        twitter_notify_string += task.name # Add the task
+        twitter_notify_string += task.short_name # Add the task
       else
-        twitter_notify_string += "; " + task.name # Add the task as one of a list
+        twitter_notify_string += "; " + task.short_name # Add the task as one of a list
       end
 			
     end

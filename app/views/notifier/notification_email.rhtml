@@ -7,7 +7,7 @@ Hi <%= @name %>,
 Here are today's tasks from mychores.co.uk
 
 <% for task in @workload %>
-	<%= task.list.name + ": " + task.name %> - <%= particularly_formatted_date(@preferred_date_format, task.next_due) %> (<%= time_from_today(task.next_due, @datetoday) %>)
+	<%= task.list.name + ": " + task.short_name %> - <%= particularly_formatted_date(@preferred_date_format, task.next_due) %> (<%= time_from_today(task.next_due, @datetoday) %>)
 	<% if @include_descriptions == true -%>
 	<%= task.description %>
 	<% end -%>
