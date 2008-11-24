@@ -9,6 +9,10 @@ backup_db
 restore_db
 nbproject/*
 *~
-config/database*
+config/database.yml
+config/database.yml.online
+config/environment.rb
+config/environment-online.rb
+config/environment-offline.rb
 Rakefile
 db/schema.rb

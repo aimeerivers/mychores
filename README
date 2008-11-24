@@ -1,0 +1,5 @@
+This is the source code for "MyChores":http://www.mychores.co.uk
+
+It is open-source, freely available to all. Feel free to fork, submit patches, or use the code for your own purposes. That's okay.
+
+Warning: the code is really, really bad! I am aware of that now. It has gradually evolved over several years and several iterations of Rails. It works, but it's not as efficient as it could be. I'm working on that! If you fancy joining in the effort, i'll be very grateful. Initially the focus is to write some tests with RSpec and Cucumber so that i have a good starting point from which to work forward.
