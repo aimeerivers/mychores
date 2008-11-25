@@ -607,7 +607,7 @@ http://www.mychores.co.uk"
   
   validates_length_of :login, :within => 3..40
   validates_presence_of :login
-  validates_uniqueness_of :login
+  validates_uniqueness_of :login, :case_sensitive => false
   validates_format_of :login, :with => /^[\w-]+$/, :message => "can only contain letters and numbers"
 
   validates_length_of :password, :within => 5..40
