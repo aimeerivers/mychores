@@ -4,6 +4,7 @@ development:
   username: root
   password: 
   socket: /var/run/mysqld/mysqld.sock
+  # socket: /var/lib/mysql/mysql.sock
   
 test:
   adapter: mysql
@@ -11,6 +12,7 @@ test:
   username: root
   password: 
   socket: /var/run/mysqld/mysqld.sock
+  # socket: /var/lib/mysql/mysql.sock
 
 production:
   adapter: mysql
@@ -18,3 +20,4 @@ production:
   username: root
   password: 
   socket: /var/run/mysqld/mysqld.sock
+  # socket: /var/lib/mysql/mysql.sock
