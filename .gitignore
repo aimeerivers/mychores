@@ -14,4 +14,3 @@ config/database.yml.online
 config/environment.rb
 config/environment-online.rb
 config/environment-offline.rb
-Rakefile
