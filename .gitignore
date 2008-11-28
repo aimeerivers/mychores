@@ -15,4 +15,3 @@ config/environment.rb
 config/environment-online.rb
 config/environment-offline.rb
 Rakefile
-db/schema.rb
