@@ -31,6 +31,15 @@ Feature: New user registration
     And we should NOT see the text 'Login is too short \(minimum is 3 characters\)'
     
   Scenario: Test duplicate logins (including with different case sensitivity)
+    Given a person called 'Aimee' with login ID 'sermoa'
+    And we are not logged in
+    When we click on 'Register'
+    And we fill in 'Desired login ID' with 'sermoa'
+    And we click the 'Register' button
+    Then we should see the text 'Login has already been taken'
+    And we fill in 'Desired login ID' with 'SermOa'
+    And we click the 'Register' button
+    Then we should see the text 'Login has already been taken'
   
   Scenario: Test name validation
   
