@@ -328,10 +328,10 @@
 			<li><a href='/questions'><%= "FAQ".t %></a></li>
 			<li><a href='/tips'><%= "Tips".t %></a></li>
 			<li><a href='/api'><%= "API".t %></a></li>
-			<li><a href='/home/search'><%= "Search".t %></a></li>
-			<li><a href='/messages/new'><%= "Contact".t %></a></li>
-			<li><a href='/home/sitemap'><%= "Sitemap".t %></a></li>
-			<li><a href='http://journal.mychores.co.uk'><%= "Journal".t %></a></li>
+			<li><%= link_to("Search".t, search_path) %></a></li>
+			<li><%= link_to("Contact".t, contact_path) %></li>
+			<li><%= link_to("Sitemap".t, sitemap_path) %></a></li>
+			<li><%= link_to("Journal".t, 'http://journal.mychores.co.uk') %></li>
 		</ul>
 	</div>
 

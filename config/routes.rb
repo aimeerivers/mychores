@@ -1,4 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
+
+  map.contact 'contact', :controller => 'messages', :action => 'new'
+  map.sitemap 'sitemap', :controller => 'home', :action => 'sitemap'
+  map.search 'search', :controller => 'home', :action => 'search'
+  
   # Add your own custom routes here.
   # The priority is based upon order of creation: first created -> highest priority.
   
