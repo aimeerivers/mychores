@@ -46,7 +46,7 @@ class AdminController < ApplicationController
     end
 		
 
-    if request.post? && validate_recap(params, @person.errors) && @person.save
+    if request.post? && recaptcha_valid?(params, @person) && @person.save
 
       session[:person] = @person
     
@@ -819,5 +819,11 @@ http://www.mychores.co.uk"
   end
   
   
+  protected
+  
+  def recaptcha_valid?(params, person)
+    return true if %w(development test).include?(RAILS_ENV)
+    validate_recap(params, person.errors)
+  end
 	
 end
