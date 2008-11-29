@@ -19,6 +19,25 @@ class Person < ActiveRecord::Base
   # parent-child relationship
   belongs_to(:parent, :class_name => "Person", :foreign_key => "parent_id")
   has_many(:children, :class_name => "Person", :foreign_key => "parent_id")
+  
+  
+  
+  
+  validates_length_of :login, :within => 3..40
+  validates_uniqueness_of :login, :case_sensitive => false
+  validates_format_of :login, :with => /^[\w-]+$/, :message => "can only contain letters and numbers"
+
+  validates_length_of :password, :within => 5..40
+  validates_presence_of :password
+  validates_confirmation_of :password, :on => :create
+  validates_presence_of :password_confirmation, :on => :create
+  
+  validates_length_of :name, :maximum => 40
+  validates_presence_of :name
+  
+  validates_length_of :email, :maximum => 255
+  validates_presence_of :email
+  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "seems to be invalid"
 	
 	
 
@@ -604,23 +623,6 @@ http://www.mychores.co.uk"
 	
 
 	
-  
-  validates_length_of :login, :within => 3..40
-  validates_presence_of :login
-  validates_uniqueness_of :login, :case_sensitive => false
-  validates_format_of :login, :with => /^[\w-]+$/, :message => "can only contain letters and numbers"
-
-  validates_length_of :password, :within => 5..40
-  validates_presence_of :password
-  validates_confirmation_of :password, :on => :create
-  validates_presence_of :password_confirmation, :on => :create
-  
-  validates_length_of :name, :maximum => 40
-  validates_presence_of :name
-  
-  validates_length_of :email, :maximum => 255
-  validates_presence_of :email
-  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "seems to be invalid"
   
   
   
