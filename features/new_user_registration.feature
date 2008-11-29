@@ -1,64 +1,64 @@
 Feature: New user registration
   As a newbie
   I want to register on MyChores
-  So that i can use its wonderful goodness
+  So that I can use its wonderful goodness
 
   Scenario: New user creates registration
-    Given we are not logged in
-    When we click on 'Register'
-    Then we should see the text 'Register'
-    When we fill in 'Desired login ID' with 'aimee'
-    And we fill in 'Name' with 'Aimee'
-    And we fill in 'Choose password' with '12345'
-    And we fill in 'Confirm password' with '12345'
-    And we fill in 'Email address' with 'aimee@test.com'
-    And we click the 'Register' button
-    Then we should see the text 'Hi Aimee, thank you for signing up with MyChores'
+    Given I am not logged in
+    When I click on 'Register'
+    Then I should see the text 'Register'
+    When I fill in 'Desired login ID' with 'aimee'
+    And I fill in 'Name' with 'Aimee'
+    And I fill in 'Choose password' with '12345'
+    And I fill in 'Confirm password' with '12345'
+    And I fill in 'Email address' with 'aimee@test.com'
+    And I click the 'Register' button
+    Then I should see the text 'Hi Aimee, thank you for signing up with MyChores'
 
   Scenario: Test login ID validation
-    Given we are not logged in
-    When we click on 'Register'
-    And we click the 'Register' button
-    Then we should see the text 'Login is too short \(minimum is 3 characters\)'
-    And we should NOT see the text 'Login can\'t be blank'
-    When we fill in 'Desired login ID' with '!!!!!'
-    And we click the 'Register' button
-    Then we should see the text 'Login can only contain letters and numbers'
-    And we should NOT see the text 'Login is too short \(minimum is 3 characters\)'
-    When we fill in 'Desired login ID' with 'good_login'
-    And we click the 'Register' button
-    Then we should NOT see the text 'Login can only contain letters and numbers'
-    And we should NOT see the text 'Login is too short \(minimum is 3 characters\)'
+    Given I am not logged in
+    When I click on 'Register'
+    And I click the 'Register' button
+    Then I should see the text 'Login is too short \(minimum is 3 characters\)'
+    And I should NOT see the text 'Login can\'t be blank'
+    When I fill in 'Desired login ID' with '!!!!!'
+    And I click the 'Register' button
+    Then I should see the text 'Login can only contain letters and numbers'
+    And I should NOT see the text 'Login is too short \(minimum is 3 characters\)'
+    When I fill in 'Desired login ID' with 'good_login'
+    And I click the 'Register' button
+    Then I should NOT see the text 'Login can only contain letters and numbers'
+    And I should NOT see the text 'Login is too short \(minimum is 3 characters\)'
     
   Scenario: Test duplicate logins (including with different case sensitivity)
     Given a person called 'Aimee' with login ID 'sermoa'
-    And we are not logged in
-    When we click on 'Register'
-    And we fill in 'Desired login ID' with 'sermoa'
-    And we click the 'Register' button
-    Then we should see the text 'Login has already been taken'
-    And we fill in 'Desired login ID' with 'SermOa'
-    And we click the 'Register' button
-    Then we should see the text 'Login has already been taken'
+    And I am not logged in
+    When I click on 'Register'
+    And I fill in 'Desired login ID' with 'sermoa'
+    And I click the 'Register' button
+    Then I should see the text 'Login has already been taken'
+    And I fill in 'Desired login ID' with 'SermOa'
+    And I click the 'Register' button
+    Then I should see the text 'Login has already been taken'
   
   Scenario: Test name validation
   
   Scenario: Test password validation
-    Given we are not logged in
-    When we click on 'Register'
-    And we click the 'Register' button
-    Then we should see the text 'Password is too short \(minimum is 5 characters\)'
-    And we should NOT see the text 'Password can\'t be blank'
-    When we fill in 'Choose password' with 'abcde'
-    And we click the 'Register' button
-    Then we should see the text 'Password doesn\'t match confirmation'
-    And we should NOT see the text 'Password confirmation can\'t be blank'
-    When we fill in 'Confirm password' with '12345'
-    And we click the 'Register' button
-    Then we should see the text 'Password doesn\'t match confirmation'
-    When we fill in 'Choose password' with '12345'
-    And we click the 'Register' button
-    Then we should NOT see the text 'Password doesn\'t match confirmation'
+    Given I am not logged in
+    When I click on 'Register'
+    And I click the 'Register' button
+    Then I should see the text 'Password is too short \(minimum is 5 characters\)'
+    And I should NOT see the text 'Password can\'t be blank'
+    When I fill in 'Choose password' with 'abcde'
+    And I click the 'Register' button
+    Then I should see the text 'Password doesn\'t match confirmation'
+    And I should NOT see the text 'Password confirmation can\'t be blank'
+    When I fill in 'Confirm password' with '12345'
+    And I click the 'Register' button
+    Then I should see the text 'Password doesn\'t match confirmation'
+    When I fill in 'Choose password' with '12345'
+    And I click the 'Register' button
+    Then I should NOT see the text 'Password doesn\'t match confirmation'
     
   Scenario: Test email validation
   
