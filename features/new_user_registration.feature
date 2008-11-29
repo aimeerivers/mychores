@@ -15,7 +15,7 @@ Feature: New user registration
     And we click the 'Register' button
     Then we should see the text 'Hi Aimee, thank you for signing up with MyChores'
 
-  Scenario: Test invalid logins
+  Scenario: Test login ID validation
     Given we are not logged in
     When we click on 'Register'
     And we click the 'Register' button
@@ -30,3 +30,26 @@ Feature: New user registration
     Then we should NOT see the text 'Login can only contain letters and numbers'
     And we should NOT see the text 'Login is too short \(minimum is 3 characters\)'
     
+  Scenario: Test duplicate logins (including with different case sensitivity)
+  
+  Scenario: Test name validation
+  
+  Scenario: Test password validation
+    Given we are not logged in
+    When we click on 'Register'
+    And we click the 'Register' button
+    Then we should see the text 'Password is too short \(minimum is 5 characters\)'
+    And we should NOT see the text 'Password can\'t be blank'
+    When we fill in 'Choose password' with 'abcde'
+    And we click the 'Register' button
+    Then we should see the text 'Password doesn\'t match confirmation'
+    And we should NOT see the text 'Password confirmation can\'t be blank'
+    When we fill in 'Confirm password' with '12345'
+    And we click the 'Register' button
+    Then we should see the text 'Password doesn\'t match confirmation'
+    When we fill in 'Choose password' with '12345'
+    And we click the 'Register' button
+    Then we should NOT see the text 'Password doesn\'t match confirmation'
+    
+  Scenario: Test email validation
+  

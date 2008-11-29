@@ -28,9 +28,7 @@ class Person < ActiveRecord::Base
   validates_format_of :login, :with => /^[\w-]+$/, :message => "can only contain letters and numbers"
 
   validates_length_of :password, :within => 5..40
-  validates_presence_of :password
   validates_confirmation_of :password, :on => :create
-  validates_presence_of :password_confirmation, :on => :create
   
   validates_length_of :name, :maximum => 40
   validates_presence_of :name
