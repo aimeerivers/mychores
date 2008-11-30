@@ -26,80 +26,38 @@ class Task < ActiveRecord::Base
 
 
   def describe_recurrence
-	
     # This is called after every create and every update done through the edit screen.
     # Not called after a reschedule resulting in a save, however - there's no need.
-	
-    # Look out for bad integers!
-    if !self.recurrence_interval
-      self.recurrence_interval = 1
-    end
-    if self.recurrence_interval < 1
-      self.recurrence_interval = 1
-    end
-	
-    if self.one_off == true
-      self.recurrence_description = "One-off task"
+    
+    if self.one_off
+      description = "One-off task"
     else
-      if self.recurrence_measure == 'days'
-        if self.recurrence_interval == 1
-          self.recurrence_description = "Every day"
-        elsif self.recurrence_interval == 2
-          self.recurrence_description = "Every other day"
-        else
-          self.recurrence_description = "Every " + self.recurrence_interval.to_s + " days"
-        end
-							
-      elsif self.recurrence_measure == 'weeks'
-        if self.recurrence_interval == 1
-          self.recurrence_description = "Every week"
-        else
-          self.recurrence_description = "Every " + self.recurrence_interval.to_s + " weeks"
-        end
-				
-							
-      elsif self.recurrence_measure == 'months'
-        if self.recurrence_interval == 1
-          self.recurrence_description = "Every month"
-        else
-          self.recurrence_description = "Every " + self.recurrence_interval.to_s + " months"
-        end
-				
+      description = case self.recurrence_interval
+      when nil,0,1
+        "Every #{self.recurrence_measure.chop}"
+      when 2
+        "Every other #{self.recurrence_measure.chop}"
+      else
+        "Every #{self.recurrence_interval} #{self.recurrence_measure}"
       end
-			
-      if self.recurrence_occur_on.length == 1
-			
-        self.recurrence_description += " ("
-				
-        if self.recurrence_occur_on.include?("0") then self.recurrence_description += "Sunday" end
-        if self.recurrence_occur_on.include?("1") then self.recurrence_description += "Monday" end
-        if self.recurrence_occur_on.include?("2") then self.recurrence_description += "Tuesday" end
-        if self.recurrence_occur_on.include?("3") then self.recurrence_description += "Wednesday" end
-        if self.recurrence_occur_on.include?("4") then self.recurrence_description += "Thursday" end
-        if self.recurrence_occur_on.include?("5") then self.recurrence_description += "Friday" end
-        if self.recurrence_occur_on.include?("6") then self.recurrence_description += "Saturday" end
-				
-        self.recurrence_description += ")"
-				
+      
+      recur_on = self.recurrence_occur_on
+      recur_on = self.recurrence_occur_on.split(",") if recur_on.is_a?(String)
+      recur_on.map!(&:to_i)
+      
+      days_of_week = %W{Sunday Monday Tuesday Wednesday Thursday Friday Saturday}
+      
+      if recur_on.length == 1
+        day = days_of_week[recur_on.first]
+        description +=  " (#{day})"
+      elsif recur_on.length == 6
+        days_of_week_as_ints = (0..6).to_a
+        day = days_of_week[(days_of_week_as_ints - recur_on).first]
+        description += " (not #{day})"
       end
-			
-			
-      if self.recurrence_occur_on.length == 6
-        self.recurrence_description += " (not "
-				
-        if self.recurrence_occur_on.include?("0") == false then self.recurrence_description += "Sunday" end
-        if self.recurrence_occur_on.include?("1") == false then self.recurrence_description += "Monday" end
-        if self.recurrence_occur_on.include?("2") == false then self.recurrence_description += "Tuesday" end
-        if self.recurrence_occur_on.include?("3") == false then self.recurrence_description += "Wednesday" end
-        if self.recurrence_occur_on.include?("4") == false then self.recurrence_description += "Thursday" end
-        if self.recurrence_occur_on.include?("5") == false then self.recurrence_description += "Friday" end
-        if self.recurrence_occur_on.include?("6") == false then self.recurrence_description += "Saturday" end
-				
-        self.recurrence_description += ")"
-				
-      end
-			
     end
+    
+    self.recurrence_description = description
   end
 	
 	
