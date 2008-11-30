@@ -1,7 +1,5 @@
 class Task < ActiveRecord::Base
 
-  # Comment added to test deployment
-
   include ActionView::Helpers::TextHelper
 
   belongs_to(:list)

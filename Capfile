@@ -16,12 +16,10 @@ namespace :deploy do
 end
 
 task :after_update_code, :roles => :app do
-  run "cp -pf #{deploy_path}/to_copy/.htaccess #{current_path}/public/.htaccess"
-  run "cp -pf #{deploy_path}/to_copy/environment.rb #{current_path}/config/environment.rb"
-  run "cp -pf #{deploy_path}/to_copy/database.yml #{current_path}/config/database.yml"
-  run "ln -s #{deploy_path}/pictures #{current_path}/public/pictures"
-  run "ln -s #{deploy_path}/exports #{current_path}/public/exports"
-  run "find #{current_path}/public -type d -exec chmod 0755 {} \\;"
-  run "find #{current_path}/public -type f -exec chmod 0644 {} \\;"
+  run "cp -pf #{deploy_to}/to_copy/.htaccess #{current_path}/public/.htaccess"
+  run "cp -pf #{deploy_to}/to_copy/environment.rb #{current_path}/config/environment.rb"
+  run "cp -pf #{deploy_to}/to_copy/database.yml #{current_path}/config/database.yml"
+  run "ln -s #{deploy_to}/pictures #{current_path}/public/pictures"
+  run "ln -s #{deploy_to}/exports #{current_path}/public/exports"
   run "chmod 0755 #{current_path}/public/dispatch.*"
 end

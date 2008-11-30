@@ -1,9 +1,5 @@
 class HomeController < ApplicationController
 
-  def capistrano
-    render :text => 'Capistrano has worked!'
-  end
-
   def welcome_page_calculations
 		@numpeople = Person.count(:conditions => "usertype = 1")
 		@numtasks = Task.count
