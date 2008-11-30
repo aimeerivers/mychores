@@ -13,7 +13,7 @@ class Task < ActiveRecord::Base
   validates_presence_of(:name)
   validates_length_of(:name, :maximum=>255)
 
-  validates_numericality_of(:recurrence_interval, :only_integer => true)
+  validates_numericality_of(:recurrence_interval, :only_integer => true, :greater_than => 0)
 
   validates_presence_of(:next_due)
 

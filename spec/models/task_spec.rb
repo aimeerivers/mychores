@@ -15,6 +15,25 @@ describe Task do
       @task.name = "1234567890123456789012345678901 blah blah blah as long as you like!"
       @task.errors_on(:name).should == []
     end
+    
+    it "should not allow to save with a zero or negative recurrence interval" do
+      @task.recurrence_interval = 0
+      @task.errors_on(:recurrence_interval).should == ['must be greater than 0']
+      @task.recurrence_interval = -1
+      @task.errors_on(:recurrence_interval).should == ['must be greater than 0']
+    end
+    
+    it "should not allow to save with a non-integer recurrence interval" do
+      @task.recurrence_interval = 'abc'
+      @task.errors_on(:recurrence_interval).should == ['is not a number']
+      @task.recurrence_interval = 3.14159
+      @task.errors_on(:recurrence_interval).should == ['is not a number']
+    end
+    
+    it "should allow to save with an integer recurrence interval" do
+      @task.recurrence_interval = 159
+      @task.errors_on(:recurrence_interval).should == []
+    end
   
   end
   
