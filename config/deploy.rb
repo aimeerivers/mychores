@@ -1,6 +1,7 @@
 set :application, 'mychores'
 set :user, 'mychore'
 set :domain, 'wycliffe'
+set :mongrel_port, '4124'
 
 
 set :scm_passphrase,  Proc.new { Capistrano::CLI.password_prompt('Git Password: ') }
