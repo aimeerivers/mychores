@@ -169,12 +169,13 @@ class Task < ActiveRecord::Base
               end
 							
             end
-          else
+          when Net::HTTPUnauthorized
             res.error!
+          else
             flash_message = "Task updated, but Twitter update failed."
           end
 					
-        rescue
+        rescue Net::HTTPServerException
           # In case of 401 unauthorised - ie wrong password
           flash_message = "Task updated, but Twitter update failed - please check Twitter password."
         end

@@ -96,5 +96,123 @@ describe Task do
       task.recurrence_description.should == "Every 3 months"
     end
   end
-
+  
+  describe "done" do
+    describe "posting to twitter" do
+      
+      before(:each) do
+        fake_it_through_to_twitter_update
+        @task = Task.new(@task_args)
+        
+        set_up_mocks_and_variables
+        set_up_data_gathering_expectations
+        set_up_request_expectations
+      end
+      
+      it "should return message for successful post to twitter" do
+        set_up_do_request_expectations(@ok_response)
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, and a post made to Twitter."
+      end
+      
+      it "should return message for unsuccessful post to twitter" do
+        set_up_do_request_expectations(@ok_response_with_empty_body)
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, but Twitter is currently not working. No post has been made to Twitter."
+      end
+      
+      it "should return message for failed post to twitter" do
+        set_up_do_request_expectations(@http_error)
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, but Twitter update failed."
+      end
+      
+      it "should return message for unauthorized post to twitter" do
+        set_up_do_request_expectations(@unauthorized_error)
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, but Twitter update failed - please check Twitter password."
+      end
+      
+      it "should return message for twitter unavailable" do
+        set_up_do_request_expectations(SocketError)
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, but Twitter is currently unavailable. No post has been made to Twitter."
+      end
+      
+      # helpers
+      
+      def fake_it_through_to_twitter_update
+        # fake it through the first half of the done method
+        @task_args = {:one_off => true}
+        
+        completion = mock("completion")
+        Completion.stub!(:new).and_return(completion)
+        completion.stub!(:save)
+      end
+      
+      def set_up_mocks_and_variables
+        @person = mock("person")
+        @person.stub!(:status).and_return("foo")
+        @datecompleted = mock("datecompleted")
+        @personcompleted = mock("personcompleted")
+        @update_twitter = true
+        
+        @preference = mock("preference")
+        @request = mock("request")
+        
+        @list = mock("list")
+        @list.stub!(:valid?).and_return(true)
+        @team = mock("team")
+        
+        @http = mock("http")
+        
+        @ok_response = Net::HTTPOK.new("200", "1.1", "OK")
+        @ok_response.instance_variable_set(:@body, "some text")
+        @ok_response.instance_variable_set(:@read, true)
+        
+        @ok_response_with_empty_body = @ok_response.dup
+        @ok_response_with_empty_body.instance_variable_set(:@body, "")
+        
+        @http_error = Net::HTTPInternalServerError.new("500", "1.1", "Internal Server Error")
+        @unauthorized_error = Net::HTTPUnauthorized.new("401", "1.1", "Unauthorized")
+        
+        @example_email = "mat@example.com"
+        @example_password = "foo"
+        @obscured_example_password = "sbb"
+        @twitter_update_action = "/statuses/update.xml"
+        @twitter_url = "twitter.com"
+      end
+      
+      def set_up_data_gathering_expectations
+        @task.should_receive(:name).at_least(:once).and_return("one")
+        @task.should_receive(:list).at_least(:once).and_return(@list)
+        @list.should_receive(:name).at_least(:once).and_return("two")
+        @list.should_receive(:team).at_least(:once).and_return(@team)
+        @team.should_receive(:name).at_least(:once).and_return("three")
+        
+        @person.should_receive(:preference).at_least(:once).and_return(@preference)
+        @preference.should_receive(:twitter_password).and_return(@obscured_example_password)
+        @preference.should_receive(:twitter_email).and_return(@example_email)
+        @preference.should_receive(:twitter_update_string).and_return("{TASK} {LIST} {TEAM}")
+      end
+      
+      def set_up_request_expectations
+        Net::HTTP::Post.should_receive(:new).with(@twitter_update_action).and_return(@request)
+        @request.should_receive(:basic_auth).with(@example_email, @example_password)
+        @request.should_receive(:set_form_data).with({"status" => "one two three (www.mychores.co.uk)"})
+      end
+      
+      def set_up_do_request_expectations(response)
+        Net::HTTP.should_receive(:new).with(@twitter_url, 80).and_return(@http)
+        if response.is_a?(Exception) || (response.is_a?(Class) && response <= Exception)
+          @http.should_receive(:start).and_raise(response)
+        else
+          @http.should_receive(:start).and_yield(@http)
+          @http.should_receive(:request).with(@request).and_return(response)
+        end
+      end
+      
+    end
+  end
+  
 end
