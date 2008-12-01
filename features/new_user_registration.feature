@@ -84,7 +84,11 @@ Feature: New user registration
     When I fill in 'Email' with 'wrong@verywrong'
     And I click the 'Register' button
     Then I should see the text 'Email seems to be invalid'
-    When I fill in 'Email' with 'good_email@subdomain.good-domain.co.uk'
+    When I fill in 'Email' with 'good_email@subdomain.good-domain.org.com.jp'
+    And I click the 'Register' button
+    Then I should NOT see the text 'Email seems to be invalid'
+    And I should NOT see the text 'Email can\'t be blank'
+    When I fill in 'Email' with 'a@b.co'
     And I click the 'Register' button
     Then I should NOT see the text 'Email seems to be invalid'
     And I should NOT see the text 'Email can\'t be blank'
