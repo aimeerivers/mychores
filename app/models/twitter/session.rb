@@ -29,26 +29,22 @@ module Twitter
     end
     
     def update(text_or_task)
-      update_string = text_or_task
-      if update_string.is_a?(Task)
-        update_string = task_update_string(text_or_task)
-      end
-      
-      request = new_request(Twitter::UPDATE, "status" => update_string)
+      update_string = text_or_task.is_a?(Task) ? task_update_string(text_or_task) : text_or_task      
+      request = new_request(Twitter::UPDATE, {'status' => update_string})
       do_request(request)
     end
     
     def direct_message(text, recipient)
-      request = new_request(Twitter::DIRECT,"text" => text,"user" => recipient)
+      request = new_request(Twitter::DIRECT, {'text' => text, 'user' => recipient})
       do_request(request)
     end
     
     private
     def new_request(action, form_data)
-      request = Net::HTTP::Post.new(action)
-      request.basic_auth(@username, @password)
-      request.set_form_data(form_data)
-      request
+      returning Net::HTTP::Post.new(action) do |request|
+        request.basic_auth(@username, @password)
+        request.set_form_data(form_data)
+      end
     end
     
     def do_request(request)
@@ -75,10 +71,11 @@ module Twitter
     end
     
     def task_update_string(task)
-      update_string = @update_prototype.dup
-      update_string.gsub!('{TASK}', task.name)
-      update_string.gsub!('{LIST}', task.list.name)
-      update_string.gsub!('{TEAM}', task.list.team.name)
+      returning @update_prototype.dup do |str|
+        str.gsub!('{TASK}', task.name)
+        str.gsub!('{LIST}', task.list.name)
+        str.gsub!('{TEAM}', task.list.team.name)
+      end
     end
     
   end
