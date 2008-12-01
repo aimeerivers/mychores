@@ -96,5 +96,58 @@ describe Task do
       task.recurrence_description.should == "Every 3 months"
     end
   end
-
+  
+  describe "done" do
+    describe "posting to twitter" do
+      
+      before(:each) do
+        completion = mock("completion")
+        Completion.stub!(:new).and_return(completion)
+        completion.stub!(:save)
+        
+        @task = Task.new(:one_off => true)
+        @session = mock("twitter session")
+        
+        @person = mock("person")
+        @person.stub!(:status).and_return("foo")
+        @datecompleted = mock("datecompleted")
+        @personcompleted = mock("personcompleted")
+        @update_twitter = true
+        
+        Twitter::Session.should_receive(:new).with(@person).and_return(@session)
+      end
+      
+      it "should return message for successful post to twitter" do
+        @session.should_receive(:update).with(@task).and_return(Twitter::Success.new("body"))
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, and a post made to Twitter."
+      end
+      
+      it "should return message for unsuccessful post to twitter" do
+        @session.should_receive(:update).with(@task).and_return(Twitter::ServiceError.new)
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, but Twitter is currently not working. No post has been made to Twitter."
+      end
+      
+      it "should return message for failed post to twitter" do
+        @session.should_receive(:update).with(@task).and_return(Twitter::Error.new)
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, but Twitter update failed."
+      end
+      
+      it "should return message for unauthorized post to twitter" do
+        @session.should_receive(:update).with(@task).and_return(Twitter::Unauthorized.new)
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, but Twitter update failed - please check Twitter password."
+      end
+      
+      it "should return message for twitter unavailable" do
+        @session.should_receive(:update).with(@task).and_return(Twitter::Unavailable.new)
+        message = @task.done(@person, @datecompleted, @personcompleted, @update_twitter)
+        message.should == "Task updated, but Twitter is currently unavailable. No post has been made to Twitter."
+      end
+      
+    end
+  end
+  
 end

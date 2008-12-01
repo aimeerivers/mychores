@@ -129,67 +129,29 @@ class Task < ActiveRecord::Base
 		
 		
     if update_twitter == true
-      # Make a post to Twitter
-					
-      twitter_password = person.preference.twitter_password.tr("A-Za-z", "N-ZA-Mn-za-m")
-	
-      update_text = person.preference.twitter_update_string + " (www.mychores.co.uk)"
-      update_text.gsub!('{TASK}', self.name)
-      update_text.gsub!('{LIST}', self.list.name)
-      update_text.gsub!('{TEAM}', self.list.team.name)
-			
-      # Apparently CGI escaping is only necessary for GET, not POST.
-      # require 'cgi'
-      # update_text = CGI::escape(update_text)
-			
-			
-      begin
-			
-        url = URI.parse('http://twitter.com/statuses/update.xml')
-        req = Net::HTTP::Post.new(url.path)
-        req.basic_auth person.preference.twitter_email, twitter_password
-        req.set_form_data({'status' => update_text})
-				
-        begin
-          res = Net::HTTP.new(url.host, url.port).start {|http| http.request(req) }
-					
-          case res
-          when Net::HTTPSuccess, Net::HTTPRedirection
-            # OK
-            if res.body.empty?
-              flash_message = "Task updated, but Twitter is currently not working. No post has been made to Twitter."
-            else
-              flash_message = "Task updated, and a post made to Twitter."
-							
-              # Update their status if they've made a Twitter post.
-              if person.status.nil? or person.status == ""
-                person.status = "Site Promoter"
-                person.save
-                session[:person].status = "Site Promoter"
-              end
-							
-            end
-          else
-            res.error!
-            flash_message = "Task updated, but Twitter update failed."
-          end
-					
-        rescue
-          # In case of 401 unauthorised - ie wrong password
-          flash_message = "Task updated, but Twitter update failed - please check Twitter password."
+      twitter = Twitter::Session.new(person)
+      result = twitter.update(self)
+      
+      case result
+      when Twitter::Success
+        if person.status.to_s.empty?
+          person.status = "Site Promoter"
+          person.save
+          session[:person].status = "Site Promoter"
         end
-				
-				
-			
-      rescue SocketError
-        # Twitter is currently unavailable
+        
+        flash_message = "Task updated, and a post made to Twitter."
+      when Twitter::Unauthorized
+        flash_message = "Task updated, but Twitter update failed - please check Twitter password."
+      when Twitter::ServiceError
+        flash_message = "Task updated, but Twitter is currently not working. No post has been made to Twitter."
+      when Twitter::Unavailable
         flash_message = "Task updated, but Twitter is currently unavailable. No post has been made to Twitter."
-				
+      when Twitter::Error
+        flash_message = "Task updated, but Twitter update failed."
       end
-						
     end
-		
-		
+    
     return flash_message
   end
 	
