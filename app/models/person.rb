@@ -35,7 +35,7 @@ class Person < ActiveRecord::Base
   
   validates_length_of :email, :maximum => 255
   validates_presence_of :email
-  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "seems to be invalid"
+  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "seems to be invalid", :unless => Proc.new { |user| user.email.blank? }
 	
 	
 

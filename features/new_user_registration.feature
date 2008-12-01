@@ -42,6 +42,17 @@ Feature: New user registration
     Then I should see the text 'Login has already been taken'
   
   Scenario: Test name validation
+    Given I am not logged in
+    When I click on 'Register'
+    And I click the 'Register' button
+    Then I should see the text 'Name can\'t be blank'
+    When I fill in 'Name' with 'Blatantly far too long to ever be acceptable - you just know this is totally going to FAIL!'
+    And I click the 'Register' button
+    Then I should see the text 'Name is too long \(maximum is 40 characters\)'
+    When I fill in 'Name' with '!@£\$%)(*$ <= acceptable!'
+    And I click the 'Register' button
+    Then I should NOT see the text 'Name can\'t be blank'
+    And I should NOT see the text 'Name is too long \(maximum is 40 characters\)'
   
   Scenario: Test password validation
     Given I am not logged in
@@ -61,4 +72,20 @@ Feature: New user registration
     Then I should NOT see the text 'Password doesn\'t match confirmation'
     
   Scenario: Test email validation
+    Given I am not logged in
+    When I click on 'Register'
+    And I click the 'Register' button
+    Then I should see the text 'Email can\'t be blank'
+    And I should NOT see the text 'Email seems to be invalid'
+    When I fill in 'Email' with 'not_even_an_email_address'
+    And I click the 'Register' button
+    Then I should see the text 'Email seems to be invalid'
+    And I should NOT see the text 'Email can\'t be blank'
+    When I fill in 'Email' with 'wrong@verywrong'
+    And I click the 'Register' button
+    Then I should see the text 'Email seems to be invalid'
+    When I fill in 'Email' with 'good_email@subdomain.good-domain.co.uk'
+    And I click the 'Register' button
+    Then I should NOT see the text 'Email seems to be invalid'
+    And I should NOT see the text 'Email can\'t be blank'
   
