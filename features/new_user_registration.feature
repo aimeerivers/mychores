@@ -112,5 +112,12 @@ Feature: New user registration
     When I click on 'Register'
     And I fill in 'Referrer ID' with 'blatantly_nobody_has_this_id'
     And I click the 'Register' button
-    Then I should see the text 'Referrer is not recognised; please check again or leave it blank'  
+    Then I should see the text 'Referrer is not recognised; please check again or leave it blank'
+    
+  Scenario: Referrer ID can be entered automatically if they followed a referral link
+    Given a person called 'Aimee' with login ID 'aimee'
+    And I am not logged in
+    When I visit the page /home?referrer=aimee
+    And I click on 'Register'
+    Then the text field with id 'person_referrer' should be filled in with 'aimee'
   

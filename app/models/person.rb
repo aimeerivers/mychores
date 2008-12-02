@@ -73,23 +73,6 @@ class Person < ActiveRecord::Base
   end
   
   
-  
-  
-  # check captcha code
-  #def validation
-  #end
-  
-  #def validation=(field)
-  #		write_attribute("validation", field)
-  #  	@captcha_invalid = true unless field == "H6a38G"
-  #end
-  
-  
-  
-  
-  
-  
-  
   def signup_new_user(code)
     
     @mytimezone = TimeZone.new(self.timezone_name)

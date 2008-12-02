@@ -9,6 +9,11 @@ When /^I click the '(.*)' button$/ do |name|
   clicks_button name
 end
 
+When /^I visit the page (.+)$/ do |url|
+  visit url
+end
+
+
 
 
 When /^I follow '(.*)'$/ do |link|
