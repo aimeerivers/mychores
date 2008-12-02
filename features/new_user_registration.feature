@@ -92,4 +92,25 @@ Feature: New user registration
     And I click the 'Register' button
     Then I should NOT see the text 'Email seems to be invalid'
     And I should NOT see the text 'Email can\'t be blank'
+    
+  Scenario: Person has been referred by someone else
+    Given a person called 'Aimee' with login ID 'aimee'
+    And I am not logged in
+    When I click on 'Register'
+    And I fill in 'Desired login ID' with 'springysparkles'
+    And I fill in 'Name' with 'Joanne'
+    And I fill in 'Choose password' with '12345'
+    And I fill in 'Confirm password' with '12345'
+    And I fill in 'Email address' with 'joanne@test.com'
+    And I fill in 'Referrer ID' with 'aimee'
+    And I click the 'Register' button
+    Then I should see the text 'Hi Joanne, thank you for signing up with MyChores'
+    And the referrer ID for 'springysparkles' should be set to 'aimee'
+    
+  Scenario: Enter an invalid referrer ID
+    Given I am not logged in
+    When I click on 'Register'
+    And I fill in 'Referrer ID' with 'blatantly_nobody_has_this_id'
+    And I click the 'Register' button
+    Then I should see the text 'Referrer is not recognised; please check again or leave it blank'  
   
