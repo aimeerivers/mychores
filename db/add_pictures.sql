@@ -1,3 +1,4 @@
+DELETE FROM pictures;
 INSERT INTO pictures (id, content_type, filename, size, parent_id, thumbnail, width, height, person_id, db_file_id, is_public, is_flickr_import, flickr_url, created_on) VALUES(1, 'image/png', 'question.png', 11692, NULL, NULL, 130, 150, NULL, NULL, 0, 0, NULL, '2007-10-14 18:25:59');
 INSERT INTO pictures (id, content_type, filename, size, parent_id, thumbnail, width, height, person_id, db_file_id, is_public, is_flickr_import, flickr_url, created_on) VALUES(2, 'image/jpeg', 'change-bed-sheets.jpg', 7094, NULL, NULL, 150, 150, NULL, NULL, 1, 0, NULL, '2007-10-14 15:26:46');
 INSERT INTO pictures (id, content_type, filename, size, parent_id, thumbnail, width, height, person_id, db_file_id, is_public, is_flickr_import, flickr_url, created_on) VALUES(3, 'image/jpeg', 'change-towels.jpg', 3891, NULL, NULL, 150, 152, NULL, NULL, 1, 0, NULL, '2007-10-14 15:26:46');
