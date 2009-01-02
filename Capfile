@@ -19,6 +19,7 @@ namespace :deploy do
     run "cp -pf #{deploy_to}/to_copy/.htaccess #{current_path}/public/.htaccess"
     run "cp -pf #{deploy_to}/to_copy/environment.rb #{current_path}/config/environment.rb"
     run "cp -pf #{deploy_to}/to_copy/database.yml #{current_path}/config/database.yml"
+    run "cp -pf #{deploy_to}/to_copy/exceptional.rb #{current_path}/config/exceptional.rb"
     run "rm -rf #{current_path}/public/pictures"
     run "ln -s #{deploy_to}/pictures #{current_path}/public/pictures"
     run "ln -s #{deploy_to}/exports #{current_path}/public/exports"
