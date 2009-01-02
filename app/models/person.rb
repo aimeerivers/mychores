@@ -165,352 +165,82 @@ http://www.mychores.co.uk"
       @membership = Membership.new(:person_id => self.id, :team_id => @team.id, :confirmed => 1, :validity_key => validitykey)
       @membership.save
       
-      # General list
-      @templist = List.new
-      @templist.name = 'General'
-      @templist.description = "A list for general things that need to be done around the home"
-      @templist.team_id = @team.id
-      @templist.save
-		
-      # Water plants
-      @temptask = Task.new
-      @temptask.name = 'Water plants'
-      @temptask.description = "Water all the plants in the house"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '2'
-      @temptask.recurrence_measure = 'days'
-      @temptask.next_due = @todaysdate
-      @temptask.default_importance = 3
-      @temptask.current_importance = 3
-      @temptask.describe_recurrence
-      @temptask.picture_id = 20
-      @temptask.save
-		
-      # Sweep/vacuum
-      @temptask = Task.new
-      @temptask.name = 'Sweep/vacuum floors'
-      @temptask.description = "Sweep or vacuum all floors throught the house"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '1'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 3
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 19
-      @temptask.save
-		
-      # Laundry
-      @temptask = Task.new
-      @temptask.name = 'Laundry'
-      @temptask.description = "Alternate between dark and light washes, or as needed"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '4'
-      @temptask.recurrence_measure = 'days'
-      @temptask.next_due = @todaysdate + 2
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 37
-      @temptask.save
-		
-      # Put away things out of place
-      @temptask = Task.new
-      @temptask.name = 'Put away things out of place'
-      @temptask.description = "Find anything that is not where it should be and put it away"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '1'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 1
-      @temptask.default_importance = 3
-      @temptask.current_importance = 3
-      @temptask.describe_recurrence
-      @temptask.picture_id = 14
-      @temptask.save
-		
-      # Dust surfaces
-      @temptask = Task.new
-      @temptask.name = 'Dust surfaces'
-      @temptask.description = "All the furniture and hard surfaces throughout the house need to be dusted"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '1'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 2
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 8
-      @temptask.save
-		
-      # Open windows
-      @temptask = Task.new
-      @temptask.name = 'Open windows'
-      @temptask.description = "Open all the windows and give the home a good airing"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '1'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 5
-      @temptask.default_importance = 2
-      @temptask.current_importance = 2
-      @temptask.describe_recurrence
-      @temptask.picture_id = 12
-      @temptask.save
-		
-		
-		
-      # Living Room
-      @templist = List.new
-      @templist.name = 'Living Room'
-      @templist.description = "A list for the tasks that need to be done in the living room"
-      @templist.team_id = @team.id
-      @templist.save
-		
-      # Plump cushions
-      @temptask = Task.new
-      @temptask.name = 'Plump cushions'
-      @temptask.description = "Are the sofa cushions looking flat? Plump them up again!"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '5'
-      @temptask.recurrence_measure = 'days'
-      @temptask.next_due = @todaysdate
-      @temptask.default_importance = 2
-      @temptask.current_importance = 2
-      @temptask.describe_recurrence
-      @temptask.picture_id = 13
-      @temptask.save
-		
-      # Clean television & stereo
-      @temptask = Task.new
-      @temptask.name = 'Clean television & stereo'
-      @temptask.description = "They get messy - time to give them a good clean"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '4'
-      @temptask.recurrence_measure = 'months'
-      @temptask.any_date = true
-      target_day = 5
-      target_month = @todaysdate.month + 3
-      if target_month > 12
-        target_month -= 12
-        target_year = @todaysdate.year + 1
-      else
-        target_year = @todaysdate.year
-      end
-      @temptask.next_due = Date.new(target_year, target_month, target_day)
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 9
-      @temptask.save
-		
-		
-		
-      # Bathroom
-      @templist = List.new
-      @templist.name = 'Bathroom'
-      @templist.description = "A list for the tasks that need to be done in the bathroom"
-      @templist.team_id = @team.id
-      @templist.save
-		
-      # Clean & scrub bath
-      @temptask = Task.new
-      @temptask.name = 'Clean & scrub bath'
-      @temptask.description = "Make the bath shine again"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '2'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 4
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 28
-      @temptask.save
-		
-      # Clean toilet
-      @temptask = Task.new
-      @temptask.name = 'Clean toilet'
-      @temptask.description = "Not a nice task but it needs to be done!"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '1'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 4
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 6
-      @temptask.save
-		
-      # Change towels
-      @temptask = Task.new
-      @temptask.name = 'Change towels'
-      @temptask.description = "On the same day as you clean the bath, change the bathroom towels"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '2'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 4
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 3
-      @temptask.save
-		
-		
-		
-      # Bedroom
-      @templist = List.new
-      @templist.name = 'Bedroom'
-      @templist.description = "A list for the tasks that need to be done in the bedroom"
-      @templist.team_id = @team.id
-      @templist.save
-		
-      # Change bed sheets
-      @temptask = Task.new
-      @temptask.name = 'Change bed sheets'
-      @temptask.description = "Strip the bed and give it fresh sheets"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '2'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 5
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 2
-      @temptask.save
-		
-      # Turn mattress
-      @temptask = Task.new
-      @temptask.name = 'Turn mattress'
-      @temptask.description = "Time to turn the mattress over and sleep on the other side"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '6'
-      @temptask.recurrence_measure = 'months'
-      @temptask.any_date = true
-      target_day = 13
-      target_month = @todaysdate.month + 4
-      if target_month > 12
-        target_month -= 12
-        target_year = @todaysdate.year + 1
-      else
-        target_year = @todaysdate.year
-      end
-      @temptask.next_due = Date.new(target_year, target_month, target_day)
-      @temptask.default_importance = 3
-      @temptask.current_importance = 3
-      @temptask.describe_recurrence
-      @temptask.picture_id = 18
-      @temptask.save
-		
-		
-		
-      # Kitchen
-      @templist = List.new
-      @templist.name = 'Kitchen'
-      @templist.description = "A list for the tasks that need to be done in the kitchen"
-      @templist.team_id = @team.id
-      @templist.save
-		
-      # Scrub & disinfect sink
-      @temptask = Task.new
-      @temptask.name = 'Scrub & disinfect sink'
-      @temptask.description = "Free the kitchen sink of limescale and make it shine"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '1'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 6
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 5
-      @temptask.save
-		
-      # Wipe appliances
-      @temptask = Task.new
-      @temptask.name = 'Wipe appliances'
-      @temptask.description = "With a damp cloth, quickly wipe down the oven, refrigerator, freezer, washing machine, dishwasher, microwave ..."
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '2'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 6
-      @temptask.default_importance = 3
-      @temptask.current_importance = 3
-      @temptask.describe_recurrence
-      @temptask.picture_id = 21
-      @temptask.save
-		
-      # Empty & clean bin
-      @temptask = Task.new
-      @temptask.name = 'Empty & clean bin'
-      @temptask.description = "Wash out the bin with some disinfectant"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '3'
-      @temptask.recurrence_measure = 'weeks'
-      @temptask.any_day = true
-      @temptask.next_due = @todaysdate + 13
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 10
-      @temptask.save
-		
-      # Clean cupboards & pantry
-      @temptask = Task.new
-      @temptask.name = 'Clean cupboards & pantry'
-      @temptask.description = "Take everything out of the cupboards and pantry, and wash the shelves thoroughly. Wipe down the doors to finish."
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '6'
-      @temptask.recurrence_measure = 'months'
-      @temptask.any_date = true
-      target_day = 23
-      target_month = @todaysdate.month + 1
-      if target_month > 12
-        target_month -= 12
-        target_year = @todaysdate.year + 1
-      else
-        target_year = @todaysdate.year
-      end
-      @temptask.next_due = Date.new(target_year, target_month, target_day)
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 4
-      @temptask.save
-		
-      # Clean oven thoroughly
-      @temptask = Task.new
-      @temptask.name = 'Clean oven thoroughly'
-      @temptask.description = "This is easy with the right equipment - look in your supermarket or search online"
-      @temptask.list_id = @templist.id
-      @temptask.recurrence_interval = '6'
-      @temptask.recurrence_measure = 'months'
-      @temptask.any_date = true
-      target_day = 18
-      target_month = @todaysdate.month + 2
-      if target_month > 12
-        target_month -= 12
-        target_year = @todaysdate.year + 1
-      else
-        target_year = @todaysdate.year
-      end
-      @temptask.next_due = Date.new(target_year, target_month, target_day)
-      @temptask.default_importance = 4
-      @temptask.current_importance = 4
-      @temptask.describe_recurrence
-      @temptask.picture_id = 27
-      @temptask.save
-		
       
-      #flash[:notice] = "Welcome to MyChores! A few tasks have been created for you to get you started."
-      #redirect_back_or_default :controller => 'tasks', :action => 'workload'
-      #redirect_to :controller => 'admin', :action => 'welcome'
+      
+      default_tasks = [
+        {:list_name => 'General', :description => 'A list for general things that need to be done around the home', :tasks => [
+        
+          {:name => 'Water plants', :description => 'Water all the plants in the house', :recurrence_interval => 2, :recurrence_measure => 'days', :next_due => @todaysdate, :default_importance => 3, :current_importance => 3, :picture_id => 20},
+          
+          {:name => 'Sweep/vacuum floors', :description => 'Sweep or vacuum all floors throughout the house', :recurrence_interval => 1, :recurrence_measure => 'weeks', :next_due => @todaysdate + 3, :default_importance => 4, :current_importance => 4, :picture_id => 19},
+          
+          {:name => 'Laundry', :description => 'Alternate between dark and light washes, or as needed', :recurrence_interval => 4, :recurrence_measure => 'days', :next_due => @todaysdate + 2, :default_importance => 4, :current_importance => 4, :picture_id => 37},
+          
+          {:name => 'Put away things out of place', :description => 'Find anything that is not where it should be and put it away', :recurrence_interval => 1, :recurrence_measure => 'weeks', :next_due => @todaysdate + 1, :default_importance => 3, :current_importance => 3, :picture_id => 14},
+          
+          {:name => 'Dust surfaces', :description => 'All the furniture and hard surfaces throughout the house need to be dusted', :recurrence_interval => 1, :recurrence_measure => 'weeks', :next_due => @todaysdate + 2, :default_importance => 4, :current_importance => 4, :picture_id => 8},
+          
+          {:name => 'Open windows', :description => 'Open all the windows and give the home a good airing', :recurrence_interval => 1, :recurrence_measure => 'weeks', :next_due => @todaysdate + 5, :default_importance => 2, :current_importance => 2, :picture_id => 12}
+        ]},
+        
+        
+        
+        {:list_name => 'Living Room', :description => 'A list for the tasks that need to be done in the living room', :tasks => [
+          
+          {:name => 'Plump cushions', :description => 'Are the sofa cushions looking flat? Plump them up again!', :recurrence_interval => 5, :recurrence_measure => 'days', :next_due => @todaysdate, :default_importance => 2, :current_importance => 2, :picture_id => 13},
+          
+          {:name => 'Clean television & stereo', :description => 'They get messy - time to give them a good clean', :recurrence_interval => 4, :recurrence_measure => 'months', :next_due => @todaysdate + 3.months, :default_importance => 4, :current_importance => 4, :picture_id => 9}
+        ]},
+        
+        
+        
+        {:list_name => 'Bathroom', :description => 'A list for the tasks that need to be done in the bathroom', :tasks => [
+          
+          {:name => 'Clean & scrub bath', :description => 'Make the bath shine again', :recurrence_interval => 2, :recurrence_measure => 'weeks', :next_due => @todaysdate + 4, :default_importance => 4, :current_importance => 4, :picture_id => 28},
+          
+          {:name => 'Clean toilet', :description => 'Not a nice task but it needs to be done!', :recurrence_interval => 1, :recurrence_measure => 'weeks', :next_due => @todaysdate + 4, :default_importance => 4, :current_importance => 4, :picture_id => 6},
+          
+          {:name => 'Change towels', :description => 'On the same day as you clean the bath, change the bathroom towels', :recurrence_interval => 2, :recurrence_measure => 'weeks', :next_due => @todaysdate + 4, :default_importance => 4, :current_importance => 4, :picture_id => 3}
+        ]},
+        
+        
+        
+        {:list_name => 'Bedroom', :description => 'A list for the tasks that need to be done in the bedroom', :tasks => [
+          
+          {:name => 'Change bed sheets', :description => 'Strip the bed and give it fresh sheets', :recurrence_interval => 2, :recurrence_measure => 'weeks', :next_due => @todaysdate + 5, :default_importance => 4, :current_importance => 4, :picture_id => 2},
+          
+          {:name => 'Turn mattress', :description => 'Time to turn the mattress over and sleep on the other side', :recurrence_interval => 6, :recurrence_measure => 'months', :next_due => @todaysdate + 4.months, :default_importance => 3, :current_importance => 3, :picture_id => 18}
+        ]},
+        
+        
+        
+        {:list_name => 'Kitchen', :description => 'A list for the tasks that need to be done in the kitchen', :tasks => [
+          
+          {:name => 'Scrub & disinfect sink', :description => 'Free the kitchen sink of limescale and make it shine', :recurrence_interval => 1, :recurrence_measure => 'weeks', :next_due => @todaysdate + 6, :default_importance => 4, :current_importance => 4, :picture_id => 5},
+          
+          {:name => 'Wipe appliances', :description => 'With a damp cloth, quickly wipe down the oven, refrigerator, freezer, washing machine, dishwasher, microwave ...', :recurrence_interval => 2, :recurrence_measure => 'weeks', :next_due => @todaysdate + 6, :default_importance => 3, :current_importance => 3, :picture_id => 21},
+          
+          {:name => 'Empty & clean bin', :description => 'Wash out the bin with disinfectant', :recurrence_interval => 3, :recurrence_measure => 'weeks', :next_due => @todaysdate + 13, :default_importance => 4, :current_importance => 4, :picture_id => 10},
+          
+          {:name => 'Clean cupboards & pantry', :description => 'Take everything out of the cupboards and pantry, and wash the shelves thoroughly. Wipe down the doors to finish.', :recurrence_interval => 6, :recurrence_measure => 'months', :next_due => @todaysdate + 5.weeks, :default_importance => 4, :current_importance => 4, :picture_id => 4},
+          
+          {:name => 'Clean oven thoroughly', :description => 'This is easy with the right equipment - look in your supermarket or check the tips on MyChores.', :recurrence_interval => 6, :recurrence_measure => 'months', :next_due => @todaysdate + 2.months, :default_importance => 4, :current_importance => 4, :picture_id => 27}
+        ]}
+      ]
+      
+      
+      
+      default_tasks.each do |list|
+        @templist = List.new(:name => list[:list_name], :description => list[:description], :team_id => @team.id)
+        @templist.save
+        list[:tasks].each do |task|
+          @temptask = Task.new(task)
+          @temptask.list_id = @templist.id
+          @temptask.save
+        end
+      end
+      
+      
       
       # Send an email
       @email = Email.new
