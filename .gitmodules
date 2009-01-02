@@ -16,3 +16,6 @@
 [submodule "vendor/plugins/mychores_globalize"]
 	path = vendor/plugins/mychores_globalize
 	url = git://github.com/sermoa/mychores_globalize.git
+[submodule "vendor/plugins/exceptional"]
+	path = vendor/plugins/exceptional
+	url = git://github.com/contrast/exceptional.git
