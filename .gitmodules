@@ -4,9 +4,6 @@
 [submodule "vendor/plugins/mislav_will_paginate"]
 	path = vendor/plugins/mislav_will_paginate
 	url = git://github.com/mislav/will_paginate.git
-[submodule "vendor/plugins/attachment_fu"]
-	path = vendor/plugins/attachment_fu
-	url = git://github.com/technoweenie/attachment_fu.git
 [submodule "vendor/plugins/rspec"]
 	path = vendor/plugins/rspec
 	url = git://github.com/dchelimsky/rspec.git
