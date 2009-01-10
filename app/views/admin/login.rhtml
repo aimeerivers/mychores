@@ -12,25 +12,25 @@
 <% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
 
 
-<% form_tag(:action=> "login") do %><div>
+<% form_for(:person, :url => {:action => :login}) do |f| -%><div>
     
     	<table>
     		<tr>
-    			<th>Login id:</th>
-	    		<td><input type="text" name="person_login" id="person_login" class='styled' /></td>
+    			<th><%= f.label(:login, 'Login ID') %>:</th>
+	    		<td><%= f.text_field(:login, :class => 'styled') %></td>
 	    	</tr>
     		<tr>
-    			<th>Password:</th>
-	    		<td><input type="password" name="person_password" id="person_password" class='styled' /></td>
+    			<th><%= f.label(:password) %>:</th>
+	    		<td><%= f.password_field(:password, :class => 'styled') %></td>
 	    	</tr>
 	    </table>
 	    
 	    <br />
 	    
-    <input type="submit" name="login" value="Login" />
+    <p><%= f.submit('Login') %></p>
 
 
-</div><% end %>
+</div><% end -%>
 
 <br />
 

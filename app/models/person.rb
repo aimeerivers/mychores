@@ -278,8 +278,13 @@ http://www.mychores.co.uk"
   
   end
   
+  def confirmed_teams
+    Team.find(memberships.confirmed.map(&:team_id))
+  end
   
-  
+  def fellow_team_members
+    confirmed_teams.map(&:confirmed_members).flatten.uniq - [self]
+  end
   
   
   

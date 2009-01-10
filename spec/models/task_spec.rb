@@ -55,6 +55,18 @@ describe Task do
     end
   end
   
+  describe "list_name" do
+    it "should return empty string if there is no list" do
+      task = Task.new
+      task.list_name.should == ''
+    end
+  
+    it "should return the name of the list if there is one" do
+      task = Task.new(:list => mock_model(List, :name => 'Bedroom'))
+      task.list_name.should == 'Bedroom'
+    end
+  end
+  
   describe "describe_recurrence" do
     it "should describe a one off task" do
       task = Task.new(:one_off => true)

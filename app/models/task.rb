@@ -23,6 +23,11 @@ class Task < ActiveRecord::Base
   def short_name
     truncate(name)
   end
+  
+  def list_name
+    return '' if list.nil?
+    list.name
+  end
 
 
   def describe_recurrence

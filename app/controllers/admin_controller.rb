@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   def login
     case request.method
     when :post
-      if session[:person] = Person.authenticate(params[:person_login], params[:person_password])
+      if session[:person] = Person.authenticate(params[:person][:login], params[:person][:password])
       
       	# Load up their preferences too
       	session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])

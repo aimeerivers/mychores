@@ -12,6 +12,9 @@ validates_presence_of(:name)
 validates_length_of(:name, :maximum=>25)
 
 
+  def confirmed_members
+    Person.find(memberships.confirmed.map(&:person_id))
+  end
 
 
 protected

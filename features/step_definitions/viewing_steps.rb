@@ -15,3 +15,14 @@ Then /^the text field with id '(\w+)' should be filled in with '(.+)'$/ do |fiel
   response.should have_tag('input[id=?][value=?]', field_id, value)
 end
 
+
+
+
+
+
+
+
+When /^I debug the page$/ do
+  raise response.body
+end
+
