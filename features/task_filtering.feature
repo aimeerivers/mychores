@@ -50,3 +50,18 @@ Feature: Task filtering
     Then I should see the task 'Vacuum floor'
     And I should see the task 'Dust shelves'
     And I should NOT see the task 'Change bed'
+    
+  Scenario: Enable filtering by person in the team view page
+    GivenScenario: Setup team and tasks
+    When I click on 'Household'
+    And I click on 'Team workload'
+    And I select 'Only my tasks' from 'preference_workload_display'
+    And I click the 'Go!' button
+    Then I should see the task 'Change bed'
+    And I should see the task 'Dust shelves'
+    And I should NOT see the task 'Vacuum floor'
+    When I select 'Only Jo's tasks' from 'preference_workload_display'
+    And I click the 'Go!' button
+    Then I should see the task 'Vacuum floor'
+    And I should see the task 'Dust shelves'
+    And I should NOT see the task 'Change bed'

@@ -43,7 +43,7 @@
 
 <table>
 
-	<% unless @team.description.empty? %>
+	<% unless @team.description.blank? %>
 		<tr>
 			<th>Description:</th>
 			<td><%= textilize @team.description %></td>

@@ -471,6 +471,15 @@ http://www.mychores.co.uk"
         elsif @order_by == "Importance"
           @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", @person.id, @team.id], :page => page, :per_page => items_per_page)
         end
+        
+        
+      else
+        if @order_by == "Due date"
+          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", session[:preference].workload_display, @team.id], :page => page, :per_page => items_per_page)
+          
+        elsif @order_by == "Importance"
+          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", session[:preference].workload_display, @team.id], :page => page, :per_page => items_per_page)
+        end
       end
 
       # step 3: create a Paginator, the second variable has to be the number of ALL items on all pages
