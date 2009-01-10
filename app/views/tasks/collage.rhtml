@@ -90,7 +90,7 @@
 
 
 <% form_tag(:action => 'quickchangepreferences', :id => @person.id, :return => 'Collage') do %><div>
-    <p><%= "Show:".t %> <%= select('preference', 'workload_display', [["All tasks".t, "All tasks"], ["Only my tasks".t, "Only my tasks"], ["Only today's tasks".t, "Only today's tasks"]]) %>  <%= submit_tag "Go!".t %></p>
+    <p><%= "Show:".t %> <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> <%= submit_tag "Go!".t %></p>
   </div><% end %>
 
 

@@ -120,5 +120,22 @@ Feature: Task filtering
     When I click on 'Hot map'
     Then I should see a link to 'Personal: Wash hair'
     And I should see a link to 'Personal: Cut fingernails'
+    And I should see a link to 'Bedroom: Change bed'
+    And I should see a link to 'Bedroom: Vacuum floor'
+    And I should see a link to 'Bedroom: Dust shelves'
+    When I select 'Only my tasks' from 'preference_workload_display'
+    And I click the 'Go!' button
+    Then I should see a link to 'Personal: Wash hair'
+    And I should see a link to 'Personal: Cut fingernails'
+    And I should NOT see a link to 'Bedroom: Change bed'
+    And I should see a link to 'Bedroom: Vacuum floor'
+    And I should see a link to 'Bedroom: Dust shelves'
+    When I select 'Only Alex's tasks' from 'preference_workload_display'
+    And I click the 'Go!' button
+    Then I should NOT see a link to 'Personal: Wash hair'
+    And I should NOT see a link to 'Personal: Cut fingernails'
+    And I should see a link to 'Bedroom: Change bed'
+    And I should NOT see a link to 'Bedroom: Vacuum floor'
+    And I should NOT see a link to 'Bedroom: Dust shelves'
     
     

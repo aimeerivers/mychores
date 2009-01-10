@@ -525,6 +525,9 @@ class TasksController < ApplicationController
 
     elsif session[:preference].workload_display == "Only my tasks"
       @workload_tasks = Task.find_by_sql ["select * from tasks where status='active' and next_due <= ? and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by next_due ASC, list_id ASC, name ASC limit 24", @datetoday + 1, @person.id, @person.id]
+      
+    else
+      @workload_tasks = Task.find_by_sql ["select * from tasks where status='active' and next_due <= ? and person_id = ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by next_due ASC, list_id ASC, name ASC limit 24", @datetoday + 1, session[:preference].workload_display, @person.id]
 
     end
 		
