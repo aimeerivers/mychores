@@ -287,6 +287,6 @@
 		<br />
 			
 		<% form_tag(:action => 'quickchangepreferences', :id => @person.id) do %><div>
-		<p><%= "Show:".t %> <%= select('preference', 'workload_display', [["All tasks".t, "All tasks"], ["Only my tasks".t, "Only my tasks"], ["Only today's tasks".t, "Only today's tasks"]]) %> <%= "Order by:".t %> <%= select('preference', 'workload_order_by', [["Due date".t, "Due date"], ["Importance".t, "Importance"]]) %> <%= "Per page:".t %> <%= select('preference', 'workload_page_size', ["10", "15", "20", "25", "30", "40"]) %> <%= submit_tag "Go!".t %></p>
+		<p><%= "Show:".t %> <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> <%= "Order by:".t %> <%= select('preference', 'workload_order_by', [["Due date".t, "Due date"], ["Importance".t, "Importance"]]) %> <%= "Per page:".t %> <%= select('preference', 'workload_page_size', ["10", "15", "20", "25", "30", "40"]) %> <%= submit_tag "Go!".t %></p>
 		</div><% end %>
 		
