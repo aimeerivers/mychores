@@ -20,7 +20,7 @@
 	
 	<table>
 	
-		<% unless @list.description.empty? %>
+		<% unless @list.description.blank? %>
 			<tr>
 				<th>Description:</th>
 				<td><%= textilize @list.description %></td>

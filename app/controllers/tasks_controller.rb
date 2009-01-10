@@ -573,6 +573,9 @@ class TasksController < ApplicationController
 		  
     elsif session[:preference].workload_display == "Only my tasks"
       @tasks_by_importance = Task.find_by_sql ["select *, datediff(curdate(), next_due) as diff, datediff(curdate(), next_due)  * current_importance as rank from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by rank desc, current_importance desc, list_id ASC, name ASC limit 15", @person.id, @person.id]
+      
+    else
+      @tasks_by_importance = Task.find_by_sql ["select *, datediff(curdate(), next_due) as diff, datediff(curdate(), next_due)  * current_importance as rank from tasks where status='active' and person_id = ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by rank desc, current_importance desc, list_id ASC, name ASC limit 15", session[:preference].workload_display, @person.id]
     end
 		
   end

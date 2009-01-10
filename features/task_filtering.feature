@@ -66,6 +66,23 @@ Feature: Task filtering
     And I should NOT see the task 'Dust shelves'
     And I should NOT see the task 'Change bed'
     
+  Scenario: Filter by person in the hot map view
+    GivenScenario: Setup team and tasks
+    When I click on 'Hot Map'
+    Then I should see a link to 'Bedroom: Change bed'
+    And I should see a link to 'Bedroom: Vacuum floor'
+    And I should see a link to 'Bedroom: Dust shelves'
+    When I select 'Only my tasks' from 'preference_workload_display'
+    And I click the 'Go!' button
+    Then I should see a link to 'Bedroom: Change bed'
+    And I should see a link to 'Bedroom: Dust shelves'
+    And I should NOT see a link to 'Bedroom: Vacuum floor'
+    When I select 'Only Jo's tasks' from 'preference_workload_display'
+    And I click the 'Go!' button
+    Then I should see a link to 'Bedroom: Vacuum floor'
+    And I should NOT see a link to 'Bedroom: Dust shelves'
+    And I should NOT see a link to 'Bedroom: Change bed'
+    
   Scenario: Jo has private team with tasks not visible to Alex
     GivenScenario: Setup team and tasks
     And a team called 'Team Jo'
@@ -86,4 +103,22 @@ Feature: Task filtering
     And I click on 'Team workload'
     Then I should NOT see the task 'Wash hair'
     And I should NOT see the task 'Cut fingernails'
+    When I click on 'Hot map'
+    Then I should NOT see a link to 'Personal: Wash hair'
+    And I should NOT see a link to 'Personal: Cut fingernails'
+    
+  Scenario: Jo does see private team tasks of course
+    GivenScenario: Jo has private team with tasks not visible to Alex
+    Given I am logged in as 'Jo'
+    When I view the workload page
+    Then I should see the task 'Wash hair'
+    And I should see the task 'Cut fingernails'
+    When I click on 'Team Jo'
+    And I click on 'Team workload'
+    Then I should see the task 'Wash hair'
+    And I should see the task 'Cut fingernails'
+    When I click on 'Hot map'
+    Then I should see a link to 'Personal: Wash hair'
+    And I should see a link to 'Personal: Cut fingernails'
+    
     
