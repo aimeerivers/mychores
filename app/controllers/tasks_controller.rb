@@ -470,10 +470,10 @@ class TasksController < ApplicationController
 
     else
       if @order_by == "Due date"
-        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", session[:preference].workload_display, session[:preference].workload_display], :page => page, :per_page => items_per_page)
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and person_id = ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", session[:preference].workload_display, session[:preference].workload_display], :page => page, :per_page => items_per_page)
 			
       elsif @order_by == "Importance"
-        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", session[:preference].workload_display, session[:preference].workload_display], :page => page, :per_page => items_per_page)
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and person_id = ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", session[:preference].workload_display, session[:preference].workload_display], :page => page, :per_page => items_per_page)
       end
     end
 

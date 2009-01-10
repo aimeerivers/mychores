@@ -31,7 +31,7 @@ Feature: Task filtering
     When I select 'Only Jo's tasks' from 'preference_workload_display'
     And I click the 'Go!' button
     Then I should see the task 'Vacuum floor'
-    And I should see the task 'Dust shelves'
+    And I should NOT see the task 'Dust shelves'
     And I should NOT see the task 'Change bed'
     
   Scenario: Enable filtering by person in the preferences page too
@@ -48,7 +48,7 @@ Feature: Task filtering
     And I click the 'Save preferences' button
     And I view the workload page
     Then I should see the task 'Vacuum floor'
-    And I should see the task 'Dust shelves'
+    And I should NOT see the task 'Dust shelves'
     And I should NOT see the task 'Change bed'
     
   Scenario: Enable filtering by person in the team view page
@@ -63,5 +63,5 @@ Feature: Task filtering
     When I select 'Only Jo's tasks' from 'preference_workload_display'
     And I click the 'Go!' button
     Then I should see the task 'Vacuum floor'
-    And I should see the task 'Dust shelves'
+    And I should NOT see the task 'Dust shelves'
     And I should NOT see the task 'Change bed'
