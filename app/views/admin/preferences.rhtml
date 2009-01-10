@@ -156,7 +156,7 @@
 			<table>
 				<tr>
 					<th>Workload shows:</th>
-					<td><%= select('preference', 'workload_display', ["All tasks", "Only my tasks", "Only today's tasks"]) %></td>
+					<td><%= select('preference', 'workload_display', workload_display_select_options(@person)) %></td>
 				</tr>
 				<tr>
 					<th>Order by:</th>

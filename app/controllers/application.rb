@@ -11,6 +11,8 @@ gem 'recaptcha'
 
 class ApplicationController < ActionController::Base
 
+  helper(:all)
+
   include ReCaptcha::AppHelper
 
   filter_parameter_logging :password, :password_confirmation

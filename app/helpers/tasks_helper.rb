@@ -6,7 +6,7 @@ module TasksHelper
       ["Only today's tasks".t, "Only today's tasks"], 
     ]
     person.fellow_team_members.each do |person|
-      display_list << ["Only #{person.name}'s tasks", person.id]
+      display_list << ["Only #{person.name}'s tasks", person.id.to_s]
     end
     display_list
   end
