@@ -4,6 +4,8 @@ require 'active_record'
 # this model expects a certain database layout and its based on the name/login pattern. 
 class Person < ActiveRecord::Base
 
+  attr_protected :status
+
   composed_of :tz, :class_name => 'TZInfo::Timezone', :mapping => %w(time_zone time_zone)
 
   has_many(:completions) # has completed tasks

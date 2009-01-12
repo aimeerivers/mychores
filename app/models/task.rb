@@ -139,10 +139,9 @@ class Task < ActiveRecord::Base
       
       case result
       when Twitter::Success
-        if person.status.to_s.empty?
+        if person.status.blank?
           person.status = "Site Promoter"
           person.save
-          session[:person].status = "Site Promoter"
         end
         
         flash_message = "Task updated, and a post made to Twitter."

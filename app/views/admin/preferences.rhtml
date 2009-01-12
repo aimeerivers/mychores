@@ -12,7 +12,7 @@
 
 <% @myteams = find_my_teams %>
 
-<% form_tag(:action => 'changepreferences', :id => @person.id) do %><div>
+<% form_tag(:action => 'changepreferences') do %><div>
 	<%= error_messages_for 'person' %>
 	
 	<div class="tab-pane" id="tab-pane-1">

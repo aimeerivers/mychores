@@ -6,7 +6,7 @@
 
 <form id='ignore'></form> <!-- Little hack to stop it highlighting the submit button -->
 
-<% form_tag(:action => 'changetheme', :id => @person.id) do %><div>
+<% form_tag(:action => 'changetheme') do %><div>
 	<%= error_messages_for 'preference' %>
 	
 

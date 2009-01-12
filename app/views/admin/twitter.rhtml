@@ -5,7 +5,7 @@
 
 <% @breadcrumbs = link_to_person(@person, 'breadcrumb') %>
 
-<% form_tag(:action => 'changetwitter', :id => @person.id) do %><div>
+<% form_tag(:action => 'changetwitter') do %><div>
 	<%= error_messages_for 'preference' %>
 	
 			<a href='http://twitter.com/' target='_blank'><img src='/images/twitter.png' width='210' height='49' alt='Twitter' border='0' /></a><br />

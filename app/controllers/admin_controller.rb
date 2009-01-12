@@ -133,7 +133,7 @@ class AdminController < ApplicationController
     # This is the page from an email link if someone has forgotten their password.
     # Obviously no checking for correct password; checking for correct code instead.
     @valid_request = 0
-    @person = Person.find(params[:id]) if params[:id]
+    @person = Person.find(session[:person].id)
     @code = params[:code]
 		
     if @person.nil?
@@ -255,7 +255,7 @@ http://www.mychores.co.uk"
 	
 	
   def changepreferences
-    @person = Person.find(params[:id])
+    @person = Person.find(session[:person].id)
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
 	
   
@@ -355,7 +355,7 @@ http://www.mychores.co.uk"
 	
 	
   def changeemail
-    @person = Person.find(params[:id])
+    @person = Person.find(session[:person].id)
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
 	
     # Check if their email address has changed
@@ -417,7 +417,7 @@ http://www.mychores.co.uk"
 	
 	
   def changetheme
-    @person = Person.find(params[:id])
+    @person = Person.find(session[:person].id)
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
 	
     if @preference.update_attributes(params[:preference])
@@ -430,30 +430,6 @@ http://www.mychores.co.uk"
     end
   end
 	
-	
-
-  def workloadpreferences
-    @person = Person.find(session[:person].id)
-    @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-  end
-	
-	
-	
-	
-  def changeworkloadpreferences
-    @person = Person.find(params[:id])
-    @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-    if @preference.update_attributes(params[:preference])
-			
-      flash[:notice] = "Workload preferences updated."
-      session[:preference] = @preference
-      @preference.save
-      redirect_to :action => 'workloadpreferences'
-    else
-      render :action => 'workloadpreferences'
-    end
-		
-  end
 	
 	
 	
@@ -493,7 +469,7 @@ http://www.mychores.co.uk"
 	
 	
   def changetwitter
-    @person = Person.find(params[:id])
+    @person = Person.find(session[:person].id)
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
 		
 		
@@ -613,7 +589,7 @@ http://www.mychores.co.uk"
 	
 	
   def changeloginid
-    @person = Person.find(params[:id])
+    @person = Person.find(session[:person].id)
     if @person.update_attributes(params[:person])
       flash[:notice] = "Login changed successfully"
       session[:person] = @person
@@ -647,7 +623,7 @@ http://www.mychores.co.uk"
     # Send a link in an email
     # Return wherever we came from
     
-    @person = Person.find(params[:id])
+    @person = Person.find(session[:person].id)
     
     # Generate a new email code
     @person.email_code = Person.sha1(@person.email + Time.now.to_s)
@@ -676,19 +652,7 @@ http://www.mychores.co.uk"
     flash[:notice]  = "You will soon be sent an email with a link to verify your email address."
     
     
-    # Return
-    if params[:return]
-      if params[:return] == 'preferences'
-    	redirect_to :action => 'help'
-      elsif params[:return] == 'workload'
-    	redirect_to :controller => 'tasks', :action => 'workload'
-      else
-    	redirect_to :controller => 'tasks', :action => 'workload'
-      end
-    else			
-      # otherwise go to the workload
-      redirect_to :controller => 'tasks', :action => 'workload'
-    end
+    redirect_to :action => 'email'
   end
   
   
