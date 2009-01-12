@@ -61,7 +61,7 @@
 <br />
 
 
-<% form_tag(:action => 'quickchangepreferences', :id => @person.id, :return => 'Matrix') do %><div>
+<% form_tag(:action => 'quickchangepreferences', :return => 'Matrix') do %><div>
     <p><%= "Show:".t %> <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> <%= submit_tag "Go!".t %></p>
   </div><% end %>
 

@@ -2,6 +2,8 @@ require 'active_record'
 
 class Team < ActiveRecord::Base
 
+  attr_protected :code
+
 has_many(:memberships) # links to members
 has_many(:invitations) # links to invitations
 has_many(:lists, :order => 'name asc') # each team has lists, in the heirarchy

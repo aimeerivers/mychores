@@ -590,7 +590,9 @@ http://www.mychores.co.uk"
 	
   def changeloginid
     @person = Person.find(session[:person].id)
-    if @person.update_attributes(params[:person])
+    return if @person.status.blank?
+    @person.login = params[:person][:login]
+    if @person.save
       flash[:notice] = "Login changed successfully"
       session[:person] = @person
       redirect_to :controller => 'people', :action => 'show_by_login', :login => @person.login

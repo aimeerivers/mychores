@@ -38,14 +38,12 @@ class PeopleController < ApplicationController
   end
 
   def update
+    return unless session[:person].status == "Site Creator"
     @person = Person.find(params[:id])
     if @person.update_attributes(params[:person])
-    
-        if @person.status.empty?
-          @person.status = nil
-          @person.save
-        end
-        
+      @person.email_verified = params[:person][:email_verified]
+      @person.status = (params[:person][:status].blank?) ? nil : params[:person][:status]
+      @person.save
     	flash[:notice] = "Person details updated."
       redirect_to :action => 'show', :id => @person
     else

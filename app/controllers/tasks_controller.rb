@@ -1419,7 +1419,7 @@ http://www.mychores.co.uk"
   def quickchangepreferences
     # Called from the workload page
 		
-    @person = Person.find(params[:id])
+    @person = Person.find(session[:person].id)
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
 		
     if @preference.update_attributes(params[:preference])
@@ -1450,20 +1450,6 @@ http://www.mychores.co.uk"
 	
 	
 	
-	
-	
-  
-  def updateall
-    # useful for making batch updates - eg recurrence changes
-    # should not be available all the time.
-    @tasks = Task.find(:all)
-    for task in @tasks
-      task.describe_recurrence
-      task.save
-    end
-    flash[:notice] = "All tasks updated."
-    redirect_to :action => 'workload'
-  end
 	
 
   def changeimportance

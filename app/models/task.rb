@@ -2,6 +2,8 @@ class Task < ActiveRecord::Base
 
   include ActionView::Helpers::TextHelper
 
+  attr_protected :escalation_date, :quickcreate
+
   belongs_to(:list)
   validates_associated(:list)
 

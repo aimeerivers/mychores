@@ -41,7 +41,7 @@
         		</tr>
         	<% end %>
         
-        	<% unless @person.status.nil? %>
+        	<% unless @person.status.blank? %>
         		<tr>
         			<th>Status:</th>
         			<td><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <a href='/home/supporters'><%= h @person.status %></a></td>
