@@ -4,7 +4,7 @@ require 'active_record'
 # this model expects a certain database layout and its based on the name/login pattern. 
 class Person < ActiveRecord::Base
 
-  attr_protected :status, :login, :password, :code, :email_code, :email_verified, :parent_id, :usertype
+  attr_protected :status, :code, :email_code, :email_verified, :usertype
 
   composed_of :tz, :class_name => 'TZInfo::Timezone', :mapping => %w(time_zone time_zone)
 
