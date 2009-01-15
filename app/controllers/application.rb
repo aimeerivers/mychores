@@ -55,6 +55,14 @@ class ApplicationController < ActionController::Base
     end
     
   end
+  
+  protected
+  
+  def redirect_back(redirect_opts = nil)
+    redirect_opts ||= {:controller => 'tasks', :action => 'workload'}
+    request.env["HTTP_REFERER"] ? redirect_to(request.env["HTTP_REFERER"]) : redirect_to(redirect_opts)
+  end
+
    
   
   private

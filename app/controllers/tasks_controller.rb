@@ -939,29 +939,7 @@ class TasksController < ApplicationController
 
       flash[:notice] = flash_message
 		
-      # redirect back
-      if params[:list]
-        # if we came from a list, return to that list
-        redirect_to :controller => 'lists', :action => 'show', :id => params[:list]
-		   	
-      elsif params[:team]
-        # if we came from a team, return to that team workload
-        redirect_to :controller => 'teams', :action => 'teamworkload', :id => params[:team]
-		   	
-      elsif params[:return]
-        if params[:return] == 'task'
-          # then go back to the task
-          redirect_to :action => 'show', :id => @task.id
-        elsif params[:return] == 'calendar'
-          # then go back to the calendar
-          redirect_to :action => 'calendar'
-        else
-          redirect_to :action => 'workload'
-        end
-      else
-        # otherwise go to the workload
-        redirect_to :action => 'workload'
-      end
+      redirect_back
 			
     else
       flash[:notice] = "Task not updated because it is not one of your tasks."
@@ -1002,29 +980,7 @@ class TasksController < ApplicationController
         flash[:notice] = flash_message
       end
 		
-      # redirect back
-      if params[:list]
-        # if we came from a list, return to that list
-        redirect_to :controller => 'lists', :action => 'show', :id => params[:list]
-		   	
-      elsif params[:team]
-        # if we came from a team, return to that team workload
-        redirect_to :controller => 'teams', :action => 'teamworkload', :id => params[:team]
-		   	
-      elsif params[:return]
-        if params[:return] == 'task'
-          # then go back to the task
-          redirect_to :action => 'show', :id => @task.id
-        elsif params[:return] == 'calendar'
-          # then go back to the calendar
-          redirect_to :action => 'calendar'
-        else
-          redirect_to :action => 'workload'
-        end
-      else
-        # otherwise go to the workload
-        redirect_to :action => 'workload'
-      end
+      redirect_back
 			
     else
       flash[:notice] = "Task not updated because it is not one of your tasks."
@@ -1112,29 +1068,8 @@ Please login to MyChores to tick off your tasks!"
       flash[:notice] = "Tasks updated: " + number_updated.to_s
 				
 			
-      # redirect back
-      if params[:list]
-        # if we came from a list, return to that list
-        redirect_to :controller => 'lists', :action => 'show', :id => params[:list]
-		   	
-      elsif params[:team]
-        # if we came from a team, return to that team workload
-        redirect_to :controller => 'teams', :action => 'teamworkload', :id => params[:team]
-		   	
-      elsif params[:return]
-        if params[:return] == 'task'
-          # then go back to the task
-          redirect_to :action => 'show', :id => @task.id
-        elsif params[:return] == 'calendar'
-          # then go back to the calendar
-          redirect_to :action => 'calendar'
-        else
-          redirect_to :action => 'workload'
-        end
-      else
-        # otherwise go to the workload
-        redirect_to :action => 'workload'
-      end
+      redirect_back
+      
     end
 		
   end
@@ -1430,22 +1365,8 @@ http://www.mychores.co.uk"
       flash[:notice] = "There was a problem updating your preferences."
     end
 		
-    # redirect back
-    if params[:team]
-      # if we came from a team, return to that team workload
-      redirect_to :controller => 'teams', :action => 'teamworkload', :id => params[:team]
-          
-    elsif params[:return]
-      if params[:return] == "Matrix"
-        redirect_to :action => 'matrix'
-      elsif params[:return] == "Collage"
-        redirect_to :action => 'collage'
-      else
-        redirect_to :action => 'workload'
-      end
-    else
-      redirect_to :action => 'workload'
-    end
+    redirect_back
+    
   end
 	
 	

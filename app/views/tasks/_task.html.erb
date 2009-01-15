@@ -117,20 +117,12 @@
 
 
   <td style='text-align: center;'>
-    <% if @enable_js == false %>
-      <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id})  %>
-    <% else %>
-      <%= link_to_remote(image_tag('tick.png', :size => '12x12', :alt => 'done', 'onclick' => "new Effect.Fade('row-" + taskid_string + "', {duration:0.8});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :flash => 'none'}, :failure => "alert('" + "Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.".t + "');") %>
-    <% end %>
+    <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id})  %>
   </td>
 
   <% if @workload_columns.include?("Skip") %>
     <td style='text-align: center;'>
-      <% if @enable_js == false %>
-        <%= link_to(image_tag('skip.png', :size => '12x12', :alt => "skip".t), {:controller => 'tasks', :action => 'skip', :id => task.id})  %>
-      <% else %>
-        <%= link_to_remote(image_tag('skip.png', :size => '12x12', :alt => 'skip', 'onclick' => "new Effect.SwitchOff('row-" + taskid_string + "');"), :url => {:controller => 'tasks', :action => 'skip', :id => task.id, :flash => 'none'}, :failure => "alert('" + "Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.".t + "');") %>
-      <% end %>
+      <%= link_to(image_tag('skip.png', :size => '12x12', :alt => "skip".t), {:controller => 'tasks', :action => 'skip', :id => task.id})  %>
     </td>
   <% end %>
 

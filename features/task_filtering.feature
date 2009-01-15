@@ -79,6 +79,7 @@ Feature: Task filtering
     And I should NOT see a link to 'Bedroom: Vacuum floor'
     When I select 'Only Jo's tasks' from 'preference_workload_display'
     And I click the 'Go!' button
+    And I click on 'Hot map'
     Then I should see a link to 'Bedroom: Vacuum floor'
     And I should NOT see a link to 'Bedroom: Dust shelves'
     And I should NOT see a link to 'Bedroom: Change bed'
@@ -132,6 +133,7 @@ Feature: Task filtering
     And I should see a link to 'Bedroom: Dust shelves'
     When I select 'Only Alex's tasks' from 'preference_workload_display'
     And I click the 'Go!' button
+    And I click on 'Hot map'
     Then I should NOT see a link to 'Personal: Wash hair'
     And I should NOT see a link to 'Personal: Cut fingernails'
     And I should see a link to 'Bedroom: Change bed'
