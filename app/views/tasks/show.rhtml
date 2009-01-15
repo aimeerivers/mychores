@@ -95,12 +95,6 @@
           <% if @enable_js and @quick_edit_options.include?("importance") %>
 
             <script type="text/javascript">
-                function ajaxRating(xml)
-                {
-                    var x = xml.responseXML;
-                    var xmlRating = x.getElementsByTagName('rating');
-                    var rating = xmlRating[0].firstChild.nodeValue;
-                }
                 var s3 = new Stars({
                     maxRating: 7,
                     actionURL: '/tasks/changeimportance/<%= @task.id.to_s %>?importance=',

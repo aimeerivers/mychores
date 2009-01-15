@@ -16,44 +16,36 @@
 	
   <title>MyChores - <%= @heading %> <%= @extraheading %></title>
   
-  	<link href="/stylesheets/calendar-blue.css" media="screen" rel="Stylesheet" type="text/css" />
-  	<link href="/stylesheets/colourpicker.css" media="screen" rel="Stylesheet" type="text/css" />
-  	<link href="/stylesheets/s2/tab.webfx2.css" media="screen" rel="Stylesheet" type="text/css" />
-  	<link href="/stylesheets/s2/planner2.css" media="screen" rel="Stylesheet" type="text/css" />
-  	
-  	<!-- Theme -->
-
-  	<% if session[:person].nil? %>
-  		<link href="/stylesheets/s2/pastels2.css" media="screen" rel="Stylesheet" type="text/css" />
-  	<% else %>
-  		<% begin %>
-  			<link href="/stylesheets/s2/<%= session[:preference].theme %>2.css" media="screen" rel="Stylesheet" type="text/css" />
-  		<% rescue %>
-  			<% session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ]) %>
-  			<link href="/stylesheets/s2/<%= session[:preference].theme %>2.css" media="screen" rel="Stylesheet" type="text/css" />
-  		<% end %>
-  	<% end %>
-  	
-	<script src="/javascripts/mychores.js" type="text/javascript"></script>
-
-        <script src="http://www.google.com/jsapi"></script>
-        <script type='text/javascript'>
-          google.load("prototype", "1.6.0.3");
-          google.load("scriptaculous", "1.8.1");
-        </script>
-
-	<script src="/javascripts/inplaceeditor.js" type="text/javascript"></script>
-
-	<script src="/javascripts/calendar.js" type="text/javascript"></script>
-	<script src="/javascripts/calendar-setup.js" type="text/javascript"></script>
-	<script src="/javascripts/calendar-en.js" type="text/javascript"></script>
+  <%= stylesheet_link_tag 'calendar-blue', 's2/planner2.css' %>
 	
-	<script src="/javascripts/tabpane.js" type="text/javascript"></script>
+	<%= yield :stylesheet %>
 	
-	<script src="/javascripts/colourpicker.js" type="text/javascript"></script>
-	<script src="/javascripts/yahoo.color.js" type="text/javascript"></script>
+	<!-- Theme -->
+
+	<% if session[:person].nil? %>
+		<link href="/stylesheets/s2/pastels2.css" media="screen" rel="Stylesheet" type="text/css" />
+	<% else %>
+		<% begin %>
+			<link href="/stylesheets/s2/<%= session[:preference].theme %>2.css" media="screen" rel="Stylesheet" type="text/css" />
+		<% rescue %>
+			<% session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ]) %>
+			<link href="/stylesheets/s2/<%= session[:preference].theme %>2.css" media="screen" rel="Stylesheet" type="text/css" />
+		<% end %>
+	<% end %>
 	
-	<script src="/javascripts/stars.js" type="text/javascript"></script>
+	
+
+  <script src="http://www.google.com/jsapi"></script>
+  <script type='text/javascript'>
+    google.load("prototype", "1.6.0.3");
+    google.load("scriptaculous", "1.8.1");
+  </script>
+	
+	<%= javascript_include_tag 'mychores', 'inplaceeditor', 'lowpro' %>
+	<%= javascript_include_tag 'calendar', 'calendar-setup', 'calendar-en' %>
+	<%= javascript_include_tag 'stars' %>
+	
+	<%= yield :javascript %>
 	
 </head>
 

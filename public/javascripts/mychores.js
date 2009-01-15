@@ -142,3 +142,13 @@ function SetAllCheckBoxes(FormName, FieldName, CheckValue)
 		for(var i = 0; i < countCheckBoxes; i++)
 			objCheckBoxes[i].checked = CheckValue;
 }
+
+
+function ajaxRating(xml)
+{
+  var x = xml.responseXML;
+  var xmlRating = x.getElementsByTagName('rating');
+  var rating = xmlRating[0].firstChild.nodeValue;
+}
+
+

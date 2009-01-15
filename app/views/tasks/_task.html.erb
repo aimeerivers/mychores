@@ -78,12 +78,6 @@
 
 
         <script type="text/javascript">
-          function ajaxRating(xml)
-          {
-            var x = xml.responseXML;
-            var xmlRating = x.getElementsByTagName('rating');
-            var rating = xmlRating[0].firstChild.nodeValue;
-          }
           var stars<%= taskid_string %> = new Stars({
           maxRating: 7,
           actionURL: '/tasks/changeimportance/<%= taskid_string %>?importance=',
@@ -99,7 +93,7 @@
 
       <td>
         <% for loop in 1..task.current_importance -%><img src='/images/stars/yellowstar.png' width='12' height='10' alt="star".t /><% end -%>
-                                                        </td>
+      </td>
 
     <% end %>
   <% end %>

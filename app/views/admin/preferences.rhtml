@@ -1,3 +1,11 @@
+<% content_for(:stylesheet) do %>
+  <%= stylesheet_link_tag 's2/tab.webfx2' %>
+<% end %>
+
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag 'tabpane' %>
+<% end %>
+
 <% @heading=@person.login + " - preferences" %>
 <% @h1class='person' %>
 
