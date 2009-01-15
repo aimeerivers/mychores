@@ -974,11 +974,13 @@ class TasksController < ApplicationController
 			
       flash_message = @task.reschedule(@datetoday)
       @task.save
-			
-			
-      unless params[:flash] == 'none'
-        flash[:notice] = flash_message
+
+      if params[:flash] and params[:flash] == 'none'
+        render :nothing => true
+        return
       end
+
+      flash[:notice] = flash_message
 		
       redirect_back
 			

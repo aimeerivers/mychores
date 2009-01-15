@@ -117,12 +117,12 @@
 
 
   <td style='text-align: center;'>
-    <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id})  %>
+    <%= link_to(image_tag('tick.png', :size => '12x12', :alt => "done".t), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick')  %>
   </td>
 
   <% if @workload_columns.include?("Skip") %>
     <td style='text-align: center;'>
-      <%= link_to(image_tag('skip.png', :size => '12x12', :alt => "skip".t), {:controller => 'tasks', :action => 'skip', :id => task.id})  %>
+      <%= link_to(image_tag('skip.png', :size => '12x12', :alt => "skip".t), {:controller => 'tasks', :action => 'skip', :id => task.id}, :class => 'quick_skip')  %>
     </td>
   <% end %>
 

@@ -1,3 +1,7 @@
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag 'workload_quick_tick' %>
+<% end %>
+
 <% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
 
 	<% @heading=@list.name; %>
