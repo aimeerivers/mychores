@@ -1,3 +1,7 @@
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag 'quick_tick' %>
+<% end %>
+
 <% @heading="Calendar".t %>
 <% @h1class='home' %>
 
@@ -53,16 +57,10 @@
 
                   <span id='task-<%= task.id.to_s %>' class='draggable'>
 
-                    <% if @enable_js -%>
-                      <img src='/images/icons/drag-handle.png' class='drag-handle' width='13' height='13' alt='<%= "Drag to re-schedule".t %>' title='<%= "Drag to re-schedule".t %>' />
-                    <% end -%>
+                    <img src='/images/icons/drag-handle.png' class='drag-handle' width='13' height='13' alt='<%= "Drag to re-schedule".t %>' title='<%= "Drag to re-schedule".t %>' style='display:none;' />
                     <a title='<%= task.recurrence_description %>' href='/tasks/show/<%= task.id %>' <%= style %>><%= task.list.name %>: <%= task.short_name %></a>
 
-                    <% if @enable_js == false %>
-                      <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'calendar'}) %>
-                    <% else %>
-                      <%= link_to_remote(image_tag('tick.png', :size => '12x12', :alt => 'done', 'onclick' => "new Effect.Fade('task-" + task.id.to_s + "', {duration:0.8});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'calendar', :flash => 'none'}, :failure => "alert('" + "Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.".t + "');") %>
-                    <% end %>
+                    <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick') %>
 
                     <br />
                   </span>

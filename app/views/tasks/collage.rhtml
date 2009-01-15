@@ -1,3 +1,7 @@
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag 'collage_quick_tick' %>
+<% end %>
+
 <% @heading="Collage".t %>
 <% @h1class='home' %>
 
@@ -58,26 +62,9 @@
       <% top = (rand(30)-15).to_s %>
       <% zindex -= 1 %>
 
-      <% if @enable_js == false %>
-        <%= link_to(show_picture_with_alt_text(task.picture, task.list.name + ': ' + task.short_name), {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'collage'}) %>
-
-      <% else %>
-
-        <% width = task.picture.width -%>
-        <% height = task.picture.height -%>
-
-        <% if width > 240 or height > 240 -%>
-          <% if width > height -%>
-            <%= link_to_remote(image_tag(task.picture.public_filename, :align => 'absmiddle', :width => 240, :height => (height * (240.to_f/width.to_f)).to_i, :style => "border: 1px solid #999999; margin:0; padding:0; position:relative; left:" + left + "px; top:" + top + "px; z-index:" + zindex.to_s, :id => "task-" + task.id.to_s, :alt => task.list.name + ': ' + task.short_name, :title => task.list.name + ': ' + task.short_name, 'onclick' => "new Effect.DropOut('task-" + task.id.to_s + "', {duration:0.5});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'collage', :flash => 'none'}, :failure => "alert('" + "Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.".t + "');") %>
-          <% else -%>
-            <%= link_to_remote(image_tag(task.picture.public_filename, :align => 'absmiddle', :height => 240, :width => (width * (240.to_f/height.to_f)).to_i, :style => "border: 1px solid #999999; margin:0; padding:0; position:relative; left:" + left + "px; top:" + top + "px; z-index:" + zindex.to_s, :id => "task-" + task.id.to_s, :alt => task.list.name + ': ' + task.short_name, :title => task.list.name + ': ' + task.short_name, 'onclick' => "new Effect.DropOut('task-" + task.id.to_s + "', {duration:0.5});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'collage', :flash => 'none'}, :failure => "alert('" + "Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.".t + "');") %>
-          <% end -%>
-        <% else -%>
-          <%= link_to_remote(image_tag(task.picture.public_filename, :align => 'absmiddle', :height => height, :width => width, :style => "border: 1px solid #999999; margin:0; padding:0; position:relative; left:" + left + "px; top:" + top + "px; z-index:" + zindex.to_s, :id => "task-" + task.id.to_s, :alt => task.list.name + ': ' + task.short_name, :title => task.list.name + ': ' + task.short_name, 'onclick' => "new Effect.DropOut('task-" + task.id.to_s + "', {duration:0.5});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :return => 'collage', :flash => 'none'}, :failure => "alert('" + "Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.".t + "');") %>
-        <% end -%>
-
-
-      <% end %>
+      <span id='<%= "quick_tick_task_#{task.id}" %>' style='<%= "position:relative; left:#{left}px; top:#{top}px; z-index:#{zindex}" %>'>
+        <%= link_to(show_picture_with_alt_text(task.picture, task.list.name + ': ' + task.short_name), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick') %>
+      </span>
 
     <% end %>
 

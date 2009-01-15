@@ -27,6 +27,6 @@ Event.addBehavior({
       }
     });
     e.stop();
-  },
+  }
 });
 
