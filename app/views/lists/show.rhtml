@@ -55,8 +55,22 @@
 				<% if @workload_columns.include?("Multiselect") %>
 					<th><input type='checkbox' onclick="SetAllCheckBoxes('workloadForm', 'multiselect[]', true);" /></th>
 				<% end %>
+					
+					<% if @workload_columns.include?("Team") %>
+						<th><%= "Team".t %></th>
+					<% end %>
+					
+				<% if @workload_columns.include?("Listonly") %>
+					<th>List</th>
+				<% end %>
 				
-				<th>Task</th>
+				<% if @workload_columns.include?("Taskonly") %>
+					<th>Task</th>
+				<% end %>
+				
+				<% if @workload_columns.include?("Listtask") %>
+					<th>List: Task</th>
+				<% end %>
 				
 				<% if @workload_columns.include?("Recurrence") %>
 					<th>Recurrence</th>					
@@ -91,139 +105,7 @@
 			</tr>
 			
 		
-			<% for task in @workload_tasks %>
-				<% taskid_string = task.id.to_s %>
-				
-				<% if @order_by == "Due date" %>
-					<% if task.next_due < (@datetoday)-7 %>
-						<tr class='very_overdue' id='row-<%= taskid_string %>'>
-					<% elsif task.next_due < @datetoday %>
-						<tr class='overdue' id='row-<%= taskid_string %>'>
-					<% elsif task.next_due == @datetoday %>
-						<tr class='due_today' id='row-<%= taskid_string %>'>
-					<% elsif task.next_due < (@datetoday)+4 %>
-						<tr class='due_soon' id='row-<%= taskid_string %>'>
-					<% else %>
-						<tr id='row-<%= taskid_string %>'>
-					<% end %>
-					
-				<% elsif @order_by == "Importance" %>
-					<% if task.current_importance == 7 %>
-						<tr class='importance7' id='row-<%= taskid_string %>'>
-					<% elsif task.current_importance == 6 %>
-						<tr class='importance6' id='row-<%= taskid_string %>'>
-					<% elsif task.current_importance == 5 %>
-						<tr class='importance5' id='row-<%= taskid_string %>'>
-					<% elsif task.current_importance == 4 %>
-						<tr class='importance4' id='row-<%= taskid_string %>'>
-					<% else %>
-						<tr id='row-<%= taskid_string %>'>
-					<% end %>
-				
-				<% end %>
-							
-					<% if @workload_columns.include?("Multiselect") %>
-						<td><input type='checkbox' name='multiselect[]' value='<%= taskid_string %>'></td>
-					<% end %>
-						
-					<td>
-					   <span id='task-name-<%= taskid_string %>'><%= link_to_task(task, 'picturelink') %> </span>
-					   <% if @enable_js and @quick_edit_options.include?("taskname") -%>
-					     <%= aimee_in_place_editor('task-name-' + taskid_string, {:url => url_for(:controller => "tasks", :action => "change_task_name", :id => task.id), :value => task.name}) %>
-					   <% end -%>
-					</td>
-					
-					<% if @workload_columns.include?("Recurrence") %>
-						<td><%= h(task.recurrence_description) %></td>
-					<% end %>
-						
-					<% if @workload_columns.include?("Duedate") %>
-						<td>
-						   <span id='task-duedate-<%= taskid_string %>'><%= formatted_date(task.next_due) %> (<%= time_from_today(task.next_due, @datetoday) %>) </span>
-						   <% if @enable_js and @quick_edit_options.include?("duedate") -%>
-						     <%= aimee_in_place_date_editor('task-duedate-' + taskid_string, task.next_due, {:url => url_for(:controller => "tasks", :action => "change_due_date", :id => task.id)}) %>
-						   <% end -%>
-						</td>
-					<% end %>
-						
-					<% if @workload_columns.include?("Importance_text") %>
-						<% @importance = Importance.find_by_value(task.current_importance) %>
-						<td><%= task.current_importance.to_s %> - <%= @importance.name %></td>
-					<% end %>
-						
-					<% if @workload_columns.include?("Importance_stars") %>
-					  <% if @enable_js and @quick_edit_options.include?("importance") -%>
-				      
-				        <td>
-				        
-				        					
-        					<script type="text/javascript">
-                              function ajaxRating(xml)
-                              {
-                                var x = xml.responseXML;
-                                var xmlRating = x.getElementsByTagName('rating');
-                                var rating = xmlRating[0].firstChild.nodeValue;
-                              }
-                              var stars<%= taskid_string %> = new Stars({
-                                maxRating: 7,
-                                actionURL: '/tasks/changeimportance/<%= taskid_string %>?importance=',
-                                callback: ajaxRating,
-                                imagePath: '/images/stars/',
-                                value: <%= task.current_importance %>
-                              });
-                            </script>
-                    
-				        </td>
-						
-				      <% else %>
-				        
-						<td>
-							<% for loop in 1..task.current_importance -%><img src='/images/stars/yellowstar.png' width='12' height='10' alt='star' /><% end -%>
-						</td>
-				      
-				      <% end %>
-					<% end %>
-						
-					<% if @workload_columns.include?("Assignee") %>
-						<% if task.person.nil? %>
-							<td>
-								<%= link_to_team(task.list.team, 'picturelink') %>
-							</td>
-						<% else %>
-							<td>
-								<%= link_to_person(task.person, 'picturelink') %>
-								<% if task.rotate == true %>
-									&nbsp;<a href='/tasks/rotating'><img src='/images/rotate.png' width='11' height='11' alt='rotating assignment' border='0' /></a>
-									<% keyrotation = true %>
-								<% end %>
-							</td>
-						<% end %>
-					<% end %>
-					
-					<td style='text-align: center;'>
-						<% if @enable_js == false %>
-							<%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id, :list=>@list.id})  %>
-						<% else %>
-							<%= link_to_remote(image_tag('tick.png', :size => '12x12', :alt => 'done', 'onclick' => "new Effect.Fade('row-" + taskid_string + "', {duration:0.8});"), :url => {:controller => 'tasks', :action => 'done', :id => task.id, :list=>@list.id, :flash => 'none'}, :failure => "alert('Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.');") %>
-						<% end %>
-					</td>
-					
-					<% if @workload_columns.include?("Skip") %>
-						<td style='text-align: center;'>
-							<% if @enable_js == false %>
-								<%= link_to(image_tag('skip.png', :size => '12x12', :alt => 'skip'), {:controller => 'tasks', :action => 'skip', :id => task.id, :list=>@list.id})  %>
-							<% else %>
-								<%= link_to_remote(image_tag('skip.png', :size => '12x12', :alt => 'skip', 'onclick' => "new Effect.SwitchOff('row-" + taskid_string + "');"), :url => {:controller => 'tasks', :action => 'skip', :id => task.id, :list=>@list.id, :flash => 'none'}, :failure => "alert('Apologies, something might have gone wrong. Please refresh your browser to check whether the task was updated properly.');") %>
-							<% end %>
-						</td>
-					<% end %>
-						
-					<% if @workload_columns.include?("Nudge") %>
-						<td style='text-align: center;'><%= link_to(image_tag('envelope.jpg', :size => '17x11', :alt => 'nudge'), {:controller => 'tasks', :action => 'nudge', :id => task.id})  %></td>
-					<% end %>
-					
-				</tr>
-			<% end %>
+			<%= render :partial => 'tasks/task', :collection => @workload_tasks %>
 		
 		</table>
 		
