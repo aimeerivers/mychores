@@ -85,39 +85,29 @@ class StatisticsController < ApplicationController
     
     
     
-    @people_by_timezone = Person.standard.find(:all,
+    people_by_timezone = Person.standard.find(:all,
       :select => 'timezone_name, count(*) AS counter',
       :group => 'timezone_name',
       :order => 'counter DESC, timezone_name ASC',
       :limit => 10
     )
-
-    @people_count = 0
     
-    @timezone_data = []
-    @timezone_labels = []
-    
-    @maximum_timezones = @people_by_timezone.map(&:counter).map(&:to_i).max
-    
-    for timezone in @people_by_timezone
-      @people_count += timezone.counter.to_i
-      @timezone_data << timezone.counter
-      @timezone_labels << timezone.timezone_name + ": " + timezone.counter.to_s
-    end
-    
+    maximum_timezones = people_by_timezone.map(&:counter).map(&:to_i).max
+    timezone_data = people_by_timezone.map(&:counter)
+    timezone_labels = people_by_timezone.map{|e| "#{e.timezone_name}: #{e.counter}"}
     
     @total_people = Person.standard.count
-    @other_timezones = @total_people - @people_count
-    @timezone_data << @other_timezones
-    @timezone_labels << "All others: " + @other_timezones.to_s
+    other_timezones = @total_people - people_by_timezone.map(&:counter).inject{|sum, n| sum.to_i + n.to_i}
+    timezone_data << other_timezones
+    timezone_labels << "All others: #{other_timezones}"
     
     
     
     @timezone_chart = GoogleChart.new
     @timezone_chart.type = :pie_3d
-    @timezone_chart.data = @timezone_data
-    @timezone_chart.max_data_value = [@other_timezones, @maximum_timezones].max
-    @timezone_chart.labels = @timezone_labels
+    @timezone_chart.data = timezone_data
+    @timezone_chart.max_data_value = [other_timezones, maximum_timezones].max
+    @timezone_chart.labels = timezone_labels
     @timezone_chart.width = 600
     @timezone_chart.height = 180
     @timezone_chart.colors = '0077CC'
