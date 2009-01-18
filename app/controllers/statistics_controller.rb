@@ -2,9 +2,6 @@ class StatisticsController < ApplicationController
   
   
   def index
-  
-    # To change the minimum all you need to do is fix this number
-    minimum_people_in_timezone = 15
     
     if session[:person].nil?
       @timenow = Time.now
@@ -88,40 +85,38 @@ class StatisticsController < ApplicationController
     
     
     
-    
-    @people_by_timezone = Person.find_by_sql(["SELECT timezone_name, count(*) AS counter FROM people WHERE usertype = 1 GROUP BY timezone_name HAVING counter >= ? ORDER BY counter DESC, timezone_name ASC;", minimum_people_in_timezone])
+    @people_by_timezone = Person.standard.find(:all,
+      :select => 'timezone_name, count(*) AS counter',
+      :group => 'timezone_name',
+      :order => 'counter DESC, timezone_name ASC',
+      :limit => 10
+    )
 
     @people_count = 0
-    @maximum_timezones = 0
     
     @timezone_data = []
     @timezone_labels = []
     
+    @maximum_timezones = @people_by_timezone.map(&:counter).map(&:to_i).max
+    
     for timezone in @people_by_timezone
       @people_count += timezone.counter.to_i
-      if timezone.counter.to_i > @maximum_timezones
-        @maximum_timezones = timezone.counter.to_i
-      end
       @timezone_data << timezone.counter
       @timezone_labels << timezone.timezone_name + ": " + timezone.counter.to_s
     end
     
     
-    @total_people = Person.count(:conditions => "usertype = 1")
+    @total_people = Person.standard.count
     @other_timezones = @total_people - @people_count
     @timezone_data << @other_timezones
     @timezone_labels << "All others: " + @other_timezones.to_s
-    
-    if @other_timezones > @maximum_timezones
-      @maximum_timezones = @other_timezones
-    end
     
     
     
     @timezone_chart = GoogleChart.new
     @timezone_chart.type = :pie_3d
     @timezone_chart.data = @timezone_data
-    @timezone_chart.max_data_value = @maximum_timezones
+    @timezone_chart.max_data_value = [@other_timezones, @maximum_timezones].max
     @timezone_chart.labels = @timezone_labels
     @timezone_chart.width = 600
     @timezone_chart.height = 180

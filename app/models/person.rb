@@ -40,6 +40,8 @@ class Person < ActiveRecord::Base
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "seems to be invalid", :unless => Proc.new { |user| user.email.blank? }
 	
 	
+	named_scope :standard, :conditions => {:usertype => 1}
+	
 
 
   # Please change the salt to something else, 
