@@ -10,3 +10,12 @@ Given /^I am logged in as '(.+)'$/ do |person|
   click_button 'Login'
 end
 
+Then /^I should be logged in$/ do
+  session[:person].should_not be_nil
+end
+
+
+Then /^I should NOT be logged in$/ do
+  session[:person].should be_nil
+end
+

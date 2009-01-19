@@ -45,4 +45,33 @@ Feature: Forgot password
     Then I should see the text 'Login ID or email not found'
     Then there should be 0 emails on the queue
     
+  Scenario: Use the link to reset password
+    Given a person called 'Alex' with login ID 'al3x'
+    And I am not logged in
+    When I visit the correct reset password link for Alex
+    And I fill in 'person_new_password' with 'chang3d'
+    And I fill in 'person_confirm_new_password' with 'chang3d'
+    And I click the 'Change' button
+    Then I should see the text 'Password changed successfully. You may now login with the new password'
+    And I should NOT be logged in
+    
+  Scenario: Can now log in with the new password
+    GivenScenario: Use the link to reset password
+    When I click on 'Login'
+    And I fill in 'Login ID' with 'al3x'
+    And I fill in 'Password' with 'chang3d'
+    And I click the 'Login' button
+    Then I should be logged in
+    
+  Scenario: Cannot reset the password unless they match
+    Given a person called 'Alex' with login ID 'al3x'
+    And I am not logged in
+    When I visit the correct reset password link for Alex
+    And I fill in 'person_new_password' with 'whoops'
+    And I fill in 'person_confirm_new_password' with 'whatan00p'
+    And I click the 'Change' button
+    Then I should see the text 'New password did not match the confirmation'
+    
+    
+    
     

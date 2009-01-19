@@ -13,3 +13,9 @@ Then /^that email should contain the correct password reset link for (\w+)$/ do 
   @email.message.should =~ /http:\/\/www.mychores.co.uk\/admin\/resetpassword\/#{person.id}\?code=#{person.code}/m
 end
 
+When /^I visit the correct reset password link for (\w+)$/ do |name|
+  person = Person.find_by_name(name)
+  visit "/admin/resetpassword/#{person.id}?code=#{person.code}"
+end
+
+

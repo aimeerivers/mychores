@@ -133,7 +133,7 @@ class AdminController < ApplicationController
     # This is the page from an email link if someone has forgotten their password.
     # Obviously no checking for correct password; checking for correct code instead.
     @valid_request = 0
-    @person = Person.find(session[:person].id)
+    @person = Person.find(params[:id]) if params[:id]
     @code = params[:code]
 		
     if @person.nil?
