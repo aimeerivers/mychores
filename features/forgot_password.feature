@@ -52,6 +52,12 @@ Feature: Forgot password
     And I click the 'Submit' button
     Then I should see the text 'Login ID or email not found'
     Then there should be 0 emails on the queue
+  
+  Scenario: Fill in with nothing nothing happens
+    Given I am not logged in
+    When I click on 'Forgotten password?'
+    And I click the 'Submit' button
+    Then I should see the text 'If you are having trouble, email contact@mychores.co.uk for help'
     
   Scenario: Use the link to reset password
     Given a person called 'Alex' with login ID 'al3x'
@@ -104,6 +110,28 @@ Feature: Forgot password
     GivenScenario: Cannot reset the password unless they match
     When I click on 'Login'
     And I fill in 'Login ID' with 'al3x'
+    And I fill in 'Password' with '12345'
+    And I click the 'Login' button
+    Then I should be logged in
+    
+  Scenario: Cannot reset the password if it is too short
+    Given a person called 'Alex' with login ID 'al3x'
+    And I am not logged in
+    When I visit the correct reset password link for Alex
+    And I fill in 'person_new_password' with '123'
+    And I fill in 'person_confirm_new_password' with '123'
+    And I click the 'Change' button
+    Then I should see the text 'New password must be at least 5 characters'
+    
+  Scenario: Password has not changed because it was too short
+    GivenScenario: Cannot reset the password if it is too short
+    When I click on 'Login'
+    And I fill in 'Login ID' with 'al3x'
+    And I fill in 'Password' with '123'
+    And I click the 'Login' button
+    Then I should see the text 'Login failed - please try again'
+    Then I should NOT be logged in
+    When I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '12345'
     And I click the 'Login' button
     Then I should be logged in
