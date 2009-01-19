@@ -34,6 +34,14 @@ Feature: Forgot password
     And that email should contain 'The link below will enable you to change your MyChores password' in the body
     And that email should contain the correct password reset link for Alex
     And that email should contain 'Your login ID is: al3x' in the body
+    
+  Scenario: Having sent the reset link you can still log in with the existing password
+    GivenScenario: Reset password makes an email get sent
+    When I click on 'Login'
+    And I fill in 'Login ID' with 'al3x'
+    And I fill in 'Password' with '12345'
+    And I click the 'Login' button
+    Then I should be logged in
   
   Scenario: Fill in with a non-valid ID and nothing happens
     Given a person called 'Alex' with login ID 'al3x'
@@ -55,6 +63,17 @@ Feature: Forgot password
     Then I should see the text 'Password changed successfully. You may now login with the new password'
     And I should NOT be logged in
     
+  Scenario: Changing the password changes the security code
+    Given a person called 'Alex' with login ID 'al3x'
+    And we already know the security code for Alex
+    And I am not logged in
+    When I visit the correct reset password link for Alex
+    And I fill in 'person_new_password' with 'chang3d'
+    And I fill in 'person_confirm_new_password' with 'chang3d'
+    And I click the 'Change' button
+    Then I should see the text 'Password changed successfully. You may now login with the new password'
+    And the security code for Alex should have changed
+    
   Scenario: Can now log in with the new password
     GivenScenario: Use the link to reset password
     When I click on 'Login'
@@ -63,14 +82,31 @@ Feature: Forgot password
     And I click the 'Login' button
     Then I should be logged in
     
+  Scenario: Can no longer log in with the old password
+    GivenScenario: Use the link to reset password
+    When I click on 'Login'
+    And I fill in 'Login ID' with 'al3x'
+    And I fill in 'Password' with '12345'
+    And I click the 'Login' button
+    Then I should see the text 'Login failed - please try again'
+    Then I should NOT be logged in
+    
   Scenario: Cannot reset the password unless they match
     Given a person called 'Alex' with login ID 'al3x'
     And I am not logged in
     When I visit the correct reset password link for Alex
     And I fill in 'person_new_password' with 'whoops'
-    And I fill in 'person_confirm_new_password' with 'whatan00p'
+    And I fill in 'person_confirm_new_password' with 'whatan00b'
     And I click the 'Change' button
     Then I should see the text 'New password did not match the confirmation'
+    
+  Scenario: Password has not changed because they did not match
+    GivenScenario: Cannot reset the password unless they match
+    When I click on 'Login'
+    And I fill in 'Login ID' with 'al3x'
+    And I fill in 'Password' with '12345'
+    And I click the 'Login' button
+    Then I should be logged in
     
     
     

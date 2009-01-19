@@ -334,7 +334,7 @@ http://www.mychores.co.uk"
   def create_code
     # provides an emergency validation code if someone forgets their password.
     # updates whenever password or preferences are changed.
-    self.code = self.class.sha1(self.name + Time.now.to_s)
+    self.code = Person.sha1("#{name}#{rand(Time.now)}")
 		
     # I also want to know when midnight occurs for each person
     mytimezone = TimeZone.new(self.timezone_name)
