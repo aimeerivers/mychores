@@ -16,7 +16,7 @@ Feature: Forgot password
     Given a person called 'Alex' with login ID 'al3x'
     And I am not logged in
     When I click on 'Forgotten password?'
-    When I fill in 'login_or_email' with 'al3x'
+    And I fill in 'login_or_email' with 'al3x'
     And I click the 'Submit' button
     Then I should see the text 'An email will shortly be sent to you with further instructions to change your password'
   
@@ -25,7 +25,7 @@ Feature: Forgot password
     And there are no emails waiting to be sent
     And I am not logged in
     When I click on 'Forgotten password?'
-    When I fill in 'login_or_email' with 'al3x'
+    And I fill in 'login_or_email' with 'al3x'
     And I click the 'Submit' button
     Then there should be 1 email on the queue
     And that email should be addressed to 'Alex@test.com'
@@ -48,7 +48,7 @@ Feature: Forgot password
     And there are no emails waiting to be sent
     And I am not logged in
     When I click on 'Forgotten password?'
-    When I fill in 'login_or_email' with 'whoops!'
+    And I fill in 'login_or_email' with 'whoops!'
     And I click the 'Submit' button
     Then I should see the text 'Login ID or email not found'
     Then there should be 0 emails on the queue
@@ -149,7 +149,7 @@ Feature: Forgot password
     And I fill in 'Password' with '123'
     And I click the 'Login' button
     Then I should see the text 'Login failed - please try again'
-    Then I should NOT be logged in
+    And I should NOT be logged in
     When I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '12345'
     And I click the 'Login' button
