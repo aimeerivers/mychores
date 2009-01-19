@@ -18,4 +18,13 @@ When /^I visit the correct reset password link for (\w+)$/ do |name|
   visit "/admin/resetpassword/#{person.id}?code=#{person.code}"
 end
 
+When /^I visit the incorrect reset password link for (\w+)$/ do |name|
+  person = Person.find_by_name(name)
+  visit "/admin/resetpassword/#{person.id}?code=#{person.code.reverse}"
+end
+
+When /^I try to use the same reset password link again for (\w+)$/ do |name|
+  person = Person.find_by_name(name)
+  visit "/admin/resetpassword/#{person.id}?code=#{@code}"
+end
 

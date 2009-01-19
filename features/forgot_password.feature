@@ -69,6 +69,13 @@ Feature: Forgot password
     Then I should see the text 'Password changed successfully. You may now login with the new password'
     And I should NOT be logged in
     
+  Scenario: Cannot reset the password without the right code
+    Given a person called 'Alex' with login ID 'al3x'
+    And I am not logged in
+    When I visit the incorrect reset password link for Alex
+    Then I should see the text 'Sorry, for security reasons you may not access this page without a valid link sent via email'
+    And I should NOT be logged in
+    
   Scenario: Changing the password changes the security code
     Given a person called 'Alex' with login ID 'al3x'
     And we already know the security code for Alex
@@ -79,6 +86,18 @@ Feature: Forgot password
     And I click the 'Change' button
     Then I should see the text 'Password changed successfully. You may now login with the new password'
     And the security code for Alex should have changed
+    
+  Scenario: Cannot use the same link again
+    Given a person called 'Alex' with login ID 'al3x'
+    And we already know the security code for Alex
+    And I am not logged in
+    When I visit the correct reset password link for Alex
+    And I fill in 'person_new_password' with 'chang3d'
+    And I fill in 'person_confirm_new_password' with 'chang3d'
+    And I click the 'Change' button
+    Then I should see the text 'Password changed successfully. You may now login with the new password'
+    When I try to use the same reset password link again for Alex
+    Then I should see the text 'Sorry, for security reasons you may not access this page without a valid link sent via email'
     
   Scenario: Can now log in with the new password
     GivenScenario: Use the link to reset password
