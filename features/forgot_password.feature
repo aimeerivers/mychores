@@ -33,6 +33,7 @@ Feature: Forgot password
     And that email should contain 'Dear Alex' in the body
     And that email should contain 'The link below will enable you to change your MyChores password' in the body
     And that email should contain the correct password reset link for Alex
+    And that email should contain 'Your login ID is: al3x' in the body
   
   Scenario: Fill in with a non-valid ID and nothing happens
     Given a person called 'Alex' with login ID 'al3x'

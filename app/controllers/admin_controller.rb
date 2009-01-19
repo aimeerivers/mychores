@@ -192,15 +192,15 @@ class AdminController < ApplicationController
           # Send an email
           @email = Email.new
           @email.subject = "Password reset link from MyChores"
-          @email.message = "Dear " + @persontoemail.name + ",
+          @email.message = "Dear #{@persontoemail.name},
 
 The link below will enable you to change your MyChores password. If you do not want to change your password please ignore this email and your password will remain the same.
 
 To change your password, click here:
 
-http://www.mychores.co.uk/admin/resetpassword/" + @persontoemail.id.to_s + "?code=" + @persontoemail.code + "
+http://www.mychores.co.uk/admin/resetpassword/#{@persontoemail.id}?code=#{@persontoemail.code}
 
-Your login id is: " + @persontoemail.login + "
+Your login id is: #{@persontoemail.login}
 
 If you have any problems please email contact@mychores.co.uk
 
