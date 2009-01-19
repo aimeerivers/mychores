@@ -7,7 +7,7 @@ Feature: Forgot password
     Given a person called 'Alex' with login ID 'al3x'
     And I am not logged in
     When I click on 'Forgotten password?'
-    Then I should see the text 'Enter your login id(.*)or email address'
+    Then I should see the text 'Enter your login ID(.*)or email address'
     When I fill in 'login_or_email' with 'alex@test.com'
     And I click the 'Submit' button
     Then I should see the text 'An email will shortly be sent to you with further instructions to change your password'
@@ -42,7 +42,7 @@ Feature: Forgot password
     When I click on 'Forgotten password?'
     When I fill in 'login_or_email' with 'whoops!'
     And I click the 'Submit' button
-    Then I should see the text 'Login or email not found'
+    Then I should see the text 'Login ID or email not found'
     Then there should be 0 emails on the queue
     
     

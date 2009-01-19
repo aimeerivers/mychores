@@ -180,7 +180,7 @@ class AdminController < ApplicationController
         @persontoemail = Person.find(:first, :conditions => [ "login = ? or email = ?", searchstring, searchstring])
 				
         if @persontoemail.nil?
-          flash[:notice] = "Login or email not found."
+          flash[:notice] = "Login ID or email not found."
 					
         else
           # There is a match.
