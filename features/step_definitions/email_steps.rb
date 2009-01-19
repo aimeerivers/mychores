@@ -17,6 +17,6 @@ Then /^that email should have the subject '(.+)'$/ do |subject|
 end
 
 Then /^that email should contain '(.+)' in the body$/ do |content|
-  @email.message.should =~ /#{content}/mi
+  @email.message.should =~ /#{content}/m
 end
 

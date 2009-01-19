@@ -200,7 +200,7 @@ To change your password, click here:
 
 http://www.mychores.co.uk/admin/resetpassword/#{@persontoemail.id}?code=#{@persontoemail.code}
 
-Your login id is: #{@persontoemail.login}
+Your login ID is: #{@persontoemail.login}
 
 If you have any problems please email contact@mychores.co.uk
 
