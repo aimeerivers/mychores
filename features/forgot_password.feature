@@ -51,9 +51,9 @@ Feature: Forgot password
     And I fill in 'login_or_email' with 'whoops!'
     And I click the 'Submit' button
     Then I should see the text 'Login ID or email not found'
-    Then there should be 0 emails on the queue
+    And there should be 0 emails on the queue
   
-  Scenario: Fill in with nothing nothing happens
+  Scenario: Fill in with nothing, and nothing happens
     Given I am not logged in
     When I click on 'Forgotten password?'
     And I click the 'Submit' button
