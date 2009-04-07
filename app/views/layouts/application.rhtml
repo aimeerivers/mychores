@@ -75,7 +75,7 @@
 	<div id="header">
 		<h1><%= @heading %></h1>
 		<% if @breadcrumbs.nil? %>
-		      <h2><%= "Let us help track your chores".t %></h2>
+		      <h2>Let us help track your chores</h2>
 		<% else %>
 		      <h2><%= @breadcrumbs %></h2>
 	    <% end %>
@@ -84,11 +84,11 @@
 	
 	<div id="menu">
 		<ul>
-			<li class="first"><a href="/home" accesskey="h" title="<%= "Home".t %>"><%= "Home".t %></a></li>
+			<li class="first"><a href="/home" accesskey="h" title="Home">Home</a></li>
 			
 			<% unless @links.nil? %>
     			<% for link in @links %>
-    			     <li><a href="<%= link[:url] %>" accesskey="<%= link[:accesskey] %>" title="<%= link[:title].t %>" <% unless link[:onclick].nil? -%>onclick="<%= link[:onclick] %>"<% end -%>><%= link[:title].t %></a></li>
+    			     <li><a href="<%= link[:url] %>" accesskey="<%= link[:accesskey] %>" title="<%= link[:title] %>" <% unless link[:onclick].nil? -%>onclick="<%= link[:onclick] %>"<% end -%>><%= link[:title] %></a></li>
     			<% end %>
     		<% end %>
 
@@ -202,15 +202,15 @@
 		<div id="tertiaryContent">
             
             <% if session[:person].nil? %> <!-- not logged in -->
-			<h3><%= "Welcome!".t %></h3>
+			<h3>Welcome</h3>
 			<ul>
-				<li><a href='/admin/login'><%= "Login".t %></a></li>
-                <li><a href='/admin/register'><%= "Register" %></a><br /></li>
-                <li><a href='/admin/forgotpassword'><%= "Forgotten password?".t %></a></li>
+				<li><a href='/admin/login'>Login</a></li>
+                <li><a href='/admin/register'>Register</a><br /></li>
+                <li><a href='/admin/forgotpassword'>Forgotten password?</a></li>
 				<form id='dont_focus'></form>
 				<li>
 				    <form id='global_search' action='/home/search' method='post'>
-				        <input type='text' name='search' style='width:100px;' value='<%= "Search".t %>' onclick="if(this.value=='<%= "Search".t %>')this.value='';" />
+				        <input type='text' name='search' style='width:100px;' value='Search' onclick="if(this.value=='Search')this.value='';" />
 				        <input type='hidden' name='searchin' value='people, teams, tips' />
 				        <input type='hidden' name='limit' value='10' />
 				    </form>
@@ -219,8 +219,8 @@
             
 			<h3>OpenID</h3>
 			<ul>
-				<li><a href='/openid/login'><%= "Login using OpenID".t %></a></li>
-                <li><a href='/openid/register'><%= "Register using OpenID".t %></a><br /></li>
+				<li><a href='/openid/login'>Login using OpenID</a></li>
+                <li><a href='/openid/register'>Register using OpenID</a><br /></li>
                 <li>
                   <% ["OpenID", "LJ", "Yahoo", "Flickr", "Wordpress", "Blogger"].each do |i| %>
                     <img src='/images/icons/<%= i %>.ico' alt='<%= i %>' title='<%= i %>' />
@@ -233,9 +233,9 @@
 			
 			<h3><a href='/person/<%= session[:person].login %>'><%= session[:person].login %></a></h3>
 			<ul>
-				<li><a href='/admin/preferences'><%= "Preferences".t %></a></li>
-				<li><a href='/admin/help'><%= "Help centre".t %></a></li>
-				<li><a href='/admin/logout'><%= "Logout".t %></a></li>
+				<li><a href='/admin/preferences'>Preferences</a></li>
+				<li><a href='/admin/help'>Help centre</a></li>
+				<li><a href='/admin/logout'>Logout</a></li>
 				<form id='dont_focus'></form>
 				<li>
 				    <form id='global_search' action='/home/search' method='post'>
@@ -246,23 +246,23 @@
 				</li>
 			</ul>
 			
-			<h3><%= "Views".t %></h3>
+			<h3>Views</h3>
 			<ul>
-				<li><a href='/tasks/workload'><%= "Workload".t %></a></li>
-				<li><a href='/tasks/matrix'><%= "Hot map".t %></a></li>
-				<li><a href='/tasks/calendar'><%= "Calendar".t %></a></li>
-				<li><a href='/tasks/collage'><%= "Collage".t %></a></li>
-				<li><a href='/tasks/statistics'><%= "Statistics".t %></a></li>
-				<li><a href='/tasks/print'><%= "Print outs".t %></a></li>
+				<li><a href='/tasks/workload'>Workload</a></li>
+				<li><a href='/tasks/matrix'>Hot map</a></li>
+				<li><a href='/tasks/calendar'>Calendar</a></li>
+				<li><a href='/tasks/collage'>Collage</a></li>
+				<li><a href='/tasks/statistics'>Statistics</a></li>
+				<li><a href='/tasks/print'>Print outs</a></li>
 			</ul>
 			
-			<h3><%= "Teams".t %></h3>
+			<h3>Teams</h3>
 			<ul>
 			    <% @my_teams = find_my_teams %>
 			    <% for team in @my_teams %>
-			        <li><%= link_to_team(team, 'picturelink')%> <img src='/images/icons/expand.png' id='expand-collapse-<%= team.id %>' class='expand-collapse' alt='<%= "click to show lists".t %>' title='<%= "click to show lists".t %>' width='12' height='12' onclick='expand_collapse_team(<%= team.id %>);' />
+			        <li><%= link_to_team(team, 'picturelink')%> <img src='/images/icons/expand.png' id='expand-collapse-<%= team.id %>' class='expand-collapse' alt='click to show lists' title='click to show lists' width='12' height='12' onclick='expand_collapse_team(<%= team.id %>);' />
 			        <ul id='lists-for-team-<%= team.id %>' style='display: none;'>
-			          <li><img width="16" height="16" alt="<%= "Loading lists ...".t %>" src="/images/spinner.gif"/></li>
+			          <li><img width="16" height="16" alt="Loading lists ..." src="/images/spinner.gif"/></li>
 			        </ul></li>
 			    <% end %>
 			</ul>
@@ -297,12 +297,12 @@
 			  }
 			</script>
 			
-			<h3><%= "Create".t %></h3>
+			<h3>Create</h3>
 			<ul>
-				<li><a href='/teams/new'><%= "New team".t %></a></li>
-				<li><a href='/lists/new'><%= "New list".t %></a></li>
-				<li><a href='/tasks/new'><%= "New task".t %></a></li>
-				<li><a href='/tasks/quickcreate'><%= "Quick-create".t %></a></li>
+				<li><a href='/teams/new'>New team</a></li>
+				<li><a href='/lists/new'>New list</a></li>
+				<li><a href='/tasks/new'>New task</a></li>
+				<li><a href='/tasks/quickcreate'>Quick-create</a></li>
 			</ul>
 			
 	        <% end %>
@@ -317,13 +317,13 @@
 
 	<div id="bottom-menu">
 		<ul>
-			<li><a href='/questions'><%= "FAQ".t %></a></li>
-			<li><a href='/tips'><%= "Tips".t %></a></li>
-			<li><a href='/api'><%= "API".t %></a></li>
-			<li><%= link_to("Search".t, search_path) %></li>
-			<li><%= link_to("Contact".t, contact_path) %></li>
-			<li><%= link_to("Sitemap".t, sitemap_path) %></li>
-			<li><%= link_to("Journal".t, 'http://journal.mychores.co.uk') %></li>
+			<li><a href='/questions'>FAQ</a></li>
+			<li><a href='/tips'>Tips</a></li>
+			<li><a href='/api'>API</a></li>
+			<li><%= link_to("Search", search_path) %></li>
+			<li><%= link_to("Contact", contact_path) %></li>
+			<li><%= link_to("Sitemap", sitemap_path) %></li>
+			<li><%= link_to("Journal", 'http://journal.mychores.co.uk') %></li>
 		</ul>
 	</div>
 
