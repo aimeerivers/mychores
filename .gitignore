@@ -19,3 +19,5 @@ vendor/gems/*/*/*/Makefile
 vendor/gems/*/*/*/*.o
 vendor/gems/*/*/*/*.so
 vendor/gems/*/*/*.so
+
+*.DS_Store

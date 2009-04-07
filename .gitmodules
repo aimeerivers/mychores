@@ -16,3 +16,9 @@
 [submodule "vendor/plugins/attachment_fu"]
 	path = vendor/plugins/attachment_fu
 	url = git://github.com/technoweenie/attachment_fu.git
+[submodule "vendor/plugins/cucumber"]
+	path = vendor/plugins/cucumber
+	url = git://github.com/aslakhellesoy/cucumber.git
+[submodule "vendor/plugins/webrat"]
+	path = vendor/plugins/webrat
+	url = git://github.com/brynary/webrat.git

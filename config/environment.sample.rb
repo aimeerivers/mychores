@@ -54,13 +54,10 @@ Rails::Initializer.run do |config|
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
 
-  # Make Active Record use UTC-base instead of local time
-  # config.active_record.default_timezone = :utc
+  config.time_zone = 'London'
 end
 
 
-ActiveRecord::Base.default_timezone = :utc # Store all times in the db in UTC
-ENV['TZ'] = 'US/Central'
 
 DAYSOFWEEK = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]
 
@@ -81,17 +78,13 @@ ActionMailer::Base.smtp_settings = {
 }
 
 
-ActiveRecord::Base.class_eval do
-  include BoilerPlate::Model::I18n
-end
+
 
 CGI::Session.expire_after 1.month
 
 require 'will_paginate'
 
 
-include Globalize
-Locale.set_base_language('en')
 
 RCC_PUB = 'your_public_key_for_recaptcha'.freeze
 RCC_PRIV = 'your_private_key_for_recaptcha'.freeze
