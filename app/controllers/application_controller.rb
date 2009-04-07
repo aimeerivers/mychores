@@ -44,16 +44,6 @@ class ApplicationController < ActionController::Base
       ActiveRecord::Base.date_format = session[:preferred_short_date_format]
     end
     
-    if session[:person].nil?
-      Locale.set("en")
-    else
-      begin
-        Locale.set(session[:preference].language_code)
-      rescue
-        Locale.set("en")
-      end
-    end
-    
   end
   
   protected
@@ -148,7 +138,7 @@ class ApplicationController < ActionController::Base
       preferred_format = session[:preferred_long_date_format]
     end
     
-    return date_to_format.localize(preferred_format)
+    return date_to_format.strftime(preferred_format)
   end
 	
 	
