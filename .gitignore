@@ -14,3 +14,8 @@ config/database.yml.online
 config/environment.rb
 config/environment-online.rb
 config/environment-offline.rb
+
+vendor/gems/*/*/*/Makefile
+vendor/gems/*/*/*/*.o
+vendor/gems/*/*/*/*.so
+vendor/gems/*/*/*.so
