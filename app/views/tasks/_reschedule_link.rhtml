@@ -1,5 +1,5 @@
 <% if @number_overdue >= 10 %>
     <% unless session[:preference].workload_display == "Only today's tasks" %>
-	   <p><%= "Too many overdue tasks?".t %> - <%= link_to("Move tasks".t, {:action => 'move'}) %> - <%= link_to("Lucky dip".t, {:action => 'luckydip'}) %></p>
+	   <p>Too many overdue tasks? - <%= link_to("Move tasks", {:action => 'move'}) %> - <%= link_to("Lucky dip", {:action => 'luckydip'}) %></p>
 	<% end %>
 <% end %>

@@ -95,7 +95,7 @@ class ApplicationController < ActionController::Base
     else
       style=""
     end
-    return_string = "<span class='specialhover'><a href='/lists/show/" + to_link.id.to_s + "' class='" + specific_class + " list'" + style + ">" + h(to_link.name) + "</a><div><a href='/lists/edit/" + to_link.id.to_s + "'>" + "Edit list".t + "</a><br /><a href='/tasks/new?list=" + to_link.id.to_s + "'>" + "Create new task".t + "</a></div></span>"
+    return_string = "<span class='specialhover'><a href='/lists/show/" + to_link.id.to_s + "' class='" + specific_class + " list'" + style + ">" + h(to_link.name) + "</a><div><a href='/lists/edit/" + to_link.id.to_s + "'>Edit list</a><br /><a href='/tasks/new?list=" + to_link.id.to_s + "'>Create new task</a></div></span>"
     return return_string
   end
 
@@ -116,11 +116,11 @@ class ApplicationController < ActionController::Base
     return_string = "<span class='specialhover'>"
     return_string += "<a href='/tasks/show/" + to_link.id.to_s + "' class='" + specific_class + " task'" + style + " title='" + to_link.recurrence_description + "'>" + h(to_link.short_name) + "</a>"
     return_string += "<div>"
-    return_string += "<a href='/tasks/edit/" + to_link.id.to_s + "'>" + "Edit task".t + "</a><br />"
-    return_string += "<a href='/tasks/markdone/" + to_link.id.to_s + "'>" + "Mark as done".t + "</a><br />"
-    return_string += "<a href='/tasks/skip/" + to_link.id.to_s + "'>" + "Skip".t + "</a><br />"
-    return_string += "<a href='/tasks/nudge/" + to_link.id.to_s + "'>" + "Nudge someone".t + "</a><br />"
-    return_string += "<a href='/tasks/destroy/" + to_link.id.to_s + "' onclick='return confirm(\"" + "Are you sure you want to delete this task: %s?" / javascript_safe_name + "\");'>" + "Delete task".t + "</a>"
+    return_string += "<a href='/tasks/edit/" + to_link.id.to_s + "'>Edit task</a><br />"
+    return_string += "<a href='/tasks/markdone/" + to_link.id.to_s + "'>Mark as done</a><br />"
+    return_string += "<a href='/tasks/skip/" + to_link.id.to_s + "'>Skip</a><br />"
+    return_string += "<a href='/tasks/nudge/" + to_link.id.to_s + "'>Nudge someone</a><br />"
+    return_string += "<a href='/tasks/destroy/" + to_link.id.to_s + "' onclick='return confirm(\"Are you sure you want to delete this task: #{javascript_safe_name}\");'>Delete task</a>"
     return_string += "</div>"
     return_string += "</span>"
 		

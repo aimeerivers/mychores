@@ -2,7 +2,7 @@
   <%= javascript_include_tag 'workload_quick_tick' %>
 <% end %>
 
-<% @heading="Workload".t %>
+<% @heading="Workload" %>
 <% @h1class='home' %>
 
 <% @links = [] %>
@@ -23,17 +23,17 @@
 		
 		<% if @workload_tasks.empty? %>
 		  <% if session[:preference].workload_display == "Only today's tasks" %>
-		      <p><%= "You have no tasks due today. Check back again tomorrow!".t %></p>
+		      <p>You have no tasks due today. Check back again tomorrow!</p>
 		  <% else %>
 		  
-    			<p><%= "You have no tasks.".t %></p>
+    			<p>You have no tasks.</p>
     
-    			<p><%= "You may wish to ...".t %></p>
+    			<p>You may wish to ...</p>
     			<ul>
-    				<li><a href='/teams/new'><%= "Create a team".t %></a></li>
-    				<li><a href='/lists/new'><%= "Create a list".t %></a></li>
-    				<li><a href='/tasks/new'><%= "Create a task".t %></a></li>
-    				<li><a href='/home/search'><%= "Search for a team to join".t %></a></li>
+    				<li><a href='/teams/new'>Create a team</a></li>
+    				<li><a href='/lists/new'>Create a list</a></li>
+    				<li><a href='/tasks/new'>Create a task</a></li>
+    				<li><a href='/home/search'>Search for a team to join</a></li>
     				<% unless @parent.nil? %>
     					<li><%= "See if %s has a team you'd like to join" / link_to_person(@parent, 'picturelink') %></li>
     				<% end %>
@@ -56,49 +56,49 @@
 					<% end %>
 					
 					<% if @workload_columns.include?("Team") %>
-						<th><%= "Team".t %></th>
+						<th>Team</th>
 					<% end %>
 					
 					<% if @workload_columns.include?("Listonly") %>
-						<th><%= "List".t %></th>
+						<th>List</th>
 					<% end %>
 					
 					<% if @workload_columns.include?("Taskonly") %>
-						<th><%= "Task".t %></th>
+						<th>Task</th>
 					<% end %>
 					
 					<% if @workload_columns.include?("Listtask") %>
-						<th><%= "List".t + ": " + "Task".t %></th>
+						<th>List: Task</th>
 					<% end %>
 					
 					<% if @workload_columns.include?("Recurrence") %>
-						<th><%= "Recurrence".t %></th>
+						<th>Recurrence</th>
 					<% end %>
 					
 					<% if @workload_columns.include?("Duedate") %>
-						<th><%= "Due".t %></th>
+						<th>Due</th>
 					<% end %>
 					
 					<% if @workload_columns.include?("Importance_text") %>
-						<th><%= "Importance".t %></th>
+						<th>Importance</th>
 					<% end %>
 					
 					<% if @workload_columns.include?("Importance_stars") %>
-						<th><%= "Importance".t %></th>
+						<th>Importance</th>
 					<% end %>
 					
 					<% if @workload_columns.include?("Assignee") %>
-						<th><%= "Assigned to".t %></th>
+						<th>Assigned to</th>
 					<% end %>
 					
-					<th><%= "Done".t %></th>
+					<th>Done</th>
 					
 					<% if @workload_columns.include?("Skip") %>
-						<th><%= "Skip".t %></th>
+						<th>Skip</th>
 					<% end %>
 					
 					<% if @workload_columns.include?("Nudge") %>
-						<th><%= "Nudge".t %></th>
+						<th>Nudge</th>
 					<% end %>
 					
 				</tr>
@@ -112,11 +112,11 @@
 			
 			
 			<% if @workload_columns.include?("Multiselect") %>
-				<p><span id='submit-button'>With selected tasks: <select id='actionsetting' name='actionsetting'><option value='markdone'><%= "Mark as done today".t %></option><option value='skip'><%= "Skip".t %></option><option value='nudge'><%= "Nudge someone".t %></option></select> <input type="submit" value="Go!".t onclick="Element.show('processing'); Element.hide('submit-button');" /></span>
+				<p><span id='submit-button'>With selected tasks: <select id='actionsetting' name='actionsetting'><option value='markdone'>Mark as done today</option><option value='skip'>Skip</option><option value='nudge'>Nudge someone</option></select> <input type="submit" value="Go!" onclick="Element.show('processing'); Element.hide('submit-button');" /></span>
 		
 				<span id='processing' style='display:none;'>
-					<img src='/images/spinner.gif' width='16' height='16' alt='<%= "Updating tasks ...".t %>' />
-					<%= "Processing ... please be patient ...".t %>
+					<img src='/images/spinner.gif' width='16' height='16' alt='Updating tasks ...' />
+					Processing ... please be patient ...
 				
 				</span></p>
 				
@@ -128,7 +128,7 @@
 			<%= will_paginate(@workload_tasks) %>
 			
 			<% if keyrotation == true %>
-				<p><a href='/tasks/rotating'><img src='/images/rotate.png' width='11' height='11' alt='rotating assignment' border='0' /></a> = <%= "rotating assignment".t %></p>
+				<p><a href='/tasks/rotating'><img src='/images/rotate.png' width='11' height='11' alt='rotating assignment' border='0' /></a> = rotating assignment</p>
 			<% end %>
 			
 			
@@ -139,6 +139,6 @@
 		<br />
 			
 		<% form_tag(:action => 'quickchangepreferences') do %><div>
-		<p><%= "Show:".t %> <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> <%= "Order by:".t %> <%= select('preference', 'workload_order_by', [["Due date".t, "Due date"], ["Importance".t, "Importance"]]) %> <%= "Per page:".t %> <%= select('preference', 'workload_page_size', ["10", "15", "20", "25", "30", "40"]) %> <%= submit_tag "Go!".t %></p>
+		<p>Show: <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> Order by: <%= select('preference', 'workload_order_by', [["Due date", "Due date"], ["Importance", "Importance"]]) %> Per page: <%= select('preference', 'workload_page_size', ["10", "15", "20", "25", "30", "40"]) %> <%= submit_tag("Go!") %></p>
 		</div><% end %>
 		

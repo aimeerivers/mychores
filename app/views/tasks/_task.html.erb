@@ -1,13 +1,13 @@
 <% taskid_string = task.id.to_s %>
 
 <% if @order_by == "Due date" %>
-  <% if task.next_due < (@datetoday)-7 %>
+  <% if task.next_due < @datetoday-7.days %>
     <tr class='very_overdue' id='row-<%= taskid_string %>'>
   <% elsif task.next_due < @datetoday %>
     <tr class='overdue' id='row-<%= taskid_string %>'>
   <% elsif task.next_due == @datetoday %>
     <tr class='due_today' id='row-<%= taskid_string %>'>
-  <% elsif task.next_due < (@datetoday)+4 %>
+  <% elsif task.next_due < @datetoday+4.days %>
     <tr class='due_soon' id='row-<%= taskid_string %>'>
   <% else %>
     <tr id='row-<%= taskid_string %>'>
@@ -68,7 +68,7 @@
 
   <% if @workload_columns.include?("Importance_text") %>
     <% @importance = Importance.find_by_value(task.current_importance) %>
-    <td><%= task.current_importance.to_s %> - <%= @importance.name.t %></td>
+    <td><%= task.current_importance.to_s %> - <%= @importance.name %></td>
   <% end %>
 
   <% if @workload_columns.include?("Importance_stars") %>
@@ -92,7 +92,7 @@
     <% else %>
 
       <td>
-        <% for loop in 1..task.current_importance -%><img src='/images/stars/yellowstar.png' width='12' height='10' alt="star".t /><% end -%>
+        <% for loop in 1..task.current_importance -%><img src='/images/stars/yellowstar.png' width='12' height='10' alt="star" /><% end -%>
       </td>
 
     <% end %>
@@ -107,7 +107,7 @@
       <td>
         <%= link_to_person(task.person, 'picturelink') %>
         <% if task.rotate == true %>
-          &nbsp;<a href='/tasks/rotating'><img src='/images/rotate.png' width='11' height='11' alt="rotating assignment".t border='0' /></a>
+          &nbsp;<a href='/tasks/rotating'><img src='/images/rotate.png' width='11' height='11' alt="rotating assignment" border='0' /></a>
           <% keyrotation = true %>
         <% end %>
       </td>
@@ -117,12 +117,12 @@
 
 
   <td style='text-align: center;'>
-    <%= link_to(image_tag('tick.png', :size => '12x12', :alt => "done".t), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick')  %>
+    <%= link_to(image_tag('tick.png', :size => '12x12', :alt => "done"), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick')  %>
   </td>
 
   <% if @workload_columns.include?("Skip") %>
     <td style='text-align: center;'>
-      <%= link_to(image_tag('skip.png', :size => '12x12', :alt => "skip".t), {:controller => 'tasks', :action => 'skip', :id => task.id}, :class => 'quick_skip')  %>
+      <%= link_to(image_tag('skip.png', :size => '12x12', :alt => "skip"), {:controller => 'tasks', :action => 'skip', :id => task.id}, :class => 'quick_skip')  %>
     </td>
   <% end %>
 

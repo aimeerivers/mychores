@@ -399,8 +399,7 @@ class TasksController < ApplicationController
     @parent = @person.parent
 		
 		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
+    @datetoday = Time.zone.today
 		
     if session[:preference].nil?
       session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
