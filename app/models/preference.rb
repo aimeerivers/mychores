@@ -11,24 +11,4 @@ validates_numericality_of(:template_recurrence_interval, :only_integer => true)
 	end
 	
 	
-	
-	
-	protected
-    
-	before_create :translate_times
-	before_update :translate_times
-  
-  
-	def translate_times
-		# Change preference.email_time (varchar)
-		# Into preference.email_time_gmt (time)
-		# Using preference.person.timezone_name
-		# updates whenever preferences are saved.
-		mytimezone = TimeZone.new(self.person.timezone_name)
-		self.email_time_gmt = mytimezone.local_to_utc(Time.parse(self.email_time))
-		
-		# do the same for Twitter receive time
-		self.twitter_receive_time_gmt = mytimezone.local_to_utc(Time.parse(self.twitter_receive_time))
-	end 
-
 end

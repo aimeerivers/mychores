@@ -240,9 +240,6 @@ http://www.mychores.co.uk"
     session[:person] = Person.find(session[:person].id)
     @person = session[:person]
     
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
-    
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
 		
     @importances = Importance.find(:all, :order=>"value desc")

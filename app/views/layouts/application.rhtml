@@ -15,6 +15,11 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf8" />
 	
   <title>MyChores - <%= @heading %> <%= @extraheading %></title>
+
+  Current user: <%= session[:person].login if session[:person] %>
+  Current time zone: <%= Time.zone.name %>
+  Current time: <%= Time.zone.now.inspect %>
+  <hr />
   
   <%= stylesheet_link_tag 'calendar-blue', 's2/planner2.css' %>
 	
@@ -239,7 +244,7 @@
 				<form id='dont_focus'></form>
 				<li>
 				    <form id='global_search' action='/home/search' method='post'>
-				        <input type='text' name='search' style='width:100px;' value='<%= "Search".t %>' onclick="if(this.value=='<%= "Search".t %>')this.value='';" />
+				        <input type='text' name='search' style='width:100px;' value='Search' onclick="if(this.value=='Search')this.value='';" />
 				        <input type='hidden' name='searchin' value='people, teams, tips, lists, tasks' />
 				        <input type='hidden' name='limit' value='10' />
 				    </form>
@@ -278,8 +283,8 @@
 			    
 			    if (image.hasClassName('expanded')) {
 			      image.src = '/images/icons/collapse.png';
-			      image.alt = '<%= "click to hide lists".t %>';
-			      image.title = '<%= "click to hide lists".t %>';
+			      image.alt = 'click to hide lists';
+			      image.title = 'click to hide lists';
 			      if(!lists.hasClassName('populated')) {
   			      new Ajax.Updater(lists, '/teams/lists/' + teamid, {
   			        asynchronous:true, onComplete: function() {
@@ -291,8 +296,8 @@
 			    
 			    else {
 			      image.src = '/images/icons/expand.png';
-			      image.alt = '<%= "click to show lists".t %>';
-			      image.title = '<%= "click to show lists".t %>';
+			      image.alt = 'click to show lists';
+			      image.title = 'click to show lists';
 			    }
 			  }
 			</script>

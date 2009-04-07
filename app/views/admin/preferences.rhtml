@@ -80,7 +80,7 @@
 			
 			
 	
-			<h2><%= "Localisation options".t %></h2>
+			<h2>Localisation options</h2>
 			
 			<table>
 				<tr>
@@ -94,9 +94,9 @@
 					<th>Date format:</th>
 					<td>
                         <select id="preference_my_date_format" name="preference[my_date_format]">
-                            <option value="%d/%m/%Y" <%= "selected=\"selected\"" if @preference.my_date_format == "%d/%m/%Y" %>><%= @datetoday.localize("%d %b %Y") %></option>
-                            <option value="%m/%d/%Y" <%= "selected=\"selected\"" if @preference.my_date_format == "%m/%d/%Y" %>><%= @datetoday.localize("%b %d %Y") %></option>
-                            <option value="%Y-%m-%d" <%= "selected=\"selected\"" if @preference.my_date_format == "%Y-%m-%d" %>><%= @datetoday.localize("%Y-%m-%d") %></option>
+                            <option value="%d/%m/%Y" <%= "selected=\"selected\"" if @preference.my_date_format == "%d/%m/%Y" %>><%= Time.zone.now.strftime("%d %b %Y") %></option>
+                            <option value="%m/%d/%Y" <%= "selected=\"selected\"" if @preference.my_date_format == "%m/%d/%Y" %>><%= Time.zone.now.strftime("%b %d %Y") %></option>
+                            <option value="%Y-%m-%d" <%= "selected=\"selected\"" if @preference.my_date_format == "%Y-%m-%d" %>><%= Time.zone.now.strftime("%Y-%m-%d") %></option>
                           </select>
 					</td>
 				</tr>
@@ -106,8 +106,6 @@
 					<td>
 						<label><%= radio_button('preference', 'language_code', 'en') %> <%= image_tag('flags/gb.png', :size => '16x11', :alt => 'British English', :align => 'absmiddle') %> British English</label><br />
 						<label><%= radio_button('preference', 'language_code', 'en-US') %> <%= image_tag('flags/us.png', :size => '16x11', :alt => 'American English', :align => 'absmiddle') %> American English</label><br />
-						<label><%= radio_button('preference', 'language_code', 'eo') %> <%= image_tag('flags/eo.png', :size => '16x11', :alt => 'Esperanto', :align => 'absmiddle') %> Esperanto (in progress)</label><br />
-						<label><%= radio_button('preference', 'language_code', 'pt') %> <%= image_tag('flags/pt.png', :size => '16x11', :alt => 'Portuguese', :align => 'absmiddle') %> Portuguese (in progress)</label><br />
 				  </td>
 				</tr>
 			</table>
@@ -194,7 +192,7 @@
 			</table>
 			
 			<br />
-			<h2><%= "Customisable columns".t %></h2>
+			<h2>Customisable columns</h2>
 			
 			<% temp_workload_columns = @preference.workload_columns %>
       

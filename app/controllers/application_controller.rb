@@ -33,9 +33,9 @@ class ApplicationController < ActionController::Base
   # session :session_expires => 1.month.from_now
 	
 
-  prepend_before_filter :localize
+  prepend_before_filter :localize_date_format, :set_time_zone
 
-  def localize
+  def localize_date_format
     # determine locale and set other relevant stuff
        
     if session[:preferred_short_date_format].nil?
@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
       ActiveRecord::Base.date_format = session[:preferred_short_date_format]
     end
     
+  end
+
+  def set_time_zone
+    Time.zone = session[:person].timezone_name if session[:person]
   end
   
   protected
