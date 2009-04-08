@@ -6,8 +6,6 @@ class Person < ActiveRecord::Base
 
   attr_protected :status, :code, :email_code, :email_verified, :usertype
 
-  composed_of :tz, :class_name => 'TZInfo::Timezone', :mapping => %w(time_zone time_zone)
-
   has_many(:completions) # has completed tasks
   has_many(:memberships) # may be a member of teams
   has_many(:tasks) # may have task assignments
@@ -78,9 +76,8 @@ class Person < ActiveRecord::Base
   
   
   def signup_new_user(code)
-    
-    @mytimezone = TimeZone.new(self.timezone_name)
-    @todaysdate = Date.parse(@mytimezone.today().to_s)
+    Time.zone = timezone_name
+    @todaysdate = Time.zone.today
     
     # Generate a new email verification code
     self.email_code = Person.sha1(self.email + Time.now.to_s)

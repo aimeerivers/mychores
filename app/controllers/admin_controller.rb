@@ -55,7 +55,7 @@ class AdminController < ApplicationController
       preference.person_id = @person.id
       
       # Sort out their date format
-      if TimeZone.us_zones.to_s.include?(@person.timezone_name) || @person.timezone_name.include?("America")
+      if ActiveSupport::TimeZone.us_zones.to_s.include?(@person.timezone_name) || @person.timezone_name.include?("America")
         preference.my_date_format = "%m/%d/%Y"
         session[:preferred_short_date_format] = "%m/%d/%Y"
         session[:preferred_long_date_format] = "%b %d %Y"
