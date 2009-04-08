@@ -2,7 +2,7 @@
   <%= javascript_include_tag 'collage_quick_tick' %>
 <% end %>
 
-<% @heading="Collage".t %>
+<% @heading="Collage" %>
 <% @h1class='home' %>
 
 <% @links = [] %>
@@ -30,27 +30,24 @@
 
   <% if @workload_tasks.empty? %>
     <% if session[:preference].workload_display == "Only today's tasks" %>
-      <p><%= "You have no tasks due today. Check back again tomorrow!".t %></p>
+      <p>You have no tasks due today. Check back again tomorrow!</p>
     <% else %>
 
-      <p><%= "You have no tasks.".t %></p>
+      <p>You have no tasks.</p>
 
-      <p><%= "You may wish to ...".t %></p>
+      <p>You may wish to ...</p>
       <ul>
-        <li><a href='/teams/new'><%= "Create a team".t %></a></li>
-        <li><a href='/lists/new'><%= "Create a list".t %></a></li>
-        <li><a href='/tasks/new'><%= "Create a task".t %></a></li>
-        <li><a href='/home/search'><%= "Search for a team to join".t %></a></li>
-        <% unless @parent.nil? %>
-          <li><%= "See if %s has a team you'd like to join" / link_to_person(@parent, 'picturelink') %></li>
-        <% end %>
+        <li><a href='/teams/new'>Create a team</a></li>
+        <li><a href='/lists/new'>Create a list</a></li>
+        <li><a href='/tasks/new'>Create a task</a></li>
+        <li><a href='/home/search'>Search for a team to join</a></li>
       </ul>
 
     <% end %>
   <% else %>
 
 
-    <p><%= "Tick off a task simply by clicking its picture.".t %></p>
+    <p>Tick off a task simply by clicking its picture.</p>
 
     <% for task in @workload_tasks %>
 
@@ -77,14 +74,14 @@
 
 
 <% form_tag(:action => 'quickchangepreferences', :return => 'Collage') do %><div>
-    <p><%= "Show:".t %> <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> <%= submit_tag "Go!".t %></p>
+    <p>Show: <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> <%= submit_tag "Go!" %></p>
   </div><% end %>
 
 
 <% if session[:preference].workload_display == "Only today's tasks" %>
-  <p><%= "The collage shows up to 24 tasks at a time.".t %></p>
+  <p>The collage shows up to 24 tasks at a time.</p>
 <% else %>
-  <p><%= "The collage shows up to 24 tasks that are overdue, due today, or due tomorrow.".t %></p>
+  <p>The collage shows up to 24 tasks that are overdue, due today, or due tomorrow.</p>
 <% end %>
 
 

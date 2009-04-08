@@ -35,7 +35,7 @@
     				<li><a href='/tasks/new'>Create a task</a></li>
     				<li><a href='/home/search'>Search for a team to join</a></li>
     				<% unless @parent.nil? %>
-    					<li><%= "See if %s has a team you'd like to join" / link_to_person(@parent, 'picturelink') %></li>
+              <li>See if <%= link_to_person(@parent, 'picturelink') %> has a team you'd like to join</li>
     				<% end %>
     			</ul>
 				

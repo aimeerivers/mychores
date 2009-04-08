@@ -2,7 +2,7 @@
   <%= javascript_include_tag 'quick_tick' %>
 <% end %>
 
-<% @heading="Calendar".t %>
+<% @heading="Calendar" %>
 <% @h1class='home' %>
 
 <% @links = [] %>
@@ -22,7 +22,7 @@
 
 <% days_in_month = ::Time.days_in_month(@month.to_i, @year.to_i) %>
 
-<h2><%= link_to(image_tag('arrow-left.png', :size => '15x12', :alt => "previous month".t), {'year' => @backyear, 'month' => @backmonth}) + day.localize("%B %Y") + link_to(image_tag('arrow-right.png', :size => '15x12', :alt => "next month".t), {'year' => @forwardyear, 'month' => @forwardmonth}) %></h2>
+<h2><%= link_to(image_tag('arrow-left.png', :size => '15x12', :alt => "previous month"), {'year' => @backyear, 'month' => @backmonth}) + day.strftime("%B %Y") + link_to(image_tag('arrow-right.png', :size => '15x12', :alt => "next month"), {'year' => @forwardyear, 'month' => @forwardmonth}) %></h2>
 
 <% day_of_month = 1 %>
 
@@ -40,7 +40,7 @@
           <tr<%= " class='calendar-today'" if day_of_month == @marktoday %>>
             <td class='calendar-date<%= " sunday" if day.wday == 0 %>'>
               <b><%= day_of_month %></b><br />
-              <%= day.localize("%a") %>
+              <%= day.strftime("%a") %>
             </td>
 
             <td class='calendar-content droppable' id='drop_<%= year_string + "-" + month_string + "-" + day_of_month.to_s %>'>
@@ -57,7 +57,7 @@
 
                   <span id='task-<%= task.id.to_s %>' class='draggable'>
 
-                    <img src='/images/icons/drag-handle.png' class='drag-handle' width='13' height='13' alt='<%= "Drag to re-schedule".t %>' title='<%= "Drag to re-schedule".t %>' style='display:none;' />
+                    <img src='/images/icons/drag-handle.png' class='drag-handle' width='13' height='13' alt='Drag to re-schedule' title='Drag to re-schedule' style='display:none;' />
                     <a title='<%= task.recurrence_description %>' href='/tasks/show/<%= task.id %>' <%= style %>><%= task.list.name %>: <%= task.short_name %></a>
 
                     <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick') %>

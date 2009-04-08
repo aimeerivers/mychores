@@ -2,7 +2,7 @@
   <%= javascript_include_tag 'quick_tick' %>
 <% end %>
 
-<% @heading="Hot map".t %>
+<% @heading="Hot map" %>
 <% @h1class='home' %>
 
 <% @links = [] %>
@@ -62,10 +62,10 @@
 
 
 <% form_tag(:action => 'quickchangepreferences', :return => 'Matrix') do %><div>
-    <p><%= "Show:".t %> <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> <%= submit_tag "Go!".t %></p>
+    <p>Show: <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> <%= submit_tag "Go!" %></p>
   </div><% end %>
 
 
-<p><%= "The hot map sorts both by due date and by importance, indicating priority.".t %></p>
+<p>The hot map sorts both by due date and by importance, indicating priority.</p>
 
 
