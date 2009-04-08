@@ -1,15 +1,5 @@
-require 'login_system'
-require 'boiler_plate'
-gem 'recaptcha'
-
-
-
-# require_dependency 'openid_login_system'
-
-# Filters added to this controller will be run for all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
+  include LoginSystem
 
   helper(:all)
 
@@ -17,40 +7,20 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password, :password_confirmation
 
-  before_filter :set_charset
+  before_filter :set_charset, :set_time_zone
+
+  protected
+
   def set_charset
     content_type = headers["Content-Type"] || "text/html"
     if /^text\//.match(content_type)
       headers["Content-Type"] = "#{content_type}; charset=utf-8"
     end
   end
-
-  include LoginSystem
 	
-  # include OpenidLoginSystem
-  # model :person
-	
-  # session :session_expires => 1.month.from_now
-	
-
-  prepend_before_filter :localize_date_format, :set_time_zone
-
-  def localize_date_format
-    # determine locale and set other relevant stuff
-       
-    if session[:preferred_short_date_format].nil?
-      ActiveRecord::Base.date_format = '%d/%m/%Y'
-    else
-      ActiveRecord::Base.date_format = session[:preferred_short_date_format]
-    end
-    
-  end
-
   def set_time_zone
     Time.zone = session[:person].timezone_name if session[:person]
   end
-  
-  protected
   
   def redirect_back(redirect_opts = nil)
     redirect_opts ||= {:controller => 'tasks', :action => 'workload'}
