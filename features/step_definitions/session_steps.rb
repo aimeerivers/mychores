@@ -1,5 +1,5 @@
 Given /^I am not logged in$/ do
-  visits '/admin/logout'
+  visit '/admin/logout'
 end
 
 Given /^I am logged in as '(.+)'$/ do |person|

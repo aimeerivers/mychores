@@ -3,7 +3,7 @@ Feature: New user has default tasks
   I want to see a list of default tasks
   So that I have something to get me started
   
-  Scenario: New user signs up
+  Background:
     Given I am not logged in
     When I click on 'Register'
     And I fill in 'Desired login ID' with 'aimee'
@@ -15,17 +15,14 @@ Feature: New user has default tasks
     Then I should see the text 'Hi Aimee, thank you for signing up with MyChores'
     
   Scenario: New user sees the workload page
-    GivenScenario: New user signs up
     When I click on 'Click to go to your workload ...'
     Then I should see a workload list showing the default tasks
     
   Scenario: New user sees the hot map view
-    GivenScenario: New user signs up
     When I click on 'Hot map'
     Then I should see the default tasks on the hot map view
     
   Scenario: New user sees the calendar view
-    GivenScenario: New user signs up
     When I click on 'Calendar'
     Then I should see a link to 'General: Water plants'
     And I should see a link to 'Living Room: Plump cushions'

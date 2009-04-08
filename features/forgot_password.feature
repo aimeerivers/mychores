@@ -20,7 +20,7 @@ Feature: Forgot password
     And I click the 'Submit' button
     Then I should see the text 'An email will shortly be sent to you with further instructions to change your password'
   
-  Scenario: Reset password makes an email get sent
+  Scenario: Reset password makes an email get sent, but can still log in with old password
     Given a person called 'Alex' with login ID 'al3x'
     And there are no emails waiting to be sent
     And I am not logged in
@@ -35,8 +35,7 @@ Feature: Forgot password
     And that email should contain the correct password reset link for Alex
     And that email should contain 'Your login ID is: al3x' in the body
     
-  Scenario: Having sent the reset link you can still log in with the existing password
-    GivenScenario: Reset password makes an email get sent
+  # Having sent the reset link you can still log in with the existing password
     When I click on 'Login'
     And I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '12345'
@@ -59,7 +58,7 @@ Feature: Forgot password
     And I click the 'Submit' button
     Then I should see the text 'If you are having trouble, email contact@mychores.co.uk for help'
     
-  Scenario: Use the link to reset password
+  Scenario: Use the link to reset password - can then log in with the new password and not the old
     Given a person called 'Alex' with login ID 'al3x'
     And I am not logged in
     When I visit the correct reset password link for Alex
@@ -68,6 +67,21 @@ Feature: Forgot password
     And I click the 'Change' button
     Then I should see the text 'Password changed successfully. You may now login with the new password'
     And I should NOT be logged in
+    
+  # Can now log in with the new password
+    When I click on 'Login'
+    And I fill in 'Login ID' with 'al3x'
+    And I fill in 'Password' with 'chang3d'
+    And I click the 'Login' button
+    Then I should be logged in
+    
+  # Can no longer log in with the old password
+    When I click on 'Login'
+    And I fill in 'Login ID' with 'al3x'
+    And I fill in 'Password' with '12345'
+    And I click the 'Login' button
+    Then I should see the text 'Login failed - please try again'
+    Then I should NOT be logged in
     
   Scenario: Cannot reset the password without the right code
     Given a person called 'Alex' with login ID 'al3x'
@@ -99,24 +113,7 @@ Feature: Forgot password
     When I try to use the same reset password link again for Alex
     Then I should see the text 'Sorry, for security reasons you may not access this page without a valid link sent via email'
     
-  Scenario: Can now log in with the new password
-    GivenScenario: Use the link to reset password
-    When I click on 'Login'
-    And I fill in 'Login ID' with 'al3x'
-    And I fill in 'Password' with 'chang3d'
-    And I click the 'Login' button
-    Then I should be logged in
-    
-  Scenario: Can no longer log in with the old password
-    GivenScenario: Use the link to reset password
-    When I click on 'Login'
-    And I fill in 'Login ID' with 'al3x'
-    And I fill in 'Password' with '12345'
-    And I click the 'Login' button
-    Then I should see the text 'Login failed - please try again'
-    Then I should NOT be logged in
-    
-  Scenario: Cannot reset the password unless they match
+  Scenario: Cannot reset the password unless they match - ensure password does not change
     Given a person called 'Alex' with login ID 'al3x'
     And I am not logged in
     When I visit the correct reset password link for Alex
@@ -124,16 +121,16 @@ Feature: Forgot password
     And I fill in 'person_confirm_new_password' with 'whatan00b'
     And I click the 'Change' button
     Then I should see the text 'New password did not match the confirmation'
+    When I debug the page
     
-  Scenario: Password has not changed because they did not match
-    GivenScenario: Cannot reset the password unless they match
+  # Password has not changed because they did not match
     When I click on 'Login'
     And I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '12345'
     And I click the 'Login' button
     Then I should be logged in
     
-  Scenario: Cannot reset the password if it is too short
+  Scenario: Cannot reset the password if it is too short - ensure password not changed
     Given a person called 'Alex' with login ID 'al3x'
     And I am not logged in
     When I visit the correct reset password link for Alex
@@ -142,8 +139,7 @@ Feature: Forgot password
     And I click the 'Change' button
     Then I should see the text 'New password must be at least 5 characters'
     
-  Scenario: Password has not changed because it was too short
-    GivenScenario: Cannot reset the password if it is too short
+  # Password has not changed because it was too short
     When I click on 'Login'
     And I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '123'
