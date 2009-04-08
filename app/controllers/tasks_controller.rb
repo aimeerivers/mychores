@@ -5,6 +5,8 @@ require 'uri'
 class TasksController < ApplicationController
 
   before_filter :login_required
+  before_filter :find_current_date,
+    :except => [:index, :list, :chooselist, :progress, :create, :edit, :update, :destroy, :multipledelete, :nudge]
   
   def index
     redirect_to :action => 'workload'
@@ -24,9 +26,6 @@ class TasksController < ApplicationController
     
 	  
     @person = Person.find(session[:person].id)
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
-    
     @importance = Importance.find_by_value(@task.current_importance)
     
     
@@ -58,9 +57,6 @@ class TasksController < ApplicationController
       @task = Task.new
       @person = Person.find(session[:person].id)
 		
-      @mytimezone = TimeZone.new(@person.timezone_name)
-      @datetoday = Date.parse(@mytimezone.today().to_s)
-			
       @task.next_due = @datetoday
       @memberships = @team.memberships
 			
@@ -85,26 +81,10 @@ class TasksController < ApplicationController
   def chooselist
   end
   
-  #  def createstandard
-  #		if params[:team]
-  #			@team = Team.find(params[:team])
-  #		end
-  #  end
-  
   def progress
     render(:layout => false)
   end
   
-  #	def createstandardtasks
-  #		if params[:team]
-  #			@team = Team.find(params[:team])
-  #			@personid = session[:person].id
-  #			@todaysdate = Date.today
-  #		end
-  #		render(:layout => false)
-  #	end
-
-
   def create
     @task = Task.new(params[:task])
     
@@ -190,8 +170,6 @@ class TasksController < ApplicationController
 
   def quickcreate
     @person = Person.find(session[:person].id)
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
 		
     if params[:list]
       @defaultlist = params[:list]
@@ -202,8 +180,6 @@ class TasksController < ApplicationController
 	
   def multiplecreate
     @person = Person.find(session[:person].id)
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
 		
     @preference = Preference.find(:first, :conditions => ["person_id = ?", @person.id ])
 		
@@ -398,9 +374,6 @@ class TasksController < ApplicationController
     @person = Person.find(session[:person].id)
     @parent = @person.parent
 		
-		
-    @datetoday = Time.zone.today
-		
     if session[:preference].nil?
       session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
     end
@@ -487,10 +460,6 @@ class TasksController < ApplicationController
   def collage
     @person = Person.find(session[:person].id)
 		
-		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
-		
     if session[:preference].nil?
       session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
     end
@@ -536,10 +505,6 @@ class TasksController < ApplicationController
   def matrix
     @person = Person.find(session[:person].id)
     @parent = @person.parent
-		
-		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
 		
     if session[:preference].nil?
       session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
@@ -587,10 +552,6 @@ class TasksController < ApplicationController
 	
   def statistics
     @person = Person.find(session[:person].id)
-		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
-		
     @preference = session[:preference]
 		
     begin
@@ -679,10 +640,6 @@ class TasksController < ApplicationController
   def calendar
     @person = Person.find(session[:person].id)
     @enable_js = @person.preference.enable_js
-		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
-		
     @preference = session[:preference]
 		
     begin
@@ -747,9 +704,6 @@ class TasksController < ApplicationController
   def printmonth
     @person = Person.find(session[:person].id)
 		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
-		
     if params[:year] then
       @year = params[:year]
     else
@@ -788,10 +742,7 @@ class TasksController < ApplicationController
 	
   def printweek
     @person = Person.find(session[:person].id)
-		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
-		
+    
     if params[:year] then
       @year = params[:year]
     else
@@ -840,9 +791,6 @@ class TasksController < ApplicationController
   def printtodo
     @person = Person.find(session[:person].id)
 		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
-		
     @overdue_tasks = Task.find_by_sql ["select * from tasks where status='active' and next_due < ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by next_due ASC, list_id ASC, name ASC", @datetoday, @person.id]
 		
     @todays_tasks = Task.find_by_sql ["select * from tasks where status='active' and next_due = ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by list_id ASC, name ASC", @datetoday, @person.id]
@@ -862,9 +810,6 @@ class TasksController < ApplicationController
     @teammembers = Person.find_by_sql ["select * from people where usertype != 3 and id in (select person_id from memberships where confirmed = 1 and  team_id = ?) order by login ASC", @team.id]
 		
     @person = Person.find(session[:person].id)
-		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
   end
 	
 	
@@ -882,10 +827,6 @@ class TasksController < ApplicationController
     @membership_search = Membership.find(:first, :conditions => [ "person_id = ? and team_id = ? and confirmed = 1", @person.id, @task.list.team.id ])
     unless @membership_search.nil?
 		
-		
-      @mytimezone = TimeZone.new(@person.timezone_name)
-      @datetoday = Date.parse(@mytimezone.today().to_s)
-			
       # Assume no Twitter update unless all the circumstances align!
       update_twitter = false
 			
@@ -966,11 +907,6 @@ class TasksController < ApplicationController
     @membership_search = Membership.find(:first, :conditions => [ "person_id = ? and team_id = ? and confirmed = 1", @person.id, @task.list.team.id ])
     unless @membership_search.nil?
 		
-		
-      @mytimezone = TimeZone.new(@person.timezone_name)
-      @datetoday = Date.parse(@mytimezone.today().to_s)
-			
-			
       flash_message = @task.reschedule(@datetoday)
       @task.save
 
@@ -1021,10 +957,6 @@ Please login to MyChores to tick off your tasks!"
       # Show the nudge page
       render :controller => 'tasks', :action => 'nudge'
     else
-		
-      @mytimezone = TimeZone.new(@person.timezone_name)
-      @datetoday = Date.parse(@mytimezone.today().to_s)
-			
       datecompleted = @datetoday
       personcompleted = @person.id
 			
@@ -1110,9 +1042,6 @@ Please login to MyChores to tick off your tasks!"
 		
     @person = Person.find(session[:person].id)
 		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
-		
     # Check that they're actually allowed to do that task!
     @membership_search = Membership.find(:first, :conditions => [ "person_id = ? and team_id = ? and confirmed = 1", @person.id, @task.list.team.id ])
     unless @membership_search.nil?
@@ -1138,9 +1067,6 @@ Please login to MyChores to tick off your tasks!"
 	
   def move
     @person = Person.find(session[:person].id)
-		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
 		
     @most_overdue = Task.find_by_sql ["select * from tasks where status='active' and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) order by next_due ASC limit 1", @person.id]
   end
@@ -1399,8 +1325,6 @@ http://www.mychores.co.uk"
   def change_due_date
     @task = Task.find(params[:id])
     @person = Person.find(session[:person].id)
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
 	
     previous_due_date = @task.next_due
     
@@ -1437,10 +1361,6 @@ http://www.mychores.co.uk"
   
   def luckydip
     @person = Person.find(session[:person].id)
-		
-		
-    @mytimezone = TimeZone.new(@person.timezone_name)
-    @datetoday = Date.parse(@mytimezone.today().to_s)
 		
     @number_of_tasks = Task.count(:conditions => ["status='active' and next_due <= ? and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1)))", @datetoday, @person.id, @person.id])
 		

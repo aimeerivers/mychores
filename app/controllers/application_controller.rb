@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
     request.env["HTTP_REFERER"] ? redirect_to(request.env["HTTP_REFERER"]) : redirect_to(redirect_opts)
   end
 
+  def find_current_date
+    @datetoday = Time.zone.today
+  end
+
    
   
   private
