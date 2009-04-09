@@ -608,9 +608,9 @@ class TasksController < ApplicationController
     @chart_data[2] = @done_today
     
     @chart_labels = []
-    @chart_labels[0] = "Overdue: %d" / @number_overdue
-    @chart_labels[1] = "Due today: %d" / @due_today
-    @chart_labels[2] = "Done today: %d" / @done_today
+    @chart_labels[0] = "Overdue: #{@number_overdue}"
+    @chart_labels[1] = "Due today: #{@due_today}"
+    @chart_labels[2] = "Done today: #{@done_today}"
     
     max = @chart_data.max
     

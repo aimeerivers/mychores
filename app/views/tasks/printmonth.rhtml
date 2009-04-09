@@ -2,20 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
   <head>
-    <title>MyChores - <%= "Printable monthly calendar".t %></title>
+    <title>MyChores - Printable monthly calendar</title>
     <%= stylesheet_link_tag('s2/planner2') %>
 
   </head>
 
   <body>
 
-    <h3 style='float:right;'><a href='http://www.mychores.co.uk'>MyChores.co.uk</a> <%= "monthly calendar for %s (best printed landscape)" / session[:person].name %></h3>
+    <h3 style='float:right;'><a href='http://www.mychores.co.uk'>MyChores.co.uk</a> <%= "monthly calendar for #{session[:person].name} (best printed landscape)" %></h3>
 
-    <h2><%= link_to(image_tag('arrow-left.png', :size => '15x12', :alt => 'previous month'.t), {'year' => @backyear, 'month' => @backmonth}) %> <%= Date.parse("#{@year}-#{@month}-01").localize("%B %Y") %> <%= link_to(image_tag('arrow-right.png', :size => '15x12', :alt => 'next month'.t), {'year' => @forwardyear, 'month' => @forwardmonth}) %></h2>
+    <h2><%= link_to(image_tag('arrow-left.png', :size => '15x12', :alt => 'previous month'), {'year' => @backyear, 'month' => @backmonth}) %> <%= Date.parse("#{@year}-#{@month}-01").strftime("%B %Y") %> <%= link_to(image_tag('arrow-right.png', :size => '15x12', :alt => 'next month'), {'year' => @forwardyear, 'month' => @forwardmonth}) %></h2>
 
     <% if @person.status.nil? %>
       <span><br />
-      <a href='/home/supporters'><%= "This page is available to site supporters.".t %></a></span>
+      <a href='/home/supporters'>This page is available to site supporters.</a></span>
     <% else %>
 
       <% days_in_month = ::Time.days_in_month(@month.to_i, @year.to_i) %>
@@ -23,7 +23,7 @@
 
 
       <% day_of_month = 1 %>
-      <% first_day = (Time.local(@year.to_i, @month.to_i, 1)).beginning_of_month %>
+      <% first_day = Date.new(@year.to_i, @month.to_i, 1) %>
       <% day_of_week = first_day.wday %>
 
 
@@ -31,13 +31,13 @@
       <table border='1' width='100%'>
 
         <tr>
-          <th width='15%'><%= Date.parse("2008-08-10").localize("%A") %></th>
-          <th width='14%'><%= Date.parse("2008-08-11").localize("%A") %></th>
-          <th width='14%'><%= Date.parse("2008-08-12").localize("%A") %></th>
-          <th width='14%'><%= Date.parse("2008-08-13").localize("%A") %></th>
-          <th width='14%'><%= Date.parse("2008-08-14").localize("%A") %></th>
-          <th width='14%'><%= Date.parse("2008-08-15").localize("%A") %></th>
-          <th width='15%'><%= Date.parse("2008-08-16").localize("%A") %></th>
+          <th width='15%'>Sunday</th>
+          <th width='14%'>Monday</th>
+          <th width='14%'>Tuesday</th>
+          <th width='14%'>Wednesday</th>
+          <th width='14%'>Thursday</th>
+          <th width='14%'>Friday</th>
+          <th width='15%'>Saturday</th>
         </tr>
 
         <% if day_of_week > 0 -%>
@@ -73,7 +73,7 @@
             <% day_of_month += 1 -%>
           <% end -%>
 
-          <% last_day = (Time.local(@year.to_i, @month.to_i, 1)).end_of_month -%>
+          <% last_day = first_day.end_of_month -%>
 
           <% day_of_week = (last_day).wday -%>
 
@@ -86,7 +86,7 @@
         </tr>
       </table>
 
-      <div style='text-align: center;'><br /><%= "Please note: Each task only appears once. Your tasks may recur more than once in the month.".t %></div>
+      <div style='text-align: center;'><br />Please note: Each task only appears once. Your tasks may recur more than once in the month.</div>
 
     <% end %>
 

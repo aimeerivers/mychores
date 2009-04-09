@@ -10,11 +10,11 @@
   <body>
 
 
-    <h3 style='float:right;'><a href='http://www.mychores.co.uk'>MyChores.co.uk</a> <%= "to-do list for %s (best printed portrait)" / session[:person].name %></h3>
+    <h3 style='float:right;'><a href='http://www.mychores.co.uk'>MyChores.co.uk</a> <%= "to-do list for #{session[:person].name} (best printed portrait)" %></h3>
 
 
     <% unless @overdue_tasks.empty? %>
-      <h2><%= "Overdue tasks".t %></h2>
+      <h2>Overdue tasks</h2>
 
       <table>
 
@@ -41,7 +41,7 @@
     <% end %>
 
 
-    <h2><%= "Today's tasks".t %> (<%= @datetoday.localize("%A") + " " + formatted_date(@datetoday) %>)</h2>
+    <h2><%= "Today's tasks (#{@datetoday.strftime('%A')} #{formatted_date(@datetoday)})" %></h2>
 
     <% if @todays_tasks.empty? %>
       <span><br />

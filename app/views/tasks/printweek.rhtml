@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
   <head>
-    <title>MyChores - <%= "Printable weekly calendar".t %></title>
+    <title>MyChores - Printable weekly calendar</title>
     <%= stylesheet_link_tag('s2/planner2') %>
 
   </head>
@@ -10,18 +10,18 @@
   <body>
 
 
-    <h3 style='float:right;'><a href='http://www.mychores.co.uk'>MyChores.co.uk</a> <%= "weekly calendar for %s (best printed portrait)" / session[:person].name %></h3>
+    <h3 style='float:right;'><a href='http://www.mychores.co.uk'>MyChores.co.uk</a> <%= "weekly calendar for #{session[:person].name} (best printed portrait)" %></h3>
 
     <h2><%= link_to(image_tag('arrow-left.png', :size => '15x12', :alt => 'previous week'), {'year' => @backyear, 'month' => @backmonth, 'day' => @backday}) %> <%= formatted_date(@start_of_week) %> - <%= formatted_date(@end_of_week) %> <%= link_to(image_tag('arrow-right.png', :size => '15x12', :alt => 'next week'), {'year' => @forwardyear, 'month' => @forwardmonth, 'day' => @forwardday}) %></h2>
 
     <% if @person.status.nil? %>
       <span><br />
-      <a href='/home/supporters'><%= "This page is available to site supporters.".t %></a></span>
+      <a href='/home/supporters'>This page is available to site supporters.</a></span>
     <% else %>
 
       <% if @this_weeks_tasks.empty? %>
         <span><br />
-        <%= "No tasks due on this week.".t %></span>
+        No tasks due on this week.</span>
       <% else %>
 
         <% next_due = 0 %>
@@ -31,7 +31,7 @@
 
           <% for task in @this_weeks_tasks %>
             <% if task.next_due != next_due %>
-              <tr><td><br /><h3><%= task.next_due.localize("%A") + " " + formatted_date(task.next_due) %></h3></td></tr>
+              <tr><td><br /><h3><%= task.next_due.strftime("%A") + " " + formatted_date(task.next_due) %></h3></td></tr>
             <% end %>
 
             <tr>
@@ -51,7 +51,7 @@
         </table>
 
 
-        <div><br /><br /><%= "Please note: Each task only appears once. Your tasks may recur more than once in the week.".t %></div>
+        <div><br /><br />Please note: Each task only appears once. Your tasks may recur more than once in the week.</div>
 
       <% end %>
 
