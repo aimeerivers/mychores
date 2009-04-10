@@ -19,7 +19,7 @@
 				<h4>My efforts</h4>
 				<%= link_to('Today', {:controller => 'completions', :action => 'today'}) %>: <%= @done_today %><br />
 				<%= link_to('Last 7 days', {:controller => 'completions', :action => 'sevendays'}) %>: <%= @done_this_week %><br />
-				<%= link_to('This month', {:controller => 'completions', :action => 'month'}) %>: <%= @done_this_month %><br />
+				<%= link_to(@datetoday.strftime('%B %Y'), {:controller => 'completions', :action => 'month'}) %>: <%= @done_this_month %><br />
 				
 				<% if @thirty_days_max > 0 %>
 				  <br /><%= image_tag(@thirty_day_chart.to_url, :alt => "Tasks completed in the last 28 days", :title => "Tasks completed in the last 28 days", :size => "120x20") %><br />
