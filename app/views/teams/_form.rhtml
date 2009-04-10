@@ -1,48 +1,46 @@
 <%= error_messages_for 'team' %>
 
-<!--[form:team]-->
-
 Please note, these details may be viewed by anyone, so you might want to be a bit cryptic.<br /><br />
 
 <table>
 
-	<tr>
-		<th>Team name:</th>
-		<td><%= text_field('team', 'name', :maxlength => 25, :class => 'styled') %></td>
-	</tr>
+  <tr>
+    <th>Team name:</th>
+    <td><%= text_field('team', 'name', :maxlength => 25, :class => 'styled') %></td>
+  </tr>
 
-	<tr>
-		<th>Description:</th>
-		<td>
-			<%= text_area('team', 'description', :cols => 50, :rows => 8, :class => 'styled') %>
-		</td>
-	</tr>
-	
-	<tr>
-	   <td colspan='2'>
-	       <br />If you turn on colour-coding then the team plus all its lists and tasks will be coloured with the background colour you choose
-	       <br />This may be useful if you have several teams to manage.
-	   </td>
-	</tr>
+  <tr>
+    <th>Description:</th>
+    <td>
+      <%= text_area('team', 'description', :cols => 50, :rows => 8, :class => 'styled') %>
+    </td>
+  </tr>
 
-	<tr>
-		<th>Use colour-coding:</th>
-		<td>
-			<%= check_box('team', 'use_colour') %>
-		</td>
-	</tr>
+  <tr>
+    <td colspan='2'>
+      <br />If you turn on colour-coding then the team plus all its lists and tasks will be coloured with the background colour you choose
+      <br />This may be useful if you have several teams to manage.
+    </td>
+  </tr>
 
-	<tr>
-		<th>Background colour:</th>
-		<td><%= text_field('team', 'colour', :maxlength => 6, :class => 'styled') %></td>
-	</tr>
+  <tr>
+    <th>Use colour-coding:</th>
+    <td>
+      <%= check_box('team', 'use_colour') %>
+    </td>
+  </tr>
 
-	<tr>
-		<th>Text colour:</th>
-		<td><%= text_field('team', 'text_colour', :maxlength => 6, :class => 'styled') %></td>
-	</tr>
-    
-    
+  <tr>
+    <th>Background colour:</th>
+    <td><%= text_field('team', 'colour', :maxlength => 6, :class => 'styled') %></td>
+  </tr>
+
+  <tr>
+    <th>Text colour:</th>
+    <td><%= text_field('team', 'text_colour', :maxlength => 6, :class => 'styled') %></td>
+  </tr>
+
+
 </table>
 
 <br />
