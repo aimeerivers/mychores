@@ -40,14 +40,14 @@ describe DateFormatHelper do
       
       it "should return an approximate number of months for up to 6 months" do
         time_from_today(Date.new(2008,11,23), @today).should == '~2 months ago'
-        time_from_today(Date.new(2008,10,25), @today).should == '~2 months ago'
-        time_from_today(Date.new(2008,10,24), @today).should == '~3 months ago'
-        time_from_today(Date.new(2008,9,25), @today).should == '~3 months ago'
-        time_from_today(Date.new(2008,9,24), @today).should == '~4 months ago'
-        time_from_today(Date.new(2008,8,26), @today).should == '~4 months ago'
-        time_from_today(Date.new(2008,8,25), @today).should == '~5 months ago'
-        time_from_today(Date.new(2008,7,27), @today).should == '~5 months ago'
-        time_from_today(Date.new(2008,7,26), @today).should == '~6 months ago'
+        time_from_today(Date.new(2008,10,24), @today).should == '~2 months ago'
+        time_from_today(Date.new(2008,10,23), @today).should == '~3 months ago'
+        time_from_today(Date.new(2008,9,24), @today).should == '~3 months ago'
+        time_from_today(Date.new(2008,9,23), @today).should == '~4 months ago'
+        time_from_today(Date.new(2008,8,24), @today).should == '~4 months ago'
+        time_from_today(Date.new(2008,8,23), @today).should == '~5 months ago'
+        time_from_today(Date.new(2008,7,25), @today).should == '~5 months ago'
+        time_from_today(Date.new(2008,7,24), @today).should == '~6 months ago'
         time_from_today(Date.new(2008,6,27), @today).should == '~6 months ago'
       end
       
@@ -83,14 +83,14 @@ describe DateFormatHelper do
       
       it "should return an approximate number of months for up to 6 months" do
         time_from_today(Date.new(2009,2,9), @today).should == 'in ~2 months'
-        time_from_today(Date.new(2009,3,10), @today).should == 'in ~2 months'
-        time_from_today(Date.new(2009,3,11), @today).should == 'in ~3 months'
-        time_from_today(Date.new(2009,4,9), @today).should == 'in ~3 months'
-        time_from_today(Date.new(2009,4,10), @today).should == 'in ~4 months'
-        time_from_today(Date.new(2009,5,9), @today).should == 'in ~4 months'
-        time_from_today(Date.new(2009,5,10), @today).should == 'in ~5 months'
-        time_from_today(Date.new(2009,6,8), @today).should == 'in ~5 months'
-        time_from_today(Date.new(2009,6,9), @today).should == 'in ~6 months'
+        time_from_today(Date.new(2009,3,11), @today).should == 'in ~2 months'
+        time_from_today(Date.new(2009,3,12), @today).should == 'in ~3 months'
+        time_from_today(Date.new(2009,4,10), @today).should == 'in ~3 months'
+        time_from_today(Date.new(2009,4,11), @today).should == 'in ~4 months'
+        time_from_today(Date.new(2009,5,11), @today).should == 'in ~4 months'
+        time_from_today(Date.new(2009,5,12), @today).should == 'in ~5 months'
+        time_from_today(Date.new(2009,6,10), @today).should == 'in ~5 months'
+        time_from_today(Date.new(2009,6,11), @today).should == 'in ~6 months'
         time_from_today(Date.new(2009,7,8), @today).should == 'in ~6 months'
       end
       

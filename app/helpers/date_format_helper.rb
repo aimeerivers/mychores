@@ -16,15 +16,8 @@ module DateFormatHelper
 
     approx = case days_difference.abs
     when 2..10 then "#{days_difference.abs} days"
-    when 11..17 then "~2 weeks"
-    when 18..24 then "~3 weeks"
-    when 25..31 then "~4 weeks"
-    when 32..38 then "~5 weeks"
-    when 39..68 then "~2 months"
-    when 69..98 then "~3 months"
-    when 99..128 then "~4 months"
-    when 129..158 then "~5 months"
-    when 159..188 then "~6 months"
+    when 11..38 then '~' + ((days_difference.abs + 3) / 7).floor.to_s + ' weeks'
+    when 39..188 then '~' + ((days_difference.abs + 22) / 30.4375).floor.to_s + ' months'
     else "more than 6 months"
     end
 
