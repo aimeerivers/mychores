@@ -76,7 +76,8 @@ Feature: Forgot password
     Then I should be logged in
     
   # Can no longer log in with the old password
-    When I click on 'Login'
+    When I click on 'Logout'
+    And I click on 'Login'
     And I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '12345'
     And I click the 'Login' button
@@ -121,7 +122,6 @@ Feature: Forgot password
     And I fill in 'person_confirm_new_password' with 'whatan00b'
     And I click the 'Change' button
     Then I should see the text 'New password did not match the confirmation'
-    When I debug the page
     
   # Password has not changed because they did not match
     When I click on 'Login'
