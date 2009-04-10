@@ -457,81 +457,16 @@ http://www.mychores.co.uk"
 
 
   def twittertest
-  
-    require 'net/http'
-    require 'uri'
-  
     twitter_username = params[:twitter_username]
     twitter_password = params[:twitter_password]
-    result = 0
-  
-    begin
-	
-      url = URI.parse('http://twitter.com/account/verify_credentials.xml')
-      req = Net::HTTP::Get.new(url.path)
-      req.basic_auth twitter_username, twitter_password
-		
-      begin
-        res = Net::HTTP.new(url.host, url.port).start {|http| http.request(req) }
-			
-        case res
-        when Net::HTTPSuccess, Net::HTTPRedirection
-          # OK
-          if res.body.empty?
-            # Uh oh, Twitter had an error
-            result = -1
-          else
-            # Sucess!
-            result = 1
-					
-					
-					
-            # Now we want to add them to the MyChores friends list
-            url2 = URI.parse('http://twitter.com/friendships/create/' + twitter_username + '.xml')
-            req2 = Net::HTTP::Post.new(url2.path)
-            req2.basic_auth Setting.value('twitter_username'), Setting.value('twitter_password')
-					
-            begin
-              res2 = Net::HTTP.new(url2.host, url2.port).start {|http2| http2.request(req2) }
-            rescue
-              res2.error!
-            end
-					
-					
-					
-          end
-        else
-          # Twitter had an error
-          res.error!
-          result = -1
-        end
-			
-      rescue
-        # Wrong password
-        result = 0
-      end
-		
-		
-	
-    rescue SocketError
-      # Twitter is currently unavailable
-      result = -1
-    end
-	
-    if result == 1
-      # Success
+     
+    if Twitter::Session.verify(twitter_username, twitter_password)
+      Twitter::Session.follow(twitter_username) library.:app/controllers/admin_controller.rb
       render :text => "<img src='/images/tick.png' width='12' height='12' alt='' /> <span style='color:green;'>Twitter authentication succeeded</span>"
-      
-    elsif result == 0
-      # Wrong password
-      render :text => "<img src='/images/redx.png' width='15' height='10' alt='' /> <span style='color:red;'>Twitter authentication failed</span>"
-      
     else
-      # Twitter had an error
-      render :text => "<img src='/images/redx.png' width='15' height='10' alt='' /> <span style='color:red;'>Something went wrong with Twitter</span>"
+      render :text => "<img src='/images/redx.png' width='15' height='10' alt='' /> <span style='color:red;'>Twitter authentication failed</span>"
     end
-    
-  end	
+  end
 	
 	
 

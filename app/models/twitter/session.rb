@@ -78,5 +78,20 @@ module Twitter
       end
     end
     
+    def self.verify(username, password)
+      url = URI.parse('http://twitter.com/account/verify_credentials.xml')
+      request = Net::HTTP::Get.new(url.path)
+      request.basic_auth(username, password)
+      response = Net::HTTP.new(url.host, url.port).start {|http| http.request(request) }
+      response.is_a?(Net::HTTPSuccess)
+    end
+    
+    def self.follow(username)
+      url = URI.parse("http://twitter.com/friendships/create/#{username}.xml")
+      request = Net::HTTP::Post.new(url.path)
+      request.basic_auth Setting.value('twitter_username'), Setting.value('twitter_password')
+      Net::HTTP.new(url.host, url.port).start {|http| http.request(request) }
+    end
+    
   end
 end
