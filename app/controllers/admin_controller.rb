@@ -461,7 +461,7 @@ http://www.mychores.co.uk"
     twitter_password = params[:twitter_password]
      
     if Twitter::Session.verify(twitter_username, twitter_password)
-      Twitter::Session.follow(twitter_username) library.:app/controllers/admin_controller.rb
+      Twitter::Session.follow(twitter_username)
       render :text => "<img src='/images/tick.png' width='12' height='12' alt='' /> <span style='color:green;'>Twitter authentication succeeded</span>"
     else
       render :text => "<img src='/images/redx.png' width='15' height='10' alt='' /> <span style='color:red;'>Twitter authentication failed</span>"
