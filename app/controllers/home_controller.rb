@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  
+  before_filter :find_current_date, :only => :search
 
   def welcome_page_calculations
 		@numpeople = Person.count(:conditions => "usertype = 1")
@@ -103,9 +105,6 @@ class HomeController < ApplicationController
       if @search_in.include?('tasks')
         @person = Person.find(session[:person].id)
         @preference = session[:preference]
-        
-        @mytimezone = TimeZone.new(@person.timezone_name)
-        @datetoday = Date.parse(@mytimezone.today().to_s)
         
         begin
           @enable_js = @preference.enable_js

@@ -1,6 +1,7 @@
 class CompletionsController < ApplicationController
 
 	before_filter :login_required
+	before_filter :find_current_date, :except => :undo
 
 	def index
 		redirect_to :action => 'today'
@@ -12,19 +13,13 @@ class CompletionsController < ApplicationController
   
 	def today
   		@person = Person.find(session[:person].id)
-		
-		@mytimezone = TimeZone.new(@person.timezone_name)
-		@datetoday = Date.parse(@mytimezone.today().to_s)
-		
+
   		@completions = Completion.find_by_sql ["select * from completions where date_completed = ? and person_id = ? order by created_on desc", @datetoday, @person.id]
 	end
   
 	def sevendays
   		@person = Person.find(session[:person].id)
-		
-		@mytimezone = TimeZone.new(@person.timezone_name)
-		@datetoday = Date.parse(@mytimezone.today().to_s)
-		
+  		
   		unless @person.status.nil?
   			@completions = Completion.find_by_sql ["select * from completions where date_completed >= DATE_SUB(?,INTERVAL 6 DAY) and date_completed <= ? and person_id = ? order by date_completed desc, created_on desc", @datetoday, @datetoday, @person.id ]
   		end
@@ -32,9 +27,6 @@ class CompletionsController < ApplicationController
   
 	def month
   		@person = Person.find(session[:person].id)
-		
-		@mytimezone = TimeZone.new(@person.timezone_name)
-		@datetoday = Date.parse(@mytimezone.today().to_s)
 		
   		unless @person.status.nil?
   			@completions = Completion.find_by_sql ["select * from completions where MONTH(date_completed) = MONTH(?) and YEAR(date_completed) = YEAR(?) and person_id = ? order by date_completed desc, created_on desc", @datetoday, @datetoday, @person.id ]
@@ -47,9 +39,7 @@ class CompletionsController < ApplicationController
 	
 	  @person = Person.find(session[:person].id)
 	  
-	  @mytimezone = TimeZone.new(@person.timezone_name)
-	  @datetoday = Date.parse(@mytimezone.today().to_s)
-	  @timenow = Time.parse(@mytimezone.now().to_s)
+	  @timenow = Time.zone.now
 	  
 	  @task = Task.find(params[:id])
       @list = List.find(@task.list_id)
@@ -74,7 +64,7 @@ class CompletionsController < ApplicationController
     i = 12
     loop do
       @completions_for_chart[i] = Completion.count(:conditions => [ "task_id = ? and MONTH(date_completed) = MONTH(?) and YEAR(date_completed) = YEAR(?)" , @task.id, @timenow.months_ago(i), @timenow.months_ago(i) ] )
-      @months[i] = (@timenow.months_ago(i)).localize("%b")
+      @months[i] = (@timenow.months_ago(i)).strftime("%b")
       i -= 1
       break if i < 0
     end
