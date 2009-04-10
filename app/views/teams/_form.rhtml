@@ -40,6 +40,13 @@ Please note, these details may be viewed by anyone, so you might want to be a bi
     <td><%= text_field('team', 'text_colour', :maxlength => 6, :class => 'styled') %></td>
   </tr>
 
+  <tr>
+    <th>Colour preview:</th>
+    <td>
+      <a class="picturelink team" id='team_preview' href="#"></a>
+    </td>
+  </tr>
+
 
 </table>
 
@@ -49,6 +56,35 @@ Please note, these details may be viewed by anyone, so you might want to be a bi
   <script type="text/javascript">
     new Control.ColorPicker("team_colour");
     new Control.ColorPicker("team_text_colour");
+    
+    $('team_name').observe('change', function() { update_preview(); });
+    $('team_use_colour').observe('click', function() { update_preview(); });
+    $('colorpicker-okbutton').observe('click', function() { update_preview(); });
+    
+    function update_preview() {
+      var background = '#fff';
+      var foreground = '#333';
+      if ($('team_use_colour').checked) {
+        background = '#' + $('team_colour').value;
+        foreground = '#' + $('team_text_colour').value;
+      }
+      $('team_preview').setStyle({
+        backgroundColor: background,
+        color: foreground
+      });
+      $('team_preview').innerHTML = $('team_name').value;
+    }
+    
+    Event.onReady(function() {
+      update_preview();
+    });
+    
+    Event.addBehavior({
+      '#team_preview:click' : function(e) {
+        e.stop();
+      }
+    })
+
   </script>
 <% end %>
 
