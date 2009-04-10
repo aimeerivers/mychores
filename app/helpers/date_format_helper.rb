@@ -16,9 +16,9 @@ module DateFormatHelper
 
     approx = case days_difference.abs
     when 2..10 then "#{days_difference.abs} days"
-    when 11..45 then '~' + ((days_difference.abs + 3) / 7).floor.to_s + ' weeks'
-    when 46..188 then '~' + ((days_difference.abs + 15) / 30.4375).floor.to_s + ' months'
-    else "more than 6 months"
+    when 11..59 then '~' + ((days_difference.abs + 3) / 7).floor.to_s + ' weeks'
+    when 60..729 then '~' + distance_of_time_in_words(todays_date, target_date).gsub('about ', '')
+    else distance_of_time_in_words(todays_date, target_date)
     end
 
     return "in #{approx}" if days_difference > 1
