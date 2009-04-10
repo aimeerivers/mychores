@@ -337,17 +337,8 @@
       </div>
     </div>
 
+    <%= yield :final_javascript %>
 
-    <% unless @load_colour_picker.nil? %>
-      <!-- load colourpicker has to go right at the end to keep IE placated -->
-      <script type="text/javascript">
-        // <![CDATA[
-        <% for field in @load_colour_picker.split %>
-            new Control.ColorPicker("<%= field %>");
-        <% end %>
-         // ]]>
-      </script>
-    <% end %>
 
 
 

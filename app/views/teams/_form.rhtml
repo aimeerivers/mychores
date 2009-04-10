@@ -20,25 +20,25 @@ Please note, these details may be viewed by anyone, so you might want to be a bi
 	
 	<tr>
 	   <td colspan='2'>
-	       <br /><%= "If you turn on colour-coding then the team plus all its lists and tasks will be coloured with the background colour you choose.".t %>
+	       <br />If you turn on colour-coding then the team plus all its lists and tasks will be coloured with the background colour you choose
 	       <br />This may be useful if you have several teams to manage.
 	   </td>
 	</tr>
 
 	<tr>
-		<th><%= "Use colour-coding".t %>:</th>
+		<th>Use colour-coding:</th>
 		<td>
 			<%= check_box('team', 'use_colour') %>
 		</td>
 	</tr>
 
 	<tr>
-		<th><%= "Background colour".t %>:</th>
+		<th>Background colour:</th>
 		<td><%= text_field('team', 'colour', :maxlength => 6, :class => 'styled') %></td>
 	</tr>
 
 	<tr>
-		<th><%= "Text colour".t %>:</th>
+		<th>Text colour:</th>
 		<td><%= text_field('team', 'text_colour', :maxlength => 6, :class => 'styled') %></td>
 	</tr>
     
@@ -47,7 +47,11 @@ Please note, these details may be viewed by anyone, so you might want to be a bi
 
 <br />
 
-<% @load_colour_picker = "team_colour team_text_colour" %>
+<% content_for(:final_javascript) do -%>
+  <script type="text/javascript">
+    new Control.ColorPicker("team_colour");
+    new Control.ColorPicker("team_text_colour");
+  </script>
+<% end %>
 
-<!--[eoform:team]-->
 
