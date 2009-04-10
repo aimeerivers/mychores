@@ -516,7 +516,7 @@ http://www.mychores.co.uk"
     begin
 	
       url = URI.parse('http://twitter.com/account/verify_credentials.xml')
-      req = Net::HTTP::Post.new(url.path)
+      req = Net::HTTP::Get.new(url.path)
       req.basic_auth twitter_username, twitter_password
 		
       begin
