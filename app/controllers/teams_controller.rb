@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
 
   before_filter :login_required, :except => [:show, :rss, :icalendar]
+  before_filter :find_current_date, :only => [:teamworkload]
   
   def index
     redirect_to :controller => 'tasks', :action => 'workload'
@@ -410,10 +411,7 @@ http://www.mychores.co.uk"
       flash[:notice] = "You cannot view this team's workload because you are not a team member."
       redirect_to :controller => 'teams', :action => 'show', :id => @team.id
     else
-    
-      @mytimezone = TimeZone.new(@person.timezone_name)
-      @datetoday = Date.parse(@mytimezone.today().to_s)
-      
+        
       if session[:preference].nil?
         session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
       end

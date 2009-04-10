@@ -139,6 +139,6 @@
 		<br />
 			
 		<% form_tag(:action => 'quickchangepreferences') do %><div>
-		<p>Show: <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> Order by: <%= select('preference', 'workload_order_by', [["Due date", "Due date"], ["Importance", "Importance"]]) %> Per page: <%= select('preference', 'workload_page_size', ["10", "15", "20", "25", "30", "40"]) %> <%= submit_tag("Go!") %></p>
+		<p>Show: <%= select('preference', 'workload_display', workload_display_select_options(@person)) %> Order by: <%= select('preference', 'workload_order_by', ['Due date', 'Importance']) %> Per page: <%= select('preference', 'workload_page_size', ["10", "15", "20", "25", "30", "40"]) %> <%= submit_tag("Go!") %></p>
 		</div><% end %>
 		
