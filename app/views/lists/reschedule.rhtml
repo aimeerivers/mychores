@@ -12,11 +12,11 @@
 			
 	<% form_tag({:action => 'rescheduletasks', :id => @list.id}) do %><div>
 	   <p>
-		<input button_image="calendar.gif" class="date" id="newdate" name="newdate" size="12" title="Date Completed" type="text" value="<%= @datetoday.strftime(session[:preferred_long_date_format]) %>" />
+		<input button_image="calendar.gif" class="date" id="newdate" name="newdate" size="12" title="Date Completed" type="text" value="<%= formatted_date(@datetoday) %>" />
 		<img alt="Calendar" button_image="calendar.gif" class="date" id="completed_calendar" src="/images/calendar.gif" title="Show calendar" />
 		
 		<script type="text/javascript">
-			Calendar.setup({ range:[<%= (@datetoday.year) %>, <%= (@datetoday.year) + 1 %>], cache:true, weekNumbers:false, firstDay:1, inputField:"newdate", step:1, showOthers:false, button:"completed_calendar", ifFormat:"<%= session[:preferred_long_date_format] %>" })
+			Calendar.setup({ range:[<%= (@datetoday.year) %>, <%= (@datetoday.year) + 1 %>], cache:true, weekNumbers:false, firstDay:1, inputField:"newdate", step:1, showOthers:false, button:"completed_calendar", ifFormat:"<%= session[:preference].my_date_format %>" })
 		</script>
 		
 	   </p>

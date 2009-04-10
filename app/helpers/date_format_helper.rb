@@ -1,7 +1,7 @@
 module DateFormatHelper
 
   def formatted_date(date_to_format)
-    preferred_format = session[:preference] ? session[:preference].my_date_format : '%d %b %Y'
+    preferred_format = session[:preference].nil? ? '%d %b %Y' : session[:preference].my_date_format
     preferred_format.gsub!('%m/%d/%Y', '%b %d %Y')
     preferred_format.gsub!('%d/%m/%Y', '%d %b %Y')
     date_to_format.strftime(preferred_format)

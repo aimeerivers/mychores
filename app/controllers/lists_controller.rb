@@ -1,6 +1,7 @@
 class ListsController < ApplicationController
 
   before_filter :login_required
+  before_filter :find_current_date, :only => [:show, :reschedule]
 	
   def index
     redirect_to :controller => 'tasks', :action => 'workload'
@@ -16,9 +17,6 @@ class ListsController < ApplicationController
 		
 		
 		@person = Person.find(session[:person].id)
-		
-		@mytimezone = TimeZone.new(@person.timezone_name)
-		@datetoday = Date.parse(@mytimezone.today().to_s)
 		
 		if session[:preference].nil?
 			session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
@@ -85,9 +83,6 @@ class ListsController < ApplicationController
 		# We still get the inactive tasks like before ...
 		@inactivetasks = Task.find(:all, :conditions => [ "status='inactive' and list_id = ?", @list.id ], :order => "next_due DESC, name ASC LIMIT 20")
     
-		
-		@mytimezone = TimeZone.new(@person.timezone_name)
-		@datetoday = Date.parse(@mytimezone.today().to_s)
 	end
 
 	def new
@@ -274,10 +269,7 @@ class ListsController < ApplicationController
 		@team = Team.find(@list.team_id)
 		@memberships = @team.memberships
 		
-  		@person = Person.find(session[:person].id)
-		
-		@mytimezone = TimeZone.new(@person.timezone_name)
-		@datetoday = Date.parse(@mytimezone.today().to_s)
+    @person = Person.find(session[:person].id)
 	end
    
 	def rescheduletasks

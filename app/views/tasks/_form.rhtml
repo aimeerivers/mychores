@@ -36,12 +36,11 @@
         :step => 1,
         :showOthers => false,
         :cache => true,
-        :ifFormat => session[:preferred_long_date_format],
+        :ifFormat => session[:preference].my_date_format,
         :weekNumbers => false }
     %>
     </td>
   </tr>
-
 
   <tr>
     <th>One-off task:</th>
