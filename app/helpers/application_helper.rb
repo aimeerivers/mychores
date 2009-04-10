@@ -60,52 +60,6 @@ module ApplicationHelper
 	
 	
 	
-  # Note this is duplicated in controllers/application.rb!
-  # Needs to be here too for the email to work.
-  def time_from_today(target_date, todays_date)
-    # Finds period of time between today and the target date
-    # If target_date is in the future it will be like '3 days time' or '2 weeks time'
-    # If target_date is in the past it will be like '4 days ago' or '1 week ago'
-
-		
-    if target_date == todays_date
-      return "today"
-			
-    else
-      days_difference = target_date - todays_date
-      if days_difference == 1
-        return "tomorrow"
-      elsif days_difference == -1
-        return "yesterday"
-				
-      else
-        absolute_difference = days_difference.abs
-        case absolute_difference
-        when 2..10 then return_string = absolute_difference.to_s + " days"
-        when 11..17 then return_string = "~2 weeks"
-        when 18..24 then return_string = "~3 weeks"
-        when 25..31 then return_string = "~4 weeks"
-        when 32..38 then return_string = "~5 weeks"
-        when 39..68 then return_string = "~2 months"
-        when 69..98 then return_string = "~3 months"
-        when 99..128 then return_string = "~4 months"
-        when 129..158 then return_string = "~5 months"
-        when 159..188 then return_string = "~6 months"
-        else return_string = "more than 6 months"
-        end
-					
-        if days_difference > 1
-          return_string = "in " + return_string
-        else
-          return_string += " ago"
-        end
-      end
-			
-      return return_string
-			
-    end
-		
-  end
 	
   def formatted_date(date_to_format)
     @controller.send(:formatted_date, date_to_format)

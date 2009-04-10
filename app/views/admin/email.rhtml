@@ -25,7 +25,7 @@
 				</tr>
 				<tr>
 					<th>Time of notification:</th>
-					<td><%= select('preference', 'email_time', ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]) %></td>
+          <td><%= datetime_select('preference', 'email_time', :order => [:hour], :minute_step => 60) %></td>
 				</tr>
 				<tr>
 					<th>HTML emails:</th>
@@ -34,9 +34,9 @@
 					</td>
 				</tr>
 				<tr>
-					<th><%= "Colourful emails".t %>:</th>
+					<th><%= "Colourful emails" %>:</th>
 					<td>
-						<label><%= check_box('preference', 'colourful_emails') %> (<%= "shows the Red/Amber/Green colour coding - HTML email format only".t %>)</label>
+						<label><%= check_box('preference', 'colourful_emails') %> (shows the Red/Amber/Green colour coding - HTML email format only)</label>
 					</td>
 				</tr>
 				<tr>

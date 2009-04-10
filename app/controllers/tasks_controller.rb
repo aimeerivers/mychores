@@ -3,7 +3,8 @@ require 'uri'
 
 
 class TasksController < ApplicationController
-
+  include DateFormatHelper
+  
   before_filter :login_required
   before_filter :find_current_date,
     :except => [:index, :list, :chooselist, :progress, :create, :edit, :update, :destroy, :multipledelete, :nudge]
@@ -1326,19 +1327,15 @@ http://www.mychores.co.uk"
     @task = Task.find(params[:id])
     @person = Person.find(session[:person].id)
 	
-    previous_due_date = @task.next_due
+    date = @task.next_due
     
     @check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = (select team_id from lists where id = (select list_id from tasks where id = ?))", session[:person].id, @task.id]
     if @check.empty?
       render(:text => "You are not authorised to do that.")
     else
-      begin
-        @task.next_due = Date.parse(params[:value])
-        @task.next_due = previous_due_date unless @task.save
-        render(:text => formatted_date(@task.next_due) + " (" + time_from_today(@task.next_due, @datetoday) + ")")
-      rescue
-        render(:text => formatted_date(previous_due_date) + " (" + time_from_today(previous_due_date, @datetoday) + ")")
-      end
+      @task.next_due = Date.parse(params[:value])
+      date = @task.next_due if @task.save
+      render(:text => descriptive_date(date, @datetoday))
     end
   end
   

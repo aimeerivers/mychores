@@ -59,7 +59,7 @@
 
   <% if @workload_columns.include?("Duedate") %>
     <td>
-      <span id='task-duedate-<%= taskid_string %>'><%= formatted_date(task.next_due) %> (<%= time_from_today(task.next_due, @datetoday) %>) </span>
+      <span id='task-duedate-<%= taskid_string %>'><%= descriptive_date(task.next_due, @datetoday) %></span>
       <% if @enable_js and @quick_edit_options.include?("duedate") -%>
         <%= aimee_in_place_date_editor('task-duedate-' + taskid_string, task.next_due, {:url => url_for(:controller => "tasks", :action => "change_due_date", :id => task.id)}) %>
       <% end -%>

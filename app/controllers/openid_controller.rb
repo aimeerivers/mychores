@@ -115,18 +115,6 @@ class OpenidController < ApplicationController
           # Get their preferences loaded too
           session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
           
-          # The short date format is like 23/02/2008 - what is stored in the database.
-          session[:preferred_short_date_format] = session[:preference].my_date_format
-        
-          # Also store the long format - ie 23 Feb 2008.
-          if session[:preference].my_date_format == "%d/%m/%Y"
-            session[:preferred_long_date_format] = "%d %b %Y"
-          elsif session[:preference].my_date_format == "%m/%d/%Y"
-            session[:preferred_long_date_format] = "%b %d %Y"
-          else
-            session[:preferred_long_date_format] = session[:preference].my_date_format
-          end          
-          
           flash[:notice]  = "You are now logged in."
           redirect_back_or_default :controller => 'home', :action => 'index'
         end
@@ -219,32 +207,14 @@ class OpenidController < ApplicationController
 
     if request.post? and @person.save
 
+      session[:person] = @person
+
+      @person.create_preference_record
+      session[:preference] = @person.preference
     
-      # Create them a preferences record
-      preference = Preference.new
-      preference.person_id = @person.id
-      
-      # Sort out their date format
-      if ActiveSupport::TimeZone.us_zones.to_s.include?(@person.timezone_name) || @person.timezone_name.include?("America")
-        preference.my_date_format = "%m/%d/%Y"
-        session[:preferred_short_date_format] = "%m/%d/%Y"
-        session[:preferred_long_date_format] = "%b %d %Y"
-        preference.language_code = "en-US"
-      else
-        preference.my_date_format = "%d/%m/%Y"
-        session[:preferred_short_date_format] = "%d/%m/%Y"
-        session[:preferred_long_date_format] = "%d %b %Y"
-        preference.language_code = "en"
-      end
-      
-      preference.save
-        
-      
       auto = @person.signup_new_user(session[:code])
       # Includes creating standard tasks and sending emails
       
-      session[:person] = @person
-      session[:preference] = preference
       
       if auto == 1
         redirect_to :controller => 'admin', :action => 'welcome', :auto => 1

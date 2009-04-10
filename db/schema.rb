@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081123160330) do
+ActiveRecord::Schema.define(:version => 20090409222528) do
 
   create_table "bulletins", :force => true do |t|
     t.text      "message",    :null => false
@@ -91,8 +91,8 @@ ActiveRecord::Schema.define(:version => 20081123160330) do
     t.string  "namespace"
   end
 
-  add_index "globalize_translations", ["tr_key", "language_id"], :name => "index_globalize_translations_on_tr_key_and_language_id"
   add_index "globalize_translations", ["table_name", "item_id", "language_id"], :name => "globalize_translations_table_name_and_item_and_language"
+  add_index "globalize_translations", ["tr_key", "language_id"], :name => "index_globalize_translations_on_tr_key_and_language_id"
 
   create_table "importances", :force => true do |t|
     t.integer "value",               :default => 0,  :null => false
@@ -205,8 +205,7 @@ ActiveRecord::Schema.define(:version => 20081123160330) do
     t.string    "theme",                        :limit => 20,  :default => "pastels"
     t.boolean   "html_emails",                                 :default => true,                                            :null => false
     t.boolean   "colourful_emails",                            :default => true,                                            :null => false
-    t.string    "email_time",                   :limit => 5,   :default => "08:00",                                         :null => false
-    t.time      "email_time_gmt",                              :default => '2000-01-01 08:00:00',                           :null => false
+    t.datetime  "email_time",                                  :default => '2009-01-01 08:00:00',                           :null => false
     t.boolean   "include_descriptions",                        :default => false,                                           :null => false
     t.string    "twitter_email"
     t.string    "twitter_password",             :limit => 40

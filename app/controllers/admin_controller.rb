@@ -10,18 +10,6 @@ class AdminController < ApplicationController
       	# Load up their preferences too
       	session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
       	
-      	# The short date format is like 23/02/2008 - what is stored in the database.
-      	session[:preferred_short_date_format] = session[:preference].my_date_format
-      
-        # Also store the long format - ie 23 Feb 2008.
-        if session[:preference].my_date_format == "%d/%m/%Y"
-          session[:preferred_long_date_format] = "%d %b %Y"
-        elsif session[:preference].my_date_format == "%m/%d/%Y"
-          session[:preferred_long_date_format] = "%b %d %Y"
-        else
-          session[:preferred_long_date_format] = session[:preference].my_date_format
-        end
-      	
         flash[:notice]  = "You are now logged in."
         redirect_back_or_default :controller => 'home', :action => 'index'
       else
@@ -49,28 +37,10 @@ class AdminController < ApplicationController
     if request.post? && recaptcha_valid?(params, @person) && @person.save
 
       session[:person] = @person
-    
-      # Create them a preferences record
-      preference = Preference.new
-      preference.person_id = @person.id
-      
-      # Sort out their date format
-      if ActiveSupport::TimeZone.us_zones.to_s.include?(@person.timezone_name) || @person.timezone_name.include?("America")
-        preference.my_date_format = "%m/%d/%Y"
-        session[:preferred_short_date_format] = "%m/%d/%Y"
-        session[:preferred_long_date_format] = "%b %d %Y"
-        preference.language_code = "en-US"
-      else
-        preference.my_date_format = "%d/%m/%Y"
-        session[:preferred_short_date_format] = "%d/%m/%Y"
-        session[:preferred_long_date_format] = "%d %b %Y"
-        preference.language_code = "en"
-      end
-      
-      preference.save
-      session[:preference] = preference
-        
-      
+
+      @person.create_preference_record
+      session[:preference] = @person.preference
+
       auto = @person.signup_new_user(session[:code])
       # Includes creating standard tasks and sending emails
       
@@ -97,8 +67,6 @@ class AdminController < ApplicationController
   def logout
     session[:person] = nil
     session[:preference] = nil
-    session[:preferred_short_date_format] = "%d/%m/%Y"
-    session[:preferred_long_date_format] = "%d %b %Y"
     flash[:notice]  = "You are now logged out."
     redirect_to :controller => 'home', :action => 'index'
   end
@@ -312,19 +280,6 @@ http://www.mychores.co.uk"
       # When all options configured, save the preferences	
       @preference.save
       
-      
-      
-      # The short date format is like 23/02/2008 - what is stored in the database.
-      session[:preferred_short_date_format] = session[:preference].my_date_format
-    
-      # Also store the long format - ie 23 Feb 2008.
-      if session[:preference].my_date_format == "%d/%m/%Y"
-        session[:preferred_long_date_format] = "%d %b %Y"
-      elsif session[:preference].my_date_format == "%m/%d/%Y"
-        session[:preferred_long_date_format] = "%b %d %Y"
-      else
-        session[:preferred_long_date_format] = session[:preference].my_date_format
-      end
 		
 		
       flash[:notice] = "Preferences saved."

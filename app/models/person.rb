@@ -278,6 +278,24 @@ http://www.mychores.co.uk"
     return 0 # (to indicate new signup)
   
   end
+
+  def create_preference_record
+    preference = Preference.new(:person => self)
+    
+    if ActiveSupport::TimeZone.us_zones.to_s.include?(timezone_name) || timezone_name =~ /America/
+      preference.my_date_format = "%m/%d/%Y"
+      preference.language_code = "en-US"
+    else
+      preference.my_date_format = "%d/%m/%Y"
+      preference.language_code = "en"
+    end
+
+    # Set the email_time to 8am in their local time
+    Time.zone = timezone_name
+    preference.email_time = '2009-01-01 08:00:00'
+    
+    preference.save
+  end
   
   def confirmed_teams
     Team.find(memberships.confirmed.map(&:team_id))
@@ -286,8 +304,6 @@ http://www.mychores.co.uk"
   def fellow_team_members
     confirmed_teams.map(&:confirmed_members).flatten.uniq - [self]
   end
-  
-  
   
   
   
