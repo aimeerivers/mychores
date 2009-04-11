@@ -122,7 +122,7 @@
 			<th>Lists:</th>
 			<td>
 				<table>
-				<tr><td colspan='2'><%= link_to('Create new list ...', {:controller=>'lists', :action=>'new', :team=>@team.id}, 'class'=>'picturelink list') %></td></tr>
+				<tr><td colspan='2'><%= link_to('Create new list ...', {:controller=>'lists', :action=>'new', :team=>@team.id}, 'class'=>'picturelink list_add') %></td></tr>
 						
 			
 				<% if @lists.empty? %>

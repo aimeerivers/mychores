@@ -32,10 +32,10 @@ a.picturelink {
 }
 
 a.breadcrumb, span.breadcrumb, a.picturelink, span.picturelink {
-  padding: 2px 3px 0;
+  padding: 1px 3px 1px 17px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  background-position: bottom left;
+  background-position: center left;
   background-repeat: no-repeat;
 }
 
@@ -43,48 +43,51 @@ a.calendar_task, a.hotmap_task {
   padding: 1px 2px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  white-space: nowrap;
-}
-
-a.home {
-  background-image: url('../../images/icons/home-tiny.png');
-  padding-left: 17px;
 }
 
 a.person, span.person {
   background-image: url('../../images/icons/person-tiny.png');
-  padding-left: 13px;
 }
 
 a.virtualperson, span.virtualperson {
   background-image: url('../../images/icons/virtual-person-tiny.png');
-  padding-left: 13px;
 }
 
 a.deletedperson, span.deletedperson {
   background-image: url('../../images/icons/deleted-person-tiny.png');
-  padding-left: 13px;
   text-decoration: line-through;
 }
 
 a.kid, span.kid {
   background-image: url('../../images/icons/kid-tiny.png');
-  padding-left: 13px;
 }
 
 a.team {
   background-image: url('../../images/icons/team-tiny.png');
-  padding-left: 17px;
+}
+
+a.team_add {
+  background-image: url('../../images/icons/team-add.png');
 }
 
 a.list {
   background-image: url('../../images/icons/list-tiny.png');
-  padding-left: 17px;
+}
+
+a.list_add {
+  background-image: url('/images/icons/list-add.png');
 }
 
 a.task {
   background-image: url('../../images/icons/task-tiny.png');
-  padding-left: 16px;
+}
+
+a.task_add {
+  background-image: url('../../images/icons/task-add.png');
+}
+
+a.task_quickadd {
+  background-image: url('../../images/icons/task-quickadd.png');
 }
 
 

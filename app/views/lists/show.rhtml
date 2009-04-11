@@ -35,8 +35,8 @@
       <th>New task:</th>
       <td>
         <table>
-          <tr><td><%= link_to('Create new task ...', {:controller=>'tasks', :action=>'new', :list=>@list.id}, 'class'=>'picturelink task') %> or</td></tr>
-          <tr><td><%= link_to('Quick-create multiple tasks ...', {:controller=>'tasks', :action=>'quickcreate', :list=>@list.id}, 'class'=>'picturelink task') %></td></tr>
+          <tr><td><%= link_to('Create new task ...', {:controller=>'tasks', :action=>'new', :list=>@list.id}, 'class'=>'picturelink task_add') %> or</td></tr>
+          <tr><td><%= link_to('Quick-create multiple tasks ...', {:controller=>'tasks', :action=>'quickcreate', :list=>@list.id}, 'class'=>'picturelink task_quickadd') %></td></tr>
         </table>
       </td>
     </tr>
