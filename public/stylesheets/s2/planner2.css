@@ -15,19 +15,13 @@ position: absolute;
 
 
 a.breadcrumb, span.breadcrumb {
-padding-top: 3px;
 margin-top: 0px;
 background-color: transparent;
-background-position: bottom left;
-background-repeat: no-repeat;
 }
 
 
 a.picturelink, span.picturelink {
-padding-top: 3px;
 background-color: transparent;
-background-position: bottom left;
-background-repeat: no-repeat;
 white-space: nowrap;
 display: inline;
 text-decoration: none;
@@ -35,6 +29,13 @@ text-decoration: none;
 
 a.picturelink {
 font-weight: bold;
+}
+
+a.breadcrumb, span.breadcrumb, a.picturelink, span.picturelink {
+padding: 2px 3px 0;
+-moz-border-radius: 3px;
+background-position: bottom left;
+background-repeat: no-repeat;
 }
 
 a.home {
