@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
-  before_filter :find_current_date, :only => :search
+  before_filter :find_current_date, :only => [:welcome, :search]
 
   def welcome_page_calculations
     @numpeople = Person.count(:conditions => "usertype = 1")
@@ -11,14 +11,6 @@ class HomeController < ApplicationController
     # Pick a random testimonial
     offset = rand(Testimonial.count(:conditions => 'approved = 1'))
     @testimonial = Testimonial.find :first, :conditions => 'approved = 1', :offset => offset
-
-    if session[:person].nil?
-      @datetoday = Date.today
-    else
-      @person = Person.find(session[:person].id)
-      @mytimezone = TimeZone.new(@person.timezone_name)
-      @datetoday = Date.parse(@mytimezone.today().to_s)
-    end
 
     @donetoday = Completion.count(:conditions => [ "date_completed = ?", @datetoday ] )
     @doneyesterday = Completion.count(:conditions => [ "date_completed = DATE_SUB(?, INTERVAL 1 DAY)", @datetoday ] )
