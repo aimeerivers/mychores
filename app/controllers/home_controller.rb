@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
-  before_filter :find_current_date, :only => [:welcome, :search]
+  before_filter :find_current_date, :only => [:welcome, :index, :search]
 
   def welcome_page_calculations
     @numpeople = Person.count(:conditions => "usertype = 1")

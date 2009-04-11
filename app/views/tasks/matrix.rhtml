@@ -41,7 +41,7 @@
 
       <td align='right'>
         <span id='task-<%= task.id.to_s %>'>
-          <a title='<%= task.recurrence_description %>' href='/tasks/show/<%= task.id %>' <%= style %>><%= task.list.name %>: <%= task.short_name %></a>
+          <a title='<%= task.recurrence_description %>' href='/tasks/show/<%= task.id %>' class='hotmap_task' <%= style %>><%= task.list.name %>: <%= task.short_name %></a>
 
           <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick') %>
         </span>
