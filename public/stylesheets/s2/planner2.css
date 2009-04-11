@@ -1,117 +1,116 @@
 body
 {
-	font-family: 'Lucida Grande', sans-serif;
-	font-size: 10pt;
+  font-family: 'Lucida Grande', sans-serif;
+  font-size: 10pt;
 }
 
 
 
 span.notice {
-display: inline;
-position: absolute;
+  display: inline;
+  position: absolute;
 }
 
 
 
 
 a.breadcrumb, span.breadcrumb {
-margin-top: 0px;
-background-color: transparent;
+  margin-top: 0px;
+  background-color: transparent;
 }
 
 
 a.picturelink, span.picturelink {
-background-color: transparent;
-white-space: nowrap;
-display: inline;
-text-decoration: none;
+  background-color: transparent;
+  white-space: nowrap;
+  display: inline;
+  text-decoration: none;
 }
 
 a.picturelink {
-font-weight: bold;
+  font-weight: bold;
 }
 
 a.breadcrumb, span.breadcrumb, a.picturelink, span.picturelink {
-padding: 2px 3px 0;
--moz-border-radius: 3px;
-background-position: bottom left;
-background-repeat: no-repeat;
+  padding: 2px 3px 0;
+  -moz-border-radius: 3px;
+  background-position: bottom left;
+  background-repeat: no-repeat;
 }
 
 a.home {
-background-image: url(../../images/icons/home-tiny.png);
-padding-left: 17px;
+  background-image: url('../../images/icons/home-tiny.png');
+  padding-left: 17px;
 }
 
 a.person, span.person {
-background-image: url(../../images/icons/person-tiny.png);
-padding-left: 13px;
+  background-image: url('../../images/icons/person-tiny.png');
+  padding-left: 13px;
 }
 
 a.virtualperson, span.virtualperson {
-background-image: url(../../images/icons/virtual-person-tiny.png);
-padding-left: 13px;
+  background-image: url('../../images/icons/virtual-person-tiny.png');
+  padding-left: 13px;
 }
 
 a.deletedperson, span.deletedperson {
-background-image: url(../../images/icons/deleted-person-tiny.png);
-padding-left: 13px;
-text-decoration: line-through;
+  background-image: url('../../images/icons/deleted-person-tiny.png');
+  padding-left: 13px;
+  text-decoration: line-through;
 }
 
 a.kid, span.kid {
-background-image: url(../../images/icons/kid-tiny.png);
-padding-left: 13px;
+  background-image: url('../../images/icons/kid-tiny.png');
+  padding-left: 13px;
 }
 
 a.team {
-background-image: url(../../images/icons/team-tiny.png);
-padding-left: 17px;
+  background-image: url('../../images/icons/team-tiny.png');
+  padding-left: 17px;
 }
 
 a.list {
-background-image: url(../../images/icons/list-tiny.png);
-padding-left: 17px;
+  background-image: url('../../images/icons/list-tiny.png');
+  padding-left: 17px;
 }
 
 a.task {
-background-image: url(../../images/icons/task-tiny.png);
-padding-left: 16px;
+  background-image: url('../../images/icons/task-tiny.png');
+  padding-left: 16px;
 }
 
 
 
 span.specialhover div {
-display: none;
+  display: none;
 }
 
 span.specialhover:hover div {
-display: inline;
-position: absolute;
-padding: 3px;
-margin: 0px;
-text-align: left;
+  display: inline;
+  position: absolute;
+  padding: 3px;
+  margin: 0px;
+  text-align: left;
 }
 
 
 
 img {
-border: 0px;
+  border: 0px;
 }
 
 
 th
 {
-    vertical-align: top;
-	text-align: left;
-	font-weight: bold;
-    padding: 0.2em;
+  vertical-align: top;
+  text-align: left;
+  font-weight: bold;
+  padding: 0.2em;
 }
 td
 {
-    vertical-align: top;
-	/* text-align: left; */
-    padding: 0.2em;
+  vertical-align: top;
+  padding: 0.2em;
 }
 
 
@@ -119,30 +118,30 @@ td
 
 
 #Emphasise td {
-vertical-align: middle;
-font-size: 1.2em;
+  vertical-align: middle;
+  font-size: 1.2em;
 }
 
 #Emphasise a {
-text-decoration: underline;
-font-weight: bold;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 
 span.bar-chart-bar {
-border: 1px solid #aaaaaa;
-height: 0.8em;
-padding: 0px;
-margin: 0px;
+  border: 1px solid #aaaaaa;
+  height: 0.8em;
+  padding: 0px;
+  margin: 0px;
 }
 
 
 
 
 table.topten td, table.topten th {
-padding: 0em 0.2em 0em 0em;
-margin: 0em;
-border-bottom: 1px dotted #CCCCCC;
+  padding: 0em 0.2em 0em 0em;
+  margin: 0em;
+  border-bottom: 1px dotted #CCCCCC;
 }
 
 
