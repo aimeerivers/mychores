@@ -10,6 +10,7 @@ Rails::Initializer.run do |config|
   config.gem 'recaptcha'
   config.gem 'RedCloth'
   config.gem 'ruby-openid', :lib => 'openid'
+  config.gem 'haml'
 
   config.action_controller.session = {
     :session_key => 'invent_something',
