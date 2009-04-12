@@ -60,7 +60,7 @@
                     <img src='/images/icons/drag-handle.png' class='drag-handle' width='13' height='13' alt='Drag to re-schedule' title='Drag to re-schedule' style='display:none;' />
                     <a title='<%= task.recurrence_description %>' href='/tasks/show/<%= task.id %>' class='calendar_task' <%= style %>><%= task.list.name %>: <%= task.short_name %></a>
 
-                    <%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick') %>
+                    <%= link_to(image_tag('tick.png', :alt => 'done'), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick') %>
 
                     <br />
                   </span>

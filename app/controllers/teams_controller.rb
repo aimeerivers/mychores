@@ -270,7 +270,8 @@ http://www.mychores.co.uk"
             # need to create a new kid record
 
             # Create a record for the kid (usertype 4)
-            @kid = Person.new(:name => name, :usertype => 4, :email => 'kids@mychores.co.uk', :default_view => "Collage", :login => Person.sha1(name + Time.now.to_s), :password => Person.sha1(name.reverse + Time.now.to_s), :password_confirmation => Person.sha1(name.reverse + Time.now.to_s), :timezone_name => @person.timezone_name, :parent_id => @person.id)
+            @kid = Person.new(:name => name, :email => 'kids@mychores.co.uk', :default_view => "Collage", :login => Person.sha1(name + Time.now.to_s), :password => Person.sha1(name.reverse + Time.now.to_s), :password_confirmation => Person.sha1(name.reverse + Time.now.to_s), :timezone_name => @person.timezone_name, :parent_id => @person.id)
+            @kid.usertype = 4
             if @kid.save
 
               # Create the preference (if they convert to a full member these are the preferences they might want)

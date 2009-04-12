@@ -10,10 +10,10 @@
         <tr>
             <td>
                 <% if @person.notifications == 'None' %>
-                <img src='/images/redx.png' width='15' height='10' alt='No' />
+                <%= image_tag('/images/redx.png', :alt => 'No') %>
                 From now on you will <b>not</b> receive notification emails.
                 <% else %>
-                <img src='/images/tick.png' width='12' height='12' alt='Yes' />
+                <%= image_tag('/images/tick.png', :alt => 'Yes') %>
                 You are currently set to receive notification emails of your chores.
                 <% end %>
             </td>
@@ -29,10 +29,10 @@
         <tr>
             <td>
                 <% if @person.newsletters %>
-                <img src='/images/tick.png' width='12' height='12' alt='Yes' />
+                <%= image_tag('/images/tick.png', :alt => 'Yes') %>
                 You will receive occasional newsletters.
                 <% else %>
-                <img src='/images/redx.png' width='15' height='10' alt='No' />
+                <%= image_tag('/images/redx.png', :alt => 'No') %>
                 From now on you will <b>not</b> receive newsletters.
                 <% end %>
             </td>

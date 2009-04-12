@@ -88,7 +88,7 @@
         <td><%= formatted_date(task.next_due) %> (<%= time_from_today(task.next_due, @datetoday) %>)</td>
         <td><%= @mark_term ? highlight(task.description, @mark_term) : h(task.description) %></td>
         <td>
-          <%= link_to(image_tag('tick.png', :size => '12x12', :alt => "done"), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick')  %>
+          <%= link_to(image_tag('tick.png', :alt => "done"), {:controller => 'tasks', :action => 'done', :id => task.id}, :class => 'quick_tick')  %>
         </td>
       </tr>
     <% end %>

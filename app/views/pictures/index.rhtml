@@ -18,7 +18,7 @@
      <td align='center'>
          <a href='/pictures/show/<%= picture.id.to_s %>'><%= show_picture(picture) %></a><br />
          <%= picture.filename %>
-         <a href="/pictures/destroy/<%= picture.id.to_s %>" onclick="return confirm('Are you sure you want to delete <%= picture.filename %>?');"><img src='/images/redx.png' width='15' height='10' alt='Delete picture' title='Delete picture' /></a>
+         <a href="/pictures/destroy/<%= picture.id.to_s %>" onclick="return confirm('Are you sure you want to delete <%= picture.filename %>?');"><%= image_tag('/images/redx.png', :alt => 'Delete picture', :title => 'Delete picture') %></a>
      </td>
      
      <% row_counter += 1 %>

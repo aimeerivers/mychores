@@ -4,7 +4,7 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-  <% @links += [{:url => "/admin/login", :title => "Log |in", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
   <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
   <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
@@ -79,13 +79,15 @@
 
     <td width='50'>&nbsp;</td>
 
-    <td width='380'>
+    <td width='400' style='text-align: center;'>
+      
+      <%= image_tag('/images/workload-example.png')   %>
       
       <% if controller.logged_in? -%>
-        <p style='text-align: center;'><%= image_tag('logout_button.png') %></p>
+        <p><%= image_tag('logout_button.png') %></p>
       <% else -%>
-        <p style='text-align: center;'><%= image_tag('login_button.png') %> <%= image_tag('register_button.png') %></p>
-        <p style='text-align: center;'><%= image_tag('openid_button.png') %></p>
+        <p><%= image_tag('login_button.png') %> <%= image_tag('register_button.png') %></p>
+        <p><%= image_tag('openid_button.png') %></p>
       <% end -%>
 
 

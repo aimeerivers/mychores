@@ -63,7 +63,7 @@
             <%= aimee_in_place_date_editor('task-duedate-' + @task.id.to_s, @task.next_due, {:url => url_for(:controller => "tasks", :action => "change_due_date", :id => @task.id)}) %>
           <% end -%>
 
-          &nbsp;&nbsp;<%= link_to(image_tag('tick.png', :size => '12x12', :alt => 'done', :title => 'Tick to mark as done by you today'), {:controller => 'tasks', :action => 'done', :id => @task.id})  %>
+          &nbsp;&nbsp;<%= link_to(image_tag('tick.png', :alt => 'done', :title => 'Tick to mark as done by you today'), {:controller => 'tasks', :action => 'done', :id => @task.id})  %>
         </td>
       </tr>
 
