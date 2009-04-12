@@ -6,44 +6,44 @@ Hi <%= h(@name) %>, here are your tasks for the coming week, from <a href='http:
 
 <table width='500' border='0'>
 
-<% for task in @workload %>
+  <% for task in @workload %>
 
     <% if task.list.team.use_colour == true
-       teamcolour="background-color:#" + task.list.team.colour + "; color:#" + task.list.team.text_colour + ";"
+      teamcolour="background-color:#" + task.list.team.colour + "; color:#" + task.list.team.text_colour + ";"
     else
-       teamcolour=""
+      teamcolour=""
     end -%>
-    
+
     <% if @colourful_emails == true -%>
-    	<% if task.next_due < (@datetoday)-7
-    		rowcolour="style='background-color: #FBADAD;'"
-    	elsif task.next_due < @datetoday
-    		rowcolour="style='background-color: #FFD7D7;'"
-    	elsif task.next_due == @datetoday
-    		rowcolour="style='background-color: #FFE9BE;'"
-    	elsif task.next_due < (@datetoday)+4
-    		rowcolour="style='background-color: #E4FBE2;'"
-    	else
-    		rowcolour=""
-    	end -%>
+      <% if task.next_due < (@datetoday)-7
+        rowcolour="style='background-color: #FBADAD;'"
+      elsif task.next_due < @datetoday
+        rowcolour="style='background-color: #FFD7D7;'"
+      elsif task.next_due == @datetoday
+        rowcolour="style='background-color: #FFE9BE;'"
+      elsif task.next_due < (@datetoday)+4
+        rowcolour="style='background-color: #E4FBE2;'"
+      else
+        rowcolour=""
+      end -%>
     <% end -%>
-						
-	<%= "<tr " + rowcolour + "><td><a href='http://www.mychores.co.uk/lists/show/" + task.list.id.to_s + "' style='white-space: nowrap; " + teamcolour + "'>" + h(task.list.name) + "</a></td><td><a href='http://www.mychores.co.uk/tasks/show/" + task.id.to_s + "' style='white-space: nowrap; " + teamcolour + "'>" + h(task.short_name) + "</a></td><td><span style='white-space: nowrap;'>" + particularly_formatted_date(@preferred_date_format, task.next_due) + "</span> <span style='white-space: nowrap;'>(" + time_from_today(task.next_due, @datetoday) + ")</span></td><td><a href='http://www.mychores.co.uk/tasks/done/" + task.id.to_s + "'> <img src='http://www.mychores.co.uk/images/tick.png' width='16' height='16' border='0' alt='Done' /></a></td></tr>" %>
-	<% if @include_descriptions == true -%>
-	   <% unless task.description.nil? or task.description.empty? -%>
-	       <%= "<tr><td colspan='4'>" + textilize_without_paragraph(task.description) + "</td></tr>" %>
-	   <% end -%>
-	<% end -%>
-<% end %>
+
+    <%= "<tr " + rowcolour + "><td><a href='http://www.mychores.co.uk/lists/show/" + task.list.id.to_s + "' style='white-space: nowrap; " + teamcolour + "'>" + h(task.list.name) + "</a></td><td><a href='http://www.mychores.co.uk/tasks/show/" + task.id.to_s + "' style='white-space: nowrap; " + teamcolour + "'>" + h(task.short_name) + "</a></td><td><span style='white-space: nowrap;'>" + particularly_formatted_date(@preferred_date_format, task.next_due) + "</span> <span style='white-space: nowrap;'>(" + time_from_today(task.next_due, @datetoday) + ")</span></td><td><a href='http://www.mychores.co.uk/tasks/done/" + task.id.to_s + "'> <img src='http://www.mychores.co.uk/images/tick.png' width='16' height='16' border='0' alt='Done' /></a></td></tr>" %>
+    <% if @include_descriptions == true -%>
+      <% unless task.description.nil? or task.description.empty? -%>
+        <%= "<tr><td colspan='4'>" + textilize_without_paragraph(task.description) + "</td></tr>" %>
+      <% end -%>
+    <% end -%>
+  <% end %>
 
 </table>
 
 <br /><br />
 
 <% if @number_overdue > 10 -%>
-Too many overdue tasks getting you down? <a href='http://www.mychores.co.uk/tasks/move'>Reschedule them</a>.
+  Too many overdue tasks getting you down? <a href='http://www.mychores.co.uk/tasks/move'>Reschedule them</a>.
 
-<br /><br />
+  <br /><br />
 
 <% end -%>
 
