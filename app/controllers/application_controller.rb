@@ -8,16 +8,16 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
 
   before_filter :set_charset, :set_time_zone
-  
+
   def logged_in?
     !session[:person].nil?
   end
-  
+
   def show_ads?
     return true if !logged_in?
     session[:person].ads
   end
-    
+
 
   protected
 
@@ -27,11 +27,11 @@ class ApplicationController < ActionController::Base
       headers["Content-Type"] = "#{content_type}; charset=utf-8"
     end
   end
-	
+
   def set_time_zone
     Time.zone = session[:person].timezone_name if session[:person]
   end
-  
+
   def redirect_back(redirect_opts = nil)
     redirect_opts ||= {:controller => 'tasks', :action => 'workload'}
     request.env["HTTP_REFERER"] ? redirect_to(request.env["HTTP_REFERER"]) : redirect_to(redirect_opts)
@@ -41,8 +41,8 @@ class ApplicationController < ActionController::Base
     @datetoday = Time.zone.today
   end
 
-   
-  
+
+
   private
 
   def html_escape(s)
@@ -88,15 +88,15 @@ class ApplicationController < ActionController::Base
       to_link.describe_recurrence
       to_link.save
     end
-		
+
     if to_link.list.team.use_colour == true
       style=" style='background-color:#" + to_link.list.team.colour + "; color:#" + to_link.list.team.text_colour + ";'"
     else
       style=""
     end
-	    
+
     javascript_safe_name = (to_link.short_name).to_s.gsub(/\"/, "").gsub(/\'/, "")
-		
+
     return_string = "<span class='specialhover'>"
     return_string += "<a href='/tasks/show/" + to_link.id.to_s + "' class='" + specific_class + " task'" + style + " title='" + to_link.recurrence_description + "'>" + h(to_link.short_name) + "</a>"
     return_string += "<div>"
@@ -107,7 +107,7 @@ class ApplicationController < ActionController::Base
     return_string += "<a href='/tasks/destroy/" + to_link.id.to_s + "' onclick='return confirm(\"Are you sure you want to delete this task: #{javascript_safe_name}\");'>Delete task</a>"
     return_string += "</div>"
     return_string += "</span>"
-		
+
     return return_string
   end
 
@@ -115,5 +115,5 @@ class ApplicationController < ActionController::Base
     return_string = "<a href='/tips/show/" + to_link.id.to_s + "'>Tip #" + to_link.id.to_s + ": " + h(to_link.short_description) + "</a>"
     return return_string
   end
-	
+
 end
