@@ -90,28 +90,44 @@ a.task_quickadd {
   background-image: url('../../images/icons/task-quickadd.png');
 }
 
-a.workload_view {
+a.workload_view, span.workload_view {
   background-image: url('../../images/icons/workload-tiny.png');
 }
 
-a.hotmap_view {
+a.hotmap_view, span.hotmap_view {
   background-image: url('../../images/icons/hotmap-tiny.png');
 }
 
-a.calendar_view {
+a.calendar_view, span.calendar_view {
   background-image: url('../../images/icons/calendar-tiny.png');
 }
 
-a.collage_view {
+a.collage_view, span.collage_view {
   background-image: url('../../images/icons/collage-tiny.png');
 }
 
-a.statistics_view {
+a.statistics_view, span.statistics_view {
   background-image: url('../../images/icons/statistics-tiny.png');
 }
 
 a.print_view {
   background-image: url('../../images/icons/print-tiny.png');
+}
+
+a.preferences {
+  background-image: url('../../images/icons/preferences-tiny.png');
+}
+
+a.help_centre {
+  background-image: url('../../images/icons/help-tiny.png');
+}
+
+a.logout {
+  background-image: url('../../images/icons/logout-tiny.png');
+}
+
+a.search, span.search {
+  background-image: url('../../images/icons/search-tiny.png');
 }
 
 
@@ -228,7 +244,7 @@ img.expand-collapse {
 
 div#tertiaryContent ul {
   list-style-type: none;
-  margin-left: 0;
+  margin-left: 2px;
 }
 
 div#tertiaryContent ul li {
@@ -252,7 +268,11 @@ div#tertiaryContent ul ul li {
 
 
 
-
+input, select, textarea {
+  padding: 1px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
 
 div.fieldWithErrors {
   display: inline;

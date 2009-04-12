@@ -233,13 +233,15 @@
 
             <h3><%= link_to_person(session[:person], 'picturelink') %></h3>
             <ul>
-              <li><a href='/admin/preferences'>Preferences</a></li>
-              <li><a href='/admin/help'>Help centre</a></li>
-              <li><a href='/admin/logout'>Logout</a></li>
+              <li><a href='/admin/preferences' class='picturelink preferences'>Preferences</a></li>
+              <li><a href='/admin/help' class='picturelink help_centre'>Help centre</a></li>
+              <li><a href='/admin/logout' class='picturelink logout'>Logout</a></li>
               <form id='dont_focus'></form>
               <li>
                 <form id='global_search' action='/home/search' method='post'>
-                  <input type='text' name='search' style='width:100px;' value='Search' onclick="if(this.value=='Search')this.value='';" />
+                  <span class='picturelink search'>
+                    <input type='text' name='search' style='width:100px;' value='Search' onclick="if(this.value=='Search')this.value='';" />
+                  </span>
                   <input type='hidden' name='searchin' value='people, teams, tips, lists, tasks' />
                   <input type='hidden' name='limit' value='10' />
                 </form>
