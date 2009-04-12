@@ -231,7 +231,7 @@
 
           <% else %>
 
-            <h3><a href='/person/<%= session[:person].login %>'><%= session[:person].login %></a></h3>
+            <h3><%= link_to_person(session[:person], 'picturelink') %></h3>
             <ul>
               <li><a href='/admin/preferences'>Preferences</a></li>
               <li><a href='/admin/help'>Help centre</a></li>
@@ -248,15 +248,15 @@
 
             <h3>Views</h3>
             <ul>
-              <li><a href='/tasks/workload'>Workload</a></li>
-              <li><a href='/tasks/matrix'>Hot map</a></li>
-              <li><a href='/tasks/calendar'>Calendar</a></li>
-              <li><a href='/tasks/collage'>Collage</a></li>
-              <li><a href='/tasks/statistics'>Statistics</a></li>
-              <li><a href='/tasks/print'>Print outs</a></li>
+              <li><a href='/tasks/workload' class='picturelink workload_view'>Workload</a></li>
+              <li><a href='/tasks/matrix' class='picturelink hotmap_view'>Hot map</a></li>
+              <li><a href='/tasks/calendar' class='picturelink calendar_view'>Calendar</a></li>
+              <li><a href='/tasks/collage' class='picturelink collage_view'>Collage</a></li>
+              <li><a href='/tasks/statistics' class='picturelink statistics_view'>Statistics</a></li>
+              <li><a href='/tasks/print' class='picturelink print_view'>Print outs</a></li>
             </ul>
 
-            <h3>Teams</h3>
+            <h3>My teams</h3>
             <ul>
               <% @my_teams = find_my_teams %>
               <% for team in @my_teams %>
@@ -299,10 +299,10 @@
 
             <h3>Create</h3>
             <ul>
-              <li><a href='/teams/new'>New team</a></li>
-              <li><a href='/lists/new'>New list</a></li>
-              <li><a href='/tasks/new'>New task</a></li>
-              <li><a href='/tasks/quickcreate'>Quick-create</a></li>
+              <li><a href='/teams/new' class='picturelink team_add'>New team</a></li>
+              <li><a href='/lists/new' class='picturelink list_add'>New list</a></li>
+              <li><a href='/tasks/new' class='picturelink task_add'>New task</a></li>
+              <li><a href='/tasks/quickcreate' class='picturelink task_quickadd'>Quick-create</a></li>
             </ul>
 
           <% end %>

@@ -32,7 +32,7 @@ a.picturelink {
 }
 
 a.breadcrumb, span.breadcrumb, a.picturelink, span.picturelink {
-  padding: 1px 3px 1px 17px;
+  padding: 1px 3px 1px 18px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   background-position: center left;
@@ -88,6 +88,30 @@ a.task_add {
 
 a.task_quickadd {
   background-image: url('../../images/icons/task-quickadd.png');
+}
+
+a.workload_view {
+  background-image: url('../../images/icons/workload-tiny.png');
+}
+
+a.hotmap_view {
+  background-image: url('../../images/icons/hotmap-tiny.png');
+}
+
+a.calendar_view {
+  background-image: url('../../images/icons/calendar-tiny.png');
+}
+
+a.collage_view {
+  background-image: url('../../images/icons/collage-tiny.png');
+}
+
+a.statistics_view {
+  background-image: url('../../images/icons/statistics-tiny.png');
+}
+
+a.print_view {
+  background-image: url('../../images/icons/print-tiny.png');
 }
 
 
@@ -200,6 +224,19 @@ table.topten td, table.topten th {
 
 img.expand-collapse {
   cursor: pointer;
+}
+
+div#tertiaryContent ul {
+  list-style-type: none;
+  margin-left: 0;
+}
+
+div#tertiaryContent ul li {
+  padding: 1px 0;
+}
+
+div#tertiaryContent h3 {
+  margin-bottom: 0.5em;
 }
 
 div#tertiaryContent ul ul {
