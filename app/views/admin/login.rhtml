@@ -2,35 +2,37 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
 <% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
 
 
-<% form_for(:person, :url => {:action => :login}) do |f| -%><div>
-    
-    	<table>
-    		<tr>
-    			<th><%= f.label(:login, 'Login ID') %>:</th>
-	    		<td><%= f.text_field(:login, :class => 'styled') %></td>
-	    	</tr>
-    		<tr>
-    			<th><%= f.label(:password) %>:</th>
-	    		<td><%= f.password_field(:password, :class => 'styled') %></td>
-	    	</tr>
-	    </table>
-	    
-	    <br />
-	    
+<% form_for(:person, :url => {:action => :login}) do |f| -%>
+  <div>
+
+    <table>
+      <tr>
+        <th><%= f.label(:login, 'Login ID') %>:</th>
+        <td><%= f.text_field(:login, :class => 'styled') %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:password) %>:</th>
+        <td><%= f.password_field(:password, :class => 'styled') %></td>
+      </tr>
+    </table>
+
+    <br />
+
     <p><%= f.submit('Log in') %></p>
 
 
-</div><% end -%>
+  </div>
+<% end -%>
 
 <br />
 

@@ -3,10 +3,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -30,7 +30,7 @@
     <th>Method</th>
     <th>Parameters</th>
   </tr>
-  
+
   <tr>
     <td><b>Site Statistics</b> <br /> Gives some site-wide information, such as total number of people registered, tasks, teams and timezones. Also tells you how many tasks have been completed in the last day, seven days, and current month.</td>
     <td>
@@ -41,7 +41,7 @@
     <td>GET</td>
     <td>None</td>
   </tr>
-  
+
   <tr>
     <td><b>Verify credentials</b> <br /> May be used as a way to verify that the correct credentials were entered. Returns a 200 OK if valid, or a 401 Unauthorized if not.</td>
     <td>
@@ -52,7 +52,7 @@
     <td>GET</td>
     <td>None</td>
   </tr>
-  
+
   <tr>
     <td><b>Person details</b> <br /> Used without paramaters it indicates who is currently authenticated. Used with a paramater it can give details of a different person. Returns a 404 Not Found if the paramater does not specify a valid person.</td>
     <td>
@@ -68,7 +68,7 @@
       </ul>
     </td>
   </tr>
-  
+
   <tr>
     <td><b>All tasks</b> <br /> Brings back a list of all tasks in the teams of the currently authenticated person. By default ordered by due date.</td>
     <td>
@@ -85,7 +85,7 @@
       </ul>
     </td>
   </tr>
-  
+
   <tr>
     <td><b>My tasks</b> <br /> Brings back a list of tasks specifically assigned to the currently authenticated person, or any tasks in their teams not assigned to anybody in particular. By default ordered by due date.</td>
     <td>
@@ -102,7 +102,7 @@
       </ul>
     </td>
   </tr>
-  
+
   <tr>
     <td><b>Today's tasks</b> <br /> As with 'My tasks' (see above) but only tasks due today, not including overdue tasks.</td>
     <td>
@@ -118,7 +118,7 @@
       </ul>
     </td>
   </tr>
-  
+
   <tr>
     <td><b>Task details</b> <br /> Returns details about a task, provided the currently authenticated person is a member of that task's team. If not, a 404 Not Found is returned.</td>
     <td>
@@ -133,7 +133,7 @@
       </ul>
     </td>
   </tr>
-  
+
 </table>
 
 <br /><br />

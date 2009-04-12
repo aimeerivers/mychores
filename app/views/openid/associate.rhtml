@@ -10,41 +10,43 @@
 <% if @person.openid_url.nil? %>
 
 
-    <p>Firstly, enter your OpenID URL to validate it.</p>
-    
-    
-    <% form_tag(:action=> "associate") do %><div>
-    
-    	<table>
-    		<tr>
-    			<th><img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' /></th>
-	    		<td><input type="text" name="openid_url" id="openid_identifier" class='styled' /><!-- BEGIN ID SELECTOR -->
-<script type="text/javascript" id="__openidselector" src="https://www.idselector.com/selector/d84d51361a57e918e32ba1923ddc1b6373a1688b" charset="utf-8"></script>
-<!-- END ID SELECTOR --></td>
-          <td><input type="submit" name="login" value="Validate OpenID" /></td>
-	    	</tr>
-	    </table>
-	    
-	    <br />
-    
-    
-    </div><% end %>
+  <p>Firstly, enter your OpenID URL to validate it.</p>
 
-    <br /><br />
-    
-    <%= render(:partial => 'about') %>
-    
+
+  <% form_tag(:action=> "associate") do %>
+    <div>
+
+      <table>
+        <tr>
+          <th><img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' /></th>
+          <td><input type="text" name="openid_url" id="openid_identifier" class='styled' /><!-- BEGIN ID SELECTOR -->
+            <script type="text/javascript" id="__openidselector" src="https://www.idselector.com/selector/d84d51361a57e918e32ba1923ddc1b6373a1688b" charset="utf-8"></script>
+          <!-- END ID SELECTOR --></td>
+          <td><input type="submit" name="login" value="Validate OpenID" /></td>
+        </tr>
+      </table>
+
+      <br />
+
+
+    </div>
+  <% end %>
+
+  <br /><br />
+
+  <%= render(:partial => 'about') %>
+
 
 
 <% else %>
-    <p>
-        Your account has been associated with the OpenID <br />
-        <img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' />
-        <b><%= denormalize_url(@person.openid_url) %></b>
-    </p>
-    
-    
-    <p>
-        <%= link_to('Remove association?', { :action => 'disassociate' }, :confirm => 'Are you sure you want to remove your OpenID association?', 'class'=>'action') %>        
-    </p>
+  <p>
+    Your account has been associated with the OpenID <br />
+    <img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' />
+    <b><%= denormalize_url(@person.openid_url) %></b>
+  </p>
+
+
+  <p>
+    <%= link_to('Remove association?', { :action => 'disassociate' }, :confirm => 'Are you sure you want to remove your OpenID association?', 'class'=>'action') %>
+  </p>
 <% end %>

@@ -4,36 +4,36 @@
 
 <table>
 
-	<tr>
-		<th>Login ID:</th>
-		<td><%= link_to_person(@person, 'picturelink') %></td>
-	</tr>
+  <tr>
+    <th>Login ID:</th>
+    <td><%= link_to_person(@person, 'picturelink') %></td>
+  </tr>
 
-	<tr>
-		<th>Name:</th>
-		<td><%= @person.name %></td>
-	</tr>
-	<tr>
-		<th>Email address:</th>
-		<td><%= text_field('person', 'email', :maxlength => 255, :class => 'styled') %></td>
-	</tr>
-	<tr>
-		<th>Email verified:</th>
-		<td><%= check_box('person', 'email_verified') %></td>
-	</tr>
-	<tr>
-		<th>Notifications:</th>
-		<td><%= select('person', 'notifications', ["None", "Daily", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"]) %></td>
-	</tr>
-	<tr>
-		<th>Receive newsletters:</th>
-		<td><%= check_box('person', 'newsletters') %></td>
-	</tr>
-	<tr>
-		<th>Status:</th>
-		<td><%= text_field('person', 'status', :maxlength => 100, :class => 'styled') %></td>
-	</tr>
-	
+  <tr>
+    <th>Name:</th>
+    <td><%= @person.name %></td>
+  </tr>
+  <tr>
+    <th>Email address:</th>
+    <td><%= text_field('person', 'email', :maxlength => 255, :class => 'styled') %></td>
+  </tr>
+  <tr>
+    <th>Email verified:</th>
+    <td><%= check_box('person', 'email_verified') %></td>
+  </tr>
+  <tr>
+    <th>Notifications:</th>
+    <td><%= select('person', 'notifications', ["None", "Daily", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"]) %></td>
+  </tr>
+  <tr>
+    <th>Receive newsletters:</th>
+    <td><%= check_box('person', 'newsletters') %></td>
+  </tr>
+  <tr>
+    <th>Status:</th>
+    <td><%= text_field('person', 'status', :maxlength => 100, :class => 'styled') %></td>
+  </tr>
+
 </table>
 
 <br />

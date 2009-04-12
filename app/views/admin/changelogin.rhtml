@@ -10,26 +10,28 @@
 
 <% if @person.status.nil? %>
 
-	Sorry, the change login ID option is only available to <%= link_to('site supporters', {:controller => 'home', :action => 'supporters'}) %>.
-	
+  Sorry, the change login ID option is only available to <%= link_to('site supporters', {:controller => 'home', :action => 'supporters'}) %>.
+
 <% else %>
 
-	<% form_tag(:action => 'changeloginid') do %><div>
-		<%= error_messages_for 'person' %>
-	
-		<table>
-			
-			<tr>
-				<th>New login id:</th>
-				<td><%= text_field('person', 'login', :maxlength => 40, :class => 'styled') %></td>
-			</tr>
-			
-		</table>
-	  
-		<br />
-	  
-	  <%= submit_tag 'Change login ID' %>
-	</div><% end %>
+  <% form_tag(:action => 'changeloginid') do %>
+    <div>
+      <%= error_messages_for 'person' %>
 
-	
+      <table>
+
+        <tr>
+          <th>New login id:</th>
+          <td><%= text_field('person', 'login', :maxlength => 40, :class => 'styled') %></td>
+        </tr>
+
+      </table>
+
+      <br />
+
+      <%= submit_tag 'Change login ID' %>
+    </div>
+  <% end %>
+
+
 <% end %>

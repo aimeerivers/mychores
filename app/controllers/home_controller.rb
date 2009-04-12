@@ -101,9 +101,4 @@ class HomeController < ApplicationController
   end
 
 
-  def publicity
-
-  end
-
-
 end

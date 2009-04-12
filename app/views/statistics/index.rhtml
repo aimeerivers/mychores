@@ -4,45 +4,45 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
 <% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
 
-	<p align='center'>
-	  <%= image_tag(@completions_chart.to_url, :alt => "Tasks completed by month", :title => "Tasks completed by month", :size => "400x180") %>
-	</p>
-	
-	<p align='center'>
-	  Tasks done so far this month: <%= @completions[0].to_s %><br />
-	  Current projected total: <%= @projected_tasks_this_month.to_i %>
-	</p>
-	
-	<br /><br /><br />
-	
-	<p align='center'>
-	  <%= image_tag(@thirty_day_chart.to_url, :alt => "Tasks completed in the last 28 days", :title => "Tasks completed in the last 28 days", :size => "400x180") %>
-	</p>
-	
-	<p align='center'>
-	  Tasks done so far today: <%= @thirty_day_totals[0].to_s %>
-	</p>
-	
-	<br /><br /><br />
-	
-	<p align='center'>
-	  <%= image_tag(@timezone_chart.to_url, :alt => "People by location", :title => "People by location", :size => "600x180") %>
-	</p>
-	
-	<p align='center'>
-	  Total number of people: <%= @total_people.to_s %>
-	</p>
-	
-	
-	
-	
+<p align='center'>
+  <%= image_tag(@completions_chart.to_url, :alt => "Tasks completed by month", :title => "Tasks completed by month", :size => "400x180") %>
+</p>
+
+<p align='center'>
+  Tasks done so far this month: <%= @completions[0].to_s %><br />
+  Current projected total: <%= @projected_tasks_this_month.to_i %>
+</p>
+
+<br /><br /><br />
+
+<p align='center'>
+  <%= image_tag(@thirty_day_chart.to_url, :alt => "Tasks completed in the last 28 days", :title => "Tasks completed in the last 28 days", :size => "400x180") %>
+</p>
+
+<p align='center'>
+  Tasks done so far today: <%= @thirty_day_totals[0].to_s %>
+</p>
+
+<br /><br /><br />
+
+<p align='center'>
+  <%= image_tag(@timezone_chart.to_url, :alt => "People by location", :title => "People by location", :size => "600x180") %>
+</p>
+
+<p align='center'>
+  Total number of people: <%= @total_people.to_s %>
+</p>
+
+
+
+
 <p><a href='#top'>Top of page</a></p>

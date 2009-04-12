@@ -1,51 +1,53 @@
 <% @heading='Complete registration' %>
 
-<% form_tag(:action=> "complete_registration") do %><div>
+<% form_tag(:action=> "complete_registration") do %>
+  <div>
 
-  <%= error_messages_for 'person' %><br/>
-  
-	<table>
-		<tr>
-			<th>Openid:</th>
-			<td><img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' /> <b><%= denormalize_url(@person.openid_url) %></b></td>
-		</tr>
-		<tr>
-			<th>MyChores id:</th>
-			<td><%= text_field("person", "login", :class => 'styled', :maxlength => 40) %></td>
-		</tr>
-		<tr>
-			<th>Name:</th>
-			<td><%= text_field("person", "name", :class => 'styled', :maxlength => 40) %></td>
-		</tr>
-		<tr>
-			<th>Email address:</th>
-			<td><%= text_field("person", "email", :class => 'styled', :maxlength => 255, :value => session[:email]) %></td>
-		</tr>
-		<tr>
-			<th>Timezone/location:</th>
-			<td><%= time_zone_select('person', 'timezone_name') %></td>
-		</tr>
-		
-		<tr>
-			<td colspan='2'><br /><br />
-				If somebody referred you here, please enter their login ID if you know it.
-			</td>
-		</tr>
-		
-		<tr>
-			<th>Referrer id:</th>
-			<td><%= text_field("person", "referrer", :class => 'styled', :maxlength => 40, :value => session[:referrer]) %></td>
-		</tr>
+    <%= error_messages_for 'person' %><br/>
 
-	</table>
-  
-  <br />
+    <table>
+      <tr>
+        <th>Openid:</th>
+        <td><img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' /> <b><%= denormalize_url(@person.openid_url) %></b></td>
+      </tr>
+      <tr>
+        <th>MyChores id:</th>
+        <td><%= text_field("person", "login", :class => 'styled', :maxlength => 40) %></td>
+      </tr>
+      <tr>
+        <th>Name:</th>
+        <td><%= text_field("person", "name", :class => 'styled', :maxlength => 40) %></td>
+      </tr>
+      <tr>
+        <th>Email address:</th>
+        <td><%= text_field("person", "email", :class => 'styled', :maxlength => 255, :value => session[:email]) %></td>
+      </tr>
+      <tr>
+        <th>Timezone/location:</th>
+        <td><%= time_zone_select('person', 'timezone_name') %></td>
+      </tr>
 
-  <input type="submit" value="Register" />
-  
+      <tr>
+        <td colspan='2'><br /><br />
+          If somebody referred you here, please enter their login ID if you know it.
+        </td>
+      </tr>
+
+      <tr>
+        <th>Referrer id:</th>
+        <td><%= text_field("person", "referrer", :class => 'styled', :maxlength => 40, :value => session[:referrer]) %></td>
+      </tr>
+
+    </table>
+
+    <br />
+
+    <input type="submit" value="Register" />
 
 
-</div><% end %>
+
+  </div>
+<% end %>
 
 
 <br />

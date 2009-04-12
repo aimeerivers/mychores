@@ -3,10 +3,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -15,107 +15,107 @@
 
 
 <table>
-	<tr>
-		<td>
+  <tr>
+    <td>
 
-			<h3>Home</h3>
-			<ul>
-				<li><%= link_to('Welcome page', {:controller => 'home', :action => 'welcome'}) %></li>
-				<li><%= link_to('Statistics', {:controller => 'statistics', :action => 'index'}) %></li>
-				<li><%= link_to('News bulletins', {:controller => 'bulletins'}) %></li>
-				<li><%= link_to('Testimonials', {:controller => 'testimonials'}) %></li>
-				<li><%= link_to('Tour', {:controller => 'home', :action => 'tour'}) %></li>
-				<li><%= link_to('FAQ', {:controller => 'questions', :action => 'list'}) %></li>
-				<li><%= link_to('Contact', {:controller => 'messages', :action => 'new'}) %></li>
-				<li><%= link_to('MyChores API', {:controller => 'api', :action => 'index'}) %></li>
-				<li><%= link_to('Privacy', {:controller => 'home', :action => 'privacy'}) %></li>
-				<li><%= link_to('Translations', {:controller => 'translations', :action => 'index'}) %></li>
-				<li><%= link_to('Site supporters', {:controller => 'home', :action => 'supporters'}) %></li>
-			</ul>
-				
-			
-			<h3>Admin</h3>
-			<ul>
-				
-				<% if @person.nil? %>
-					<li><%= link_to('Log in', {:controller => 'admin', :action => 'login'}) %></li>
-					<li><%= link_to('Register', {:controller => 'admin', :action => 'register'}) %></li>
-					<li><%= link_to('Forgotten password', {:controller => 'admin', :action => 'forgotpassword'}) %></li>
-				<% else %>
-					<li><%= link_to('Log out', {:controller => 'admin', :action => 'logout'}) %></li>
-					<li><%= link_to('Delete account ...', {:controller => 'admin', :action => 'unregister'}) %></li>
-				<% end %>
-				
-				<li><%= link_to('Search', {:controller => 'home', :action => 'search'}) %></li>
-				<li><%= link_to('Invite friends', {:controller => 'home', :action => 'promotions'}) %></li>
-				<% unless @person.nil? %>
-					<li><%= link_to('Referrals', {:controller => 'people', :action => 'referrals'}) %></li>
-					<li><%= link_to('Help centre', {:controller => 'admin', :action => 'help'}) %></li>
-					<li><%= link_to('Preferences', {:controller => 'admin', :action => 'preferences'}) %></li>
-					<li><%= link_to('OpenID', {:controller => 'openid', :action => 'associate'}) %></li>
-					<li><%= link_to('Change password', {:controller => 'admin', :action => 'changepassword'}) %></li>
-					<li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Change login id', {:controller => 'admin', :action => 'changelogin'}) %></li>
-					
-				<% end %>
-			</ul>
-				
-			
-			<h3>Tips</h3>
-			<ul>
-				
-				<li><%= link_to('Tips list', {:controller => 'tips', :action => 'list'}) %></li>
-				<li><%= link_to('Tips tag cloud', {:controller => 'tips', :action => 'tagcloud'}) %></li>
+      <h3>Home</h3>
+      <ul>
+        <li><%= link_to('Welcome page', {:controller => 'home', :action => 'welcome'}) %></li>
+        <li><%= link_to('Statistics', {:controller => 'statistics', :action => 'index'}) %></li>
+        <li><%= link_to('News bulletins', {:controller => 'bulletins'}) %></li>
+        <li><%= link_to('Testimonials', {:controller => 'testimonials'}) %></li>
+        <li><%= link_to('Tour', {:controller => 'home', :action => 'tour'}) %></li>
+        <li><%= link_to('FAQ', {:controller => 'questions', :action => 'list'}) %></li>
+        <li><%= link_to('Contact', {:controller => 'messages', :action => 'new'}) %></li>
+        <li><%= link_to('MyChores API', {:controller => 'api', :action => 'index'}) %></li>
+        <li><%= link_to('Privacy', {:controller => 'home', :action => 'privacy'}) %></li>
+        <li><%= link_to('Translations', {:controller => 'translations', :action => 'index'}) %></li>
+        <li><%= link_to('Site supporters', {:controller => 'home', :action => 'supporters'}) %></li>
+      </ul>
 
-				<% unless @person.nil? %>
-					<li><%= link_to('Add a tip', {:controller => 'tips', :action => 'new'}) %></li>
-				<% end %>
-			</ul>
-			
-		</td>
-		
-		<% unless @person.nil? %>
-			<td width='40'>&nbsp;</td>
-			<td>
-				<h3>Views</h3>
-				<ul>
-					<li><%= link_to('Workload', {:controller => 'tasks', :action => 'workload'}) %></li>
-					<li><%= link_to('Hot map', {:controller => 'tasks', :action => 'matrix'}) %></li>
-					<li><%= link_to('Calendar', {:controller => 'tasks', :action => 'calendar'}) %></li>
-					<li><%= link_to('Collage', {:controller => 'tasks', :action => 'collage'}) %></li>
-					<li><%= link_to('Statistics', {:controller => 'tasks', :action => 'statistics'}) %></li>
-					<li><%= link_to('Printable to-do list', {:controller => 'tasks', :action => 'printtodo'}, 'target' => '_blank') %></li>
-					<li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Printable weekly calendar', {:controller => 'tasks', :action => 'printweek'}, 'target' => '_blank') %></li>
-					<li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Printable monthly calendar', {:controller => 'tasks', :action => 'printmonth'}, 'target' => '_blank') %></li>
-				</ul>
-				
-				
-				<h3>Tasks</h3>
-				<ul>
-					<li><%= link_to('Lucky dip', {:controller => 'tasks', :action => 'luckydip'}) %></li>
-					<li><%= link_to('Pictures', {:controller => 'pictures', :action => 'index'}) %></li>
-					<li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Export to spreadsheet', {:controller => 'tasks', :action => 'export'}) %></li>
-					<li><%= link_to('Move tasks', {:controller => 'tasks', :action => 'move'}) %></li>
-					<li><%= link_to('Delete tasks', {:controller => 'tasks', :action => 'multipledelete'}) %></li>
-					<li><%= link_to('Rotating assignments', {:controller => 'tasks', :action => 'rotating'}) %></li>
-				</ul>
-				
-				
-				<h3>Tasks completed</h3>
-				<ul>
-					<li><%= link_to('Today', {:controller => 'completions', :action => 'today'}) %></li>
-					<li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Last 7 days', {:controller => 'completions', :action => 'sevendays'}) %></li>
-					<li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('This month', {:controller => 'completions', :action => 'month'}) %></li>
-				</ul>
-			
-			</td>
-		<% end %>
-		
-		
-	</tr>
+
+      <h3>Admin</h3>
+      <ul>
+
+        <% if @person.nil? %>
+          <li><%= link_to('Log in', {:controller => 'admin', :action => 'login'}) %></li>
+          <li><%= link_to('Register', {:controller => 'admin', :action => 'register'}) %></li>
+          <li><%= link_to('Forgotten password', {:controller => 'admin', :action => 'forgotpassword'}) %></li>
+        <% else %>
+          <li><%= link_to('Log out', {:controller => 'admin', :action => 'logout'}) %></li>
+          <li><%= link_to('Delete account ...', {:controller => 'admin', :action => 'unregister'}) %></li>
+        <% end %>
+
+        <li><%= link_to('Search', {:controller => 'home', :action => 'search'}) %></li>
+        <li><%= link_to('Invite friends', {:controller => 'home', :action => 'promotions'}) %></li>
+        <% unless @person.nil? %>
+          <li><%= link_to('Referrals', {:controller => 'people', :action => 'referrals'}) %></li>
+          <li><%= link_to('Help centre', {:controller => 'admin', :action => 'help'}) %></li>
+          <li><%= link_to('Preferences', {:controller => 'admin', :action => 'preferences'}) %></li>
+          <li><%= link_to('OpenID', {:controller => 'openid', :action => 'associate'}) %></li>
+          <li><%= link_to('Change password', {:controller => 'admin', :action => 'changepassword'}) %></li>
+          <li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Change login id', {:controller => 'admin', :action => 'changelogin'}) %></li>
+
+        <% end %>
+      </ul>
+
+
+      <h3>Tips</h3>
+      <ul>
+
+        <li><%= link_to('Tips list', {:controller => 'tips', :action => 'list'}) %></li>
+        <li><%= link_to('Tips tag cloud', {:controller => 'tips', :action => 'tagcloud'}) %></li>
+
+        <% unless @person.nil? %>
+          <li><%= link_to('Add a tip', {:controller => 'tips', :action => 'new'}) %></li>
+        <% end %>
+      </ul>
+
+    </td>
+
+    <% unless @person.nil? %>
+      <td width='40'>&nbsp;</td>
+      <td>
+        <h3>Views</h3>
+        <ul>
+          <li><%= link_to('Workload', {:controller => 'tasks', :action => 'workload'}) %></li>
+          <li><%= link_to('Hot map', {:controller => 'tasks', :action => 'matrix'}) %></li>
+          <li><%= link_to('Calendar', {:controller => 'tasks', :action => 'calendar'}) %></li>
+          <li><%= link_to('Collage', {:controller => 'tasks', :action => 'collage'}) %></li>
+          <li><%= link_to('Statistics', {:controller => 'tasks', :action => 'statistics'}) %></li>
+          <li><%= link_to('Printable to-do list', {:controller => 'tasks', :action => 'printtodo'}, 'target' => '_blank') %></li>
+          <li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Printable weekly calendar', {:controller => 'tasks', :action => 'printweek'}, 'target' => '_blank') %></li>
+          <li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Printable monthly calendar', {:controller => 'tasks', :action => 'printmonth'}, 'target' => '_blank') %></li>
+        </ul>
+
+
+        <h3>Tasks</h3>
+        <ul>
+          <li><%= link_to('Lucky dip', {:controller => 'tasks', :action => 'luckydip'}) %></li>
+          <li><%= link_to('Pictures', {:controller => 'pictures', :action => 'index'}) %></li>
+          <li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Export to spreadsheet', {:controller => 'tasks', :action => 'export'}) %></li>
+          <li><%= link_to('Move tasks', {:controller => 'tasks', :action => 'move'}) %></li>
+          <li><%= link_to('Delete tasks', {:controller => 'tasks', :action => 'multipledelete'}) %></li>
+          <li><%= link_to('Rotating assignments', {:controller => 'tasks', :action => 'rotating'}) %></li>
+        </ul>
+
+
+        <h3>Tasks completed</h3>
+        <ul>
+          <li><%= link_to('Today', {:controller => 'completions', :action => 'today'}) %></li>
+          <li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('Last 7 days', {:controller => 'completions', :action => 'sevendays'}) %></li>
+          <li><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <%= link_to('This month', {:controller => 'completions', :action => 'month'}) %></li>
+        </ul>
+
+      </td>
+    <% end %>
+
+
+  </tr>
 </table>
 
 <br />
 
 <% unless @person.nil? %>
-	<p><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> = <%= link_to('Site supporters', {:controller => 'home', :action => 'supporters'}) %> only.</p>
+  <p><img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> = <%= link_to('Site supporters', {:controller => 'home', :action => 'supporters'}) %> only.</p>
 <% end %>

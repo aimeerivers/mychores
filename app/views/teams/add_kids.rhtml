@@ -12,42 +12,44 @@
 <p>For now, all you need provide is your kids' names.</p>
 
 
-<% form_tag({:action => 'add_kids', :id => @team.id} ) do %><div>
+<% form_tag({:action => 'add_kids', :id => @team.id} ) do %>
+  <div>
 
-	<table>
-		
-		<tr>
-			<th>Kid's name:</th>
-			<td>
-				<input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
-			</td>
-		</tr>
-		
-		<tr>
-			<th>Kid's name:</th>
-			<td>
-				<input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
-			</td>
-		</tr>
-		
-		<tr>
-			<th>Kid's name:</th>
-			<td>
-				<input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
-			</td>
-		</tr>
-		
-		<tr>
-			<th>Kid's name:</th>
-			<td>
-				<input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
-			</td>
-		</tr>
-		
-	</table>
-	
-	<br />
-		
-	<input type="submit" value="Add kids" />
-	
-</div><% end %>
+    <table>
+
+      <tr>
+        <th>Kid's name:</th>
+        <td>
+          <input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
+        </td>
+      </tr>
+
+      <tr>
+        <th>Kid's name:</th>
+        <td>
+          <input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
+        </td>
+      </tr>
+
+      <tr>
+        <th>Kid's name:</th>
+        <td>
+          <input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
+        </td>
+      </tr>
+
+      <tr>
+        <th>Kid's name:</th>
+        <td>
+          <input type='text' id='name[]' name='name[]' maxlength='40' class='styled' />
+        </td>
+      </tr>
+
+    </table>
+
+    <br />
+
+    <input type="submit" value="Add kids" />
+
+  </div>
+<% end %>

@@ -4,10 +4,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -15,38 +15,38 @@
 
 
 <% unless session[:person].nil? %>
-	<% if session[:person].status == 'Site Creator' %>
-	
-	   <% editaccess = true %>
-	   <% @links += [{:url => "/questions/new", :title => "New question", :accesskey => "n"}] %>
+  <% if session[:person].status == 'Site Creator' %>
 
-    <% else %>
-    
-        <% editaccess = false %>
-        
-	<% end %>
+    <% editaccess = true %>
+    <% @links += [{:url => "/questions/new", :title => "New question", :accesskey => "n"}] %>
+
+  <% else %>
+
+    <% editaccess = false %>
+
+  <% end %>
 <% end %>
 
 
 <ul>
-<% for question in @questions %>
+  <% questions.each do |question| -%>
 
-	<li><a href='#<%= question.id %>'><%= h question.question %></a></li>
+    <li><a href='#<%= question.id %>'><%= h question.question %></a></li>
 
-<% end %>
+  <% end -%>
 </ul>
 
 <br />
 
 
-<% for question in @questions %>
+<% @questions.each do |question| -%>
 
-	<a href='#' name='<%= question.id %>'></a>
-	<h3><%= h question.question %> <%= link_to("Edit", {:action => "edit", :id => question.id}) if editaccess == true %></h3>
-	<%= textilize(question.answer) %>
-	
+  <a href='#' name='<%= question.id %>'></a>
+  <h3><%= h question.question %> <%= link_to("Edit", {:action => "edit", :id => question.id}) if editaccess == true %></h3>
+  <%= textilize(question.answer) %>
 
-<% end %>
+
+<% end -%>
 
 
 <br />

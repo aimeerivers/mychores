@@ -4,10 +4,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -20,18 +20,20 @@
 <p>You can fill out this form to send a message, or if you prefer, <a href='http://mailhide.recaptcha.net/d?k=01bzvy_fu9yrE8rDJQ9vQ7pg==&c=tjoZhEVDRku6xSbCimwZBI8MfAX-ckiWE2VALKKdp_I=' target='_blank'>click for MyChores email address</a>.</p>
 
 
-<% form_tag(:action => 'create') do %><div>
-  <%= render :partial => 'form' %>
-	
-	<% unless session[:person].nil? %>
-	  <%= hidden_field('message', 'person_id', :value=>session[:person].id) %>
-	<% end %>
-	  
-	  
-  <%= submit_tag "Send message" %>
+<% form_tag(:action => 'create') do %>
+  <div>
+    <%= render :partial => 'form' %>
 
-  
-</div><% end %>
+    <% unless session[:person].nil? %>
+      <%= hidden_field('message', 'person_id', :value=>session[:person].id) %>
+    <% end %>
+
+
+    <%= submit_tag "Send message" %>
+
+
+  </div>
+<% end %>
 
 <br />
 

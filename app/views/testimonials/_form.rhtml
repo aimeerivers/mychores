@@ -3,28 +3,28 @@
 
 <table>
 
-	<tr>
-		<th>Testimonial:</th>
-		<td>
-			<%= text_area('testimonial', 'message', :rows => 12) %>
-		</td>
-	</tr>
+  <tr>
+    <th>Testimonial:</th>
+    <td>
+      <%= text_area('testimonial', 'message', :rows => 12) %>
+    </td>
+  </tr>
 
-	<tr>
-		<th>Your name:</th>
-		<td><%= text_field('testimonial', 'name', :maxlength => 50, :class => 'styled') %></td>
-	</tr>
+  <tr>
+    <th>Your name:</th>
+    <td><%= text_field('testimonial', 'name', :maxlength => 50, :class => 'styled') %></td>
+  </tr>
 
-	<tr>
-		<th>Login ID:</th>
-		<td><%= text_field('testimonial', 'login_id', :maxlength => 40, :class => 'styled') %></td>
-	</tr>
-	
-	<tr>
-	  <th>reCAPTCHA:</th>
-	  <td><%= get_captcha() %></td>
-	</tr>
-	
+  <tr>
+    <th>Login ID:</th>
+    <td><%= text_field('testimonial', 'login_id', :maxlength => 40, :class => 'styled') %></td>
+  </tr>
+
+  <tr>
+    <th>reCAPTCHA:</th>
+    <td><%= get_captcha() %></td>
+  </tr>
+
 </table>
 
 <br />

@@ -3,10 +3,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-    <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -15,39 +15,39 @@
 
 
 <% unless @person.nil? %>
-	<h2>Referral Program</h2>
+  <h2>Referral Program</h2>
 
-	<p>Refer 5 or more people to MyChores to qualify for <a href='/home/supporters'>site supporter</a> status. This is your personal referrer url to give to your friends and family:</p>
-	<p><b><a href='<%= @website %>'><%= @website %></a></b></p>
-	
-	<% if @children_count > 0 %>
-		<p>You have referred <a href='/people/referrals'><%= @children_count.to_s %> <%= @children_count == 1 ? "person" : "people" %></a>.<p>
-	<% else %>
-		<p>You have not yet referred anybody.</p>
-	<% end %>
-	
-	
-	
-	
-	<% @myteams = find_my_teams %>
-	
-	<% unless @myteams.empty? %>
-	
-	   <br />
-		<h2>Personal team invitations</h2>
-		
-		<table>
-		<% for team in @myteams %>
-		  <tr>
-			<td>To invite someone to join <%= link_to_team(team, "picturelink") %></td>
-			<td><a href='/teams/invite/<%= team.id.to_s %>'>click here</a></td>
-		  </tr>
-		<% end %>
-		</table>
-		<br />
-		
-	<% end %>
-	
+  <p>Refer 5 or more people to MyChores to qualify for <a href='/home/supporters'>site supporter</a> status. This is your personal referrer url to give to your friends and family:</p>
+  <p><b><a href='<%= @website %>'><%= @website %></a></b></p>
+
+  <% if @children_count > 0 %>
+    <p>You have referred <a href='/people/referrals'><%= @children_count.to_s %> <%= @children_count == 1 ? "person" : "people" %></a>.<p>
+  <% else %>
+    <p>You have not yet referred anybody.</p>
+  <% end %>
+
+
+
+
+  <% @myteams = find_my_teams %>
+
+  <% unless @myteams.empty? %>
+
+    <br />
+    <h2>Personal team invitations</h2>
+
+    <table>
+      <% for team in @myteams %>
+        <tr>
+          <td>To invite someone to join <%= link_to_team(team, "picturelink") %></td>
+          <td><a href='/teams/invite/<%= team.id.to_s %>'>click here</a></td>
+        </tr>
+      <% end %>
+    </table>
+    <br />
+
+  <% end %>
+
 <% end %>
 
 
@@ -60,100 +60,100 @@
 <table>
 
 
-	<tr>
-		<td>
-			<p align='center'>
-				<a href='<%= @website %>'><img src='http://www.mychores.co.uk/images/logo/medium.png' width='310' height='93' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /></a><br />
-				<a href='<%= @website %>'>www.mychores.co.uk</a>
-			</p>
-		</td>
-		<td>
-		
-			<textarea class='styled'><p align='center'> <a href='<%= @website %>'> <img src='http://www.mychores.co.uk/images/logo/medium.png' width='310' height='93' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /> </a> <br /> <a href='<%= @website %>'>www.mychores.co.uk</a> </p></textarea>
-			
-			
-		</td>
-	</tr>
-	
-	<tr><td colspan='2'><hr width='95%' /></td></tr>
-	
-	
-	<tr>
-		<td>
-			<p align='center'>
-				<a href='<%= @website %>'><img src='http://www.mychores.co.uk/images/mychores-card.jpg' width='310' height='179' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /></a><br />
-				<a href='<%= @website %>'>www.mychores.co.uk</a>
-			</p>
-		</td>
-		<td>
-		
-			<textarea class='styled'><p align='center'> <a href='<%= @website %>'> <img src='http://www.mychores.co.uk/images/mychores-card.jpg' width='310' height='179' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /> </a> <br /> <a href='<%= @website %>'>www.mychores.co.uk</a> </p></textarea>
-			
-			
-		</td>
-	</tr>
-	
-	<tr><td colspan='2'><hr width='95%' /></td></tr>
-	
-	<tr>
-		<td>
-			<p align='center'>
-				<a href='<%= @website %>'><img src='http://www.mychores.co.uk/images/logo-big-border.jpg' width='202' height='126' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /></a><br />
-				Stay on top of your chores<br />
-				with <a href='<%= @website %>'>mychores.co.uk</a>
-			</p>
-		</td>
-		<td>
-		
-			<textarea class='styled'><p align='center'> <a href='<%= @website %>'> <img src='http://www.mychores.co.uk/images/logo-big-border.jpg' width='202' height='126' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /> </a> <br /> Stay on top of your chores<br /> with <a href='<%= @website %>'>mychores.co.uk</a> </p></textarea>
-			
-			
-		</td>
-	</tr>
-	
-	<tr><td colspan='2'><hr width='95%' /></td></tr>
-	
-	
-	<tr>
-		<td>
-			<p align='center'>
-				<a href='<%= @website %>'><img src='http://www.mychores.co.uk/images/logo-small-border.jpg' width='88' height='55' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /></a><br />
-				Keep track of your chores<br />
-				with <a href='<%= @website %>'>mychores.co.uk</a>
-			</p>
-		</td>
-		<td>
-		
-			<textarea class='styled'><p align='center'> <a href='<%= @website %>'> <img src='http://www.mychores.co.uk/images/logo-small-border.jpg' width='88' height='55' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /> </a> <br /> Keep track of your chores<br /> with <a href='<%= @website %>'>mychores.co.uk</a> </p></textarea>
-			
-			
-		</td>
-	</tr>
-	
-	<tr><td colspan='2'><hr width='95%' /></td></tr>
-	
-	
-	<tr>
-		<td>
-			<p align='center'>
-				Need help keeping up with your chores?<br />
-				<a href='<%= @website %>'>MyChores.co.uk</a> can track them for you!<br />
-				Simply enter your tasks,<br />
-				view them at a glance,<br />
-				receive email reminders,<br />
-				tick them off as you go.
-			</p>
-		</td>
-		<td>
-		
-			<textarea class='styled'><p align='center'>Need help keeping up with your chores?<br /> <a href='<%= @website %>'>MyChores.co.uk</a> can track them for you!<br /> Simply enter your tasks,<br /> view them at a glance,<br /> receive email reminders,<br /> tick them off as you go. </p></textarea>
-			
-			
-		</td>
-	</tr>
-	
-	<tr><td colspan='2'><hr width='95%' /></td></tr>
-	
+  <tr>
+    <td>
+      <p align='center'>
+        <a href='<%= @website %>'><img src='http://www.mychores.co.uk/images/logo/medium.png' width='310' height='93' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /></a><br />
+        <a href='<%= @website %>'>www.mychores.co.uk</a>
+      </p>
+    </td>
+    <td>
+
+      <textarea class='styled'><p align='center'> <a href='<%= @website %>'> <img src='http://www.mychores.co.uk/images/logo/medium.png' width='310' height='93' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /> </a> <br /> <a href='<%= @website %>'>www.mychores.co.uk</a> </p></textarea>
+
+
+    </td>
+  </tr>
+
+  <tr><td colspan='2'><hr width='95%' /></td></tr>
+
+
+  <tr>
+    <td>
+      <p align='center'>
+        <a href='<%= @website %>'><img src='http://www.mychores.co.uk/images/mychores-card.jpg' width='310' height='179' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /></a><br />
+        <a href='<%= @website %>'>www.mychores.co.uk</a>
+      </p>
+    </td>
+    <td>
+
+      <textarea class='styled'><p align='center'> <a href='<%= @website %>'> <img src='http://www.mychores.co.uk/images/mychores-card.jpg' width='310' height='179' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /> </a> <br /> <a href='<%= @website %>'>www.mychores.co.uk</a> </p></textarea>
+
+
+    </td>
+  </tr>
+
+  <tr><td colspan='2'><hr width='95%' /></td></tr>
+
+  <tr>
+    <td>
+      <p align='center'>
+        <a href='<%= @website %>'><img src='http://www.mychores.co.uk/images/logo-big-border.jpg' width='202' height='126' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /></a><br />
+        Stay on top of your chores<br />
+        with <a href='<%= @website %>'>mychores.co.uk</a>
+      </p>
+    </td>
+    <td>
+
+      <textarea class='styled'><p align='center'> <a href='<%= @website %>'> <img src='http://www.mychores.co.uk/images/logo-big-border.jpg' width='202' height='126' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /> </a> <br /> Stay on top of your chores<br /> with <a href='<%= @website %>'>mychores.co.uk</a> </p></textarea>
+
+
+    </td>
+  </tr>
+
+  <tr><td colspan='2'><hr width='95%' /></td></tr>
+
+
+  <tr>
+    <td>
+      <p align='center'>
+        <a href='<%= @website %>'><img src='http://www.mychores.co.uk/images/logo-small-border.jpg' width='88' height='55' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /></a><br />
+        Keep track of your chores<br />
+        with <a href='<%= @website %>'>mychores.co.uk</a>
+      </p>
+    </td>
+    <td>
+
+      <textarea class='styled'><p align='center'> <a href='<%= @website %>'> <img src='http://www.mychores.co.uk/images/logo-small-border.jpg' width='88' height='55' alt='MyChores.co.uk helps you track household chores and other recurring tasks!' border='0' /> </a> <br /> Keep track of your chores<br /> with <a href='<%= @website %>'>mychores.co.uk</a> </p></textarea>
+
+
+    </td>
+  </tr>
+
+  <tr><td colspan='2'><hr width='95%' /></td></tr>
+
+
+  <tr>
+    <td>
+      <p align='center'>
+        Need help keeping up with your chores?<br />
+        <a href='<%= @website %>'>MyChores.co.uk</a> can track them for you!<br />
+        Simply enter your tasks,<br />
+        view them at a glance,<br />
+        receive email reminders,<br />
+        tick them off as you go.
+      </p>
+    </td>
+    <td>
+
+      <textarea class='styled'><p align='center'>Need help keeping up with your chores?<br /> <a href='<%= @website %>'>MyChores.co.uk</a> can track them for you!<br /> Simply enter your tasks,<br /> view them at a glance,<br /> receive email reminders,<br /> tick them off as you go. </p></textarea>
+
+
+    </td>
+  </tr>
+
+  <tr><td colspan='2'><hr width='95%' /></td></tr>
+
 </table>
 
 

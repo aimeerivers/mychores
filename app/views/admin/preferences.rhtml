@@ -21,315 +21,315 @@
 <% @myteams = find_my_teams %>
 
 <% form_tag(:action => 'changepreferences') do %><div>
-	<%= error_messages_for 'person' %>
-	
-	<div class="tab-pane" id="tab-pane-1">
-	
-	<script type="text/javascript">
-	var tabPane1 = new WebFXTabPane( document.getElementById( "tab-pane-1" ), false );
-	</script>
-	
-		<div class="tab-page" id="tab-page-1">
-			<h2 class="tab">General Preferences</h2>
-			
-			<script type="text/javascript">
-			tabPane1.addTabPage( document.getElementById( "tab-page-1" ) );
-			</script>
-	
-			<h2>Login details</h2>
-			
-			<table>
-			
-				<tr>
-					<th>Your name:</th>
-					<td><%= text_field('person', 'name', :maxlength => 40, :class => 'styled') %></td>
-				</tr>
-				<tr>
-					<th>Login ID:</th>
-					<td>
-						<%= link_to_person(@person, 'picturelink') %>
-						<% unless @person.status.nil? %>
-							&nbsp;&nbsp;<img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <a href='/admin/changelogin' class='action'>Change</a>
-						<% end %>
-					</td></td>
-				</tr>
-				<tr>
-					<th>OpenID:</th>
-					<td>
-					   <img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' />
-						<% if @person.openid_url.nil? %>
-						  <a href='/openid/associate' class='action'>Associate an OpenID</a>
-						<% else %>
-							<b><%= denormalize_url(@person.openid_url) %></b>
-							<a href='/openid/associate' class='action'>Change</a>
-						<% end %>
-					</td></td>
-				</tr>
-				<tr>
-					<th>Password:</th>
-					<td>(not shown) <a href='/admin/changepassword' class='action'>Change</a></td>
-				</tr>
-			</table>
-			
-			
-			<br />
-			
-			
-			
-			
-			
-			
-	
-			<h2>Localisation options</h2>
-			
-			<table>
-				<tr>
-					<th>Timezone/location:</th>
-					<td>
-						<%= time_zone_select('person', 'timezone_name') %>
-					</td>
-				</tr>
-				
-				<tr>
-					<th>Date format:</th>
-					<td>
-                        <select id="preference_my_date_format" name="preference[my_date_format]">
-                            <option value="%d/%m/%Y" <%= "selected=\"selected\"" if @preference.my_date_format == "%d/%m/%Y" %>><%= Time.zone.now.strftime("%d %b %Y") %></option>
-                            <option value="%m/%d/%Y" <%= "selected=\"selected\"" if @preference.my_date_format == "%m/%d/%Y" %>><%= Time.zone.now.strftime("%b %d %Y") %></option>
-                            <option value="%Y-%m-%d" <%= "selected=\"selected\"" if @preference.my_date_format == "%Y-%m-%d" %>><%= Time.zone.now.strftime("%Y-%m-%d") %></option>
-                          </select>
-					</td>
-				</tr>
-				
-				<tr>
-					<th>Language:</th>
-					<td>
-						<label><%= radio_button('preference', 'language_code', 'en') %> <%= image_tag('flags/gb.png', :size => '16x11', :alt => 'British English', :align => 'absmiddle') %> British English</label><br />
-						<label><%= radio_button('preference', 'language_code', 'en-US') %> <%= image_tag('flags/us.png', :size => '16x11', :alt => 'American English', :align => 'absmiddle') %> American English</label><br />
-				  </td>
-				</tr>
-			</table>
-			
-			<br />
-			
-			
-			
-			
-			<h2>Viewing options</h2>
-			
-			<table>
-				<tr>
-					<th>Advertisements:</th>
-					<td>
-						<% if session[:person].status.nil? %>
-							<img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <a href='/home/supporters'>Site supporters</a> may turn off ads.
-						<% else %>
-							<%= check_box('person', 'ads') %>
-						<% end %>
-					</td>
-				</tr>
-				
-				<tr>
-					<th>Default home view:</th>
-					<td>
-						<label><%= radio_button('person', 'default_view', 'Workload') %> <span class='picturelink workload_view'>Workload</span></label><br />
-						<label><%= radio_button('person', 'default_view', 'Hot map') %> <span class='picturelink hotmap_view'>Hot map</span></label><br />
-						<label><%= radio_button('person', 'default_view', 'Calendar') %> <span class='picturelink calendar_view'>Calendar</span></label><br />
-						<label><%= radio_button('person', 'default_view', 'Collage') %> <span class='picturelink collage_view'>Collage</span></label><br />
-						<label><%= radio_button('person', 'default_view', 'Statistics') %> <span class='picturelink statistics_view'>Statistics</span></label>
-					</td>
-				</tr>
-				
-			</table>
-			
-			<br /><br />
-	
-		</div>
-	
-	
-	
-	
-	
-		<div class="tab-page" id="tab-page-2">
-			<h2 class="tab">Workload Preferences</h2>
+  <%= error_messages_for 'person' %>
 
-			<script type="text/javascript">
-			tabPane1.addTabPage( document.getElementById( "tab-page-2" ) );
-			</script>
-			
-			<h2>Workload display</h2>
-      
-			<table>
-				<tr>
-					<th>Workload shows:</th>
-					<td><%= select('preference', 'workload_display', workload_display_select_options(@person)) %></td>
-				</tr>
-				<tr>
-					<th>Order by:</th>
-					<td><%= select('preference', 'workload_order_by', ["Due date", "Importance"]) %></td>
-				</tr>
-				<tr>
-					<th>Workload page size:</th>
-					<td><%= select('preference', 'workload_page_size', ["10", "15", "20", "25", "30", "40"]) %></td>
-				</tr>
-				<tr>
-					<th>Auto-refresh workload:</th>
-					<td><%= select('preference', 'workload_refresh', [["Never",0], ["Every minute",60], ["Every 5 minutes",300], ["Every 10 minutes",600]]) %></td>
-				</tr>
-				<tr>
-					<th>Enable JavaScript:</th>
-					<td><label><%= check_box('preference', 'enable_js') %> (Reduces page reloading if your browser supports JavaScript)</label></td>
-				</tr>
-				<tr id='in-place-edit-options'>
-					<td><b>Enable in-place editing:</b><br />(requires JavaScript)</td>
-					<td>
-						<label><input type="checkbox" name="quick_edit_options[]" <%= "checked='checked'" if @temp_edit_options.include?("taskname") %> value="taskname" /> Task name</label><br />
-						<label><input type="checkbox" name="quick_edit_options[]" <%= "checked='checked'" if @temp_edit_options.include?("duedate") %> value="duedate" /> Due date</label><br />
-						<label><input type="checkbox" name="quick_edit_options[]" <%= "checked='checked'" if @temp_edit_options.include?("importance") %> value="importance" /> Importance</label><br />
-				    </td>
-				</tr>
-				
-			</table>
-			
-			<br />
-			<h2>Customisable columns</h2>
-			
-			<% temp_workload_columns = @preference.workload_columns %>
-      
-			<table>
-				<tr>
-					<th>Workload shows:</th>
-					<td>
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Multiselect") %> value="Multiselect" /> Multiple select</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Team") %> value="Team" /> Team</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Listonly") %> value="Listonly" /> List (separate column)</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Taskonly") %> value="Taskonly" /> Task (separate column)</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Listtask") %> value="Listtask" /> List: Task</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Recurrence") %> value="Recurrence" /> Recurrence</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Duedate") %> value="Duedate" /> Due date</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Importance_text") %> value="Importance_text" /> Importance (in words)</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Importance_stars") %> value="Importance_stars" /> Importance (in stars)</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Assignee") %> value="Assignee" /> Assigned to</label><br />
-						<label><input type="checkbox" checked='checked' value="Done" /> Done</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Skip") %> value="Skip" /> Skip</label><br />
-						<label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Nudge") %> value="Nudge" /> Nudge</label><br />
-					</td>
-				</tr>
-				
-				<tr>
-					<th>For example:</th>
-					<td>&nbsp;</td>
-				</tr>
-				
-				<tr>
-					<th>Detailed workload:</th>
-					<td><img src='/images/workload-detailed.jpg' width='300' height='69' alt='workload - detailed view' /></td>
-				</tr>
-				
-				<tr>
-					<th>Simple workload:</th>
-					<td><img src='/images/workload-simple.jpg' width='117' height='69' alt='workload - simple view' /></td>
-				</tr>
-			</table>
-			
-			
-			
-			
-			<br /><br />
-			
-		</div>
-		
-		
-		
-		
-		
-		
-	
-		<div class="tab-page" id="tab-page-3">
-			<h2 class="tab">Task Template</h2>
+  <div class="tab-pane" id="tab-pane-1">
 
-			<script type="text/javascript">
-			tabPane1.addTabPage( document.getElementById( "tab-page-3" ) );
-			</script>
-			
-			
-			<p>The following options will apply to new tasks you create:</p>
-			
-            <table>
-				<tr>
-					<th>One-off task:</th>
-					<td>
-						<label><%= check_box('preference', 'template_one_off', 'onchange' => "toggle_recurrence_options();") %> (New tasks are one-off tasks)</label>
-					</td>
-				</tr>
-			
-				<tr id='recurrence-options' <%= "style='display:none;'" if @preference.template_one_off == true %>>
-					<th>Recurrence:</th>
-					<% @preference.template_recurrence_interval = 3 if @preference.template_recurrence_interval.nil? %>
-					<% @preference.template_recurrence_measure = 'days' if @preference.template_recurrence_measure.nil? %>
-					
-					<td>		
-						<div id='recurrenceinterval'>
-							Every <%= text_field('preference', 'template_recurrence_interval', :size => 2, :maxlength => 2) %>
-							<label><%= radio_button('preference', 'template_recurrence_measure', 'days') %>days</label> &nbsp;
-							<label><%= radio_button('preference', 'template_recurrence_measure', 'weeks') %>weeks</label> &nbsp;
-							<label><%= radio_button('preference', 'template_recurrence_measure', 'months') %>months</label> &nbsp;
-						</div>
-						
-					</td>
-				</tr>
-				
-				<% temp_occur_on = @preference.template_recurrence_occur_on %>
-				
-				<tr>
-					<th>Can occur on:</th>
-					<td>
-					   <table>
-					       <tr><td>
-						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("1") %> value="1" />Monday</label><br />
-						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("2") %> value="2" />Tuesday</label><br />
-						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("3") %> value="3" />Wednesday</label><br />
-						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("4") %> value="4" />Thursday</label><br />
-						  </td><td>
-						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("5") %> value="5" />Friday</label><br />
-						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("6") %> value="6" />Saturday</label><br />
-						      <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("0") %> value="0" />Sunday</label>
-						  </td></tr>
-					   </table>
-					</td>
-				</tr>
-	
-				<tr>
-					<th>Importance:</th>
-					<td>
-						<select id="preference_template_importance" name="preference[template_importance]" class="styled">
-							<%= options_from_collection_for_select(@importances, "value", "name", @preference.template_importance) %>
-						</select>
-					</td>
-				</tr>
-				
-				
-				
-				<% temp_task_missed_options = @preference.template_task_missed_options %>
-			
-				<tr>
-					<th>When task is missed:</th>
-					<td>
-						<label><input type="checkbox" name="template_task_missed_options[]" <%= "checked='checked'" if temp_task_missed_options.include?("increase_importance") %> value="increase_importance" /> Increase importance</label><br />
-						<label><input type="checkbox" name="template_task_missed_options[]" <%= "checked='checked'" if temp_task_missed_options.include?("reschedule") %> value="reschedule" /> Automatically re-schedule (skip)</label><br />
-						
-					</td>
-				</tr>
-				
-			</table>
-			
-			
-			
-			<br /><br />
-			
-		</div>
-	</div>
+  <script type="text/javascript">
+    var tabPane1 = new WebFXTabPane( document.getElementById( "tab-pane-1" ), false );
+  </script>
+
+  <div class="tab-page" id="tab-page-1">
+  <h2 class="tab">General Preferences</h2>
+
+  <script type="text/javascript">
+    tabPane1.addTabPage( document.getElementById( "tab-page-1" ) );
+  </script>
+
+  <h2>Login details</h2>
+
+  <table>
+
+  <tr>
+    <th>Your name:</th>
+    <td><%= text_field('person', 'name', :maxlength => 40, :class => 'styled') %></td>
+  </tr>
+  <tr>
+    <th>Login ID:</th>
+    <td>
+      <%= link_to_person(@person, 'picturelink') %>
+      <% unless @person.status.nil? %>
+        &nbsp;&nbsp;<img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <a href='/admin/changelogin' class='action'>Change</a>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>OpenID:</th>
+    <td>
+      <img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' />
+      <% if @person.openid_url.nil? %>
+        <a href='/openid/associate' class='action'>Associate an OpenID</a>
+      <% else %>
+        <b><%= denormalize_url(@person.openid_url) %></b>
+        <a href='/openid/associate' class='action'>Change</a>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>Password:</th>
+    <td>(not shown) <a href='/admin/changepassword' class='action'>Change</a></td>
+  </tr>
+  </table>
 
 
-	<%= submit_tag 'Save preferences' %>
-</div><% end %>
+  <br />
+
+
+
+
+
+
+
+  <h2>Localisation options</h2>
+
+  <table>
+    <tr>
+      <th>Timezone/location:</th>
+      <td>
+        <%= time_zone_select('person', 'timezone_name') %>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Date format:</th>
+      <td>
+        <select id="preference_my_date_format" name="preference[my_date_format]">
+          <option value="%d/%m/%Y" <%= "selected=\"selected\"" if @preference.my_date_format == "%d/%m/%Y" %>><%= Time.zone.now.strftime("%d %b %Y") %></option>
+          <option value="%m/%d/%Y" <%= "selected=\"selected\"" if @preference.my_date_format == "%m/%d/%Y" %>><%= Time.zone.now.strftime("%b %d %Y") %></option>
+          <option value="%Y-%m-%d" <%= "selected=\"selected\"" if @preference.my_date_format == "%Y-%m-%d" %>><%= Time.zone.now.strftime("%Y-%m-%d") %></option>
+        </select>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Language:</th>
+      <td>
+        <label><%= radio_button('preference', 'language_code', 'en') %> <%= image_tag('flags/gb.png', :size => '16x11', :alt => 'British English', :align => 'absmiddle') %> British English</label><br />
+        <label><%= radio_button('preference', 'language_code', 'en-US') %> <%= image_tag('flags/us.png', :size => '16x11', :alt => 'American English', :align => 'absmiddle') %> American English</label><br />
+      </td>
+    </tr>
+  </table>
+
+  <br />
+
+
+
+
+  <h2>Viewing options</h2>
+
+  <table>
+    <tr>
+      <th>Advertisements:</th>
+      <td>
+        <% if session[:person].status.nil? %>
+          <img src='/images/site-supporter.jpg' width='10' height='10' alt='plus' /> <a href='/home/supporters'>Site supporters</a> may turn off ads.
+        <% else %>
+          <%= check_box('person', 'ads') %>
+        <% end %>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Default home view:</th>
+      <td>
+        <label><%= radio_button('person', 'default_view', 'Workload') %> <span class='picturelink workload_view'>Workload</span></label><br />
+        <label><%= radio_button('person', 'default_view', 'Hot map') %> <span class='picturelink hotmap_view'>Hot map</span></label><br />
+        <label><%= radio_button('person', 'default_view', 'Calendar') %> <span class='picturelink calendar_view'>Calendar</span></label><br />
+        <label><%= radio_button('person', 'default_view', 'Collage') %> <span class='picturelink collage_view'>Collage</span></label><br />
+        <label><%= radio_button('person', 'default_view', 'Statistics') %> <span class='picturelink statistics_view'>Statistics</span></label>
+      </td>
+    </tr>
+
+  </table>
+
+  <br /><br />
+
+  </div>
+
+
+
+
+
+  <div class="tab-page" id="tab-page-2">
+    <h2 class="tab">Workload Preferences</h2>
+
+    <script type="text/javascript">
+      tabPane1.addTabPage( document.getElementById( "tab-page-2" ) );
+    </script>
+
+    <h2>Workload display</h2>
+
+    <table>
+      <tr>
+        <th>Workload shows:</th>
+        <td><%= select('preference', 'workload_display', workload_display_select_options(@person)) %></td>
+      </tr>
+      <tr>
+        <th>Order by:</th>
+        <td><%= select('preference', 'workload_order_by', ["Due date", "Importance"]) %></td>
+      </tr>
+      <tr>
+        <th>Workload page size:</th>
+        <td><%= select('preference', 'workload_page_size', ["10", "15", "20", "25", "30", "40"]) %></td>
+      </tr>
+      <tr>
+        <th>Auto-refresh workload:</th>
+        <td><%= select('preference', 'workload_refresh', [["Never",0], ["Every minute",60], ["Every 5 minutes",300], ["Every 10 minutes",600]]) %></td>
+      </tr>
+      <tr>
+        <th>Enable JavaScript:</th>
+        <td><label><%= check_box('preference', 'enable_js') %> (Reduces page reloading if your browser supports JavaScript)</label></td>
+      </tr>
+      <tr id='in-place-edit-options'>
+        <td><b>Enable in-place editing:</b><br />(requires JavaScript)</td>
+        <td>
+          <label><input type="checkbox" name="quick_edit_options[]" <%= "checked='checked'" if @temp_edit_options.include?("taskname") %> value="taskname" /> Task name</label><br />
+          <label><input type="checkbox" name="quick_edit_options[]" <%= "checked='checked'" if @temp_edit_options.include?("duedate") %> value="duedate" /> Due date</label><br />
+          <label><input type="checkbox" name="quick_edit_options[]" <%= "checked='checked'" if @temp_edit_options.include?("importance") %> value="importance" /> Importance</label><br />
+        </td>
+      </tr>
+
+    </table>
+
+    <br />
+    <h2>Customisable columns</h2>
+
+    <% temp_workload_columns = @preference.workload_columns %>
+
+    <table>
+      <tr>
+        <th>Workload shows:</th>
+        <td>
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Multiselect") %> value="Multiselect" /> Multiple select</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Team") %> value="Team" /> Team</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Listonly") %> value="Listonly" /> List (separate column)</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Taskonly") %> value="Taskonly" /> Task (separate column)</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Listtask") %> value="Listtask" /> List: Task</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Recurrence") %> value="Recurrence" /> Recurrence</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Duedate") %> value="Duedate" /> Due date</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Importance_text") %> value="Importance_text" /> Importance (in words)</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Importance_stars") %> value="Importance_stars" /> Importance (in stars)</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Assignee") %> value="Assignee" /> Assigned to</label><br />
+          <label><input type="checkbox" checked='checked' value="Done" /> Done</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Skip") %> value="Skip" /> Skip</label><br />
+          <label><input type="checkbox" name="workload_columns[]" <%= "checked='checked'" if temp_workload_columns.include?("Nudge") %> value="Nudge" /> Nudge</label><br />
+        </td>
+      </tr>
+
+      <tr>
+        <th>For example:</th>
+        <td>&nbsp;</td>
+      </tr>
+
+      <tr>
+        <th>Detailed workload:</th>
+        <td><img src='/images/workload-detailed.jpg' width='300' height='69' alt='workload - detailed view' /></td>
+      </tr>
+
+      <tr>
+        <th>Simple workload:</th>
+        <td><img src='/images/workload-simple.jpg' width='117' height='69' alt='workload - simple view' /></td>
+      </tr>
+    </table>
+
+
+
+
+    <br /><br />
+
+  </div>
+
+
+
+
+
+
+
+  <div class="tab-page" id="tab-page-3">
+    <h2 class="tab">Task Template</h2>
+
+    <script type="text/javascript">
+      tabPane1.addTabPage( document.getElementById( "tab-page-3" ) );
+    </script>
+
+
+    <p>The following options will apply to new tasks you create:</p>
+
+    <table>
+      <tr>
+        <th>One-off task:</th>
+        <td>
+          <label><%= check_box('preference', 'template_one_off', 'onchange' => "toggle_recurrence_options();") %> (New tasks are one-off tasks)</label>
+        </td>
+      </tr>
+
+      <tr id='recurrence-options' <%= "style='display:none;'" if @preference.template_one_off == true %>>
+        <th>Recurrence:</th>
+        <% @preference.template_recurrence_interval = 3 if @preference.template_recurrence_interval.nil? %>
+        <% @preference.template_recurrence_measure = 'days' if @preference.template_recurrence_measure.nil? %>
+
+        <td>
+          <div id='recurrenceinterval'>
+            Every <%= text_field('preference', 'template_recurrence_interval', :size => 2, :maxlength => 2) %>
+            <label><%= radio_button('preference', 'template_recurrence_measure', 'days') %>days</label> &nbsp;
+            <label><%= radio_button('preference', 'template_recurrence_measure', 'weeks') %>weeks</label> &nbsp;
+            <label><%= radio_button('preference', 'template_recurrence_measure', 'months') %>months</label> &nbsp;
+          </div>
+
+        </td>
+      </tr>
+
+      <% temp_occur_on = @preference.template_recurrence_occur_on %>
+
+      <tr>
+        <th>Can occur on:</th>
+        <td>
+          <table>
+            <tr><td>
+                <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("1") %> value="1" />Monday</label><br />
+                <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("2") %> value="2" />Tuesday</label><br />
+                <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("3") %> value="3" />Wednesday</label><br />
+                <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("4") %> value="4" />Thursday</label><br />
+              </td><td>
+                <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("5") %> value="5" />Friday</label><br />
+                <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("6") %> value="6" />Saturday</label><br />
+                <label><input type="checkbox" name="occur_on[]" <%= "checked='checked'" if temp_occur_on.include?("0") %> value="0" />Sunday</label>
+            </td></tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Importance:</th>
+        <td>
+          <select id="preference_template_importance" name="preference[template_importance]" class="styled">
+            <%= options_from_collection_for_select(@importances, "value", "name", @preference.template_importance) %>
+          </select>
+        </td>
+      </tr>
+
+
+
+      <% temp_task_missed_options = @preference.template_task_missed_options %>
+
+      <tr>
+        <th>When task is missed:</th>
+        <td>
+          <label><input type="checkbox" name="template_task_missed_options[]" <%= "checked='checked'" if temp_task_missed_options.include?("increase_importance") %> value="increase_importance" /> Increase importance</label><br />
+          <label><input type="checkbox" name="template_task_missed_options[]" <%= "checked='checked'" if temp_task_missed_options.include?("reschedule") %> value="reschedule" /> Automatically re-schedule (skip)</label><br />
+
+        </td>
+      </tr>
+
+    </table>
+
+
+
+    <br /><br />
+
+  </div>
+  </div>
+
+
+  <%= submit_tag 'Save preferences' %>
+  </div><% end %>

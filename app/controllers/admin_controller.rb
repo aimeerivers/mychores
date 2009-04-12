@@ -5,11 +5,12 @@ class AdminController < ApplicationController
   def login
     case request.method
     when :post
-      if session[:person] = Person.authenticate(params[:person][:login], params[:person][:password])
-      
-      	# Load up their preferences too
-      	session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-      	
+      session[:person] = Person.authenticate(params[:person][:login], params[:person][:password])
+      if session[:person]
+
+        # Load up their preferences too
+        session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
+
         flash[:notice]  = "You are now logged in."
         redirect_back_or_default :controller => 'home', :action => 'index'
       else
@@ -18,13 +19,13 @@ class AdminController < ApplicationController
       end
     end
   end
-  
-  
+
+
   def register
     @person = Person.new(params[:person])
     session[:referrer] = params[:referrer] if params[:referrer]
     session[:code] = params[:code] if params[:code]
-		
+
     unless session[:code].nil?
       @invitation = Invitation.find(:first, :conditions => [ "code = ? and accepted = 0", session[:code] ])
       unless @invitation.nil?
@@ -32,7 +33,7 @@ class AdminController < ApplicationController
         session[:referrer] = @invitation.person.login
       end
     end
-		
+
 
     if request.post? && recaptcha_valid?(params, @person) && @person.save
 
@@ -43,27 +44,27 @@ class AdminController < ApplicationController
 
       auto = @person.signup_new_user(session[:code])
       # Includes creating standard tasks and sending emails
-      
-      
+
+
       # Double-check the password is saved correctly
       Person.updatepassword(@person, params[:person][:password])
-      
+
       if auto == 1
         redirect_to :controller => 'admin', :action => 'welcome', :auto => 1
       else
         redirect_to :controller => 'admin', :action => 'welcome'
       end
-      
-    end      
-  end  
-  
-  
-  
-  
-  
-  
-  
-  
+
+    end
+  end
+
+
+
+
+
+
+
+
   def logout
     session[:person] = nil
     session[:preference] = nil
@@ -80,7 +81,7 @@ class AdminController < ApplicationController
           if params[:person_new_password].length > 4
             # Save the password
             Person.updatepassword(@person, params[:person_new_password])
-		      		
+
             flash[:notice] = "Password changed successfully."
             redirect_back_or_default :controller => 'people', :action => 'show_by_login', :login => @person.login
           else
@@ -95,35 +96,35 @@ class AdminController < ApplicationController
       end
     end
   end
-  
-	
+
+
   def resetpassword
     # This is the page from an email link if someone has forgotten their password.
     # Obviously no checking for correct password; checking for correct code instead.
     @valid_request = 0
     @person = Person.find(params[:id]) if params[:id]
     @code = params[:code]
-		
+
     if @person.nil?
       @valid_request = 0
-		
+
     elsif @person.code == @code
       @valid_request = 1
-		
+
       case request.method
       when :post
         if params[:person_new_password] == params[:person_confirm_new_password]
           if params[:person_new_password].length > 4
             # Save the password
             Person.updatepassword(@person, params[:person_new_password])
-						
+
             # Make sure they are definitely logged out!
             session[:person] = nil
-						
+
             # Go back to the welcome page
             flash[:notice] = "Password changed successfully. You may now log in with the new password."
             redirect_back_or_default :controller => 'home', :action => 'welcome'
-						
+
           else
             flash[:notice] = "New password must be at least 5 characters."
           end
@@ -135,28 +136,28 @@ class AdminController < ApplicationController
       # Request is not valid - eg, wrong code.
     end
   end
-  
+
   def forgotpassword
     @person = session[:person]
     case request.method
     when :post
       if params[:login_or_email].empty?
         flash[:notice] = "If you are having trouble, email contact@mychores.co.uk for help."
-				
+
       else
         searchstring = params[:login_or_email]
         @persontoemail = Person.find(:first, :conditions => [ "login = ? or email = ?", searchstring, searchstring])
-				
+
         if @persontoemail.nil?
           flash[:notice] = "Login ID or email not found."
-					
+
         else
           # There is a match.
-					
+
           # Redirect
           flash[:notice] = "An email will shortly be sent to you with further instructions to change your password."
           redirect_back_or_default :controller => 'home', :action => 'welcome'
-					
+
           # Send an email
           @email = Email.new
           @email.subject = "Password reset link from MyChores"
@@ -180,10 +181,10 @@ http://www.mychores.co.uk"
       end
     end
   end
-    
+
   def welcome
     @person = session[:person]
-		
+
     if params[:auto]
       @auto_team_added = true
       @teams = Team.find(:all, :conditions => [ "id in (select team_id from memberships where person_id = ?)", @person.id ])
@@ -192,48 +193,48 @@ http://www.mychores.co.uk"
       @team = Team.find(:first, :conditions => [ "id in (select team_id from memberships where person_id = ?)", @person.id ])
     end
   end
-	
-	
-	
+
+
+
   def help
     @person = Person.find(session[:person].id)
   end
-	
-	
+
+
 
   def preferences
     # Reload session
     # Shouldn't have to do this but for some reason we do.
-	    
+
     session[:person] = Person.find(session[:person].id)
     @person = session[:person]
-    
+
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-		
+
     @importances = Importance.find(:all, :order=>"value desc")
-		
+
     @temp_edit_options = @preference.quick_edit_options
-		
+
   end
-	
-	
-	
-	
+
+
+
+
   def changepreferences
     @person = Person.find(session[:person].id)
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-	
-  
+
+
     if @person.update_attributes(params[:person])
-    	
+
       @preference.update_attributes(params[:preference])
-			
+
       # update the session variables
       session[:person] = @person
       session[:preference] = @preference
-      
+
       @preference.quick_edit_options = params[:quick_edit_options]
-      
+
       @preference.workload_columns = params[:workload_columns]
 
       if @preference.workload_columns.nil?
@@ -242,14 +243,14 @@ http://www.mychores.co.uk"
         # Done is the only column which is always included
         # And they should at least have the task if nothing else.
       end
-    		
+
       unless @preference.workload_columns.include?("Taskonly") or @preference.workload_columns.include?("Listtask")
         # Make sure they at least have a task showing!
         @preference.workload_columns.insert(0,"Taskonly")
       end
-        
-        
-        
+
+
+
       # Template occur on days
       if params[:occur_on]
         @preference.template_recurrence_occur_on = params[:occur_on]
@@ -257,8 +258,8 @@ http://www.mychores.co.uk"
         # If no days ticked assume all.
         @preference.template_recurrence_occur_on = "0,1,2,3,4,5,6"
       end
-	 	
-    	
+
+
       # Template escalation options
       if params[:template_task_missed_options]
         @preference.template_task_missed_options = params[:template_task_missed_options]
@@ -266,8 +267,8 @@ http://www.mychores.co.uk"
         # It is possible that they don't want anything to happen.
         @preference.template_task_missed_options = ""
       end
-	 	
-    	
+
+
       # In-place editing
       if params[:quick_edit_options]
         @preference.quick_edit_options = params[:quick_edit_options]
@@ -275,191 +276,191 @@ http://www.mychores.co.uk"
         # Save an empty string to avoid getting errors when doing include?()
         @preference.quick_edit_options = ""
       end
-      
-    	
-      # When all options configured, save the preferences	
+
+
+      # When all options configured, save the preferences
       @preference.save
-      
-		
-		
+
+
+
       flash[:notice] = "Preferences saved."
       redirect_to :action => 'preferences'
-			
+
     else
       flash[:notice] = "Sorry, there was a problem updating your preferences."
       @importances = Importance.find(:all, :order=>"value desc")
       render :action => 'preferences'
     end
-		
-	
+
+
   end
-	
-	
+
+
 
   def email
     # Reload session
     # Shouldn't have to do this but for some reason we do.
-	    
+
     session[:person] = Person.find(session[:person].id)
     @person = session[:person]
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
   end
-	
-	
+
+
   def changeemail
     @person = Person.find(session[:person].id)
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-	
+
     # Check if their email address has changed
     if params[:person][:email] != @person.email
       @email_changed = true
     else
       @email_changed = false
     end
-    
+
     if @person.update_attributes(params[:person])
-    	
+
       @preference.update_attributes(params[:preference])
-        
-        
+
+
       # See if we need to prompt to verify the email address
       if @email_changed == true
         @person.email_code = Person.sha1(@person.email + Time.now.to_s)
         @person.email_verified = false
         @person.save
-          
+
         # Send an email
         @email = Email.new
         @email.subject = "Please verify your new email address for MyChores"
         @email.message = "Hi " + @person.name + ",
-      
+
 MyChores has noticed that you changed your email address. Please verify by clicking the link below so that you can receive notifications and newlsetters to this email address.
-      
+
 Click here to verify:
 http://www.mychores.co.uk/admin/verify_email/" + @person.id.to_s + "?code=" + @person.email_code + "
-      
-      
+
+
 If you have any problems please email contact@mychores.co.uk
-      
+
 http://www.mychores.co.uk"
         @email.to = @person.email
         @email.save
-          
+
       end
-    		
+
       @preference.save
       flash[:notice] = "Email settings successfully updated."
       redirect_to :action => 'help'
-        
+
     else
       render :action => 'email'
     end
   end
-	
-	
+
+
 
   def theme
     # Reload session
     # Shouldn't have to do this but for some reason we do.
-	    
+
     session[:person] = Person.find(session[:person].id)
     @person = session[:person]
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
   end
-	
-	
+
+
   def changetheme
     @person = Person.find(session[:person].id)
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-	
+
     if @preference.update_attributes(params[:preference])
       session[:preference] = @preference
       flash[:notice] = "Theme successfully changed."
       redirect_to :action => 'help'
-        
+
     else
       render :action => 'theme'
     end
   end
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 
   def flickr
     # Reload session
     # Shouldn't have to do this but for some reason we do.
-	    
+
     session[:person] = Person.find(session[:person].id)
     @person = session[:person]
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-		
+
     if @preference.flickr_email.nil?
       @preference.flickr_email = @person.email
     end
   end
-	
-	
-	
-	
+
+
+
+
 
   def twitter
     # Reload session
     # Shouldn't have to do this but for some reason we do.
-	    
+
     session[:person] = Person.find(session[:person].id)
     @person = session[:person]
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
   end
-	
-	
-	
-	
+
+
+
+
   def changetwitter
     @person = Person.find(session[:person].id)
     @preference = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-		
-		
+
+
     case request.method
     when :post
-      
+
       if @preference.update_attributes(params[:preference])
-      	
+
         @preference.twitter_lists = params[:include_lists]
-      	
+
         # Save the password
         Preference.updatepassword(@preference, params[:twitter_password])
-	      	
+
         flash[:notice] = "Twitter Integration settings updated."
-			
+
         # update the session variables
         session[:person] = @person
         session[:preference] = @preference
         @preference.save
-			
+
         redirect_to :action => 'help'
-				
-				
+
+
       else
         render :action => 'twitter'
       end
-		
+
     end
-		
+
   end
-	
-	
+
+
 
 
   def twittertest
     twitter_username = params[:twitter_username]
     twitter_password = params[:twitter_password]
-     
+
     if Twitter::Session.verify(twitter_username, twitter_password)
       Twitter::Session.follow(twitter_username)
       render :text => "<img src='/images/tick.png' width='12' height='12' alt='' /> <span style='color:green;'>Twitter authentication succeeded</span>"
@@ -467,14 +468,14 @@ http://www.mychores.co.uk"
       render :text => "<img src='/images/redx.png' width='15' height='10' alt='' /> <span style='color:red;'>Twitter authentication failed</span>"
     end
   end
-	
-	
+
+
 
   def changelogin
     @person = Person.find(session[:person].id)
   end
-	
-	
+
+
   def changeloginid
     @person = Person.find(session[:person].id)
     return if @person.status.blank?
@@ -487,39 +488,39 @@ http://www.mychores.co.uk"
       render :action => 'changelogin'
     end
   end
-	
-	
-	
+
+
+
   def ss_check
-	
+
     @supporters = Preference.find(:all, :order => ["updated_on DESC"], :conditions => ["twitter_email != ''"] )
-		
+
     @promoters = Person.find_by_sql(["select parent.login, parent.name, parent.status, parent.usertype, count(child.id) as referred from people child, people parent where child.parent_id = parent.id AND child.usertype = 1 group by parent.name having referred > 4"])
-	
+
   end
-	
-	
-	
+
+
+
   def openid_check
-	
+
     @people = Person.find(:all, :order => ["updated_on DESC"], :conditions => ["openid_url != ''"] )
-		
+
   end
-	
+
 
 
   def email_verify
     # Send a link in an email
     # Return wherever we came from
-    
+
     @person = Person.find(session[:person].id)
-    
+
     # Generate a new email code
     @person.email_code = Person.sha1(@person.email + Time.now.to_s)
     @person.email_verified = false
     @person.save
-    
-    # Create the email    
+
+    # Create the email
     @email = Email.new
     @email.subject = "Please verify your email address for MyChores"
     @email.message = "Hi " + @person.name + ",
@@ -535,23 +536,23 @@ If you have any problems please email contact@mychores.co.uk
 http://www.mychores.co.uk"
     @email.to = @person.email
     @email.save
-    
-    
+
+
     # Flash information
     flash[:notice]  = "You will soon be sent an email with a link to verify your email address."
-    
-    
+
+
     redirect_to :action => 'email'
   end
-  
-  
-  
+
+
+
   def verify_email
     # Look up user based on id and email code.
     # If matched, email is verified.
-    
+
     @is_valid = false
-    
+
     if params[:id] and params[:code]
       @person = Person.find(:first, :conditions => [ "id = ? and email_code = ?", params[:id], params[:code] ])
       if @person.nil?
@@ -566,20 +567,20 @@ http://www.mychores.co.uk"
       @is_valid = false
     end
   end
-  
-  
-  
+
+
+
   def subscription_options
     # Look up user based on id and email code.
     # This allows people to change their email settings without being logged in.
     # It also serves to validate their email address.
-    
+
     @is_valid = false
-    
+
     if params[:id] and params[:code]
       @id = params[:id]
       @code = params[:code]
-      
+
       @person = Person.find(:first, :conditions => [ "id = ? and email_code = ?", @id, @code ])
       if @person.nil?
         @is_valid = false
@@ -588,7 +589,7 @@ http://www.mychores.co.uk"
         @is_valid = true
         key = params[:key]
         value = params[:value]
-        
+
         if key == 'email'
           if value == 'off'
             @person.notifications = 'None'
@@ -602,27 +603,27 @@ http://www.mychores.co.uk"
             @person.newsletters = true
           end
         end
-        
+
         @person.email_verified = true
         @person.save
-        
+
       end
     else
       @is_valid = false
     end
   end
-  
-  
-  
+
+
+
   def unregister
     @person = session[:person]
   end
-  
-  
+
+
   def unregister_do
-  
+
     @person = session[:person]
-  
+
     # Send an email
     @email = Email.new
     @email.subject = @person.login + " has left MyChores"
@@ -633,24 +634,24 @@ http://www.mychores.co.uk"
     end
     @email.to = "contact@mychores.co.uk"
     @email.save
-    
-    
+
+
     # Find all tasks assigned to this person
     @tasks = Task.find(:all, :conditions => ["person_id = ?", @person.id])
-    
+
     # Assign them all to the team and turn off task rotating.
     for task in @tasks
       task.person_id = nil
       task.rotate = 0
       task.save
     end
-    
+
     # Edit their preferences
     @preference = @person.preference
     @preference.twitter_receive = false
     @preference.twitter_post = false
     @preference.save
-    
+
     # Edit this person
     @person.login = Person.sha1(@person.login + Time.now.to_s) # So that they could sign up again if they wanted
     @person.email = "deleted@mychores.co.uk"
@@ -660,23 +661,23 @@ http://www.mychores.co.uk"
     @person.openid_url = nil
     @person.usertype = 3
     @person.save
-    
-    
+
+
     # Clear the session to log them out
     session[:person] = nil
     session[:preference] = nil
-    
+
     flash[:notice]  = "Thank you for using MyChores. Goodbye."
     redirect_to :controller => 'home', :action => 'index'
-    
+
   end
-  
-  
+
+
   protected
-  
+
   def recaptcha_valid?(params, person)
     return true if %w(development test).include?(RAILS_ENV)
     validate_recap(params, person.errors)
   end
-	
+
 end
