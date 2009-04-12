@@ -29,7 +29,7 @@
 
 
 <ul>
-  <% questions.each do |question| -%>
+  <% @questions.each do |question| -%>
 
     <li><a href='#<%= question.id %>'><%= h question.question %></a></li>
 
