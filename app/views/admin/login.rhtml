@@ -1,11 +1,11 @@
-<% @heading='Please login' %>
+<% @heading='Please log in' %>
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
     <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -27,7 +27,7 @@
 	    
 	    <br />
 	    
-    <p><%= f.submit('Login') %></p>
+    <p><%= f.submit('Log in') %></p>
 
 
 </div><% end -%>
@@ -39,7 +39,7 @@
 
 <br /><br />
 
-<h3><img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' /> Login using OpenID</h3>
+<h3><img src='/images/openid-icon.png' width='16' height='15' alt='OpenID' /> Log in with OpenID</h3>
 
-<p>If your account is associated with an OpenID you may use it to login.</p>
-<p><a class='action' href='/openid/login'>Login using OpenID</a></p>
+<p>If your account is associated with an OpenID you may use it to log in.</p>
+<p><a class='action' href='/openid/login'><%= image_tag('/images/openid_button.png', :alt => 'Log in with OpenID') %></a></p>

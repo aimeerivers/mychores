@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
 
   before_filter :set_charset, :set_time_zone
+  
+  def logged_in?
+    !session[:person].nil?
+  end
 
   protected
 

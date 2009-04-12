@@ -3,10 +3,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
     <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -63,7 +63,7 @@
     <td>GET</td>
     <td>
       <ul>
-        <li><b>login</b> <i>(optional)</i> - look up a person from their login id, eg <a href='/api/person_details.xml?login=sermoa'>sermoa</a>.</li>
+        <li><b>login</b> <i>(optional)</i> - look up a person from their login ID, eg <a href='/api/person_details.xml?login=sermoa'>sermoa</a>.</li>
         <li><b>id</b> <i>(optional)</i> - look up a person from their id in the database, eg <a href='/api/person_details.xml?id=1'>1</a>.</li>
       </ul>
     </td>

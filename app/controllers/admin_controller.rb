@@ -13,7 +13,7 @@ class AdminController < ApplicationController
         flash[:notice]  = "You are now logged in."
         redirect_back_or_default :controller => 'home', :action => 'index'
       else
-        flash[:notice]  = "Login failed - please try again."
+        flash[:notice]  = "Log in failed - please try again."
         @login = params[:person_login]
       end
     end
@@ -121,7 +121,7 @@ class AdminController < ApplicationController
             session[:person] = nil
 						
             # Go back to the welcome page
-            flash[:notice] = "Password changed successfully. You may now login with the new password."
+            flash[:notice] = "Password changed successfully. You may now log in with the new password."
             redirect_back_or_default :controller => 'home', :action => 'welcome'
 						
           else
@@ -480,7 +480,7 @@ http://www.mychores.co.uk"
     return if @person.status.blank?
     @person.login = params[:person][:login]
     if @person.save
-      flash[:notice] = "Login changed successfully"
+      flash[:notice] = "Login ID changed successfully"
       session[:person] = @person
       redirect_to :controller => 'people', :action => 'show_by_login', :login => @person.login
     else

@@ -7,7 +7,7 @@ Given /^I am logged in as '(.+)'$/ do |person|
   visit 'admin/login'
   fill_in 'Login ID', :with => person.login
   fill_in 'Password', :with => '12345'
-  click_button 'Login'
+  click_button 'Log in'
 end
 
 Then /^I should be logged in$/ do

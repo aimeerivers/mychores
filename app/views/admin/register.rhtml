@@ -4,10 +4,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-  <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
   <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-  <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -84,7 +84,7 @@
       <p>
       <a href='http://openid.net/' target='_blank'><img src='/images/openid-large.png' width='133' height='50' alt='OpenID' border='0' /></a></p>
 
-      <p>Alternatively, register using OpenID. It's easier, and you won't need to remember a new login id and password.</p>
+      <p>Alternatively, register using OpenID. It's easier, and you won't need to remember a new login ID and password.</p>
 
       <p><a href='/openid/register' class='action'>Register using OpenID</a></p>
 

@@ -953,7 +953,7 @@ class TasksController < ApplicationController
       @default_message += "
 			
 			
-Please login to MyChores to tick off your tasks!"
+Please log into MyChores to tick off your tasks!"
 			
       # Show the nudge page
       render :controller => 'tasks', :action => 'nudge'
@@ -1238,7 +1238,7 @@ Please login to MyChores to tick off your tasks!"
       " + @list.name + ": " + @task.name + "
 	
 
-Please login to MyChores to tick off your tasks!"
+Please log into MyChores to tick off your tasks!"
 			
     else
       flash[:notice] = "You cannot nudge someone to do that task."
@@ -1262,7 +1262,7 @@ Please login to MyChores to tick off your tasks!"
 		
     " + params[:message] + "
 
-Your MyChores login id is: " + @persontonudge.login + "
+Your MyChores login ID is: " + @persontonudge.login + "
 
 Forgot your password? Reset it here:
 http://www.mychores.co.uk/admin/forgotpassword

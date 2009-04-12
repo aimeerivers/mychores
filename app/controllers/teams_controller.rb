@@ -158,7 +158,7 @@ http://www.mychores.co.uk/admin/register?code=" + @invitation.code
 
 You have been invited to join a team: " + @team.name + ".
 
-Login to MyChores to accept or decline this invitation. You'll find the links when you login.
+Log into MyChores to accept or decline this invitation. You'll find the links when you log in.
 
 If you have any problems please email contact@mychores.co.uk
 

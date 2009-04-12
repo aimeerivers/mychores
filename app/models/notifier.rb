@@ -135,26 +135,6 @@ class Notifier < ActionMailer::Base
     content_type 'text/html'   #    <== note this line
   end
 	
-  def memrequest(team, person)
-    @recipients = team.person.email # creator of the team
-    @from = "contact@mychores.co.uk"
-    @subject = "New membership request from mychores.co.uk"
-		
-    @body["name"] = team.person.name
-    @body["team"] = team.name
-    @body["person"] = person.name
-    @body["login"] = person.login
-  end
-	
-  def meminvite(team, person)
-    @recipients = person.email
-    @from = "contact@mychores.co.uk"
-    @subject = "New membership invitation from mychores.co.uk"
-		
-    @body["name"] = person.name
-    @body["team"] = team.name
-  end
-	
   def password_reset_link(person)
     @recipients = person.email
     @from = "contact@mychores.co.uk"

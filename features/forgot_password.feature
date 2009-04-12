@@ -36,10 +36,10 @@ Feature: Forgot password
     And that email should contain 'Your login ID is: al3x' in the body
     
   # Having sent the reset link you can still log in with the existing password
-    When I click on 'Login'
+    When I click on 'Log in'
     And I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '12345'
-    And I click the 'Login' button
+    And I click the 'Log in' button
     Then I should be logged in
   
   Scenario: Fill in with a non-valid ID and nothing happens
@@ -65,23 +65,23 @@ Feature: Forgot password
     And I fill in 'person_new_password' with 'chang3d'
     And I fill in 'person_confirm_new_password' with 'chang3d'
     And I click the 'Change' button
-    Then I should see the text 'Password changed successfully. You may now login with the new password'
+    Then I should see the text 'Password changed successfully. You may now log in with the new password'
     And I should NOT be logged in
     
   # Can now log in with the new password
-    When I click on 'Login'
+    When I click on 'Log in'
     And I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with 'chang3d'
-    And I click the 'Login' button
+    And I click the 'Log in' button
     Then I should be logged in
     
   # Can no longer log in with the old password
-    When I click on 'Logout'
-    And I click on 'Login'
+    When I click on 'Log out'
+    And I click on 'Log in'
     And I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '12345'
-    And I click the 'Login' button
-    Then I should see the text 'Login failed - please try again'
+    And I click the 'Log in' button
+    Then I should see the text 'Log in failed - please try again'
     Then I should NOT be logged in
     
   Scenario: Cannot reset the password without the right code
@@ -99,7 +99,7 @@ Feature: Forgot password
     And I fill in 'person_new_password' with 'chang3d'
     And I fill in 'person_confirm_new_password' with 'chang3d'
     And I click the 'Change' button
-    Then I should see the text 'Password changed successfully. You may now login with the new password'
+    Then I should see the text 'Password changed successfully. You may now log in with the new password'
     And the security code for Alex should have changed
     
   Scenario: Cannot use the same link again
@@ -110,7 +110,7 @@ Feature: Forgot password
     And I fill in 'person_new_password' with 'chang3d'
     And I fill in 'person_confirm_new_password' with 'chang3d'
     And I click the 'Change' button
-    Then I should see the text 'Password changed successfully. You may now login with the new password'
+    Then I should see the text 'Password changed successfully. You may now log in with the new password'
     When I try to use the same reset password link again for Alex
     Then I should see the text 'Sorry, for security reasons you may not access this page without a valid link sent via email'
     
@@ -124,10 +124,10 @@ Feature: Forgot password
     Then I should see the text 'New password did not match the confirmation'
     
   # Password has not changed because they did not match
-    When I click on 'Login'
+    When I click on 'Log in'
     And I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '12345'
-    And I click the 'Login' button
+    And I click the 'Log in' button
     Then I should be logged in
     
   Scenario: Cannot reset the password if it is too short - ensure password not changed
@@ -140,15 +140,15 @@ Feature: Forgot password
     Then I should see the text 'New password must be at least 5 characters'
     
   # Password has not changed because it was too short
-    When I click on 'Login'
+    When I click on 'Log in'
     And I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '123'
-    And I click the 'Login' button
-    Then I should see the text 'Login failed - please try again'
+    And I click the 'Log in' button
+    Then I should see the text 'Log in failed - please try again'
     And I should NOT be logged in
     When I fill in 'Login ID' with 'al3x'
     And I fill in 'Password' with '12345'
-    And I click the 'Login' button
+    And I click the 'Log in' button
     Then I should be logged in
     
     

@@ -3,10 +3,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-    <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
     <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-    <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+    <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -38,11 +38,11 @@
 			<ul>
 				
 				<% if @person.nil? %>
-					<li><%= link_to('Login', {:controller => 'admin', :action => 'login'}) %></li>
+					<li><%= link_to('Log in', {:controller => 'admin', :action => 'login'}) %></li>
 					<li><%= link_to('Register', {:controller => 'admin', :action => 'register'}) %></li>
 					<li><%= link_to('Forgotten password', {:controller => 'admin', :action => 'forgotpassword'}) %></li>
 				<% else %>
-					<li><%= link_to('Logout', {:controller => 'admin', :action => 'logout'}) %></li>
+					<li><%= link_to('Log out', {:controller => 'admin', :action => 'logout'}) %></li>
 					<li><%= link_to('Delete account ...', {:controller => 'admin', :action => 'unregister'}) %></li>
 				<% end %>
 				

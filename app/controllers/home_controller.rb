@@ -1,54 +1,14 @@
 class HomeController < ApplicationController
 
-  before_filter :find_current_date, :only => [:welcome, :index, :search]
-
-  def welcome_page_calculations
-    @numpeople = Person.count(:conditions => "usertype = 1")
-    @numtasks = Task.count
-    
-    @bulletin = Bulletin.find(:first, :order => "created_on desc, updated_on desc")
-
-    # Pick a random testimonial
-    offset = rand(Testimonial.count(:conditions => 'approved = 1'))
-    @testimonial = Testimonial.find :first, :conditions => 'approved = 1', :offset => offset
-
-    @donetoday = Completion.count(:conditions => [ "date_completed = ?", @datetoday ] )
-    @doneyesterday = Completion.count(:conditions => [ "date_completed = DATE_SUB(?, INTERVAL 1 DAY)", @datetoday ] )
-    @donethismonth = Completion.count(:conditions => [ "MONTH(date_completed) = MONTH(?) and YEAR(date_completed) = YEAR(?)" , @datetoday, @datetoday ] )
-
-    @thirty_day_totals = []
-
-    i = 27
-    loop do
-      @thirty_day_totals[i] = Completion.count(:conditions => [ "date_completed = ?", @datetoday.advance(:days => -i) ] )
-      i -= 1
-      break if i < 0
-    end
-
-    max = @thirty_day_totals.max
-
-
-    @thirty_day_chart = GoogleChart.new
-    @thirty_day_chart.type = :sparkline
-    @thirty_day_chart.line_style = "2,2,1"
-    @thirty_day_chart.data = @thirty_day_totals.reverse
-    @thirty_day_chart.marker = "B,E6F2FA,0,0,0"
-    @thirty_day_chart.max_data_value = max
-    @thirty_day_chart.width = 150
-    @thirty_day_chart.height = 20
-    @thirty_day_chart.colors = '0077CC'
-
-  end
+  before_filter :find_current_date, :only => [:search]
 
   def welcome
-    welcome_page_calculations
     session[:referrer] = params[:referrer] if params[:referrer]
     session[:code] = params[:code] if params[:code]
   end
 
   def index
     if session[:person].nil?
-      welcome_page_calculations
 
 
       session[:referrer] = params[:referrer] if params[:referrer]

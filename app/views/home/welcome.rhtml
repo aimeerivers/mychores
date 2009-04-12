@@ -4,10 +4,10 @@
 
 <% @links = [] %>
 <% if session[:person].nil? %>
-  <% @links += [{:url => "/admin/login", :title => "Login", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/login", :title => "Log |in", :accesskey => "l"}] %>
   <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
 <% else %>
-  <% @links += [{:url => "/admin/logout", :title => "Logout", :accesskey => "l"}] %>
+  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
 <% end %>
 <% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
 <% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
@@ -69,7 +69,7 @@
 
         <tr>
           <td><img src='/images/openid-icon-large.png' width='42' height='37' alt='OpenID' /></td>
-          <td>Login using <a href='http://openid.net'>OpenID</a></td>
+          <td>Log in with <a href='http://openid.net'>OpenID</a></td>
         </tr>
 
       </table>
@@ -80,35 +80,12 @@
     <td width='50'>&nbsp;</td>
 
     <td width='380'>
-
-      <h3><a href='/statistics'>Statistics</a></h3>
-      <ul>
-        <li><a href='/statistics'><%= image_tag(@thirty_day_chart.to_url, :alt => "Tasks completed in the last 28 days", :title => "Tasks completed in the last 28 days", :size => "150x20") %></a></li>
-        <li><%= @numpeople %> people</li>
-        <li><%= @donetoday %> task<%= 's' unless @donetoday == 1 %> done today</li>
-        <li><%= @doneyesterday %> task<%= 's' unless @doneyesterday == 1 %> done yesterday</li>
-        <li><%= @donethismonth %> task<%= 's' unless @donethismonth == 1 %> done this month</li>
-      </ul>
       
-      <p style='text-align: center;'><%= image_tag('login_button.png') %> <%= image_tag('register_button.png') %></p>
-      <p style='text-align: center;'><%= image_tag('openid_button.png') %></p>
-
-      <% unless @bulletin.nil? -%>
-        <h3><a href='/bulletins'>News</a> (updated <%= formatted_date(@bulletin.created_on) %>)</h3>
-
-        <p>
-          <%= textilize_without_paragraph(@bulletin.message) %>
-          <% unless @bulletin.link.nil? %>
-            <a href='<%= @bulletin.link %>'>Read more ...</a>
-          <% end %>
-        </p>
-      <% end -%>
-
-
-      <% unless @testimonial.nil? -%>
-        <h3><a href='/testimonials'>Testimonials</a></h3>
-
-        <%= textilize(@testimonial.short_message) %>
+      <% if controller.logged_in? -%>
+        <p style='text-align: center;'><%= image_tag('logout_button.png') %></p>
+      <% else -%>
+        <p style='text-align: center;'><%= image_tag('login_button.png') %> <%= image_tag('register_button.png') %></p>
+        <p style='text-align: center;'><%= image_tag('openid_button.png') %></p>
       <% end -%>
 
 
