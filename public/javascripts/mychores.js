@@ -152,3 +152,30 @@ function ajaxRating(xml)
 }
 
 
+function expand_collapse_team(teamid) {
+  var lists = $('lists-for-team-' + teamid);
+  lists.toggle();
+
+  var image = $('expand-collapse-' + teamid);
+  image.toggleClassName('expanded');
+
+  if (image.hasClassName('expanded')) {
+    image.src = '/images/icons/collapse.png';
+    image.alt = 'click to hide lists';
+    image.title = 'click to hide lists';
+    if(!lists.hasClassName('populated')) {
+      new Ajax.Updater(lists, '/teams/lists/' + teamid, {
+        asynchronous:true, onComplete: function() {
+          lists.addClassName('populated');
+        }
+      });
+    }
+  }
+
+  else {
+    image.src = '/images/icons/expand.png';
+    image.alt = 'click to show lists';
+    image.title = 'click to show lists';
+  }
+}
+

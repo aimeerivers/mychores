@@ -122,6 +122,18 @@ a.help_centre {
   background-image: url('../../images/icons/help-tiny.png');
 }
 
+a.login {
+  background-image: url('../../images/icons/login-tiny.png');
+}
+
+a.register {
+  background-image: url('../../images/icons/register-tiny.png');
+}
+
+a.forgotpassword {
+  background-image: url('../../images/icons/forgotpassword-tiny.png');
+}
+
 a.logout {
   background-image: url('../../images/icons/logout-tiny.png');
 }
@@ -249,6 +261,11 @@ div#tertiaryContent ul {
 
 div#tertiaryContent ul li {
   padding: 1px 0;
+}
+
+div#tertiaryContent ul li.testimonial {
+  font-size: 0.9em;
+  padding-right: 8px;
 }
 
 div#tertiaryContent h3 {

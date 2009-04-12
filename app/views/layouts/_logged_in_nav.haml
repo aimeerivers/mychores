@@ -1,0 +1,56 @@
+%h3= link_to_person(session[:person], 'picturelink')
+%ul
+  %li
+    %a.picturelink.preferences{:href => '/admin/preferences'} Preferences
+  %li
+    %a.picturelink.help_centre{:href => '/admin/help'} Help centre
+  %li
+    %a.picturelink.logout{:href => '/admin/logout'} Log out
+    
+  %form#dont_focus
+  
+  %li
+    %form#global_search{:action => '/home/search', :method => 'post'}
+      %span.picturelink.search
+        %input{:type => 'text', :name => 'search', :style => 'width:100px;', :value => 'Search', :onclick => "if(this.value=='Search') {this.value='';}"}
+        %input{:type => 'hidden', :name => 'searchin', :value => 'people, teams, tips, lists, tasks'}
+        %input{:type => 'hidden', :name => 'limit', :value => '10'}
+
+
+%h3 Views
+%ul
+  %li
+    %a.picturelink.workload_view{:href => '/tasks/workload'} Workload
+  %li
+    %a.picturelink.hotmap_view{:href => '/tasks/matrix'} Hotmap
+  %li
+    %a.picturelink.calendar_view{:href => '/tasks/calendar'} Calendar
+  %li
+    %a.picturelink.collage_view{:href => '/tasks/collage'} Collage
+  %li
+    %a.picturelink.statistics_view{:href => '/tasks/statistics'} Statistics
+  %li
+    %a.picturelink.print_view{:href => '/tasks/print'} Print outs
+
+
+%h3 My teams
+%ul
+  - @my_teams = find_my_teams
+  - @my_teams.each do |team|
+    %li
+      = link_to_team(team, 'picturelink')
+      = image_tag('/images/icons/expand.png', :id => "expand-collapse-#{team.id}", :class => 'expand-collapse', :alt => 'click to show lists', :title => 'click to show lists', :onclick => "expand_collapse_team(#{team.id});")
+      %ul{:id => "lists-for-team-#{team.id}", :style => 'display:none;'}
+        %li
+          = image_tag('/images/spinner.gif')
+
+%h3 Create
+%ul
+  %li
+    %a.picturelink.team_add{:href => '/teams/new'} New team
+  %li
+    %a.picturelink.list_add{:href => '/lists/new'} New list
+  %li
+    %a.picturelink.task_add{:href => '/tasks/new'} New task
+  %li
+    %a.picturelink.task_quickadd{:href => '/tasks/quickcreate'} Quick-create

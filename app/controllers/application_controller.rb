@@ -12,6 +12,12 @@ class ApplicationController < ActionController::Base
   def logged_in?
     !session[:person].nil?
   end
+  
+  def show_ads?
+    return true if !logged_in?
+    session[:person].ads
+  end
+    
 
   protected
 

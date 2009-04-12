@@ -95,7 +95,7 @@
         </ul>
       </div>
 
-      <% if session[:person].nil? %>
+      <% if controller.show_ads? %>
         <div id="ads">
           <script type="text/javascript"><!--
             google_ad_client = "pub-9132037076712124";
@@ -115,28 +115,6 @@
                   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
           </script>
         </div>
-      <% else %>
-        <% if session[:person].ads %>
-          <div id="ads">
-            <script type="text/javascript"><!--
-              google_ad_client = "pub-9132037076712124";
-              google_ad_width = 728;
-              google_ad_height = 15;
-              google_ad_format = "728x15_0ads_al_s";
-              //2007-06-30: chores
-              google_ad_channel = "0506546916";
-              google_color_border = "FFFFFF";
-              google_color_bg = "FFFFFF";
-              google_color_link = "0000FF";
-              google_color_text = "000000";
-              google_color_url = "008000";
-              //-->
-            </script>
-            <script type="text/javascript"
-                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
-          </div>
-        <% end %>
       <% end %>
 
       <div id="content">
@@ -148,7 +126,7 @@
             <%= @content_for_layout %>
 
 
-            <% if session[:person].nil? %>
+            <% if controller.show_ads? %>
               <div id="more-ads">
                 <script type="text/javascript"><!--
                   google_ad_client = "pub-9132037076712124";
@@ -169,29 +147,6 @@
                         src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
                 </script>
               </div>
-            <% else %>
-              <% if session[:person].ads %>
-                <div id="more-ads">
-                  <script type="text/javascript"><!--
-                    google_ad_client = "pub-9132037076712124";
-                    google_ad_width = 468;
-                    google_ad_height = 60;
-                    google_ad_format = "468x60_as";
-                    google_ad_type = "text_image";
-                    //2007-07-01: chores
-                    google_ad_channel = "0506546916";
-                    google_color_border = "FFFFFF";
-                    google_color_bg = "FFFFFF";
-                    google_color_link = "0000FF";
-                    google_color_text = "000000";
-                    google_color_url = "008000";
-                    //-->
-                  </script>
-                  <script type="text/javascript"
-                          src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                  </script>
-                </div>
-              <% end %>
             <% end %>
 
 
@@ -200,103 +155,12 @@
 
 
         <div id="tertiaryContent">
-
-          <% if session[:person].nil? %> <!-- not logged in -->
-            <h3>Welcome</h3>
-            <ul>
-              <li><a href='/admin/login'>Log in</a></li>
-              <li><a href='/admin/register'>Register</a><br /></li>
-              <li><a href='/admin/forgotpassword'>Forgotten password?</a></li>
-              <form id='dont_focus'></form>
-              <li>
-                <form id='global_search' action='/home/search' method='post'>
-                  <input type='text' name='search' style='width:100px;' value='Search' onclick="if(this.value=='Search')this.value='';" />
-                  <input type='hidden' name='searchin' value='people, teams, tips' />
-                  <input type='hidden' name='limit' value='10' />
-                </form>
-              </li>
-            </ul>
-
-
-          <% else %>
-
-            <h3><%= link_to_person(session[:person], 'picturelink') %></h3>
-            <ul>
-              <li><a href='/admin/preferences' class='picturelink preferences'>Preferences</a></li>
-              <li><a href='/admin/help' class='picturelink help_centre'>Help centre</a></li>
-              <li><a href='/admin/logout' class='picturelink logout'>Log out</a></li>
-              <form id='dont_focus'></form>
-              <li>
-                <form id='global_search' action='/home/search' method='post'>
-                  <span class='picturelink search'>
-                    <input type='text' name='search' style='width:100px;' value='Search' onclick="if(this.value=='Search')this.value='';" />
-                  </span>
-                  <input type='hidden' name='searchin' value='people, teams, tips, lists, tasks' />
-                  <input type='hidden' name='limit' value='10' />
-                </form>
-              </li>
-            </ul>
-
-            <h3>Views</h3>
-            <ul>
-              <li><a href='/tasks/workload' class='picturelink workload_view'>Workload</a></li>
-              <li><a href='/tasks/matrix' class='picturelink hotmap_view'>Hot map</a></li>
-              <li><a href='/tasks/calendar' class='picturelink calendar_view'>Calendar</a></li>
-              <li><a href='/tasks/collage' class='picturelink collage_view'>Collage</a></li>
-              <li><a href='/tasks/statistics' class='picturelink statistics_view'>Statistics</a></li>
-              <li><a href='/tasks/print' class='picturelink print_view'>Print outs</a></li>
-            </ul>
-
-            <h3>My teams</h3>
-            <ul>
-              <% @my_teams = find_my_teams %>
-              <% for team in @my_teams %>
-                <li><%= link_to_team(team, 'picturelink')%> <img src='/images/icons/expand.png' id='expand-collapse-<%= team.id %>' class='expand-collapse' alt='click to show lists' title='click to show lists' width='12' height='12' onclick='expand_collapse_team(<%= team.id %>);' />
-                  <ul id='lists-for-team-<%= team.id %>' style='display: none;'>
-                    <li><img width="16" height="16" alt="Loading lists ..." src="/images/spinner.gif"/></li>
-                </ul></li>
-              <% end %>
-            </ul>
-
-            <script type='text/javascript'>
-              function expand_collapse_team(teamid) {
-
-                var lists = $('lists-for-team-' + teamid);
-                lists.toggle();
-
-                var image = $('expand-collapse-' + teamid);
-                image.toggleClassName('expanded');
-
-                if (image.hasClassName('expanded')) {
-                  image.src = '/images/icons/collapse.png';
-                  image.alt = 'click to hide lists';
-                  image.title = 'click to hide lists';
-                  if(!lists.hasClassName('populated')) {
-                    new Ajax.Updater(lists, '/teams/lists/' + teamid, {
-                      asynchronous:true, onComplete: function() {
-                        lists.addClassName('populated');
-                      }
-                    });
-                  }
-                }
-
-                else {
-                  image.src = '/images/icons/expand.png';
-                  image.alt = 'click to show lists';
-                  image.title = 'click to show lists';
-                }
-              }
-            </script>
-
-            <h3>Create</h3>
-            <ul>
-              <li><a href='/teams/new' class='picturelink team_add'>New team</a></li>
-              <li><a href='/lists/new' class='picturelink list_add'>New list</a></li>
-              <li><a href='/tasks/new' class='picturelink task_add'>New task</a></li>
-              <li><a href='/tasks/quickcreate' class='picturelink task_quickadd'>Quick-create</a></li>
-            </ul>
-
-          <% end %>
+          
+          <% if controller.logged_in? -%>
+            <%= render(:partial => 'layouts/logged_in_nav') %>
+          <% else -%>
+            <%= render(:partial => 'layouts/logged_out_nav') %>
+          <% end -%>
 
         </div>
 

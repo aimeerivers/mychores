@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  
+  map.resources 'testimonials'
 
   map.contact 'contact', :controller => 'messages', :action => 'new'
   map.sitemap 'sitemap', :controller => 'home', :action => 'sitemap'

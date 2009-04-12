@@ -1,0 +1,27 @@
+%h3 Welcome
+%ul
+  %li
+    %a.picturelink.login{:href => '/admin/login'} Log in
+  %li
+    %a.picturelink.register{:href => '/admin/register'} Register
+  %li
+    %a.picturelink.forgotpassword{:href => '/admin/forgotpassword'} Forgotten password?
+    
+  %form#dont_focus
+  
+  %li
+    %form#global_search{:action => '/home/search', :method => 'post'}
+      %span.picturelink.search
+        %input{:type => 'text', :name => 'search', :style => 'width:100px;', :value => 'Search', :onclick => "if(this.value=='Search') {this.value='';}"}
+        %input{:type => 'hidden', :name => 'searchin', :value => 'people, teams, tips'}
+        %input{:type => 'hidden', :name => 'limit', :value => '10'}
+
+
+- testimonial = Testimonial.random.first
+- if testimonial
+  %h3 Testimonials
+  %ul
+    %li.testimonial
+      = textilize_without_paragraph(testimonial.short_message.blank? ? testimonial.message : testimonial.short_message)
+    %li
+      = link_to('see more ...', testimonials_path, :class => 'action')
