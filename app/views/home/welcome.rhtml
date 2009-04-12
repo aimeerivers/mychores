@@ -79,7 +79,7 @@
 
     <td width='50'>&nbsp;</td>
 
-    <td width='280'>
+    <td width='380'>
 
       <h3><a href='/statistics'>Statistics</a></h3>
       <ul>
@@ -89,6 +89,9 @@
         <li><%= @doneyesterday %> task<%= 's' unless @doneyesterday == 1 %> done yesterday</li>
         <li><%= @donethismonth %> task<%= 's' unless @donethismonth == 1 %> done this month</li>
       </ul>
+      
+      <p style='text-align: center;'><%= image_tag('login_button.png') %> <%= image_tag('register_button.png') %></p>
+      <p style='text-align: center;'><%= image_tag('openid_button.png') %></p>
 
       <% unless @bulletin.nil? -%>
         <h3><a href='/bulletins'>News</a> (updated <%= formatted_date(@bulletin.created_on) %>)</h3>
