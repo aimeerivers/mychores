@@ -84,13 +84,15 @@
 
       <div id="menu">
         <ul>
-          <li class="first"><%= link_to('Home', controller.home_path) %></li>
+          <li class="first"><%= link_to('Home', controller.home_path, :class => 'picturelink home') %></li>
 
           <% unless @links.nil? %>
             <% for link in @links %>
               <li><a href="<%= link[:url] %>" accesskey="<%= link[:accesskey] %>" title="<%= link[:title] %>" <% unless link[:onclick].nil? -%>onclick="<%= link[:onclick] %>"<% end -%>><%= link[:title] %></a></li>
             <% end %>
           <% end %>
+          
+          <%= yield(:links) %>
 
         </ul>
       </div>

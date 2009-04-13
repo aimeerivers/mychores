@@ -3,15 +3,10 @@
 <% end %>
 
 <% @heading="Collage" %>
-<% @h1class='home' %>
 
-<% @links = [] %>
-<% @links += [{:url => "/tasks/workload", :title => "Workload", :accesskey => "w"}] %>
-<% @links += [{:url => "/tasks/matrix", :title => "Hot Map", :accesskey => "m"}] %>
-<% @links += [{:url => "/tasks/calendar", :title => "Calendar", :accesskey => "c"}] %>
-<% @links += [{:url => "/tasks/collage", :title => "Collage", :accesskey => "o"}] %>
-<% @links += [{:url => "/tasks/statistics", :title => "Statistics", :accesskey => "s"}] %>
-<% @links += [{:url => "/tasks/print", :title => "Print outs", :accesskey => "p"}] %>
+<% content_for(:links) do -%>
+  <%= render(:partial => 'view_links') %>
+<% end -%>
 
 <%= render(:partial => 'messages') %>
 

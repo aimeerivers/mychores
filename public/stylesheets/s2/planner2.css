@@ -142,6 +142,10 @@ a.search, span.search {
   background-image: url('../../images/icons/search-tiny.png');
 }
 
+a.home {
+  background-image: url('../../images/icons/home-tiny.png');
+}
+
 
 
 span.specialhover div {
