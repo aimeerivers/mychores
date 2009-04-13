@@ -14,7 +14,7 @@
     <meta name="description" content="Easily track household chores and recurring tasks with workload lists, calendars and email notifications. Form teams and assign tasks, keep an up-to-date record of what has been done." />
     <meta http-equiv="content-type" content="text/html; charset=utf8" />
 
-    <title>MyChores - <%= @heading %> <%= @extraheading %></title>
+    <title>MyChores <%= " - " + @heading unless @heading == 'MyChores' %> <%= @extraheading %></title>
 
     <%= stylesheet_link_tag 'calendar-blue', 's2/planner2.css' %>
 
