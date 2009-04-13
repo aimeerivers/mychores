@@ -25,12 +25,12 @@ module Twitter
       pref = person.preference
       @username = pref.twitter_email
       @password = pref.twitter_password.tr("A-Za-z", "N-ZA-Mn-za-m")
-      @update_prototype = pref.twitter_update_string + " (www.mychores.co.uk)"
+      @update_prototype = pref.twitter_update_string
     end
     
     def update(text_or_task)
       update_string = text_or_task.is_a?(Task) ? task_update_string(text_or_task) : text_or_task      
-      request = new_request(Twitter::UPDATE, {'status' => update_string})
+      request = new_request(Twitter::UPDATE, {'status' => update_string, 'source' => 'mychores'})
       do_request(request)
     end
     
