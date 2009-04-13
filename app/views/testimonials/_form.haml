@@ -1,0 +1,30 @@
+= f.error_messages
+
+%table
+  %tr
+    %th= label(:testimonial, :message, 'Testimonial')
+    %td= text_area(:testimonial, :message, :rows => 12)
+    
+  - if controller.admin?
+    %tr
+      %th= label(:testimonial, :short_message, 'Short version')
+      %td= text_area(:testimonial, :short_message, :rows => 6)
+  
+  %tr
+    %th= label(:testimonial, :name, 'Your name')
+    %td= text_field(:testimonial, :name, :maxlength => 50, :class => 'styled')
+  %tr
+    %th= label(:testimonial, :login_id, 'Login ID')
+    %td= text_field(:testimonial, :login_id, :maxlength => 40, :class => 'styled')
+    
+  - if controller.admin?
+    %tr
+      %th= label(:testimonial, :approved)
+      %td= check_box(:testimonial, :approved)
+  - else
+    %tr
+      %th reCAPTCHA
+      %td= get_captcha()
+    
+%br/
+%br/

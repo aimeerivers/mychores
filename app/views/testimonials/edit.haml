@@ -1,0 +1,6 @@
+- @heading = 'Edit testimonial'
+
+- form_for(@testimonial) do |f|
+  = render(:partial => 'form', :locals => {:f => f})
+  
+  = f.submit('Save')

@@ -1,75 +1,60 @@
 class TestimonialsController < ApplicationController
 
-  before_filter :login_required, :only => [:edit, :update]
+  before_filter :admin_authorised, :only => [:edit, :update]
   
+  # GET /testimonials
   def index
-    redirect_to :action => 'list'
+    @testimonials = Testimonial.approved
   end
   
-  def list
-    @testimonials = Testimonial.find(:all, :conditions => "approved = 1", :order => "id desc")
-    
-    unless session[:person].nil?
-      if session[:person].status == "Site Creator"
-        @editaccess = true
-      else
-        @editaccess = false
-      end
-    end
-    
-  end
-  
-  
+  # GET /testimonials/new
   def new
     @testimonial = Testimonial.new
-    
-    unless session[:person].nil?
+    if logged_in?
       @testimonial.name = session[:person].name
       @testimonial.login_id = session[:person].login
     end
   end
 
+  # POST /testimonials
   def create
     @testimonial = Testimonial.new(params[:testimonial])
-	if validate_recap(params, @testimonial.errors) && @testimonial.save
-	   flash[:notice] = 'Thank you. Your testimonial will appear here once approved.'
-	   
-	      @email = Email.new
-	      @email.subject = "New MyChores testimonial from " + @testimonial.name + " (" + @testimonial.login_id + ")"
-          @email.message = @testimonial.message
-          
-          @email.message += "
-          
-Approve it here: "
-
-          @email.message += "http://www.mychores.co.uk/testimonials/edit/" + @testimonial.id.to_s
-          
-          @email.to = "contact@mychores.co.uk"
-          @email.save
-	   
-	   redirect_to :action => 'list'
-	else
-	   render :action => 'new'
-	end
-  end
-  
-  def edit
-    if session[:person].status == "Site Creator"
-    	@testimonial = Testimonial.find(params[:id])
+    if recaptcha_valid?(params, @testimonial)
+      if @testimonial.save
+        flash[:notice] = 'Thank you. Your testimonial will appear here once approved.'
+        @email = Email.new
+        @email.to = "contact@mychores.co.uk"
+        @email.subject = "New MyChores testimonial from #{@testimonial.name} (#{@testimonial.login_id})"
+        @email.message = "#{@testimonial.message}\n\nApprove it here: #{edit_testimonial_url(@testimonial)}"
+        @email.save
+        redirect_to(testimonials_path)
+      else
+        render :action => 'new'
+      end
     end
   end
+  
+  # GET /testimonials/1/edit
+  def edit
+    @testimonial = Testimonial.find(params[:id])
+  end
 
+  # PUT /testimonials/1
   def update
     @testimonial = Testimonial.find(params[:id])
-    if session[:person].status == "Site Creator"
-	    if @testimonial.update_attributes(params[:testimonial])
-	      flash[:notice] = 'Testimonial was successfully updated.'
-	      redirect_to :action => 'list'
-	    else
-	      render :action => 'edit'
-	    end
+    if @testimonial.update_attributes(params[:testimonial])
+      flash[:notice] = 'Testimonial was successfully updated.'
+      redirect_to testimonials_path
+    else
+      render :action => 'edit'
     end
   end
-  
+
+  protected
+
+  def recaptcha_valid?(params, testimonial)
+    return true if %w(development test).include?(RAILS_ENV)
+    validate_recap(params, testimonial.errors)
+  end  
   
 end

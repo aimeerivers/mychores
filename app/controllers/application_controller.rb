@@ -17,9 +17,39 @@ class ApplicationController < ActionController::Base
     return true if !logged_in?
     session[:person].ads
   end
+  
+  def admin?
+    return false if !logged_in?
+    session[:person].status == 'Site Creator'
+  end
+  
+  # local: starts with a / or contains the same domain of this site.
+  def local?(referer)
+    return true if referer =~ /^\//
+    referer.include?(request.domain)
+  end
+  
+  def home_path
+    return welcome_path if !logged_in?
+    case session[:person].default_view
+    when 'Workload' then return workload_path
+    when 'Hot map' then return hotmap_path
+    when 'Calendar' then return calendar_path
+    when 'Collage' then return collage_path
+    when 'Statistics' then return my_statistics_path
+    else return workload_path
+    end
+  end
 
 
   protected
+  
+  def admin_authorised
+    if !admin?
+      flash[:notice] = "Sorry, you don't have permission to view that page."
+      redirect_back
+    end
+  end
 
   def set_charset
     content_type = headers["Content-Type"] || "text/html"
@@ -32,9 +62,13 @@ class ApplicationController < ActionController::Base
     Time.zone = session[:person].timezone_name if session[:person]
   end
 
-  def redirect_back(redirect_opts = nil)
-    redirect_opts ||= {:controller => 'tasks', :action => 'workload'}
-    request.env["HTTP_REFERER"] ? redirect_to(request.env["HTTP_REFERER"]) : redirect_to(redirect_opts)
+  def redirect_back
+    referer = request.env["HTTP_REFERER"]
+    if referer.blank? or !(local?(referer))
+      redirect_to(home_path)
+      return
+    end
+    redirect_to(referer)
   end
 
   def find_current_date

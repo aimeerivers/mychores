@@ -84,7 +84,7 @@
 
       <div id="menu">
         <ul>
-          <li class="first"><a href="/home" accesskey="h" title="Home">Home</a></li>
+          <li class="first"><%= link_to('Home', controller.home_path) %></li>
 
           <% unless @links.nil? %>
             <% for link in @links %>

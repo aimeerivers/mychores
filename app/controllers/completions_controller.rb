@@ -142,24 +142,7 @@ class CompletionsController < ApplicationController
       end
 
       # Re-direct back wherever they came from.
-      if params[:return]
-
-        if params[:return] == 'task'
-          redirect_to :controller => 'tasks', :action => 'show', :id => @task.id
-        elsif params[:return] == 'today'
-          redirect_to :controller => 'completions', :action => 'today'
-        elsif params[:return] == 'sevendays'
-          redirect_to :controller => 'completions', :action => 'sevendays'
-        elsif params[:return] == 'month'
-          redirect_to :controller => 'completions', :action => 'month'
-        else
-          # Don't really know where they want to go!
-          redirect_to :controller => 'tasks', :action => 'workload'
-        end
-
-      else
-        redirect_to :controller => 'tasks', :action => 'workload'
-      end
+      redirect_back
 
     else
       # Naughty, naughty!

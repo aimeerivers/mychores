@@ -8,26 +8,11 @@ class HomeController < ApplicationController
   end
 
   def index
-    if session[:person].nil?
-
-
+    if !logged_in?
       session[:referrer] = params[:referrer] if params[:referrer]
       session[:code] = params[:code] if params[:code]
-      render :action => 'welcome'
-    else
-      @loggedon = session[:person]
-      if @loggedon.default_view == 'Calendar'
-        redirect_to :controller => 'tasks', :action => 'calendar'
-      elsif @loggedon.default_view == 'Statistics'
-        redirect_to :controller => 'tasks', :action => 'statistics'
-      elsif @loggedon.default_view == 'Hot map'
-        redirect_to :controller => 'tasks', :action => 'matrix'
-      elsif @loggedon.default_view == 'Collage'
-        redirect_to :controller => 'tasks', :action => 'collage'
-      else
-        redirect_to :controller => 'tasks', :action => 'workload'
-      end
     end
+    redirect_to(home_path)
   end
 
   def search

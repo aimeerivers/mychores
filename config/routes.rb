@@ -1,10 +1,19 @@
 ActionController::Routing::Routes.draw do |map|
 
-  map.resources 'testimonials'
+  map.resources 'testimonials', :except => [:show, :destroy]
 
   map.contact 'contact', :controller => 'messages', :action => 'new'
   map.sitemap 'sitemap', :controller => 'home', :action => 'sitemap'
   map.search 'search', :controller => 'home', :action => 'search'
+  map.welcome 'welcome', :controller => 'home', :action => 'welcome'
+  
+  map.workload 'workload', :controller => 'tasks', :action => 'workload'
+  map.hotmap 'hotmap', :controller => 'tasks', :action => 'matrix'
+  map.calendar 'calendar', :controller => 'tasks', :action => 'calendar'
+  map.collage 'collage', :controller => 'tasks', :action => 'collage'
+  map.my_statistics 'my_statistics', :controller => 'tasks', :action => 'statistics'
+  map.print 'print', :controller => 'tasks', :action => 'print'
+  
   
   map.root :controller => 'home'
 

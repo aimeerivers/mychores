@@ -13,6 +13,11 @@ When /^I visit the page (.+)$/ do |url|
   visit url
 end
 
+When /^I visit the welcome page$/ do
+  visit welcome_path
+end
+
+
 
 
 

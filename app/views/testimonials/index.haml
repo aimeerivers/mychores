@@ -1,0 +1,26 @@
+- @heading = 'Testimonials'
+- @links = [{:url => "/testimonials/new", :title => "Submit a testimonial", :accesskey => "s"}]
+
+- if @testimonials.empty?
+  %p There are currently no approved testimonials.
+- else
+  
+  %p See what other people have to say about MyChores:
+
+  - @testimonials.each do |testimonial|
+    - if controller.admin?
+      = link_to('Edit', edit_testimonial_path(testimonial))
+    
+    %blockquote
+      %p
+        %big &ldquo;
+        = textilize_without_paragraph(testimonial.message)
+        %big &rdquo;
+        %div{:align => 'right'}
+          - if testimonial.link.blank?
+            = h(testimonial.name)
+          - else
+            = link_to(h(testimonial.name), testimonial.link)
+          
+  %p
+    %a{:href => '#top'} Top of page

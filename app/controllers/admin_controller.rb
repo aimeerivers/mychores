@@ -12,7 +12,7 @@ class AdminController < ApplicationController
         session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
 
         flash[:notice]  = "You are now logged in."
-        redirect_back_or_default :controller => 'home', :action => 'index'
+        redirect_back_or_default(home_path)
       else
         flash[:notice]  = "Log in failed - please try again."
         @login = params[:person_login]

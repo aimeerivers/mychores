@@ -19,6 +19,9 @@ Then /^the text field with id '(\w+)' should be filled in with '(.+)'$/ do |fiel
   response.should have_tag('input[id=?][value=?]', field_id, value)
 end
 
+Then /^I should be denied access$/ do
+  response.body.should =~ /Sorry, you don\'t have permission to view that page/m
+end
 
 
 
