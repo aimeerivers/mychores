@@ -1,17 +1,8 @@
 <% @heading="FAQ" %>
-<% @h1class='home' %>
 
-
-<% @links = [] %>
-<% if session[:person].nil? %>
-  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
-<% else %>
-  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
-<% end %>
-<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
-<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
-<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+<% content_for(:links) do -%>
+  <%= render(:partial => 'home/menu_links') %>
+<% end -%>
 
 
 <% unless session[:person].nil? %>

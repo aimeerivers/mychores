@@ -1,17 +1,9 @@
 <% @heading="MyChores" %>
 <% @extraheading = "- Easily track household chores and recurring tasks with workload lists, calendars and email notifications." %>
-<% @h1class='home' %>
 
-<% @links = [] %>
-<% if session[:person].nil? %>
-  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
-<% else %>
-  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
-<% end %>
-<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
-<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
-<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+<% content_for(:links) do -%>
+  <%= render(:partial => 'menu_links') %>
+<% end -%>
 
 
 <div style='display: none;'>Non-CSS browser? Try <a href='http://mobile.mychores.co.uk'>MyChores Mobile</a></div>
@@ -19,60 +11,20 @@
 <table width='100%' cellpadding='10' cellspacing='0' border='0'>
   <tr>
     <td style='min-width: 100px; max-width: 200px;'>
-
-
-
-      <table id='Emphasise'>
-
-        <% if session[:person].nil? %>
-          <tr>
-            <td><a href='/admin/register'><img src='/images/register.png' width='44' height='44' alt='Register' border='0' /></a></td>
-            <td><a href='/admin/register'>Register for free</a><br />
-            <small>(you can leave at any time)</small></td>
-          </tr>
-        <% end %>
-
-        <tr>
-          <td><img src='/images/icons/workload-large.png' width='48' height='48' alt='Workload' /></td>
-          <td>Set up your schedule and tick off your tasks</td>
-        </tr>
-
-        <tr>
-          <td><img src='/images/icons/team-large.png' width='46' height='48' alt='Team' /></td>
-          <td>Work as a team to get things done</td>
-        </tr>
-
-        <tr>
-          <td><img src='/images/icons/statistics-large.png' width='48' height='48' alt='Statistics' /></td>
-          <td>Track your progress with statistics</td>
-        </tr>
-
-        <tr>
-          <td><img src='/images/icons/email-large.png' width='48' height='45' alt='Team' /></td>
-          <td>Access through any browser and receive email reminders</td>
-        </tr>
-
-        <tr>
-          <td><img src='/images/icons/printer-large.png' width='48' height='48' alt='Print' /></td>
-          <td>Print out your personal to-do list</td>
-        </tr>
-
-        <tr>
-          <td><img src='/images/rss-icon.png' width='40' height='40' alt='RSS' /></td>
-          <td>Integrate using RSS and iCalendar feeds</td>
-        </tr>
-
-        <tr>
-          <td><img src='/images/twitter-t.png' width='36' height='49' alt='Twitter' /></td>
-          <td>Update <a href='http://twitter.com'>Twitter</a> and/or receive Twitter notifications</td>
-        </tr>
-
-        <tr>
-          <td><img src='/images/openid-icon-large.png' width='42' height='37' alt='OpenID' /></td>
-          <td>Log in with <a href='http://openid.net'>OpenID</a></td>
-        </tr>
-
-      </table>
+      
+      <ul class='features'>
+        <li><span class='picturelink web_service'>Web service</span></li>
+        <li><span class='picturelink email'>Email reminders</span></li>
+        <li><span class='picturelink workload_view'>Easy to use</span></li>
+        <li><span class='picturelink print'>Print-friendly views</span></li>
+        <li><span class='picturelink team'>Team tracking</span></li>
+        <li><span class='picturelink statistics_view'>Statistics</span></li>
+        <li><span class='picturelink twitter'>Twitter integration</span></li>
+        <li><span class='picturelink rss'>RSS feeds</span></li>
+        <li><span class='picturelink openid'>OpenID</span></li>
+        <li><span class='picturelink open_source'>Free and open source</span></li>
+        <li><span class='picturelink api'>API for programmers</span></li>
+      </ul>
 
 
     </td>

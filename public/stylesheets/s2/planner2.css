@@ -62,7 +62,7 @@ a.kid, span.kid {
   background-image: url('../../images/icons/kid-tiny.png');
 }
 
-a.team {
+a.team, span.team {
   background-image: url('../../images/icons/team-tiny.png');
 }
 
@@ -78,7 +78,7 @@ a.list_add {
   background-image: url('/images/icons/list-add.png');
 }
 
-a.task {
+a.task, span.task {
   background-image: url('../../images/icons/task-tiny.png');
 }
 
@@ -110,7 +110,7 @@ a.statistics_view, span.statistics_view {
   background-image: url('../../images/icons/statistics-tiny.png');
 }
 
-a.print_view {
+a.print_view, span.print_view, span.print {
   background-image: url('../../images/icons/print-tiny.png');
 }
 
@@ -118,7 +118,7 @@ a.preferences {
   background-image: url('../../images/icons/preferences-tiny.png');
 }
 
-a.help_centre {
+a.help_centre, a.faq {
   background-image: url('../../images/icons/help-tiny.png');
 }
 
@@ -144,6 +144,54 @@ a.search, span.search {
 
 a.home {
   background-image: url('../../images/icons/home-tiny.png');
+}
+
+a.email, span.email {
+  background-image: url('../../images/icons/email-tiny.png');
+}
+
+a.web_service, span.web_service {
+  background-image: url('../../images/icons/web-service-tiny.png');
+}
+
+a.twitter, span.twitter {
+  background-image: url('../../images/icons/twitter-tiny.png');
+}
+
+a.openid, span.openid {
+  background-image: url('../../images/icons/openid-tiny.png');
+}
+
+a.rss, span.rss {
+  background-image: url('../../images/icons/rss-tiny.png');
+}
+
+a.open_source, span.open_source {
+  background-image: url('../../images/icons/open-source-tiny.png');
+}
+
+a.api, span.api {
+  background-image: url('../../images/icons/api-tiny.png');
+}
+
+a.privacy, span.privacy {
+  background-image: url('../../images/icons/privacy-tiny.png');
+}
+
+
+
+#content ul.features {
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 1.1em;
+}
+
+#content ul.features li {
+  padding-bottom: 0.5em;
+}
+
+#content ul.features li span {
+  padding-left: 20px;
 }
 
 
@@ -178,20 +226,6 @@ td
 {
   vertical-align: top;
   padding: 0.2em;
-}
-
-
-
-
-
-#Emphasise td {
-  vertical-align: middle;
-  font-size: 1.2em;
-}
-
-#Emphasise a {
-  text-decoration: underline;
-  font-weight: bold;
 }
 
 

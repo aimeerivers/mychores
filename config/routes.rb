@@ -1,10 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
 
   map.resources 'testimonials', :except => [:show, :destroy]
+  map.resources 'questions', :as => 'faq'
 
   map.contact 'contact', :controller => 'messages', :action => 'new'
   map.sitemap 'sitemap', :controller => 'home', :action => 'sitemap'
   map.search 'search', :controller => 'home', :action => 'search'
+  map.privacy 'privacy', :controller => 'home', :action => 'privacy'
   map.welcome 'welcome', :controller => 'home', :action => 'welcome'
   
   map.workload 'workload', :controller => 'tasks', :action => 'workload'
@@ -13,6 +15,10 @@ ActionController::Routing::Routes.draw do |map|
   map.collage 'collage', :controller => 'tasks', :action => 'collage'
   map.my_statistics 'my_statistics', :controller => 'tasks', :action => 'statistics'
   map.print 'print', :controller => 'tasks', :action => 'print'
+  
+  map.login 'login', :controller => 'admin', :action => 'login'
+  map.logout 'logout', :controller => 'admin', :action => 'logout'
+  map.register 'register', :controller => 'admin', :action => 'register'
   
   
   map.root :controller => 'home'

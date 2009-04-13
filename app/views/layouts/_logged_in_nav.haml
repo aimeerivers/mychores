@@ -4,8 +4,7 @@
     %a.picturelink.preferences{:href => '/admin/preferences'} Preferences
   %li
     %a.picturelink.help_centre{:href => '/admin/help'} Help centre
-  %li
-    %a.picturelink.logout{:href => '/admin/logout'} Log out
+  %li= link_to('Log out', logout_path, :class => 'picturelink logout')
     
   %form#dont_focus
   

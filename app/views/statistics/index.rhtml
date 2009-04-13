@@ -1,17 +1,8 @@
 <% @heading="Statistics" %>
-<% @h1class='home' %>
 
-
-<% @links = [] %>
-<% if session[:person].nil? %>
-  <% @links += [{:url => "/admin/login", :title => "Log in", :accesskey => "l"}] %>
-  <% @links += [{:url => "/admin/register", :title => "Register", :accesskey => "r"}] %>
-<% else %>
-  <% @links += [{:url => "/admin/logout", :title => "Log out", :accesskey => "l"}] %>
-<% end %>
-<% @links += [{:url => "/home/tour", :title => "Take a tour", :accesskey => "t"}] %>
-<% @links += [{:url => "/questions", :title => "FAQ", :accesskey => "f"}] %>
-<% @links += [{:url => "/home/privacy", :title => "Privacy", :accesskey => "p"}] %>
+<% content_for(:links) do -%>
+  <%= render(:partial => 'menu_links') %>
+<% end -%>
 
 <p align='center'>
   <%= image_tag(@completions_chart.to_url, :alt => "Tasks completed by month", :title => "Tasks completed by month", :size => "400x180") %>

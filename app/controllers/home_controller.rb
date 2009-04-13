@@ -63,9 +63,6 @@ class HomeController < ApplicationController
   def supporters
   end
 
-  def tour
-  end
-
   def privacy
   end
 

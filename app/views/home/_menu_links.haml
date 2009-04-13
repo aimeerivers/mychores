@@ -1,0 +1,8 @@
+- if controller.logged_in?
+  %li= link_to('Log out', logout_path, :class => 'picturelink logout')
+- else
+  %li= link_to('Log in', login_path, :class => 'picturelink login')
+  %li= link_to('Register', register_path, :class => 'picturelink register')
+  
+%li= link_to('FAQ', questions_path, :class => 'picturelink faq')
+%li= link_to('Privacy', privacy_path, :class => 'picturelink privacy')

@@ -1,9 +1,7 @@
 %h3 Welcome
 %ul
-  %li
-    %a.picturelink.login{:href => '/admin/login'} Log in
-  %li
-    %a.picturelink.register{:href => '/admin/register'} Register
+  %li= link_to('Log in', login_path, :class => 'picturelink login')
+  %li= link_to('Register', register_path, :class => 'picturelink register')
   %li
     %a.picturelink.forgotpassword{:href => '/admin/forgotpassword'} Forgotten password?
     
