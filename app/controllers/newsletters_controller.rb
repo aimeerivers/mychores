@@ -14,7 +14,7 @@ class NewslettersController < ApplicationController
   def list
     if session[:person].status == 'Site Creator'
       @total_wanting = Person.count_by_sql(["select count(*) from people where usertype = 1 and email_verified = true and newsletters = true"])
-      @newsletter_pages, @newsletters = paginate(:newsletters, :per_page => 5, :order => "id desc")
+      @newsletters = Newsletter.paginate(:page => params[:page], :order => 'id desc', :per_page => 5)
     end
   end
 

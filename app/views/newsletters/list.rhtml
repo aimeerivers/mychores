@@ -28,11 +28,7 @@
     <br /><br />
     
     
-    <% if @newsletter_pages.page_count > 1 %>
-    	<p>
-    	Page: <%= pagination_links(@newsletter_pages) %>
-    	</p>
-    <% end %>
+    <%= will_paginate(@newsletters) %>
 
 <% else %>
 	<%= access_denied() %>
