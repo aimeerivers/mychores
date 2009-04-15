@@ -53,10 +53,7 @@ class NewslettersController < ApplicationController
   
   def do_send
     if session[:person].status == 'Site Creator'
-    
-      @person = Person.find(session[:person].id)
-      @mytimezone = TimeZone.new(@person.timezone_name)
-      @timenow = @mytimezone.now()
+      @timenow = Time.zone.now
     
       @newsletter = Newsletter.find(params[:id])
       @send_from = params[:send_from].to_i
