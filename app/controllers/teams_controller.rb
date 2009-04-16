@@ -29,7 +29,7 @@ class TeamsController < ApplicationController
       Membership.create!(:team => @team, :person => session[:person], :confirmed => 1, :validity_key => KeyFactory.new)
       redirect_to team_path(@team)
     else
-      render :action => 'new'
+      render :new
     end
   end
 
@@ -40,9 +40,9 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
     if @team.update_attributes(params[:team])
-      redirect_to :action => 'show', :id => @team
+      redirect_to team_path(@team)
     else
-      render :action => 'edit'
+      render :edit
     end
   end
 
