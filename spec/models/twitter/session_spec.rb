@@ -26,7 +26,7 @@ describe Twitter::Session do
       @list.should_receive(:team).at_least(:once).and_return(@team)
       @team.should_receive(:name).at_least(:once).and_return("three")
       
-      @session.send(:task_update_string, @task).should == "one two three (www.mychores.co.uk)"
+      @session.send(:task_update_string, @task).should == "one two three"
     end
   end
   
@@ -117,7 +117,7 @@ describe Twitter::Session do
       @task = mock("task")
       
       @session.should_receive(:task_update_string).with(@task).and_return(@string)
-      @session.should_receive(:new_request).with("/statuses/update.xml", "status" => @string).and_return(@request)
+      @session.should_receive(:new_request).with("/statuses/update.xml", "status" => @string, 'source' => 'mychores').and_return(@request)
       @session.should_receive(:do_request).with(@request).and_return(@response)
       
       @task.should_receive(:is_a?).with(Task).and_return(true)
@@ -127,7 +127,7 @@ describe Twitter::Session do
     end
     
     it "should post to twitter with a string" do
-      @session.should_receive(:new_request).with("/statuses/update.xml", "status" => @string).and_return(@request)
+      @session.should_receive(:new_request).with("/statuses/update.xml", "status" => @string, 'source' => 'mychores').and_return(@request)
       @session.should_receive(:do_request).with(@request).and_return(@response)
       
       @string.should_receive(:is_a?).with(Task).and_return(false)
