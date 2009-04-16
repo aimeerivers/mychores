@@ -8,6 +8,22 @@ Given /^'(.+)' is a member of team '(.+)'$/ do |person, team|
   membership = Membership.create!(:person => person, :team => team, :confirmed => true)
 end
 
+When /^I view the team '(.+)'$/ do |teamname|
+  team = Team.find_by_name(teamname)
+  visit team_path(team)
+end
+
+When /^I try to edit the team '(.+)'$/ do |teamname|
+  team = Team.find_by_name(teamname)
+  visit edit_team_path(team)
+end
+
+When /^I try to update the team '(.+)'$/ do |teamname|
+  team = Team.find_by_name(teamname)
+  visit team_path(team), :put
+end
+
+
 Then /^(\w+) should be a member of the team '(.+)'$/ do |name, team|
   p = Person.find_by_name(name)
   t = Team.find_by_name(team)

@@ -17,6 +17,10 @@ validates_length_of(:name, :maximum=>25)
   def confirmed_members
     Person.find(memberships.confirmed.map(&:person_id))
   end
+  
+  def editable_by?(person)
+    Membership.count(:conditions => {:team_id => id, :person_id => person.id, :confirmed => true}) >= 1
+  end
 
 
 protected

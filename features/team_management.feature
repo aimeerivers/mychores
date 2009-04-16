@@ -30,3 +30,13 @@ Feature: Team management
     And I click the 'Save team' button
     Then the team should have no background colour
   
+  Scenario: Ensure non-member cannot edit the team
+    Given a person called 'Chris' with login ID 'chr1s'
+    And I am logged in as 'Chris'
+    When I view the team 'Happy people'
+    Then I should NOT see a link to 'Edit team'
+    When I try to edit the team 'Happy people'
+    Then I should see the text 'Sorry, you don\'t have permission to do that'
+    When I try to update the team 'Happy people'
+    Then I should see the text 'Sorry, you don\'t have permission to do that'
+    

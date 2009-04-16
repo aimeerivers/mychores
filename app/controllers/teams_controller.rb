@@ -2,6 +2,8 @@ class TeamsController < ApplicationController
 
   before_filter :login_required, :except => [:show, :rss, :icalendar]
   before_filter :find_current_date, :only => [:teamworkload]
+  before_filter :find_team, :only => [:show, :edit, :update]
+  before_filter :edit_access_required, :only => [:edit, :update]
 
   def index
     redirect_to :controller => 'tasks', :action => 'workload'
@@ -12,7 +14,6 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id])
     @memberships = @team.memberships
     @invitations = Invitation.find(:all, :conditions => [ "team_id = ? and accepted = 0" , @team.id ])
     @lists = List.find(:all, :conditions => [ "team_id = ?", @team.id ], :order => "name ASC")
@@ -34,11 +35,9 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    @team = Team.find(params[:id])
   end
 
   def update
-    @team = Team.find(params[:id])
     if @team.update_attributes(params[:team])
       redirect_to team_path(@team)
     else
@@ -509,5 +508,17 @@ http://www.mychores.co.uk"
 
   end
 
+  protected
+  
+  def find_team
+    @team = Team.find(params[:id])
+  end
+  
+  def edit_access_required
+    if !@team.editable_by?(session[:person])
+      flash[:notice] = "Sorry, you don't have permission to do that."
+      redirect_back
+    end
+  end
 
 end

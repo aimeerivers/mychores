@@ -1,15 +1,5 @@
-<% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
+<% @heading=@team.name -%>
 
-	<% @heading=@team.name; %>
-	<% @h1class='team' %>
-	
-	<% @breadcrumbs = link_to_team(@team, 'breadcrumb') %>
-	
-	<%= render :partial => 'form' %>
+<% @breadcrumbs = link_to_team(@team, 'breadcrumb') -%>
 
-
-<% else %>
-
-	<%= access_denied() %>
-	
-<% end %>
+<%= render :partial => 'form' %>
