@@ -24,13 +24,10 @@ class TeamsController < ApplicationController
 
   def create
     @team = Team.new(params[:team])
-    @person = session[:person]
-    @team.person_id = @person.id # created by
+    @team.person = session[:person]
     if @team.save
-      validitykey = Person.sha1(@person.name + Time.now.to_s)
-      @membership = Membership.new(:team_id => @team.id, :person_id => session[:person].id, :confirmed => 1, :validity_key => validitykey)
-      @membership.save
-      redirect_to :action => 'show', :id => @team.id
+      Membership.create!(:team => @team, :person => session[:person], :confirmed => 1, :validity_key => KeyFactory.new)
+      redirect_to team_path(@team)
     else
       render :action => 'new'
     end
