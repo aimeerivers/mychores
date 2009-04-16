@@ -17,7 +17,9 @@ When /^I visit the welcome page$/ do
   visit welcome_path
 end
 
-
+When /^I visit my home page$/ do
+  visit root_path
+end
 
 
 

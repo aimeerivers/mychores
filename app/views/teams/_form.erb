@@ -1,0 +1,102 @@
+<% content_for(:stylesheet) do %>
+  <%= stylesheet_link_tag 'colourpicker' %>
+<% end %>
+
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag 'colourpicker', 'yahoo.color' %>
+<% end %>
+
+<p>Please note, these details may be viewed by anyone, so you might want to be a bit cryptic.</p>
+
+<% form_for(@team) do |f| -%>
+  <%= f.error_messages %>
+
+  <table>
+
+    <tr>
+      <th><%= f.label(:name, 'Team name') %></th>
+      <td><%= f.text_field(:name, :maxlength => 25, :class => 'styled') %></td>
+    </tr>
+
+    <tr>
+      <th><%= f.label(:description) %></th>
+      <td><%= f.text_area(:description, :cols => 50, :rows => 8, :class => 'styled') %></td>
+    </tr>
+  </table>
+  
+  <br />
+
+  <p>
+    If you turn on colour-coding then the team plus all its lists and tasks will be coloured with the background colour you choose.<br />
+    This may be useful if you have several teams to manage.
+  </p>
+    
+  <table>
+    <tr>
+      <th><%= f.label(:use_colour) %></th>
+      <td><%= f.check_box(:use_colour) %></td>
+    </tr>
+
+    <tr>
+      <th><%= f.label(:colour) %></th>
+      <td><%= f.text_field(:colour, :maxlength => 6, :class => 'styled') %></td>
+    </tr>
+
+    <tr>
+      <th><%= f.label(:text_colour) %></th>
+      <td><%= f.text_field(:text_colour, :maxlength => 6, :class => 'styled') %></td>
+    </tr>
+
+    <tr>
+      <th>Colour preview:</th>
+      <td><a class="picturelink team" id='team_preview' href="#"></a></td>
+    </tr>
+
+
+  </table>
+  
+  <br />
+  
+  <p><%= f.submit('Save team') %></p>
+
+<% end -%>
+
+<br />
+
+<% content_for(:final_javascript) do -%>
+  <script type="text/javascript">
+    new Control.ColorPicker("team_colour");
+    new Control.ColorPicker("team_text_colour");
+    
+    $('team_name').observe('change', function() { update_preview(); });
+    $('team_use_colour').observe('click', function() { update_preview(); });
+    $('colorpicker-okbutton').observe('click', function() { update_preview(); });
+    
+    function update_preview() {
+      var background = '#fff';
+      var foreground = '#333';
+      if ($('team_use_colour').checked) {
+        background = '#' + $('team_colour').value;
+        foreground = '#' + $('team_text_colour').value;
+      }
+      $('team_preview').setStyle({
+        backgroundColor: background,
+        color: foreground
+      });
+      $('team_preview').innerHTML = $('team_name').value;
+    }
+    
+    Event.onReady(function() {
+      update_preview();
+    });
+    
+    Event.addBehavior({
+      '#team_preview:click' : function(e) {
+        e.stop();
+      }
+    })
+
+  </script>
+<% end %>
+
+

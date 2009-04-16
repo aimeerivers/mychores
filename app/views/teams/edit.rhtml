@@ -1,11 +1,3 @@
-<% content_for(:stylesheet) do %>
-  <%= stylesheet_link_tag 'colourpicker' %>
-<% end %>
-
-<% content_for(:javascript) do %>
-  <%= javascript_include_tag 'colourpicker', 'yahoo.color' %>
-<% end %>
-
 <% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
 
 	<% @heading=@team.name; %>
@@ -13,15 +5,7 @@
 	
 	<% @breadcrumbs = link_to_team(@team, 'breadcrumb') %>
 	
-	<% form_tag(:action => 'update', :id => @team) do %><div>
-	
-	  <%= render :partial => 'form' %>
-	  
-	  <%= submit_tag 'Save team' %>
-	</div><% end %>
-	
-	
-	
+	<%= render :partial => 'form' %>
 
 
 <% else %>
