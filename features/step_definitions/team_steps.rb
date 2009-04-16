@@ -13,3 +13,12 @@ Then /^(\w+) should be a member of the team '(.+)'$/ do |name, team|
   t = Team.find_by_name(team)
   p.confirmed_teams.include?(t).should be_true
 end
+
+Then /^the team should have background colour '(.+)' and text colour '(.+)'$/ do |b, t|
+  response.should have_tag('a.team[style=?]', "background-color:##{b}; color:##{t};")
+end
+
+Then /^the team should have no background colour$/ do
+  response.should have_tag('a.team')
+  response.should_not have_tag('a.team[style=?]', "background-color:#3F2A44; color:#D2AFAF;")
+end
