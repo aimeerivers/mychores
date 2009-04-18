@@ -97,16 +97,6 @@ class ApplicationController < ActionController::Base
     return return_string
   end
 
-  def link_to_team(to_link, specific_class)
-    if to_link.use_colour == true
-      style=" style='background-color:#" + to_link.colour + "; color:#" + to_link.text_colour + ";'"
-    else
-      style=""
-    end
-    return_string = "<a href='/teams/show/" + to_link.id.to_s + "' class='" + specific_class + " team'" + style + ">" + h(to_link.name) + "</a>"
-    return return_string
-  end
-
   def link_to_list(to_link, specific_class)
     if to_link.team.use_colour == true
       style=" style='background-color:#" + to_link.team.colour + "; color:#" + to_link.team.text_colour + ";'"

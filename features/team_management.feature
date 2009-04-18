@@ -39,6 +39,16 @@ Feature: Team management
     Then I should see the text 'Sorry, you don\'t have permission to do that'
     When I try to update the team 'Happy people'
     Then I should see the text 'Sorry, you don\'t have permission to do that'
+  
+  Scenario: Another member of the team can edit it
+    Given a person called 'Chris' with login ID 'chr1s'
+    And 'Chris' is a member of team 'Happy people'
+    And I am logged in as 'Chris'
+    When I click on 'Happy people'
+    And I click on 'Edit team'
+    And I fill in 'Team name' with 'Sad people'
+    And I click the 'Save team' button
+    Then I should see the text 'Sad people'
     
   Scenario: Alex should be able to delete the team
     When I click on 'Delete team'
@@ -83,4 +93,16 @@ Feature: Team management
     And there should be 1 list in the database
     And there should be 1 task in the database
     
+  Scenario: Logged out person can view the team but not edit or delete it
+    Given I am not logged in
+    When I view the team 'Happy people'
+    Then I should see the text 'hard-working chore-loving people'
+    And I should NOT see a link to 'Edit team'
+    And I should NOT see a link to 'Delete team'
+    When I try to edit the team 'Happy people'
+    Then I should see the text 'Please log in'
+    When I try to update the team 'Happy people'
+    Then I should see the text 'Please log in'
+    When I try to delete the team 'Happy people'
+    Then I should see the text 'Please log in'
     

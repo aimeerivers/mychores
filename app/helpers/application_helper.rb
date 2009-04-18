@@ -8,10 +8,6 @@ module ApplicationHelper
     @controller.send(:link_to_person, to_link, specific_class)
   end
 
-  def link_to_team(to_link, specific_class)
-    @controller.send(:link_to_team, to_link, specific_class)
-  end
-
   def link_to_list(to_link, specific_class)
     @controller.send(:link_to_list, to_link, specific_class)
   end

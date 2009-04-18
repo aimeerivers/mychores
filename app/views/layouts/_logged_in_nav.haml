@@ -39,8 +39,7 @@
 
 %h3 Create
 %ul
-  %li
-    %a.picturelink.team_add{:href => '/teams/new'} New team
+  %li= link_to('New team', new_team_path, :class => 'picturelink team_add')
   %li
     %a.picturelink.list_add{:href => '/lists/new'} New list
   %li
