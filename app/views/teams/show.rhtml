@@ -1,45 +1,24 @@
-<% @heading=@team.name; %>
-<% @h1class='team' %>
-<% @is_member = false %>
+<% @heading= h(@team.name) %>
 
 <% @breadcrumbs = link_to_team(@team, 'breadcrumb') %>
 
-
-<% @ismember = false %>
-<% @imadeit = false %>
-
-
-<% unless session[:person].nil? %>
-  <% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
-
-    <% @ismember = true %>
-
-    <% if @team.person_id == session[:person].id %>
-      <% @imadeit = true %>
-    <% end %>
-
-
-    <% @links = [] %>
-    <% @links += [{:url => "/teams/teamworkload/" + @team.id.to_s, :title => "Team workload", :accesskey => "w"}] %>
-    <% @links += [{:url => "/teams/edit/" + @team.id.to_s, :title => "Edit team", :accesskey => "e"}] %>
-    <% if @imadeit == true %>
-      <% @links += [{:url => "/teams/destroy/" + @team.id.to_s, :title => "Delete team", :accesskey => "d", :onclick => "return confirm('Deleting a team will delete all associated lists and tasks. Are you sure you want to delete this team?');"}] %>
-    <% end %>
-    <% @links += [{:url => "/teams/invite/" + @team.id.to_s, :title => "Invite someone to join", :accesskey => "i"}] %>
-    <% @links += [{:url => "/teams/add_virtual/" + @team.id.to_s, :title => "Add a virtual member", :accesskey => "v"}] %>
-
-
-  <% else %>
+<% content_for(:links) do -%>
+  <% if controller.logged_in? -%>
+    <% if @team.editable_by?(session[:person]) -%>
+      <li><%= link_to('Team workload', workload_team_path(@team), :class => 'picturelink workload_view') %></li>
+      <li><%= link_to('Edit team', edit_team_path(@team), :class => 'picturelink team_edit') %></li>
+      <li><a href='/teams/invite/<%= @team.id.to_s %>' class='picturelink person_invite'>Invite someone to join</a></li>
+      <li><a href='/teams/add_virtual/<%= @team.id.to_s %>' class='picturelink virtualperson_add'>Add a virtual member</a></li>
+    <% end -%>
+    
+    <% if @team.deletable_by?(session[:person]) -%>
+      <li><%= link_to('Delete team', team_path(@team), :method => :delete, :confirm => "Deleting a team will delete all associated lists and tasks. Are you sure you want to delete this team?", :class => 'picturelink team_delete') %></li>
+    <% end -%>
+  <% end -%>
+<% end -%>
 
 
 
-
-    <% @links = [] %>
-    <% @links += [{:url => "/memberships/memrequest?team=" + @team.id.to_s, :title => "Request to join", :accesskey => "j", :onclick => "return confirm('Do you wish to make a request to join " + @team.name + "?');"}] %>
-
-
-  <% end %>
-<% end %>
 
 <table>
 

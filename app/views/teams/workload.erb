@@ -1,0 +1,118 @@
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag 'workload_quick_tick' %>
+<% end %>
+
+<% @heading="Team workload" %>
+
+<% content_for(:links) do -%>
+  <li><%= link_to('Team details', team_path(@team), :class => 'picturelink team') %></li>
+  <li><%= link_to('Edit team', edit_team_path(@team), :class => 'picturelink team_edit') %></li>
+<% end -%>
+
+
+
+<% keyrotation = false -%>
+
+<p>This page shows workload filtered to team: <%= link_to_team(@team, 'picturelink') %></p>
+
+
+<form id='ignore'></form> <!-- Little hack to stop it highlighting the submit button -->
+
+
+<form action="/tasks/multipleaction?team=<%= @team.id.to_s %>" name="workloadForm" method="post">
+
+  <table>
+
+    <tr>
+      <% if @workload_columns.include?("Multiselect") %>
+        <th><input type='checkbox' onclick="SetAllCheckBoxes('workloadForm', 'multiselect[]', true);" /></th>
+      <% end %>
+
+      <% if @workload_columns.include?("Team") %>
+        <th>Team</th>
+      <% end %>
+
+      <% if @workload_columns.include?("Listonly") %>
+        <th>List</th>
+      <% end %>
+
+      <% if @workload_columns.include?("Taskonly") %>
+        <th>Task</th>
+      <% end %>
+
+      <% if @workload_columns.include?("Listtask") %>
+        <th>List: Task</th>
+      <% end %>
+
+      <% if @workload_columns.include?("Recurrence") %>
+        <th>Recurrence</th>
+      <% end %>
+
+      <% if @workload_columns.include?("Duedate") %>
+        <th>Due</th>
+      <% end %>
+
+      <% if @workload_columns.include?("Importance_text") %>
+        <th>Importance</th>
+      <% end %>
+
+      <% if @workload_columns.include?("Importance_stars") %>
+        <th>Importance</th>
+      <% end %>
+
+      <% if @workload_columns.include?("Assignee") %>
+        <th>Assigned to</th>
+      <% end %>
+
+      <th>Done</th>
+
+      <% if @workload_columns.include?("Skip") %>
+        <th>Skip</th>
+      <% end %>
+
+      <% if @workload_columns.include?("Nudge") %>
+        <th>Nudge</th>
+      <% end %>
+
+    </tr>
+
+    <%= render :partial => 'tasks/task', :collection => @workload_tasks %>
+
+  </table>
+  <br />
+
+
+  <% if @workload_columns.include?("Multiselect") %>
+    <p>
+      <span id='submit-button'>With selected tasks: <select id='actionsetting' name='actionsetting'><option value='markdone'>Mark as done today</option><option value='skip'>Skip</option><option value='nudge'>Nudge someone</option></select> <input type="submit" value="Go!" onclick="Element.show('processing'); Element.hide('submit-button');" /></span>
+
+      <span id='processing' style='display:none;'>
+        <img src='/images/spinner.gif' width='16' height='16' alt='Updating tasks ...' />
+        Processing ... please be patient ...
+
+      </span>
+    </p>
+
+  <% end %>
+
+</form>
+
+<%= will_paginate(@workload_tasks) %>
+
+<% if keyrotation == true %>
+  <p><a href='/tasks/rotating'><img src='/images/rotate.png' width='11' height='11' alt='rotating assignment' border='0' /></a> = rotating assignment</p>
+<% end %>
+
+<br />
+
+<% form_tag(:controller => 'tasks', :action => 'quickchangepreferences', :team => @team.id) do %>
+  <div>
+    <p>
+      Show: <%= select('preference', 'workload_display', workload_display_select_options(@person)) %>
+      Order by: <%= select('preference', 'workload_order_by', ['Due date', 'Importance']) %>
+      Per page: <%= select('preference', 'workload_page_size', ["10", "15", "20", "25", "30", "40"]) %>
+      <%= submit_tag "Go!" %>
+    </p>
+  </div>
+<% end %>
+

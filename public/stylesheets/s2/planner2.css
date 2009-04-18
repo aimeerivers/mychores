@@ -49,8 +49,16 @@ a.person, span.person {
   background-image: url('../../images/icons/person-tiny.png');
 }
 
+a.person_invite {
+  background-image: url('../../images/icons/person-invite.png');
+}
+
 a.virtualperson, span.virtualperson {
   background-image: url('../../images/icons/virtual-person-tiny.png');
+}
+
+a.virtualperson_add {
+  background-image: url('../../images/icons/virtual-person-add.png');
 }
 
 a.deletedperson, span.deletedperson {
@@ -68,6 +76,14 @@ a.team, span.team {
 
 a.team_add {
   background-image: url('../../images/icons/team-add.png');
+}
+
+a.team_edit {
+  background-image: url('../../images/icons/team-edit.png');
+}
+
+a.team_delete {
+  background-image: url('../../images/icons/team-delete.png');
 }
 
 a.list {

@@ -22,6 +22,10 @@ validates_length_of(:name, :maximum=>25)
     Membership.count(:conditions => {:team_id => id, :person_id => person.id, :confirmed => true}) >= 1
   end
   
+  def member?(person)
+    Membership.count(:conditions => {:team_id => id, :person_id => person.id, :confirmed => true}) >= 1
+  end
+  
   def deletable_by?(person)
     self.person == person
   end

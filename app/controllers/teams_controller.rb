@@ -1,8 +1,9 @@
 class TeamsController < ApplicationController
 
   before_filter :login_required, :except => [:show, :rss, :icalendar]
-  before_filter :find_current_date, :only => [:teamworkload]
-  before_filter :find_team, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_current_date, :only => [:workload]
+  before_filter :find_team, :only => [:show, :edit, :update, :destroy, :workload]
+  before_filter :membership_required, :only => [:workload]
   before_filter :edit_access_required, :only => [:edit, :update]
   before_filter :delete_access_required, :only => [:destroy]
 
@@ -388,95 +389,86 @@ http://www.mychores.co.uk"
 
 
 
-  def teamworkload
-    # Shows a workload filtered to just one team
+  def workload
     @person = Person.find(session[:person].id)
 
-    @team = Team.find(params[:id])
-    @check = Membership.find_by_sql ["select * from memberships where confirmed = 1 and person_id = ? and team_id = ?", session[:person].id, @team.id]
-    if @check.empty?
-      flash[:notice] = "You cannot view this team's workload because you are not a team member."
-      redirect_to :controller => 'teams', :action => 'show', :id => @team.id
-    else
+    if session[:preference].nil?
+      session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
+    end
 
-      if session[:preference].nil?
-        session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-      end
+    @preference = session[:preference]
 
+
+    begin
+      @workload_columns = @preference.workload_columns
+      @enable_js = @preference.enable_js
+      @quick_edit_options = @preference.quick_edit_options
+      @order_by = @preference.workload_order_by
+      @refreshrate = @preference.workload_refresh
+    rescue
+      session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
       @preference = session[:preference]
 
-
-      begin
-        @workload_columns = @preference.workload_columns
-        @enable_js = @preference.enable_js
-        @quick_edit_options = @preference.quick_edit_options
-        @order_by = @preference.workload_order_by
-        @refreshrate = @preference.workload_refresh
-      rescue
-        session[:preference] = Preference.find(:first, :conditions => ["person_id = ?", session[:person].id ])
-        @preference = session[:preference]
-
-        @workload_columns = @preference.workload_columns
-        @enable_js = @preference.enable_js
-        @quick_edit_options = @preference.quick_edit_options
-        @order_by = @preference.workload_order_by
-        @refreshrate = @preference.workload_refresh
-      end
-
-
-      # step 1: read and set the variables you'll need
-      page = (params[:page] ||= 1).to_i
-      items_per_page = session[:preference].workload_page_size.to_i
-      offset = (page - 1) * items_per_page
-
-      # step 2: do your custom find without doing any kind of limits or offsets
-      #  i.e. get everything on every page, don't worry about pagination yet
-      # @items = Item.find_with_some_custom_method(@some_variable)
-      if session[:preference].workload_display == "All tasks"
-        if @order_by == "Due date"
-          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and list_id in (select id from lists where team_id = ?) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", @team.id], :page => page, :per_page => items_per_page)
-
-        elsif @order_by == "Importance"
-          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", @team.id], :page => page, :per_page => items_per_page)
-        end
-
-      elsif session[:preference].workload_display == "Only today's tasks"
-        if @order_by == "Due date"
-          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and next_due = ? and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", @datetoday, @person.id, @team.id], :page => page, :per_page => items_per_page)
-
-        elsif @order_by == "Importance"
-          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and next_due = ? and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", @datetoday, @person.id, @team.id], :page => page, :per_page => items_per_page)
-        end
-
-
-      elsif session[:preference].workload_display == "Only my tasks"
-        if @order_by == "Due date"
-          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", @person.id, @team.id], :page => page, :per_page => items_per_page)
-
-        elsif @order_by == "Importance"
-          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", @person.id, @team.id], :page => page, :per_page => items_per_page)
-        end
-
-
-      else
-        if @order_by == "Due date"
-          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and person_id = ? and list_id in (select id from lists where team_id = ?) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", session[:preference].workload_display, @team.id], :page => page, :per_page => items_per_page)
-
-        elsif @order_by == "Importance"
-          @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and person_id = ? and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", session[:preference].workload_display, @team.id], :page => page, :per_page => items_per_page)
-        end
-      end
-
-      # step 3: create a Paginator, the second variable has to be the number of ALL items on all pages
-      # @item_pages = Paginator.new(self, @items.length, items_per_page, page)
-      # @workload_task_pages = Paginator.new(self, @workload_tasks.length, items_per_page, page)
-
-      # step 4: only send a subset of @items to the view
-      # this is where the magic happens... and you don't have to do another find
-      # @items = @items[offset..(offset + items_per_page - 1)]
-      # @workload_tasks = @workload_tasks[offset..(offset + items_per_page -1)]
-
+      @workload_columns = @preference.workload_columns
+      @enable_js = @preference.enable_js
+      @quick_edit_options = @preference.quick_edit_options
+      @order_by = @preference.workload_order_by
+      @refreshrate = @preference.workload_refresh
     end
+
+
+    # step 1: read and set the variables you'll need
+    page = (params[:page] ||= 1).to_i
+    items_per_page = session[:preference].workload_page_size.to_i
+    offset = (page - 1) * items_per_page
+
+    # step 2: do your custom find without doing any kind of limits or offsets
+    #  i.e. get everything on every page, don't worry about pagination yet
+    # @items = Item.find_with_some_custom_method(@some_variable)
+    if session[:preference].workload_display == "All tasks"
+      if @order_by == "Due date"
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and list_id in (select id from lists where team_id = ?) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", @team.id], :page => page, :per_page => items_per_page)
+
+      elsif @order_by == "Importance"
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", @team.id], :page => page, :per_page => items_per_page)
+      end
+
+    elsif session[:preference].workload_display == "Only today's tasks"
+      if @order_by == "Due date"
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and next_due = ? and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", @datetoday, @person.id, @team.id], :page => page, :per_page => items_per_page)
+
+      elsif @order_by == "Importance"
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and next_due = ? and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", @datetoday, @person.id, @team.id], :page => page, :per_page => items_per_page)
+      end
+
+
+    elsif session[:preference].workload_display == "Only my tasks"
+      if @order_by == "Due date"
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", @person.id, @team.id], :page => page, :per_page => items_per_page)
+
+      elsif @order_by == "Importance"
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and (person_id = ? or person_id is null) and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", @person.id, @team.id], :page => page, :per_page => items_per_page)
+      end
+
+
+    else
+      if @order_by == "Due date"
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and person_id = ? and list_id in (select id from lists where team_id = ?) order by next_due ASC, current_importance DESC, list_id ASC, name ASC", session[:preference].workload_display, @team.id], :page => page, :per_page => items_per_page)
+
+      elsif @order_by == "Importance"
+        @workload_tasks = Task.paginate_by_sql(["select * from tasks where status='active' and person_id = ? and list_id in (select id from lists where team_id = ?) order by current_importance DESC, next_due ASC, list_id ASC, name ASC", session[:preference].workload_display, @team.id], :page => page, :per_page => items_per_page)
+      end
+    end
+
+    # step 3: create a Paginator, the second variable has to be the number of ALL items on all pages
+    # @item_pages = Paginator.new(self, @items.length, items_per_page, page)
+    # @workload_task_pages = Paginator.new(self, @workload_tasks.length, items_per_page, page)
+
+    # step 4: only send a subset of @items to the view
+    # this is where the magic happens... and you don't have to do another find
+    # @items = @items[offset..(offset + items_per_page - 1)]
+    # @workload_tasks = @workload_tasks[offset..(offset + items_per_page -1)]
+
   end
 
 
@@ -514,6 +506,13 @@ http://www.mychores.co.uk"
   def delete_access_required
     if !@team.deletable_by?(session[:person])
       flash[:notice] = "Sorry, you don't have permission to do that."
+      redirect_back
+    end
+  end
+  
+  def membership_required
+    if !@team.member?(session[:person])
+      flash[:notice] = "Sorry, you are not a member of the team."
       redirect_back
     end
   end
