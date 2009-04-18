@@ -25,3 +25,8 @@ Then /^I should NOT see the task '(.+)'$/ do |task|
   response.should_not have_tag('td', /^#{task}/)
 end
 
+Then /^the task '(.+)' should be assigned to the team$/ do |task|
+  task = Task.find_by_name(task)
+  task.person_id.should be_nil
+end
+

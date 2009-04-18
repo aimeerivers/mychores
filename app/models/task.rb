@@ -247,6 +247,10 @@ class Task < ActiveRecord::Base
 	 	
     return flash_message
   end
+  
+  def self.assigned_to_person_in_team(person, team)
+    Task.find(:all, :conditions => {:person_id => person, :list_id => team.lists})
+  end
 	
 	
   protected

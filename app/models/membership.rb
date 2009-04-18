@@ -27,6 +27,7 @@ class Membership < ActiveRecord::Base
   end
   
   def deletable_by?(person)
+    return false if team.owned_by?(self.person)
     return true if self.person == person
     team.member?(person)
   end

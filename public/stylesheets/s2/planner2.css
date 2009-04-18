@@ -86,6 +86,10 @@ a.team_delete {
   background-image: url('../../images/icons/team-delete.png');
 }
 
+a.team_leave {
+  background-image: url('../../images/icons/team-leave.png');
+}
+
 a.list {
   background-image: url('../../images/icons/list-tiny.png');
 }
@@ -242,6 +246,10 @@ td
 {
   vertical-align: top;
   padding: 0.2em;
+}
+
+#content td p {
+  margin-bottom: 0.5em;
 }
 
 

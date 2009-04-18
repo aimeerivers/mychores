@@ -35,6 +35,11 @@ When /^I try to delete the team '(.+)'$/ do |teamname|
   visit team_path(team), :delete
 end
 
+When /^I try to remove myself from '(.+)'$/ do |teamname|
+  team = Team.find_by_name(teamname)
+  visit leave_team_path(team), :delete
+end
+
 
 Then /^(\w+) should be a member of the team '(.+)'$/ do |name, team|
   p = Person.find_by_name(name)

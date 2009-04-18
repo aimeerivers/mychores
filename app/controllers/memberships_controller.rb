@@ -4,6 +4,7 @@ class MembershipsController < ApplicationController
   before_filter :find_membership, :only => [:accept, :destroy]
   before_filter :edit_access_required, :only => [:accept]
   before_filter :delete_access_required, :only => [:destroy]
+  before_filter :delete_access_required_to_leave, :only => [:leave]
   
   def new
     @invitee = Person.find(params[:person_id])
@@ -50,6 +51,17 @@ class MembershipsController < ApplicationController
     redirect_back
   end
   
+  def leave
+    Task.assigned_to_person_in_team(@membership.person, @membership.team).each do |task|
+      task.rotate = false
+      task.person_id = nil
+      task.save
+    end
+    @membership.destroy
+    flash[:notice] = 'You have successfully left the team.'
+    redirect_back
+  end
+  
   
   protected
   
@@ -59,14 +71,22 @@ class MembershipsController < ApplicationController
   
   def edit_access_required
     if !@membership.editable_by?(session[:person])
-      flash[:notice] = "Sorry, you don't have permission to do that"
+      flash[:notice] = "Sorry, you don't have permission to do that."
       redirect_back
     end
   end
   
   def delete_access_required
     if !@membership.deletable_by?(session[:person])
-      flash[:notice] = "Sorry, you don't have permission to do that"
+      flash[:notice] = "Sorry, you don't have permission to do that."
+      redirect_back
+    end
+  end
+  
+  def delete_access_required_to_leave
+    @membership = Membership.find_by_team_id_and_person_id(params[:team_id], session[:person].id)
+    if !@membership.deletable_by?(session[:person])
+      flash[:notice] = "Sorry, you cannot do that."
       redirect_back
     end
   end

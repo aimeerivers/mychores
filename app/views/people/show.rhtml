@@ -56,13 +56,7 @@
                   <tr>
                     <td><%= link_to_team(membership.team, 'picturelink') %></td>
                     <td>
-                      <% if membership.confirmed != 1 %>
-                        <%= " (awaiting confirmation)" %>
-                      <% else %>
-                        <% if @itsme == true %>
-                          <%= link_to(image_tag('redx.png', :alt => 'Remove yourself from this team?', :title => 'Remove yourself from this team?'), { :controller => 'memberships', :action => 'remove', :id => membership.id, :returnto => 'person' }, :confirm => 'Are you sure you want to remove yourself from this team?') %>
-                        <% end %>
-                      <% end %>
+                      <%= membership.confirmed? ? '&nbsp;' : ' (awaiting confirmation)' %>
                     </td>
                   </tr>
                 <% end %>

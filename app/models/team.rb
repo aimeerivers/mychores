@@ -27,6 +27,10 @@ validates_length_of(:name, :maximum=>25)
   end
   
   def deletable_by?(person)
+    owned_by?(person)
+  end
+  
+  def owned_by?(person)
     self.person == person
   end
   

@@ -9,6 +9,6 @@
 
 - form_for(@membership, :url => person_memberships_path(@invitee)) do |f|
   = f.label(:team_id)
-  = f.select(:team_id, session[:person].confirmed_teams.map{|t| [t.name, t.id]})
+  = f.select(:team_id, session[:person].confirmed_teams.sort_by(&:name).map{|t| [t.name, t.id]})
   
   = f.submit('Invite')

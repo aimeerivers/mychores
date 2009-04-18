@@ -10,6 +10,10 @@
       <li><a href='/teams/invite/<%= @team.id.to_s %>' class='picturelink person_invite'>Invite someone to join</a></li>
       <li><a href='/teams/add_virtual/<%= @team.id.to_s %>' class='picturelink virtualperson_add'>Add a virtual member</a></li>
       
+      <% unless @team.owned_by?(session[:person]) -%>
+        <li><%= link_to('Leave team', leave_team_path(@team), :method => :delete, :class => 'picturelink team_leave', :confirm => "Are you sure you want to leave #{ javascript_safe(@team.name)}?") %></li>
+      <% end -%>
+      
     <% else -%>
       <li><%= link_to('Request to join', memrequest_path(@team), :method => :post, :confirm => "Do you wish to make a request to join #{ javascript_safe(@team.name)}?", :class => 'picturelink membership_request') %></li>
     <% end -%>
@@ -34,70 +38,33 @@
   <% end %>
 
 
-  <% if @ismember == false %>
+  <tr>
+    <th>Team Members:</th>
+    <td>
+      <% @memberships.each do |membership| -%>
+        <p>
+          <%= link_to_person(membership.person, 'picturelink') %>
+          <%= ' (awaiting confirmation)' unless membership.confirmed? %>
+        </p>
+      <% end -%>
+    </td>
+  </tr>
 
-    <tr>
-      <th>Team Members:</th>
-      <td>
-        <table>
-          <% unless @memberships.empty? %>
-            <% for membership in @memberships %>
-              <% if membership.person.usertype == 1 %>
-                <tr>
-                  <td><%= link_to_person(membership.person, 'picturelink') %></td>
-                  <td>
-                    <% if membership.confirmed != 1 %>
-                      <%= " (awaiting confirmation)" %>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            <% end %>
-          <% end %>
-
-        </table>
-      </td>
-    </tr>
-
-
-
-  <% else %>
-
-    <tr>
-      <th>Team Members:</th>
-      <td>
-        <table>
-          <% for membership in @memberships %>
-            <tr>
-              <td><%= link_to_person(membership.person, 'picturelink') %></td>
-              <td>
-                <% if membership.confirmed != 1 %>
-                  <%= " (awaiting confirmation)" %>
-                <% else %>
-                  <% if @imadeit == true %>
-                    <%= link_to(image_tag('redx.png', :alt => 'Remove this person from your team?', :title => 'Remove this person from your team?'), { :controller => 'memberships', :action => 'remove', :id => membership.id, :returnto => 'team' }, :confirm => 'Are you sure you want to remove this person from your team?') %>
-                  <% end %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-
-          <% unless session[:person].nil? %>
-            <% unless @invitations.empty? %>
-              <% if is_confirmed_member_of_team(session[:person].id, @team.id) %>
-                <% for invitation in @invitations %>
-                  <tr>
-                    <td><%= invitation.email %></td>
-                    <td><%= link_to(image_tag('envelope.jpg', :size => '17x11', :alt => 'Send a reminder email?', :title => 'Send a reminder email?'), { :controller => 'invitations', :action => 'remind', :id => invitation.code }, :confirm => 'Would you like to send this person a reminder email?') %> (click envelope to send a reminder)</td>
-                  </tr>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-
-        </table>
-      </td>
-    </tr>
+  <% if controller.logged_in? && @team.member?(session[:person]) -%>
+  
+    <% if @invitations.any? -%>
+      <tr>
+        <th>Invitations:</th>
+        <td>
+          <% @invitations.each do |invitation| -%>
+            <p>
+              <%= invitation.email %>
+              <%= link_to(image_tag('envelope.jpg', :size => '17x11', :alt => 'Send a reminder email?', :title => 'Send a reminder email?'), { :controller => 'invitations', :action => 'remind', :id => invitation.code }, :confirm => 'Would you like to send this person a reminder email?') %>
+            </p>
+          <% end -%>
+        </td>
+      </tr>
+    <% end -%>
 
     <tr>
       <th>Lists:</th>

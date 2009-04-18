@@ -166,4 +166,37 @@ Feature: Memberships
     Then I should NOT see the text 'Your request to join(.*)Household(.*)is pending'
     And I should NOT see the task 'dust shelves'
     
+  Scenario: Members of a team can remove themselves from it
+    Given I am logged in as 'Chris'
+    When I view the team 'Household'
+    And I click on 'Leave team'
+    Then I should see the text 'You have successfully left the team'
+    And I should see a link to 'Request to join'
+    When I visit my home page
+    Then I should NOT see the task 'dust shelves'
     
+  Scenario: Members of a team can remove themselves from it
+    Given I am logged in as 'Chris'
+    When I view the team 'Household'
+    And I click on 'Leave team'
+    Then I should see the text 'You have successfully left the team'
+    And I should see a link to 'Request to join'
+    When I visit my home page
+    Then I should NOT see the task 'dust shelves'
+    
+  Scenario: Tasks are reassigned when someone is removed
+    Given I am logged in as 'Chris'
+    And the task 'dust shelves' is assigned to 'Chris'
+    When I view the team 'Household'
+    And I click on 'Leave team'
+    Then I should see the text 'You have successfully left the team'
+    And the task 'dust shelves' should be assigned to the team
+    
+  Scenario: Owner of the team cannot be removed
+    Given I am logged in as 'Alex'
+    When I view the team 'Household'
+    Then I should NOT see a link to 'Leave team'
+    When I try to remove myself from 'Household'
+    Then I should see the text 'Sorry, you cannot do that'
+    Then Alex should be a member of the team 'Household'
+  

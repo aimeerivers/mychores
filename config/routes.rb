@@ -6,7 +6,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :memberships, :member => {:accept => :put}
   
   map.resources :teams, :member => {:workload => :get}
-  map.memrequest 'teams/:team_id/memberships/request', :controller => 'memberships', :action => 'memrequest'
+  map.memrequest 'teams/:team_id/memberships/request', :controller => 'memberships', :action => 'memrequest', :method => :post
+  map.leave_team 'teams/:team_id/leave', :controller => 'memberships', :action => 'leave', :method => :delete
   
   map.resources :people do |person|
     person.resources :memberships
