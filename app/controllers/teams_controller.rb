@@ -16,9 +16,6 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @memberships = @team.memberships
-    @invitations = Invitation.find(:all, :conditions => [ "team_id = ? and accepted = 0" , @team.id ])
-    @lists = List.find(:all, :conditions => [ "team_id = ?", @team.id ], :order => "name ASC")
   end
 
   def new

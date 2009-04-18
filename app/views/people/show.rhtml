@@ -51,16 +51,12 @@
           <tr>
             <th>Teams:</th>
             <td>
-              <table>
-                <% for membership in @memberships %>
-                  <tr>
-                    <td><%= link_to_team(membership.team, 'picturelink') %></td>
-                    <td>
-                      <%= membership.confirmed? ? '&nbsp;' : ' (awaiting confirmation)' %>
-                    </td>
-                  </tr>
-                <% end %>
-              </table>
+              <% @person.memberships.each do |membership| -%>
+                <p>
+                  <%= link_to_team(membership.team, 'picturelink') %>
+                  <%= ' (awaiting confirmation)' unless membership.confirmed? %>
+                </p>
+              <% end -%>
             </td>
           </tr>
 

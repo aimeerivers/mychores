@@ -16,7 +16,6 @@ class PeopleController < ApplicationController
 
   def show
     @person = Person.find(params[:id])
-    @memberships = Membership.find(:all, :conditions => ["person_id = ?", @person.id])
     
     @person_tips = Tip.find(:all, :limit => 3, :order => "id desc", :conditions => "person_id = " + @person.id.to_s + " and is_anon = false")
     @number_of_tips = Tip.count(:conditions => "person_id = " + @person.id.to_s + " and is_anon = false")
@@ -25,7 +24,6 @@ class PeopleController < ApplicationController
 	def show_by_login
 		@person = Person.find_by_login(params[:login])
 		unless @person.nil?
-			@memberships = Membership.find(:all, :conditions => ["person_id = ?", @person.id])
 			
 			@person_tips = Tip.find(:all, :limit => 3, :order => "id desc", :conditions => "person_id = " + @person.id.to_s + " and is_anon = false")
 			@number_of_tips = Tip.count(:conditions => "person_id = " + @person.id.to_s + " and is_anon = false")
