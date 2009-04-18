@@ -17,7 +17,7 @@ class MembershipsController < ApplicationController
       # Send an email
       @email = Email.new
       @email.subject = "New membership request from mychores.co.uk"
-      @email.message = "Dear " + @team.person.name + ",
+      @email.message = "Dear " + @team.owner_name + ",
 
       " + @person.name + " (" + @person.login + ") has asked to join your team: " + @team.name + ".
 
@@ -26,7 +26,7 @@ Log into MyChores to view their profile and accept or decline this request. You'
 If you have any problems please email contact@mychores.co.uk
 
 http://www.mychores.co.uk"
-      @email.to = @team.person.email
+      @email.to = @team.owner_email
       @email.save
     end
   end

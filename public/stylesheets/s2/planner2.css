@@ -49,7 +49,7 @@ a.person, span.person {
   background-image: url('../../images/icons/person-tiny.png');
 }
 
-a.person_invite {
+a.person_invite, a.membership_request {
   background-image: url('../../images/icons/person-invite.png');
 }
 

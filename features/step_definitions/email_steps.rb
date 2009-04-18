@@ -3,6 +3,12 @@ Given /^there are no emails waiting to be sent$/ do
   Email.delete_all
 end
 
+Then /^(\w+) should receive an email$/ do |name|
+  p = Person.find_by_name(name)
+  @email = Email.last
+  @email.to.should == p.email
+end
+
 Then /^there should be (\d+) emails? on the queue$/ do |number|
   Email.count.should == number.to_i
   @email = Email.last unless number.to_i < 1

@@ -71,6 +71,10 @@ module ApplicationHelper
     url.strip.sub(/^http:\/\//, '').sub(/^([^\/]+)\/$/, '\1')
   end
   
+  def javascript_safe(string)
+    string.gsub(/\"/, "").gsub(/\'/, "")
+  end
+  
   
   def print_tags_for_tip(tip)
     require 'cgi'

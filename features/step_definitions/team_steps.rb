@@ -8,6 +8,13 @@ Given /^'(.+)' is a member of team '(.+)'$/ do |person, team|
   membership = Membership.create!(:person => person, :team => team, :confirmed => true)
 end
 
+Given /^'(.+)' is the owner of team '(.+)'$/ do |person, team|
+  person = Person.find_by_name(person)
+  team = Team.find_by_name(team)
+  team.person = person
+  team.save
+end
+
 When /^I view the team '(.+)'$/ do |teamname|
   team = Team.find_by_name(teamname)
   visit team_path(team)
@@ -33,6 +40,12 @@ Then /^(\w+) should be a member of the team '(.+)'$/ do |name, team|
   p = Person.find_by_name(name)
   t = Team.find_by_name(team)
   p.confirmed_teams.include?(t).should be_true
+end
+
+Then /^(\w+) should NOT be a member of the team '(.+)'$/ do |name, team|
+  p = Person.find_by_name(name)
+  t = Team.find_by_name(team)
+  p.confirmed_teams.include?(t).should be_false
 end
 
 Then /^the team should have background colour '(.+)' and text colour '(.+)'$/ do |b, t|

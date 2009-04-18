@@ -29,6 +29,16 @@ validates_length_of(:name, :maximum=>25)
   def deletable_by?(person)
     self.person == person
   end
+  
+  def owner_name
+    return '' if person.nil?
+    person.name
+  end
+  
+  def owner_email
+    return 'contact@mychores.co.uk' if person.nil?
+    person.email
+  end
 
 
 protected

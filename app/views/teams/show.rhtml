@@ -4,16 +4,20 @@
 
 <% content_for(:links) do -%>
   <% if controller.logged_in? -%>
-    <% if @team.editable_by?(session[:person]) -%>
+    <% if @team.member?(session[:person]) -%>
       <li><%= link_to('Team workload', workload_team_path(@team), :class => 'picturelink workload_view') %></li>
       <li><%= link_to('Edit team', edit_team_path(@team), :class => 'picturelink team_edit') %></li>
       <li><a href='/teams/invite/<%= @team.id.to_s %>' class='picturelink person_invite'>Invite someone to join</a></li>
       <li><a href='/teams/add_virtual/<%= @team.id.to_s %>' class='picturelink virtualperson_add'>Add a virtual member</a></li>
+      
+    <% else -%>
+      <li><a href='/memberships/memrequest?team=<%= @team.id.to_s %>' class='picturelink membership_request' onclick="return confirm('Do you wish to make a request to join <%= javascript_safe(@team.name) %>?');">Request to join</a></li>
     <% end -%>
     
     <% if @team.deletable_by?(session[:person]) -%>
       <li><%= link_to('Delete team', team_path(@team), :method => :delete, :confirm => "Deleting a team will delete all associated lists and tasks. Are you sure you want to delete this team?", :class => 'picturelink team_delete') %></li>
     <% end -%>
+
   <% end -%>
 <% end -%>
 
