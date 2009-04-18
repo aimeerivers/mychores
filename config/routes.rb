@@ -3,6 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources 'testimonials', :except => [:show, :destroy]
   map.resources 'questions', :as => 'faq'
   map.resources :teams, :member => {:workload => :get}
+  map.resources :people do |person|
+    person.resources :memberships
+  end
 
   map.contact 'contact', :controller => 'messages', :action => 'new'
   map.sitemap 'sitemap', :controller => 'home', :action => 'sitemap'

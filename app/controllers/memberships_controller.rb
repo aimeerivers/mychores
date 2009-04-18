@@ -1,4 +1,24 @@
 class MembershipsController < ApplicationController
+  
+  before_filter :login_required
+  
+  def new
+    @invitee = Person.find(params[:person_id])
+    @membership = Membership.new(:person => @invitee)
+  end
+  
+  def create
+    @membership = Membership.new(params[:membership])
+    @membership.person_id = params[:person_id]
+    @membership.invited = true
+    if @membership.save
+      flash[:notice] = 'An invitation will be sent shortly.'
+      Email.new_membership_invitation(@membership)
+      redirect_to(person_path(params[:person_id]))
+    else
+      render :new
+    end
+  end
 
   def memrequest
     if params[:team]

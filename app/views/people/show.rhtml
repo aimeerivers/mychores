@@ -20,7 +20,7 @@
       <% @itsme = false %>
 
       <% @links = [] %>
-      <% @links += [{:url => "/memberships/invite?person=" + @person.id.to_s, :title => "Invite to join a team", :accesskey => "i"}] %>
+      <% @links += [{:url => new_person_membership_path(@person), :title => "Invite to join a team", :accesskey => "i"}] %>
 
     <% end %>
   <% end %>

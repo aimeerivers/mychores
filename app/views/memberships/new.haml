@@ -1,0 +1,14 @@
+- @heading="Invitation to join a team"
+
+- @breadcrumbs = link_to_person(@invitee, 'breadcrumb')
+
+%p
+  You can invite
+  = link_to_person(@invitee, 'picturelink')
+  to join one of your teams:
+
+- form_for(@membership, :url => person_memberships_path(@invitee)) do |f|
+  = f.label(:team_id)
+  = f.select(:team_id, session[:person].confirmed_teams.map{|t| [t.name, t.id]})
+  
+  = f.submit('Invite')
