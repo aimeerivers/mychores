@@ -72,7 +72,7 @@ module ApplicationHelper
   end
   
   def javascript_safe(string)
-    string.gsub(/\"/, "").gsub(/\'/, "")
+    string.gsub(/[\"\']/, '')
   end
   
   
