@@ -400,9 +400,6 @@ class TasksController < ApplicationController
     end
 
 
-
-    @messages = Membership.find_by_sql ["select * from memberships where (confirmed is null or confirmed = 0) and (person_id = ? or team_id in (select team_id from memberships where person_id = ? and confirmed = 1))", @person.id, @person.id]
-
     @number_overdue = Task.count_by_sql ["select count(*) from tasks where status='active' and next_due < ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) and (person_id = ? or person_id is null)", @datetoday, @person.id, @person.id]
 
 
@@ -481,8 +478,6 @@ class TasksController < ApplicationController
 
 
 
-    @messages = Membership.find_by_sql ["select * from memberships where (confirmed is null or confirmed = 0) and (person_id = ? or team_id in (select team_id from memberships where person_id = ? and confirmed = 1))", @person.id, @person.id]
-
     @number_overdue = Task.count_by_sql ["select count(*) from tasks where status='active' and next_due < ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) and (person_id = ? or person_id is null)", @datetoday, @person.id, @person.id]
 
 
@@ -527,8 +522,6 @@ class TasksController < ApplicationController
 
 
 
-    @messages = Membership.find_by_sql ["select * from memberships where (confirmed is null or confirmed = 0) and (person_id = ? or team_id in (select team_id from memberships where person_id = ? and confirmed = 1))", @person.id, @person.id]
-
     @number_overdue = Task.count_by_sql ["select count(*) from tasks where status='active' and next_due < ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) and (person_id = ? or person_id is null)", @datetoday, @person.id, @person.id]
 
 
@@ -564,7 +557,6 @@ class TasksController < ApplicationController
       @refreshrate = @preference.workload_refresh
     end
 
-    @messages = Membership.find_by_sql ["select * from memberships where (confirmed is null or confirmed = 0) and (person_id = ? or team_id in (select team_id from memberships where person_id = ? and confirmed = 1))", @person.id, @person.id]
 
     @number_overdue = Task.count_by_sql ["select count(*) from tasks where status='active' and next_due < ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) and (person_id = ? or person_id is null)", @datetoday, @person.id, @person.id]
 
@@ -687,7 +679,6 @@ class TasksController < ApplicationController
     end
 
 
-    @messages = Membership.find_by_sql ["select * from memberships where (confirmed is null or confirmed = 0) and (person_id = ? or team_id in (select team_id from memberships where person_id = ? and confirmed = 1))", @person.id, @person.id]
 
     @number_overdue = Task.count_by_sql ["select count(*) from tasks where status='active' and next_due < ? and list_id in (select id from lists where team_id in (select id from teams where id in (select team_id from memberships where person_id = ? and confirmed = 1))) and (person_id = ? or person_id is null)", @datetoday, @person.id, @person.id]
 

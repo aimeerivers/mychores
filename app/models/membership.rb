@@ -4,6 +4,7 @@ class Membership < ActiveRecord::Base
   belongs_to(:team) # ... of teams
 
   named_scope :confirmed, :conditions => {:confirmed => true}
+  named_scope :unconfirmed, :conditions => {:confirmed => false}
   
   def person_name
     return '' if person.nil?
@@ -18,6 +19,16 @@ class Membership < ActiveRecord::Base
   def team_name
     return '' if team.nil?
     team.name
+  end
+  
+  def editable_by?(person)
+    return true if self.person == person && invited?
+    team.member?(person)
+  end
+  
+  def deletable_by?(person)
+    return true if self.person == person
+    team.member?(person)
   end
 
 end

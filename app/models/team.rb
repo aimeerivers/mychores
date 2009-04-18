@@ -39,6 +39,10 @@ validates_length_of(:name, :maximum=>25)
     return 'contact@mychores.co.uk' if person.nil?
     person.email
   end
+  
+  def outstanding_memberships
+    Membership.find(:all, :conditions => {:confirmed => false, :team_id => id})
+  end
 
 
 protected

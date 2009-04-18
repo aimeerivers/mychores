@@ -11,7 +11,7 @@
       <li><a href='/teams/add_virtual/<%= @team.id.to_s %>' class='picturelink virtualperson_add'>Add a virtual member</a></li>
       
     <% else -%>
-      <li><a href='/memberships/memrequest?team=<%= @team.id.to_s %>' class='picturelink membership_request' onclick="return confirm('Do you wish to make a request to join <%= javascript_safe(@team.name) %>?');">Request to join</a></li>
+      <li><%= link_to('Request to join', memrequest_path(@team), :method => :post, :confirm => "Do you wish to make a request to join #{ javascript_safe(@team.name)}?", :class => 'picturelink membership_request') %></li>
     <% end -%>
     
     <% if @team.deletable_by?(session[:person]) -%>

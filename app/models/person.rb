@@ -8,8 +8,6 @@ class Person < ActiveRecord::Base
 
   has_many(:completions) # has completed tasks
   has_many(:memberships) # may be a member of teams
-  has_many(:tasks) # may have task assignments
-  has_many(:teams) # is owner/creator of teams
   has_many(:invitations) # may have sent invitations to many people
   has_many(:tips) # may have contributed one or more tips
   has_many(:pictures) # any pictures this person has uploaded
@@ -305,6 +303,13 @@ http://www.mychores.co.uk"
     confirmed_teams.map(&:confirmed_members).flatten.uniq - [self]
   end
   
+  def outstanding_memberships
+    memberships.unconfirmed
+  end
+  
+  def team_outstanding_memberships
+    Membership.find(:all, :conditions => {:confirmed => false, :team_id => memberships.confirmed.map(&:team_id)})
+  end
   
   
   

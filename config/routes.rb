@@ -2,7 +2,12 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources 'testimonials', :except => [:show, :destroy]
   map.resources 'questions', :as => 'faq'
+  
+  map.resources :memberships, :member => {:accept => :put}
+  
   map.resources :teams, :member => {:workload => :get}
+  map.memrequest 'teams/:team_id/memberships/request', :controller => 'memberships', :action => 'memrequest'
+  
   map.resources :people do |person|
     person.resources :memberships
   end

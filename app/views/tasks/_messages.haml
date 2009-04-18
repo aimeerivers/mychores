@@ -1,0 +1,30 @@
+- session[:person].outstanding_memberships.each do |membership|
+  - if membership.invited?
+    %p
+      You have been invited to join
+      = link_to_team(membership.team, 'picturelink')
+      = link_to('Accept', accept_membership_path(membership), :method => :put, :class => 'action')
+      |
+      = link_to('Decline', membership_path(membership), :method => :delete, :class => 'action')
+      
+  - if membership.requested?
+    %p
+      Your request to join
+      = link_to_team(membership.team, 'picturelink')
+      is pending
+      
+- session[:person].team_outstanding_memberships.each do |membership|
+  - if membership.invited?
+    %p
+      = link_to_person(membership.person, 'picturelink')
+      has not yet joined
+      = link_to_team(membership.team, 'picturelink')
+      
+  - if membership.requested?
+    %p
+      = link_to_person(membership.person, 'picturelink')
+      wants to join
+      = link_to_team(membership.team, 'picturelink')
+      = link_to('Accept', accept_membership_path(membership), :method => :put, :class => 'action')
+      |
+      = link_to('Decline', membership_path(membership), :method => :delete, :class => 'action')
