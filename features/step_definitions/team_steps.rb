@@ -23,6 +23,11 @@ When /^I try to update the team '(.+)'$/ do |teamname|
   visit team_path(team), :put
 end
 
+When /^I try to delete the team '(.+)'$/ do |teamname|
+  team = Team.find_by_name(teamname)
+  visit team_path(team), :delete
+end
+
 
 Then /^(\w+) should be a member of the team '(.+)'$/ do |name, team|
   p = Person.find_by_name(name)
@@ -38,3 +43,5 @@ Then /^the team should have no background colour$/ do
   response.should have_tag('a.team')
   response.should_not have_tag('a.team[style=?]', "background-color:#3F2A44; color:#D2AFAF;")
 end
+
+

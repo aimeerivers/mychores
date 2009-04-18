@@ -2,8 +2,9 @@ class TeamsController < ApplicationController
 
   before_filter :login_required, :except => [:show, :rss, :icalendar]
   before_filter :find_current_date, :only => [:teamworkload]
-  before_filter :find_team, :only => [:show, :edit, :update]
+  before_filter :find_team, :only => [:show, :edit, :update, :destroy]
   before_filter :edit_access_required, :only => [:edit, :update]
+  before_filter :delete_access_required, :only => [:destroy]
 
   def index
     redirect_to :controller => 'tasks', :action => 'workload'
@@ -46,23 +47,12 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    @team = Team.find(params[:id])
-    if @team.person_id == session[:person].id
-
-      @team.memberships.each do |membership|
-        membership.destroy
-      end
-
-      @team.destroy
-
-
-
+    if @team.destroy
       flash[:notice] = "Your team was deleted successfully."
     else
-      flash[:notice] = "Team not deleted. You can only delete teams which you created."
+      flash[:notice] = "Your team could not be deleted."
     end
-
-    redirect_to :controller => 'tasks', :action => 'workload'
+    redirect_to home_path
   end
 
 
@@ -516,6 +506,13 @@ http://www.mychores.co.uk"
   
   def edit_access_required
     if !@team.editable_by?(session[:person])
+      flash[:notice] = "Sorry, you don't have permission to do that."
+      redirect_back
+    end
+  end
+  
+  def delete_access_required
+    if !@team.deletable_by?(session[:person])
       flash[:notice] = "Sorry, you don't have permission to do that."
       redirect_back
     end

@@ -4,9 +4,9 @@ class Team < ActiveRecord::Base
 
   attr_protected :code
 
-has_many(:memberships) # links to members
+has_many(:memberships, :dependent => :destroy)
 has_many(:invitations) # links to invitations
-has_many(:lists, :order => 'name asc') # each team has lists, in the heirarchy
+has_many(:lists, :order => 'name asc', :dependent => :destroy) # each team has lists, in the heirarchy
 
 belongs_to(:person) # owner/creator
 
@@ -20,6 +20,10 @@ validates_length_of(:name, :maximum=>25)
   
   def editable_by?(person)
     Membership.count(:conditions => {:team_id => id, :person_id => person.id, :confirmed => true}) >= 1
+  end
+  
+  def deletable_by?(person)
+    self.person == person
   end
 
 
